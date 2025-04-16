@@ -21,10 +21,10 @@ var __runInitializers = (array, flags, self, value) => {
   return value;
 };
 var __decorateElement = (array, flags, name, decorators, target, extra) => {
-  var fn, it, done, ctx, access, k3 = flags & 7, s4 = !!(flags & 8), p4 = !!(flags & 16);
-  var j3 = k3 > 3 ? array.length + 1 : k3 ? s4 ? 1 : 2 : 0, key = __decoratorStrings[k3 + 5];
+  var fn, it, done, ctx, access, k3 = flags & 7, s5 = !!(flags & 8), p4 = !!(flags & 16);
+  var j3 = k3 > 3 ? array.length + 1 : k3 ? s5 ? 1 : 2 : 0, key = __decoratorStrings[k3 + 5];
   var initializers = k3 > 3 && (array[j3 - 1] = []), extraInitializers = array[j3] || (array[j3] = []);
-  var desc = k3 && (!p4 && !s4 && (target = target.prototype), k3 < 5 && (k3 > 3 || !p4) && __getOwnPropDesc(k3 < 4 ? target : { get [name]() {
+  var desc = k3 && (!p4 && !s5 && (target = target.prototype), k3 < 5 && (k3 > 3 || !p4) && __getOwnPropDesc(k3 < 4 ? target : { get [name]() {
     return __privateGet(this, extra);
   }, set [name](x3) {
     return __privateSet(this, extra, x3);
@@ -33,7 +33,7 @@ var __decorateElement = (array, flags, name, decorators, target, extra) => {
   for (var i8 = decorators.length - 1; i8 >= 0; i8--) {
     ctx = __decoratorContext(k3, name, done = {}, array[3], extraInitializers);
     if (k3) {
-      ctx.static = s4, ctx.private = p4, access = ctx.access = { has: p4 ? (x3) => __privateIn(target, x3) : (x3) => name in x3 };
+      ctx.static = s5, ctx.private = p4, access = ctx.access = { has: p4 ? (x3) => __privateIn(target, x3) : (x3) => name in x3 };
       if (k3 ^ 3) access.get = p4 ? (x3) => (k3 ^ 1 ? __privateGet : __privateMethod)(x3, target, k3 ^ 4 ? extra : desc.get) : (x3) => x3[name];
       if (k3 > 2) access.set = p4 ? (x3, y4) => __privateSet(x3, target, y4, k3 ^ 4 ? extra : desc.set) : (x3, y4) => x3[name] = y4;
     }
@@ -58,16 +58,16 @@ var e = t.ShadowRoot && (void 0 === t.ShadyCSS || t.ShadyCSS.nativeShadow) && "a
 var s = Symbol();
 var o = /* @__PURE__ */ new WeakMap();
 var n = class {
-  constructor(t7, e12, o9) {
-    if (this._$cssResult$ = true, o9 !== s) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
+  constructor(t7, e12, o10) {
+    if (this._$cssResult$ = true, o10 !== s) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
     this.cssText = t7, this.t = e12;
   }
   get styleSheet() {
     let t7 = this.o;
-    const s4 = this.t;
+    const s5 = this.t;
     if (e && void 0 === t7) {
-      const e12 = void 0 !== s4 && 1 === s4.length;
-      e12 && (t7 = o.get(s4)), void 0 === t7 && ((this.o = t7 = new CSSStyleSheet()).replaceSync(this.cssText), e12 && o.set(s4, t7));
+      const e12 = void 0 !== s5 && 1 === s5.length;
+      e12 && (t7 = o.get(s5)), void 0 === t7 && ((this.o = t7 = new CSSStyleSheet()).replaceSync(this.cssText), e12 && o.set(s5, t7));
     }
     return t7;
   }
@@ -77,35 +77,35 @@ var n = class {
 };
 var r = (t7) => new n("string" == typeof t7 ? t7 : t7 + "", void 0, s);
 var i = (t7, ...e12) => {
-  const o9 = 1 === t7.length ? t7[0] : e12.reduce((e13, s4, o10) => e13 + ((t8) => {
+  const o10 = 1 === t7.length ? t7[0] : e12.reduce((e13, s5, o11) => e13 + ((t8) => {
     if (true === t8._$cssResult$) return t8.cssText;
     if ("number" == typeof t8) return t8;
     throw Error("Value passed to 'css' function must be a 'css' function result: " + t8 + ". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.");
-  })(s4) + t7[o10 + 1], t7[0]);
-  return new n(o9, t7, s);
+  })(s5) + t7[o11 + 1], t7[0]);
+  return new n(o10, t7, s);
 };
-var S = (s4, o9) => {
-  if (e) s4.adoptedStyleSheets = o9.map((t7) => t7 instanceof CSSStyleSheet ? t7 : t7.styleSheet);
-  else for (const e12 of o9) {
-    const o10 = document.createElement("style"), n7 = t.litNonce;
-    void 0 !== n7 && o10.setAttribute("nonce", n7), o10.textContent = e12.cssText, s4.appendChild(o10);
+var S = (s5, o10) => {
+  if (e) s5.adoptedStyleSheets = o10.map((t7) => t7 instanceof CSSStyleSheet ? t7 : t7.styleSheet);
+  else for (const e12 of o10) {
+    const o11 = document.createElement("style"), n7 = t.litNonce;
+    void 0 !== n7 && o11.setAttribute("nonce", n7), o11.textContent = e12.cssText, s5.appendChild(o11);
   }
 };
 var c = e ? (t7) => t7 : (t7) => t7 instanceof CSSStyleSheet ? ((t8) => {
   let e12 = "";
-  for (const s4 of t8.cssRules) e12 += s4.cssText;
+  for (const s5 of t8.cssRules) e12 += s5.cssText;
   return r(e12);
 })(t7) : t7;
 
 // node_modules/@lit/reactive-element/reactive-element.js
-var { is: i2, defineProperty: e2, getOwnPropertyDescriptor: r2, getOwnPropertyNames: h, getOwnPropertySymbols: o2, getPrototypeOf: n2 } = Object;
+var { is: i2, defineProperty: e2, getOwnPropertyDescriptor: h, getOwnPropertyNames: r2, getOwnPropertySymbols: o2, getPrototypeOf: n2 } = Object;
 var a = globalThis;
 var c2 = a.trustedTypes;
 var l = c2 ? c2.emptyScript : "";
 var p = a.reactiveElementPolyfillSupport;
-var d = (t7, s4) => t7;
-var u = { toAttribute(t7, s4) {
-  switch (s4) {
+var d = (t7, s5) => t7;
+var u = { toAttribute(t7, s5) {
+  switch (s5) {
     case Boolean:
       t7 = t7 ? l : null;
       break;
@@ -114,9 +114,9 @@ var u = { toAttribute(t7, s4) {
       t7 = null == t7 ? t7 : JSON.stringify(t7);
   }
   return t7;
-}, fromAttribute(t7, s4) {
+}, fromAttribute(t7, s5) {
   let i8 = t7;
-  switch (s4) {
+  switch (s5) {
     case Boolean:
       i8 = null !== t7;
       break;
@@ -133,37 +133,35 @@ var u = { toAttribute(t7, s4) {
   }
   return i8;
 } };
-var f = (t7, s4) => !i2(t7, s4);
-var y = { attribute: true, type: String, converter: u, reflect: false, hasChanged: f };
+var f = (t7, s5) => !i2(t7, s5);
+var b = { attribute: true, type: String, converter: u, reflect: false, useDefault: false, hasChanged: f };
 Symbol.metadata ??= Symbol("metadata"), a.litPropertyMetadata ??= /* @__PURE__ */ new WeakMap();
-var b = class extends HTMLElement {
+var y = class extends HTMLElement {
   static addInitializer(t7) {
     this._$Ei(), (this.l ??= []).push(t7);
   }
   static get observedAttributes() {
     return this.finalize(), this._$Eh && [...this._$Eh.keys()];
   }
-  static createProperty(t7, s4 = y) {
-    if (s4.state && (s4.attribute = false), this._$Ei(), this.elementProperties.set(t7, s4), !s4.noAccessor) {
-      const i8 = Symbol(), r9 = this.getPropertyDescriptor(t7, i8, s4);
-      void 0 !== r9 && e2(this.prototype, t7, r9);
+  static createProperty(t7, s5 = b) {
+    if (s5.state && (s5.attribute = false), this._$Ei(), this.prototype.hasOwnProperty(t7) && ((s5 = Object.create(s5)).wrapped = true), this.elementProperties.set(t7, s5), !s5.noAccessor) {
+      const i8 = Symbol(), h4 = this.getPropertyDescriptor(t7, i8, s5);
+      void 0 !== h4 && e2(this.prototype, t7, h4);
     }
   }
-  static getPropertyDescriptor(t7, s4, i8) {
-    const { get: e12, set: h4 } = r2(this.prototype, t7) ?? { get() {
-      return this[s4];
+  static getPropertyDescriptor(t7, s5, i8) {
+    const { get: e12, set: r8 } = h(this.prototype, t7) ?? { get() {
+      return this[s5];
     }, set(t8) {
-      this[s4] = t8;
+      this[s5] = t8;
     } };
-    return { get() {
-      return e12?.call(this);
-    }, set(s5) {
-      const r9 = e12?.call(this);
-      h4.call(this, s5), this.requestUpdate(t7, r9, i8);
+    return { get: e12, set(s6) {
+      const h4 = e12?.call(this);
+      r8?.call(this, s6), this.requestUpdate(t7, h4, i8);
     }, configurable: true, enumerable: true };
   }
   static getPropertyOptions(t7) {
-    return this.elementProperties.get(t7) ?? y;
+    return this.elementProperties.get(t7) ?? b;
   }
   static _$Ei() {
     if (this.hasOwnProperty(d("elementProperties"))) return;
@@ -173,31 +171,31 @@ var b = class extends HTMLElement {
   static finalize() {
     if (this.hasOwnProperty(d("finalized"))) return;
     if (this.finalized = true, this._$Ei(), this.hasOwnProperty(d("properties"))) {
-      const t8 = this.properties, s4 = [...h(t8), ...o2(t8)];
-      for (const i8 of s4) this.createProperty(i8, t8[i8]);
+      const t8 = this.properties, s5 = [...r2(t8), ...o2(t8)];
+      for (const i8 of s5) this.createProperty(i8, t8[i8]);
     }
     const t7 = this[Symbol.metadata];
     if (null !== t7) {
-      const s4 = litPropertyMetadata.get(t7);
-      if (void 0 !== s4) for (const [t8, i8] of s4) this.elementProperties.set(t8, i8);
+      const s5 = litPropertyMetadata.get(t7);
+      if (void 0 !== s5) for (const [t8, i8] of s5) this.elementProperties.set(t8, i8);
     }
     this._$Eh = /* @__PURE__ */ new Map();
-    for (const [t8, s4] of this.elementProperties) {
-      const i8 = this._$Eu(t8, s4);
+    for (const [t8, s5] of this.elementProperties) {
+      const i8 = this._$Eu(t8, s5);
       void 0 !== i8 && this._$Eh.set(i8, t8);
     }
     this.elementStyles = this.finalizeStyles(this.styles);
   }
-  static finalizeStyles(s4) {
+  static finalizeStyles(s5) {
     const i8 = [];
-    if (Array.isArray(s4)) {
-      const e12 = new Set(s4.flat(1 / 0).reverse());
-      for (const s5 of e12) i8.unshift(c(s5));
-    } else void 0 !== s4 && i8.push(c(s4));
+    if (Array.isArray(s5)) {
+      const e12 = new Set(s5.flat(1 / 0).reverse());
+      for (const s6 of e12) i8.unshift(c(s6));
+    } else void 0 !== s5 && i8.push(c(s5));
     return i8;
   }
-  static _$Eu(t7, s4) {
-    const i8 = s4.attribute;
+  static _$Eu(t7, s5) {
+    const i8 = s5.attribute;
     return false === i8 ? void 0 : "string" == typeof i8 ? i8 : "string" == typeof t7 ? t7.toLowerCase() : void 0;
   }
   constructor() {
@@ -213,8 +211,8 @@ var b = class extends HTMLElement {
     this._$EO?.delete(t7);
   }
   _$E_() {
-    const t7 = /* @__PURE__ */ new Map(), s4 = this.constructor.elementProperties;
-    for (const i8 of s4.keys()) this.hasOwnProperty(i8) && (t7.set(i8, this[i8]), delete this[i8]);
+    const t7 = /* @__PURE__ */ new Map(), s5 = this.constructor.elementProperties;
+    for (const i8 of s5.keys()) this.hasOwnProperty(i8) && (t7.set(i8, this[i8]), delete this[i8]);
     t7.size > 0 && (this._$Ep = t7);
   }
   createRenderRoot() {
@@ -229,34 +227,35 @@ var b = class extends HTMLElement {
   disconnectedCallback() {
     this._$EO?.forEach((t7) => t7.hostDisconnected?.());
   }
-  attributeChangedCallback(t7, s4, i8) {
+  attributeChangedCallback(t7, s5, i8) {
     this._$AK(t7, i8);
   }
-  _$EC(t7, s4) {
+  _$ET(t7, s5) {
     const i8 = this.constructor.elementProperties.get(t7), e12 = this.constructor._$Eu(t7, i8);
     if (void 0 !== e12 && true === i8.reflect) {
-      const r9 = (void 0 !== i8.converter?.toAttribute ? i8.converter : u).toAttribute(s4, i8.type);
-      this._$Em = t7, null == r9 ? this.removeAttribute(e12) : this.setAttribute(e12, r9), this._$Em = null;
+      const h4 = (void 0 !== i8.converter?.toAttribute ? i8.converter : u).toAttribute(s5, i8.type);
+      this._$Em = t7, null == h4 ? this.removeAttribute(e12) : this.setAttribute(e12, h4), this._$Em = null;
     }
   }
-  _$AK(t7, s4) {
+  _$AK(t7, s5) {
     const i8 = this.constructor, e12 = i8._$Eh.get(t7);
     if (void 0 !== e12 && this._$Em !== e12) {
-      const t8 = i8.getPropertyOptions(e12), r9 = "function" == typeof t8.converter ? { fromAttribute: t8.converter } : void 0 !== t8.converter?.fromAttribute ? t8.converter : u;
-      this._$Em = e12, this[e12] = r9.fromAttribute(s4, t8.type), this._$Em = null;
+      const t8 = i8.getPropertyOptions(e12), h4 = "function" == typeof t8.converter ? { fromAttribute: t8.converter } : void 0 !== t8.converter?.fromAttribute ? t8.converter : u;
+      this._$Em = e12, this[e12] = h4.fromAttribute(s5, t8.type) ?? this._$Ej?.get(e12) ?? null, this._$Em = null;
     }
   }
-  requestUpdate(t7, s4, i8) {
+  requestUpdate(t7, s5, i8) {
     if (void 0 !== t7) {
-      if (i8 ??= this.constructor.getPropertyOptions(t7), !(i8.hasChanged ?? f)(this[t7], s4)) return;
-      this.P(t7, s4, i8);
+      const e12 = this.constructor, h4 = this[t7];
+      if (i8 ??= e12.getPropertyOptions(t7), !((i8.hasChanged ?? f)(h4, s5) || i8.useDefault && i8.reflect && h4 === this._$Ej?.get(t7) && !this.hasAttribute(e12._$Eu(t7, i8)))) return;
+      this.C(t7, s5, i8);
     }
-    false === this.isUpdatePending && (this._$ES = this._$ET());
+    false === this.isUpdatePending && (this._$ES = this._$EP());
   }
-  P(t7, s4, i8) {
-    this._$AL.has(t7) || this._$AL.set(t7, s4), true === i8.reflect && this._$Em !== t7 && (this._$Ej ??= /* @__PURE__ */ new Set()).add(t7);
+  C(t7, s5, { useDefault: i8, reflect: e12, wrapped: h4 }, r8) {
+    i8 && !(this._$Ej ??= /* @__PURE__ */ new Map()).has(t7) && (this._$Ej.set(t7, r8 ?? s5 ?? this[t7]), true !== h4 || void 0 !== r8) || (this._$AL.has(t7) || (this.hasUpdated || i8 || (s5 = void 0), this._$AL.set(t7, s5)), true === e12 && this._$Em !== t7 && (this._$Eq ??= /* @__PURE__ */ new Set()).add(t7));
   }
-  async _$ET() {
+  async _$EP() {
     this.isUpdatePending = true;
     try {
       await this._$ES;
@@ -273,27 +272,30 @@ var b = class extends HTMLElement {
     if (!this.isUpdatePending) return;
     if (!this.hasUpdated) {
       if (this.renderRoot ??= this.createRenderRoot(), this._$Ep) {
-        for (const [t9, s5] of this._$Ep) this[t9] = s5;
+        for (const [t9, s6] of this._$Ep) this[t9] = s6;
         this._$Ep = void 0;
       }
       const t8 = this.constructor.elementProperties;
-      if (t8.size > 0) for (const [s5, i8] of t8) true !== i8.wrapped || this._$AL.has(s5) || void 0 === this[s5] || this.P(s5, this[s5], i8);
+      if (t8.size > 0) for (const [s6, i8] of t8) {
+        const { wrapped: t9 } = i8, e12 = this[s6];
+        true !== t9 || this._$AL.has(s6) || void 0 === e12 || this.C(s6, void 0, i8, e12);
+      }
     }
     let t7 = false;
-    const s4 = this._$AL;
+    const s5 = this._$AL;
     try {
-      t7 = this.shouldUpdate(s4), t7 ? (this.willUpdate(s4), this._$EO?.forEach((t8) => t8.hostUpdate?.()), this.update(s4)) : this._$EU();
-    } catch (s5) {
-      throw t7 = false, this._$EU(), s5;
+      t7 = this.shouldUpdate(s5), t7 ? (this.willUpdate(s5), this._$EO?.forEach((t8) => t8.hostUpdate?.()), this.update(s5)) : this._$EM();
+    } catch (s6) {
+      throw t7 = false, this._$EM(), s6;
     }
-    t7 && this._$AE(s4);
+    t7 && this._$AE(s5);
   }
   willUpdate(t7) {
   }
   _$AE(t7) {
     this._$EO?.forEach((t8) => t8.hostUpdated?.()), this.hasUpdated || (this.hasUpdated = true, this.firstUpdated(t7)), this.updated(t7);
   }
-  _$EU() {
+  _$EM() {
     this._$AL = /* @__PURE__ */ new Map(), this.isUpdatePending = false;
   }
   get updateComplete() {
@@ -306,14 +308,14 @@ var b = class extends HTMLElement {
     return true;
   }
   update(t7) {
-    this._$Ej &&= this._$Ej.forEach((t8) => this._$EC(t8, this[t8])), this._$EU();
+    this._$Eq &&= this._$Eq.forEach((t8) => this._$ET(t8, this[t8])), this._$EM();
   }
   updated(t7) {
   }
   firstUpdated(t7) {
   }
 };
-b.elementStyles = [], b.shadowRootOptions = { mode: "open" }, b[d("elementProperties")] = /* @__PURE__ */ new Map(), b[d("finalized")] = /* @__PURE__ */ new Map(), p?.({ ReactiveElement: b }), (a.reactiveElementVersions ??= []).push("2.0.4");
+y.elementStyles = [], y.shadowRootOptions = { mode: "open" }, y[d("elementProperties")] = /* @__PURE__ */ new Map(), y[d("finalized")] = /* @__PURE__ */ new Map(), p?.({ ReactiveElement: y }), (a.reactiveElementVersions ??= []).push("2.1.0");
 
 // node_modules/lit-html/lit-html.js
 var t2 = globalThis;
@@ -337,7 +339,7 @@ var m = RegExp(`>|${d2}(?:([^\\s"'>=/]+)(${d2}*=${d2}*(?:[^
 var p2 = /'/g;
 var g = /"/g;
 var $ = /^(?:script|style|textarea|title)$/i;
-var y2 = (t7) => (i8, ...s4) => ({ _$litType$: t7, strings: i8, values: s4 });
+var y2 = (t7) => (i8, ...s5) => ({ _$litType$: t7, strings: i8, values: s5 });
 var x = y2(1);
 var b2 = y2(2);
 var w = y2(3);
@@ -350,59 +352,59 @@ function P(t7, i8) {
   return void 0 !== s2 ? s2.createHTML(i8) : i8;
 }
 var V = (t7, i8) => {
-  const s4 = t7.length - 1, o9 = [];
-  let r9, l6 = 2 === i8 ? "<svg>" : 3 === i8 ? "<math>" : "", c6 = f2;
-  for (let i9 = 0; i9 < s4; i9++) {
-    const s5 = t7[i9];
+  const s5 = t7.length - 1, o10 = [];
+  let r8, l6 = 2 === i8 ? "<svg>" : 3 === i8 ? "<math>" : "", c6 = f2;
+  for (let i9 = 0; i9 < s5; i9++) {
+    const s6 = t7[i9];
     let a5, u6, d4 = -1, y4 = 0;
-    for (; y4 < s5.length && (c6.lastIndex = y4, u6 = c6.exec(s5), null !== u6); ) y4 = c6.lastIndex, c6 === f2 ? "!--" === u6[1] ? c6 = v : void 0 !== u6[1] ? c6 = _ : void 0 !== u6[2] ? ($.test(u6[2]) && (r9 = RegExp("</" + u6[2], "g")), c6 = m) : void 0 !== u6[3] && (c6 = m) : c6 === m ? ">" === u6[0] ? (c6 = r9 ?? f2, d4 = -1) : void 0 === u6[1] ? d4 = -2 : (d4 = c6.lastIndex - u6[2].length, a5 = u6[1], c6 = void 0 === u6[3] ? m : '"' === u6[3] ? g : p2) : c6 === g || c6 === p2 ? c6 = m : c6 === v || c6 === _ ? c6 = f2 : (c6 = m, r9 = void 0);
+    for (; y4 < s6.length && (c6.lastIndex = y4, u6 = c6.exec(s6), null !== u6); ) y4 = c6.lastIndex, c6 === f2 ? "!--" === u6[1] ? c6 = v : void 0 !== u6[1] ? c6 = _ : void 0 !== u6[2] ? ($.test(u6[2]) && (r8 = RegExp("</" + u6[2], "g")), c6 = m) : void 0 !== u6[3] && (c6 = m) : c6 === m ? ">" === u6[0] ? (c6 = r8 ?? f2, d4 = -1) : void 0 === u6[1] ? d4 = -2 : (d4 = c6.lastIndex - u6[2].length, a5 = u6[1], c6 = void 0 === u6[3] ? m : '"' === u6[3] ? g : p2) : c6 === g || c6 === p2 ? c6 = m : c6 === v || c6 === _ ? c6 = f2 : (c6 = m, r8 = void 0);
     const x3 = c6 === m && t7[i9 + 1].startsWith("/>") ? " " : "";
-    l6 += c6 === f2 ? s5 + n3 : d4 >= 0 ? (o9.push(a5), s5.slice(0, d4) + e3 + s5.slice(d4) + h2 + x3) : s5 + h2 + (-2 === d4 ? i9 : x3);
+    l6 += c6 === f2 ? s6 + n3 : d4 >= 0 ? (o10.push(a5), s6.slice(0, d4) + e3 + s6.slice(d4) + h2 + x3) : s6 + h2 + (-2 === d4 ? i9 : x3);
   }
-  return [P(t7, l6 + (t7[s4] || "<?>") + (2 === i8 ? "</svg>" : 3 === i8 ? "</math>" : "")), o9];
+  return [P(t7, l6 + (t7[s5] || "<?>") + (2 === i8 ? "</svg>" : 3 === i8 ? "</math>" : "")), o10];
 };
 var N = class _N {
-  constructor({ strings: t7, _$litType$: s4 }, n7) {
-    let r9;
+  constructor({ strings: t7, _$litType$: s5 }, n7) {
+    let r8;
     this.parts = [];
     let c6 = 0, a5 = 0;
-    const u6 = t7.length - 1, d4 = this.parts, [f6, v3] = V(t7, s4);
-    if (this.el = _N.createElement(f6, n7), C.currentNode = this.el.content, 2 === s4 || 3 === s4) {
+    const u6 = t7.length - 1, d4 = this.parts, [f6, v3] = V(t7, s5);
+    if (this.el = _N.createElement(f6, n7), C.currentNode = this.el.content, 2 === s5 || 3 === s5) {
       const t8 = this.el.content.firstChild;
       t8.replaceWith(...t8.childNodes);
     }
-    for (; null !== (r9 = C.nextNode()) && d4.length < u6; ) {
-      if (1 === r9.nodeType) {
-        if (r9.hasAttributes()) for (const t8 of r9.getAttributeNames()) if (t8.endsWith(e3)) {
-          const i8 = v3[a5++], s5 = r9.getAttribute(t8).split(h2), e12 = /([.?@])?(.*)/.exec(i8);
-          d4.push({ type: 1, index: c6, name: e12[2], strings: s5, ctor: "." === e12[1] ? H : "?" === e12[1] ? I : "@" === e12[1] ? L : k }), r9.removeAttribute(t8);
-        } else t8.startsWith(h2) && (d4.push({ type: 6, index: c6 }), r9.removeAttribute(t8));
-        if ($.test(r9.tagName)) {
-          const t8 = r9.textContent.split(h2), s5 = t8.length - 1;
-          if (s5 > 0) {
-            r9.textContent = i3 ? i3.emptyScript : "";
-            for (let i8 = 0; i8 < s5; i8++) r9.append(t8[i8], l2()), C.nextNode(), d4.push({ type: 2, index: ++c6 });
-            r9.append(t8[s5], l2());
+    for (; null !== (r8 = C.nextNode()) && d4.length < u6; ) {
+      if (1 === r8.nodeType) {
+        if (r8.hasAttributes()) for (const t8 of r8.getAttributeNames()) if (t8.endsWith(e3)) {
+          const i8 = v3[a5++], s6 = r8.getAttribute(t8).split(h2), e12 = /([.?@])?(.*)/.exec(i8);
+          d4.push({ type: 1, index: c6, name: e12[2], strings: s6, ctor: "." === e12[1] ? H : "?" === e12[1] ? I : "@" === e12[1] ? L : k }), r8.removeAttribute(t8);
+        } else t8.startsWith(h2) && (d4.push({ type: 6, index: c6 }), r8.removeAttribute(t8));
+        if ($.test(r8.tagName)) {
+          const t8 = r8.textContent.split(h2), s6 = t8.length - 1;
+          if (s6 > 0) {
+            r8.textContent = i3 ? i3.emptyScript : "";
+            for (let i8 = 0; i8 < s6; i8++) r8.append(t8[i8], l2()), C.nextNode(), d4.push({ type: 2, index: ++c6 });
+            r8.append(t8[s6], l2());
           }
         }
-      } else if (8 === r9.nodeType) if (r9.data === o3) d4.push({ type: 2, index: c6 });
+      } else if (8 === r8.nodeType) if (r8.data === o3) d4.push({ type: 2, index: c6 });
       else {
         let t8 = -1;
-        for (; -1 !== (t8 = r9.data.indexOf(h2, t8 + 1)); ) d4.push({ type: 7, index: c6 }), t8 += h2.length - 1;
+        for (; -1 !== (t8 = r8.data.indexOf(h2, t8 + 1)); ) d4.push({ type: 7, index: c6 }), t8 += h2.length - 1;
       }
       c6++;
     }
   }
   static createElement(t7, i8) {
-    const s4 = r3.createElement("template");
-    return s4.innerHTML = t7, s4;
+    const s5 = r3.createElement("template");
+    return s5.innerHTML = t7, s5;
   }
 };
-function S2(t7, i8, s4 = t7, e12) {
+function S2(t7, i8, s5 = t7, e12) {
   if (i8 === T) return i8;
-  let h4 = void 0 !== e12 ? s4._$Co?.[e12] : s4._$Cl;
-  const o9 = c3(i8) ? void 0 : i8._$litDirective$;
-  return h4?.constructor !== o9 && (h4?._$AO?.(false), void 0 === o9 ? h4 = void 0 : (h4 = new o9(t7), h4._$AT(t7, s4, e12)), void 0 !== e12 ? (s4._$Co ??= [])[e12] = h4 : s4._$Cl = h4), void 0 !== h4 && (i8 = S2(t7, h4._$AS(t7, i8.values), h4, e12)), i8;
+  let h4 = void 0 !== e12 ? s5._$Co?.[e12] : s5._$Cl;
+  const o10 = c3(i8) ? void 0 : i8._$litDirective$;
+  return h4?.constructor !== o10 && (h4?._$AO?.(false), void 0 === o10 ? h4 = void 0 : (h4 = new o10(t7), h4._$AT(t7, s5, e12)), void 0 !== e12 ? (s5._$Co ??= [])[e12] = h4 : s5._$Cl = h4), void 0 !== h4 && (i8 = S2(t7, h4._$AS(t7, i8.values), h4, e12)), i8;
 }
 var M = class {
   constructor(t7, i8) {
@@ -415,29 +417,29 @@ var M = class {
     return this._$AM._$AU;
   }
   u(t7) {
-    const { el: { content: i8 }, parts: s4 } = this._$AD, e12 = (t7?.creationScope ?? r3).importNode(i8, true);
+    const { el: { content: i8 }, parts: s5 } = this._$AD, e12 = (t7?.creationScope ?? r3).importNode(i8, true);
     C.currentNode = e12;
-    let h4 = C.nextNode(), o9 = 0, n7 = 0, l6 = s4[0];
+    let h4 = C.nextNode(), o10 = 0, n7 = 0, l6 = s5[0];
     for (; void 0 !== l6; ) {
-      if (o9 === l6.index) {
+      if (o10 === l6.index) {
         let i9;
-        2 === l6.type ? i9 = new R(h4, h4.nextSibling, this, t7) : 1 === l6.type ? i9 = new l6.ctor(h4, l6.name, l6.strings, this, t7) : 6 === l6.type && (i9 = new z(h4, this, t7)), this._$AV.push(i9), l6 = s4[++n7];
+        2 === l6.type ? i9 = new R(h4, h4.nextSibling, this, t7) : 1 === l6.type ? i9 = new l6.ctor(h4, l6.name, l6.strings, this, t7) : 6 === l6.type && (i9 = new z(h4, this, t7)), this._$AV.push(i9), l6 = s5[++n7];
       }
-      o9 !== l6?.index && (h4 = C.nextNode(), o9++);
+      o10 !== l6?.index && (h4 = C.nextNode(), o10++);
     }
     return C.currentNode = r3, e12;
   }
   p(t7) {
     let i8 = 0;
-    for (const s4 of this._$AV) void 0 !== s4 && (void 0 !== s4.strings ? (s4._$AI(t7, s4, i8), i8 += s4.strings.length - 2) : s4._$AI(t7[i8])), i8++;
+    for (const s5 of this._$AV) void 0 !== s5 && (void 0 !== s5.strings ? (s5._$AI(t7, s5, i8), i8 += s5.strings.length - 2) : s5._$AI(t7[i8])), i8++;
   }
 };
 var R = class _R {
   get _$AU() {
     return this._$AM?._$AU ?? this._$Cv;
   }
-  constructor(t7, i8, s4, e12) {
-    this.type = 2, this._$AH = E, this._$AN = void 0, this._$AA = t7, this._$AB = i8, this._$AM = s4, this.options = e12, this._$Cv = e12?.isConnected ?? true;
+  constructor(t7, i8, s5, e12) {
+    this.type = 2, this._$AH = E, this._$AN = void 0, this._$AA = t7, this._$AB = i8, this._$AM = s5, this.options = e12, this._$Cv = e12?.isConnected ?? true;
   }
   get parentNode() {
     let t7 = this._$AA.parentNode;
@@ -463,11 +465,11 @@ var R = class _R {
     this._$AH !== E && c3(this._$AH) ? this._$AA.nextSibling.data = t7 : this.T(r3.createTextNode(t7)), this._$AH = t7;
   }
   $(t7) {
-    const { values: i8, _$litType$: s4 } = t7, e12 = "number" == typeof s4 ? this._$AC(t7) : (void 0 === s4.el && (s4.el = N.createElement(P(s4.h, s4.h[0]), this.options)), s4);
+    const { values: i8, _$litType$: s5 } = t7, e12 = "number" == typeof s5 ? this._$AC(t7) : (void 0 === s5.el && (s5.el = N.createElement(P(s5.h, s5.h[0]), this.options)), s5);
     if (this._$AH?._$AD === e12) this._$AH.p(i8);
     else {
-      const t8 = new M(e12, this), s5 = t8.u(this.options);
-      t8.p(i8), this.T(s5), this._$AH = t8;
+      const t8 = new M(e12, this), s6 = t8.u(this.options);
+      t8.p(i8), this.T(s6), this._$AH = t8;
     }
   }
   _$AC(t7) {
@@ -477,9 +479,9 @@ var R = class _R {
   k(t7) {
     a2(this._$AH) || (this._$AH = [], this._$AR());
     const i8 = this._$AH;
-    let s4, e12 = 0;
-    for (const h4 of t7) e12 === i8.length ? i8.push(s4 = new _R(this.O(l2()), this.O(l2()), this, this.options)) : s4 = i8[e12], s4._$AI(h4), e12++;
-    e12 < i8.length && (this._$AR(s4 && s4._$AB.nextSibling, e12), i8.length = e12);
+    let s5, e12 = 0;
+    for (const h4 of t7) e12 === i8.length ? i8.push(s5 = new _R(this.O(l2()), this.O(l2()), this, this.options)) : s5 = i8[e12], s5._$AI(h4), e12++;
+    e12 < i8.length && (this._$AR(s5 && s5._$AB.nextSibling, e12), i8.length = e12);
   }
   _$AR(t7 = this._$AA.nextSibling, i8) {
     for (this._$AP?.(false, true, i8); t7 && t7 !== this._$AB; ) {
@@ -498,19 +500,19 @@ var k = class {
   get _$AU() {
     return this._$AM._$AU;
   }
-  constructor(t7, i8, s4, e12, h4) {
-    this.type = 1, this._$AH = E, this._$AN = void 0, this.element = t7, this.name = i8, this._$AM = e12, this.options = h4, s4.length > 2 || "" !== s4[0] || "" !== s4[1] ? (this._$AH = Array(s4.length - 1).fill(new String()), this.strings = s4) : this._$AH = E;
+  constructor(t7, i8, s5, e12, h4) {
+    this.type = 1, this._$AH = E, this._$AN = void 0, this.element = t7, this.name = i8, this._$AM = e12, this.options = h4, s5.length > 2 || "" !== s5[0] || "" !== s5[1] ? (this._$AH = Array(s5.length - 1).fill(new String()), this.strings = s5) : this._$AH = E;
   }
-  _$AI(t7, i8 = this, s4, e12) {
+  _$AI(t7, i8 = this, s5, e12) {
     const h4 = this.strings;
-    let o9 = false;
-    if (void 0 === h4) t7 = S2(this, t7, i8, 0), o9 = !c3(t7) || t7 !== this._$AH && t7 !== T, o9 && (this._$AH = t7);
+    let o10 = false;
+    if (void 0 === h4) t7 = S2(this, t7, i8, 0), o10 = !c3(t7) || t7 !== this._$AH && t7 !== T, o10 && (this._$AH = t7);
     else {
       const e13 = t7;
-      let n7, r9;
-      for (t7 = h4[0], n7 = 0; n7 < h4.length - 1; n7++) r9 = S2(this, e13[s4 + n7], i8, n7), r9 === T && (r9 = this._$AH[n7]), o9 ||= !c3(r9) || r9 !== this._$AH[n7], r9 === E ? t7 = E : t7 !== E && (t7 += (r9 ?? "") + h4[n7 + 1]), this._$AH[n7] = r9;
+      let n7, r8;
+      for (t7 = h4[0], n7 = 0; n7 < h4.length - 1; n7++) r8 = S2(this, e13[s5 + n7], i8, n7), r8 === T && (r8 = this._$AH[n7]), o10 ||= !c3(r8) || r8 !== this._$AH[n7], r8 === E ? t7 = E : t7 !== E && (t7 += (r8 ?? "") + h4[n7 + 1]), this._$AH[n7] = r8;
     }
-    o9 && !e12 && this.j(t7);
+    o10 && !e12 && this.j(t7);
   }
   j(t7) {
     t7 === E ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t7 ?? "");
@@ -533,21 +535,21 @@ var I = class extends k {
   }
 };
 var L = class extends k {
-  constructor(t7, i8, s4, e12, h4) {
-    super(t7, i8, s4, e12, h4), this.type = 5;
+  constructor(t7, i8, s5, e12, h4) {
+    super(t7, i8, s5, e12, h4), this.type = 5;
   }
   _$AI(t7, i8 = this) {
     if ((t7 = S2(this, t7, i8, 0) ?? E) === T) return;
-    const s4 = this._$AH, e12 = t7 === E && s4 !== E || t7.capture !== s4.capture || t7.once !== s4.once || t7.passive !== s4.passive, h4 = t7 !== E && (s4 === E || e12);
-    e12 && this.element.removeEventListener(this.name, this, s4), h4 && this.element.addEventListener(this.name, this, t7), this._$AH = t7;
+    const s5 = this._$AH, e12 = t7 === E && s5 !== E || t7.capture !== s5.capture || t7.once !== s5.once || t7.passive !== s5.passive, h4 = t7 !== E && (s5 === E || e12);
+    e12 && this.element.removeEventListener(this.name, this, s5), h4 && this.element.addEventListener(this.name, this, t7), this._$AH = t7;
   }
   handleEvent(t7) {
     "function" == typeof this._$AH ? this._$AH.call(this.options?.host ?? this.element, t7) : this._$AH.handleEvent(t7);
   }
 };
 var z = class {
-  constructor(t7, i8, s4) {
-    this.element = t7, this.type = 6, this._$AN = void 0, this._$AM = i8, this.options = s4;
+  constructor(t7, i8, s5) {
+    this.element = t7, this.type = 6, this._$AN = void 0, this._$AM = i8, this.options = s5;
   }
   get _$AU() {
     return this._$AM._$AU;
@@ -558,19 +560,20 @@ var z = class {
 };
 var Z = { M: e3, P: h2, A: o3, C: 1, L: V, R: M, D: u2, V: S2, I: R, H: k, N: I, U: L, B: H, F: z };
 var j = t2.litHtmlPolyfillSupport;
-j?.(N, R), (t2.litHtmlVersions ??= []).push("3.2.1");
-var B = (t7, i8, s4) => {
-  const e12 = s4?.renderBefore ?? i8;
+j?.(N, R), (t2.litHtmlVersions ??= []).push("3.3.0");
+var B = (t7, i8, s5) => {
+  const e12 = s5?.renderBefore ?? i8;
   let h4 = e12._$litPart$;
   if (void 0 === h4) {
-    const t8 = s4?.renderBefore ?? null;
-    e12._$litPart$ = h4 = new R(i8.insertBefore(l2(), t8), t8, void 0, s4 ?? {});
+    const t8 = s5?.renderBefore ?? null;
+    e12._$litPart$ = h4 = new R(i8.insertBefore(l2(), t8), t8, void 0, s5 ?? {});
   }
   return h4._$AI(t7), h4;
 };
 
 // node_modules/lit-element/lit-element.js
-var r4 = class extends b {
+var s3 = globalThis;
+var i4 = class extends y {
   constructor() {
     super(...arguments), this.renderOptions = { host: this }, this._$Do = void 0;
   }
@@ -579,8 +582,8 @@ var r4 = class extends b {
     return this.renderOptions.renderBefore ??= t7.firstChild, t7;
   }
   update(t7) {
-    const s4 = this.render();
-    this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(t7), this._$Do = B(s4, this.renderRoot, this.renderOptions);
+    const r8 = this.render();
+    this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(t7), this._$Do = B(r8, this.renderRoot, this.renderOptions);
   }
   connectedCallback() {
     super.connectedCallback(), this._$Do?.setConnected(true);
@@ -592,10 +595,10 @@ var r4 = class extends b {
     return T;
   }
 };
-r4._$litElement$ = true, r4["finalized"] = true, globalThis.litElementHydrateSupport?.({ LitElement: r4 });
-var i4 = globalThis.litElementPolyfillSupport;
-i4?.({ LitElement: r4 });
-(globalThis.litElementVersions ??= []).push("4.1.1");
+i4._$litElement$ = true, i4["finalized"] = true, s3.litElementHydrateSupport?.({ LitElement: i4 });
+var o4 = s3.litElementPolyfillSupport;
+o4?.({ LitElement: i4 });
+(s3.litElementVersions ??= []).push("4.2.0");
 
 // node_modules/@webwriter/lit/index.js
 var __create2 = Object.create;
@@ -649,11 +652,11 @@ var __privateSet2 = (obj, member, value, setter) => (__accessCheck2(obj, member,
 var __privateMethod2 = (obj, member, method) => (__accessCheck2(obj, member, "access private method"), method);
 var t3 = globalThis;
 var e4 = t3.ShadowRoot && (void 0 === t3.ShadyCSS || t3.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype;
-var s3 = Symbol();
-var o4 = /* @__PURE__ */ new WeakMap();
+var s4 = Symbol();
+var o5 = /* @__PURE__ */ new WeakMap();
 var n4 = class {
   constructor(t22, e42, o42) {
-    if (this._$cssResult$ = true, o42 !== s3) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
+    if (this._$cssResult$ = true, o42 !== s4) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
     this.cssText = t22, this.t = e42;
   }
   get styleSheet() {
@@ -661,7 +664,7 @@ var n4 = class {
     const s22 = this.t;
     if (e4 && void 0 === t22) {
       const e42 = void 0 !== s22 && 1 === s22.length;
-      e42 && (t22 = o4.get(s22)), void 0 === t22 && ((this.o = t22 = new CSSStyleSheet()).replaceSync(this.cssText), e42 && o4.set(s22, t22));
+      e42 && (t22 = o5.get(s22)), void 0 === t22 && ((this.o = t22 = new CSSStyleSheet()).replaceSync(this.cssText), e42 && o5.set(s22, t22));
     }
     return t22;
   }
@@ -669,7 +672,7 @@ var n4 = class {
     return this.cssText;
   }
 };
-var r5 = (t22) => new n4("string" == typeof t22 ? t22 : t22 + "", void 0, s3);
+var r4 = (t22) => new n4("string" == typeof t22 ? t22 : t22 + "", void 0, s4);
 var S3 = (s22, o42) => {
   if (e4) s22.adoptedStyleSheets = o42.map((t22) => t22 instanceof CSSStyleSheet ? t22 : t22.styleSheet);
   else for (const e42 of o42) {
@@ -680,7 +683,7 @@ var S3 = (s22, o42) => {
 var c4 = e4 ? (t22) => t22 : (t22) => t22 instanceof CSSStyleSheet ? ((t32) => {
   let e42 = "";
   for (const s22 of t32.cssRules) e42 += s22.cssText;
-  return r5(e42);
+  return r4(e42);
 })(t22) : t22;
 var { is: i22, defineProperty: e22, getOwnPropertyDescriptor: r22, getOwnPropertyNames: h3, getOwnPropertySymbols: o22, getPrototypeOf: n22 } = Object;
 var a3 = globalThis;
@@ -1350,56 +1353,56 @@ __publicField2(LitElementWw, "options", {});
 __publicField2(LitElementWw, "actions", {});
 
 // node_modules/@lit/reactive-element/decorators/custom-element.js
-var t4 = (t7) => (e12, o9) => {
-  void 0 !== o9 ? o9.addInitializer(() => {
+var t4 = (t7) => (e12, o10) => {
+  void 0 !== o10 ? o10.addInitializer(() => {
     customElements.define(t7, e12);
   }) : customElements.define(t7, e12);
 };
 
 // node_modules/@lit/reactive-element/decorators/property.js
-var o5 = { attribute: true, type: String, converter: u, reflect: false, hasChanged: f };
-var r6 = (t7 = o5, e12, r9) => {
-  const { kind: n7, metadata: i8 } = r9;
-  let s4 = globalThis.litPropertyMetadata.get(i8);
-  if (void 0 === s4 && globalThis.litPropertyMetadata.set(i8, s4 = /* @__PURE__ */ new Map()), s4.set(r9.name, t7), "accessor" === n7) {
-    const { name: o9 } = r9;
-    return { set(r10) {
+var o6 = { attribute: true, type: String, converter: u, reflect: false, hasChanged: f };
+var r5 = (t7 = o6, e12, r8) => {
+  const { kind: n7, metadata: i8 } = r8;
+  let s5 = globalThis.litPropertyMetadata.get(i8);
+  if (void 0 === s5 && globalThis.litPropertyMetadata.set(i8, s5 = /* @__PURE__ */ new Map()), "setter" === n7 && ((t7 = Object.create(t7)).wrapped = true), s5.set(r8.name, t7), "accessor" === n7) {
+    const { name: o10 } = r8;
+    return { set(r9) {
       const n8 = e12.get.call(this);
-      e12.set.call(this, r10), this.requestUpdate(o9, n8, t7);
+      e12.set.call(this, r9), this.requestUpdate(o10, n8, t7);
     }, init(e13) {
-      return void 0 !== e13 && this.P(o9, void 0, t7), e13;
+      return void 0 !== e13 && this.C(o10, void 0, t7, e13), e13;
     } };
   }
   if ("setter" === n7) {
-    const { name: o9 } = r9;
-    return function(r10) {
-      const n8 = this[o9];
-      e12.call(this, r10), this.requestUpdate(o9, n8, t7);
+    const { name: o10 } = r8;
+    return function(r9) {
+      const n8 = this[o10];
+      e12.call(this, r9), this.requestUpdate(o10, n8, t7);
     };
   }
   throw Error("Unsupported decorator location: " + n7);
 };
 function n5(t7) {
-  return (e12, o9) => "object" == typeof o9 ? r6(t7, e12, o9) : ((t8, e13, o10) => {
-    const r9 = e13.hasOwnProperty(o10);
-    return e13.constructor.createProperty(o10, r9 ? { ...t8, wrapped: true } : t8), r9 ? Object.getOwnPropertyDescriptor(e13, o10) : void 0;
-  })(t7, e12, o9);
+  return (e12, o10) => "object" == typeof o10 ? r5(t7, e12, o10) : ((t8, e13, o11) => {
+    const r8 = e13.hasOwnProperty(o11);
+    return e13.constructor.createProperty(o11, t8), r8 ? Object.getOwnPropertyDescriptor(e13, o11) : void 0;
+  })(t7, e12, o10);
 }
 
 // node_modules/@lit/reactive-element/decorators/state.js
-function r7(r9) {
-  return n5({ ...r9, state: true, attribute: false });
+function r6(r8) {
+  return n5({ ...r8, state: true, attribute: false });
 }
 
 // node_modules/@lit/reactive-element/decorators/base.js
 var e5 = (e12, t7, c6) => (c6.configurable = true, c6.enumerable = true, Reflect.decorate && "object" != typeof t7 && Object.defineProperty(e12, t7, c6), c6);
 
 // node_modules/@lit/reactive-element/decorators/query.js
-function e6(e12, r9) {
-  return (n7, s4, i8) => {
-    const o9 = (t7) => t7.renderRoot?.querySelector(e12) ?? null;
-    if (r9) {
-      const { get: e13, set: r10 } = "object" == typeof s4 ? n7 : i8 ?? (() => {
+function e6(e12, r8) {
+  return (n7, s5, i8) => {
+    const o10 = (t7) => t7.renderRoot?.querySelector(e12) ?? null;
+    if (r8) {
+      const { get: e13, set: r9 } = "object" == typeof s5 ? n7 : i8 ?? (() => {
         const t7 = Symbol();
         return { get() {
           return this[t7];
@@ -1407,13 +1410,13 @@ function e6(e12, r9) {
           this[t7] = e14;
         } };
       })();
-      return e5(n7, s4, { get() {
+      return e5(n7, s5, { get() {
         let t7 = e13.call(this);
-        return void 0 === t7 && (t7 = o9(this), (null !== t7 || this.hasUpdated) && r10.call(this, t7)), t7;
+        return void 0 === t7 && (t7 = o10(this), (null !== t7 || this.hasUpdated) && r9.call(this, t7)), t7;
       } });
     }
-    return e5(n7, s4, { get() {
-      return o9(this);
+    return e5(n7, s5, { get() {
+      return o10(this);
     } });
   };
 }
@@ -1463,6 +1466,9 @@ function aoutput(out, instance) {
   }
 }
 
+// node_modules/@noble/hashes/esm/crypto.js
+var crypto = typeof globalThis === "object" && "crypto" in globalThis ? globalThis.crypto : void 0;
+
 // node_modules/@noble/hashes/esm/utils.js
 function u8(arr) {
   return new Uint8Array(arr.buffer, arr.byteOffset, arr.byteLength);
@@ -1489,6 +1495,10 @@ function byteSwap32(arr) {
     arr[i8] = byteSwap(arr[i8]);
   }
 }
+var hasHexBuiltin = (
+  // @ts-ignore
+  typeof Uint8Array.from([]).toHex === "function" && typeof Uint8Array.fromHex === "function"
+);
 var nextTick = async () => {
 };
 async function asyncLoop(iters, tick, cb) {
@@ -1549,6 +1559,15 @@ function wrapXOFConstructorWithOpts(hashCons) {
   hashC.create = (opts) => hashCons(opts);
   return hashC;
 }
+function randomBytes(bytesLength = 32) {
+  if (crypto && typeof crypto.getRandomValues === "function") {
+    return crypto.getRandomValues(new Uint8Array(bytesLength));
+  }
+  if (crypto && typeof crypto.randomBytes === "function") {
+    return Uint8Array.from(crypto.randomBytes(bytesLength));
+  }
+  throw new Error("crypto.getRandomValues must be defined");
+}
 
 // node_modules/@noble/hashes/esm/_md.js
 function setBigUint64(view, byteOffset, value, isLE2) {
@@ -1572,14 +1591,14 @@ function Maj(a5, b4, c6) {
 var HashMD = class extends Hash {
   constructor(blockLen, outputLen, padOffset, isLE2) {
     super();
-    this.blockLen = blockLen;
-    this.outputLen = outputLen;
-    this.padOffset = padOffset;
-    this.isLE = isLE2;
     this.finished = false;
     this.length = 0;
     this.pos = 0;
     this.destroyed = false;
+    this.blockLen = blockLen;
+    this.outputLen = outputLen;
+    this.padOffset = padOffset;
+    this.isLE = isLE2;
     this.buffer = new Uint8Array(blockLen);
     this.view = createView(this.buffer);
   }
@@ -1735,8 +1754,8 @@ var SHA256_IV = /* @__PURE__ */ new Uint32Array([
 ]);
 var SHA256_W = /* @__PURE__ */ new Uint32Array(64);
 var SHA256 = class extends HashMD {
-  constructor() {
-    super(64, 32, 8, false);
+  constructor(outputLen = 32) {
+    super(64, outputLen, 8, false);
     this.A = SHA256_IV[0] | 0;
     this.B = SHA256_IV[1] | 0;
     this.C = SHA256_IV[2] | 0;
@@ -1806,7 +1825,7 @@ var SHA256 = class extends HashMD {
 };
 var SHA224 = class extends SHA256 {
   constructor() {
-    super();
+    super(28);
     this.A = 3238371032 | 0;
     this.B = 914150663 | 0;
     this.C = 812702999 | 0;
@@ -1815,7 +1834,6 @@ var SHA224 = class extends SHA256 {
     this.F = 1750603025 | 0;
     this.G = 1694076839 | 0;
     this.H = 3204075428 | 0;
-    this.outputLen = 28;
   }
 };
 var sha256 = /* @__PURE__ */ wrapConstructor(() => new SHA256());
@@ -1839,18 +1857,18 @@ function split(lst, le = false) {
   return [Ah, Al];
 }
 var toBig = (h4, l6) => BigInt(h4 >>> 0) << _32n | BigInt(l6 >>> 0);
-var shrSH = (h4, _l, s4) => h4 >>> s4;
-var shrSL = (h4, l6, s4) => h4 << 32 - s4 | l6 >>> s4;
-var rotrSH = (h4, l6, s4) => h4 >>> s4 | l6 << 32 - s4;
-var rotrSL = (h4, l6, s4) => h4 << 32 - s4 | l6 >>> s4;
-var rotrBH = (h4, l6, s4) => h4 << 64 - s4 | l6 >>> s4 - 32;
-var rotrBL = (h4, l6, s4) => h4 >>> s4 - 32 | l6 << 64 - s4;
+var shrSH = (h4, _l, s5) => h4 >>> s5;
+var shrSL = (h4, l6, s5) => h4 << 32 - s5 | l6 >>> s5;
+var rotrSH = (h4, l6, s5) => h4 >>> s5 | l6 << 32 - s5;
+var rotrSL = (h4, l6, s5) => h4 << 32 - s5 | l6 >>> s5;
+var rotrBH = (h4, l6, s5) => h4 << 64 - s5 | l6 >>> s5 - 32;
+var rotrBL = (h4, l6, s5) => h4 >>> s5 - 32 | l6 << 64 - s5;
 var rotr32H = (_h, l6) => l6;
 var rotr32L = (h4, _l) => h4;
-var rotlSH = (h4, l6, s4) => h4 << s4 | l6 >>> 32 - s4;
-var rotlSL = (h4, l6, s4) => l6 << s4 | h4 >>> 32 - s4;
-var rotlBH = (h4, l6, s4) => l6 << s4 - 32 | h4 >>> 64 - s4;
-var rotlBL = (h4, l6, s4) => h4 << s4 - 32 | l6 >>> 64 - s4;
+var rotlSH = (h4, l6, s5) => h4 << s5 | l6 >>> 32 - s5;
+var rotlSL = (h4, l6, s5) => l6 << s5 | h4 >>> 32 - s5;
+var rotlBH = (h4, l6, s5) => l6 << s5 - 32 | h4 >>> 64 - s5;
+var rotlBL = (h4, l6, s5) => h4 << s5 - 32 | l6 >>> 64 - s5;
 function add(Ah, Al, Bh, Bl) {
   const l6 = (Al >>> 0) + (Bl >>> 0);
   return { h: Ah + Bh + (l6 / 2 ** 32 | 0) | 0, l: l6 | 0 };
@@ -1973,8 +1991,8 @@ var [SHA512_Kh, SHA512_Kl] = /* @__PURE__ */ (() => u64_default.split([
 var SHA512_W_H = /* @__PURE__ */ new Uint32Array(80);
 var SHA512_W_L = /* @__PURE__ */ new Uint32Array(80);
 var SHA512 = class extends HashMD {
-  constructor() {
-    super(128, 64, 16, false);
+  constructor(outputLen = 64) {
+    super(128, outputLen, 16, false);
     this.Ah = 1779033703 | 0;
     this.Al = 4089235720 | 0;
     this.Bh = 3144134277 | 0;
@@ -2086,7 +2104,7 @@ var SHA512 = class extends HashMD {
 };
 var SHA512_224 = class extends SHA512 {
   constructor() {
-    super();
+    super(28);
     this.Ah = 2352822216 | 0;
     this.Al = 424955298 | 0;
     this.Bh = 1944164710 | 0;
@@ -2103,12 +2121,11 @@ var SHA512_224 = class extends SHA512 {
     this.Gl = 1780299464 | 0;
     this.Hh = 286451373 | 0;
     this.Hl = 2446758561 | 0;
-    this.outputLen = 28;
   }
 };
 var SHA512_256 = class extends SHA512 {
   constructor() {
-    super();
+    super(32);
     this.Ah = 573645204 | 0;
     this.Al = 4230739756 | 0;
     this.Bh = 2673172387 | 0;
@@ -2125,12 +2142,11 @@ var SHA512_256 = class extends SHA512 {
     this.Gl = 746961066 | 0;
     this.Hh = 246885852 | 0;
     this.Hl = 2177182882 | 0;
-    this.outputLen = 32;
   }
 };
 var SHA384 = class extends SHA512 {
   constructor() {
-    super();
+    super(48);
     this.Ah = 3418070365 | 0;
     this.Al = 3238371032 | 0;
     this.Bh = 1654270250 | 0;
@@ -2147,7 +2163,6 @@ var SHA384 = class extends SHA512 {
     this.Gl = 1694076839 | 0;
     this.Hh = 1203062813 | 0;
     this.Hl = 3204075428 | 0;
-    this.outputLen = 48;
   }
 };
 var sha512 = /* @__PURE__ */ wrapConstructor(() => new SHA512());
@@ -2193,13 +2208,13 @@ for (let round2 = 0, R3 = _1n, x3 = 1, y4 = 0; round2 < 24; round2++) {
   _SHA3_IOTA.push(t7);
 }
 var [SHA3_IOTA_H, SHA3_IOTA_L] = /* @__PURE__ */ split(_SHA3_IOTA, true);
-var rotlH = (h4, l6, s4) => s4 > 32 ? rotlBH(h4, l6, s4) : rotlSH(h4, l6, s4);
-var rotlL = (h4, l6, s4) => s4 > 32 ? rotlBL(h4, l6, s4) : rotlSL(h4, l6, s4);
-function keccakP(s4, rounds = 24) {
+var rotlH = (h4, l6, s5) => s5 > 32 ? rotlBH(h4, l6, s5) : rotlSH(h4, l6, s5);
+var rotlL = (h4, l6, s5) => s5 > 32 ? rotlBL(h4, l6, s5) : rotlSL(h4, l6, s5);
+function keccakP(s5, rounds = 24) {
   const B3 = new Uint32Array(5 * 2);
   for (let round2 = 24 - rounds; round2 < 24; round2++) {
     for (let x3 = 0; x3 < 10; x3++)
-      B3[x3] = s4[x3] ^ s4[x3 + 10] ^ s4[x3 + 20] ^ s4[x3 + 30] ^ s4[x3 + 40];
+      B3[x3] = s5[x3] ^ s5[x3 + 10] ^ s5[x3 + 20] ^ s5[x3 + 30] ^ s5[x3 + 40];
     for (let x3 = 0; x3 < 10; x3 += 2) {
       const idx1 = (x3 + 8) % 10;
       const idx0 = (x3 + 2) % 10;
@@ -2208,30 +2223,30 @@ function keccakP(s4, rounds = 24) {
       const Th = rotlH(B0, B1, 1) ^ B3[idx1];
       const Tl = rotlL(B0, B1, 1) ^ B3[idx1 + 1];
       for (let y4 = 0; y4 < 50; y4 += 10) {
-        s4[x3 + y4] ^= Th;
-        s4[x3 + y4 + 1] ^= Tl;
+        s5[x3 + y4] ^= Th;
+        s5[x3 + y4 + 1] ^= Tl;
       }
     }
-    let curH = s4[2];
-    let curL = s4[3];
+    let curH = s5[2];
+    let curL = s5[3];
     for (let t7 = 0; t7 < 24; t7++) {
       const shift3 = SHA3_ROTL[t7];
       const Th = rotlH(curH, curL, shift3);
       const Tl = rotlL(curH, curL, shift3);
       const PI = SHA3_PI[t7];
-      curH = s4[PI];
-      curL = s4[PI + 1];
-      s4[PI] = Th;
-      s4[PI + 1] = Tl;
+      curH = s5[PI];
+      curL = s5[PI + 1];
+      s5[PI] = Th;
+      s5[PI + 1] = Tl;
     }
     for (let y4 = 0; y4 < 50; y4 += 10) {
       for (let x3 = 0; x3 < 10; x3++)
-        B3[x3] = s4[y4 + x3];
+        B3[x3] = s5[y4 + x3];
       for (let x3 = 0; x3 < 10; x3++)
-        s4[y4 + x3] ^= ~B3[(x3 + 2) % 10] & B3[(x3 + 4) % 10];
+        s5[y4 + x3] ^= ~B3[(x3 + 2) % 10] & B3[(x3 + 4) % 10];
     }
-    s4[0] ^= SHA3_IOTA_H[round2];
-    s4[1] ^= SHA3_IOTA_L[round2];
+    s5[0] ^= SHA3_IOTA_H[round2];
+    s5[1] ^= SHA3_IOTA_L[round2];
   }
   B3.fill(0);
 }
@@ -2239,15 +2254,16 @@ var Keccak = class _Keccak extends Hash {
   // NOTE: we accept arguments in bytes instead of bits here.
   constructor(blockLen, suffix, outputLen, enableXOF = false, rounds = 24) {
     super();
+    this.pos = 0;
+    this.posOut = 0;
+    this.finished = false;
+    this.destroyed = false;
+    this.enableXOF = false;
     this.blockLen = blockLen;
     this.suffix = suffix;
     this.outputLen = outputLen;
     this.enableXOF = enableXOF;
     this.rounds = rounds;
-    this.pos = 0;
-    this.posOut = 0;
-    this.finished = false;
-    this.destroyed = false;
     anumber(outputLen);
     if (0 >= this.blockLen || this.blockLen >= 200)
       throw new Error("Sha3 supports only keccak-f1600 function");
@@ -2356,7 +2372,7 @@ var genShake = (suffix, blockLen, outputLen) => wrapXOFConstructorWithOpts((opts
 var shake128 = /* @__PURE__ */ genShake(31, 168, 128 / 8);
 var shake256 = /* @__PURE__ */ genShake(31, 136, 256 / 8);
 
-// node_modules/@noble/hashes/esm/sha1.js
+// node_modules/@noble/hashes/esm/legacy.js
 var SHA1_IV = /* @__PURE__ */ new Uint32Array([
   1732584193,
   4023233417,
@@ -2429,6 +2445,7 @@ var SHA1 = class extends HashMD {
   }
 };
 var sha1 = /* @__PURE__ */ wrapConstructor(() => new SHA1());
+var p32 = 2 ** 32;
 
 // node_modules/@noble/hashes/esm/sha3-addons.js
 var sha3_addons_exports = {};
@@ -2581,10 +2598,10 @@ var tuplehash256xof = /* @__PURE__ */ (() => genTuple(136, 256 / 8, true))();
 var ParallelHash = class _ParallelHash extends Keccak {
   constructor(blockLen, outputLen, leafCons, enableXOF, opts = {}) {
     super(blockLen, 31, outputLen, enableXOF);
-    this.leafCons = leafCons;
     this.chunkPos = 0;
     this.chunksDone = 0;
     cshakePers(this, { NISTfn: "ParallelHash", personalization: opts.personalization });
+    this.leafCons = leafCons;
     let { blockLen: B3 } = opts;
     B3 || (B3 = 8);
     anumber(B3);
@@ -2668,10 +2685,10 @@ var EMPTY = new Uint8Array([]);
 var KangarooTwelve = class _KangarooTwelve extends Keccak {
   constructor(blockLen, leafLen, outputLen, rounds, opts) {
     super(blockLen, 7, outputLen, true, rounds);
-    this.leafLen = leafLen;
     this.chunkLen = 8192;
     this.chunkPos = 0;
     this.chunksDone = 0;
+    this.leafLen = leafLen;
     const { personalization } = opts;
     this.personalization = toBytesOptional(personalization);
   }
@@ -3152,8 +3169,6 @@ var SIGMA = /* @__PURE__ */ new Uint8Array([
 var BLAKE = class extends Hash {
   constructor(blockLen, outputLen, opts = {}, keyLen, saltLen, persLen) {
     super();
-    this.blockLen = blockLen;
-    this.outputLen = outputLen;
     this.length = 0;
     this.pos = 0;
     this.finished = false;
@@ -3169,6 +3184,8 @@ var BLAKE = class extends Hash {
       throw new Error("salt must be undefined or " + saltLen);
     if (opts.personalization !== void 0 && opts.personalization.length !== persLen)
       throw new Error("personalization must be undefined or " + persLen);
+    this.blockLen = blockLen;
+    this.outputLen = outputLen;
     this.buffer = new Uint8Array(blockLen);
     this.buffer32 = u32(this.buffer);
   }
@@ -3269,25 +3286,25 @@ function G2s(a5, b4, c6, d4, x3) {
   b4 = rotr(b4 ^ c6, 7);
   return { a: a5, b: b4, c: c6, d: d4 };
 }
-function compress(s4, offset3, msg, rounds, v0, v1, v22, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15) {
+function compress(s5, offset3, msg, rounds, v0, v1, v22, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15) {
   let j3 = 0;
   for (let i8 = 0; i8 < rounds; i8++) {
-    ({ a: v0, b: v4, c: v8, d: v12 } = G1s(v0, v4, v8, v12, msg[offset3 + s4[j3++]]));
-    ({ a: v0, b: v4, c: v8, d: v12 } = G2s(v0, v4, v8, v12, msg[offset3 + s4[j3++]]));
-    ({ a: v1, b: v5, c: v9, d: v13 } = G1s(v1, v5, v9, v13, msg[offset3 + s4[j3++]]));
-    ({ a: v1, b: v5, c: v9, d: v13 } = G2s(v1, v5, v9, v13, msg[offset3 + s4[j3++]]));
-    ({ a: v22, b: v6, c: v10, d: v14 } = G1s(v22, v6, v10, v14, msg[offset3 + s4[j3++]]));
-    ({ a: v22, b: v6, c: v10, d: v14 } = G2s(v22, v6, v10, v14, msg[offset3 + s4[j3++]]));
-    ({ a: v3, b: v7, c: v11, d: v15 } = G1s(v3, v7, v11, v15, msg[offset3 + s4[j3++]]));
-    ({ a: v3, b: v7, c: v11, d: v15 } = G2s(v3, v7, v11, v15, msg[offset3 + s4[j3++]]));
-    ({ a: v0, b: v5, c: v10, d: v15 } = G1s(v0, v5, v10, v15, msg[offset3 + s4[j3++]]));
-    ({ a: v0, b: v5, c: v10, d: v15 } = G2s(v0, v5, v10, v15, msg[offset3 + s4[j3++]]));
-    ({ a: v1, b: v6, c: v11, d: v12 } = G1s(v1, v6, v11, v12, msg[offset3 + s4[j3++]]));
-    ({ a: v1, b: v6, c: v11, d: v12 } = G2s(v1, v6, v11, v12, msg[offset3 + s4[j3++]]));
-    ({ a: v22, b: v7, c: v8, d: v13 } = G1s(v22, v7, v8, v13, msg[offset3 + s4[j3++]]));
-    ({ a: v22, b: v7, c: v8, d: v13 } = G2s(v22, v7, v8, v13, msg[offset3 + s4[j3++]]));
-    ({ a: v3, b: v4, c: v9, d: v14 } = G1s(v3, v4, v9, v14, msg[offset3 + s4[j3++]]));
-    ({ a: v3, b: v4, c: v9, d: v14 } = G2s(v3, v4, v9, v14, msg[offset3 + s4[j3++]]));
+    ({ a: v0, b: v4, c: v8, d: v12 } = G1s(v0, v4, v8, v12, msg[offset3 + s5[j3++]]));
+    ({ a: v0, b: v4, c: v8, d: v12 } = G2s(v0, v4, v8, v12, msg[offset3 + s5[j3++]]));
+    ({ a: v1, b: v5, c: v9, d: v13 } = G1s(v1, v5, v9, v13, msg[offset3 + s5[j3++]]));
+    ({ a: v1, b: v5, c: v9, d: v13 } = G2s(v1, v5, v9, v13, msg[offset3 + s5[j3++]]));
+    ({ a: v22, b: v6, c: v10, d: v14 } = G1s(v22, v6, v10, v14, msg[offset3 + s5[j3++]]));
+    ({ a: v22, b: v6, c: v10, d: v14 } = G2s(v22, v6, v10, v14, msg[offset3 + s5[j3++]]));
+    ({ a: v3, b: v7, c: v11, d: v15 } = G1s(v3, v7, v11, v15, msg[offset3 + s5[j3++]]));
+    ({ a: v3, b: v7, c: v11, d: v15 } = G2s(v3, v7, v11, v15, msg[offset3 + s5[j3++]]));
+    ({ a: v0, b: v5, c: v10, d: v15 } = G1s(v0, v5, v10, v15, msg[offset3 + s5[j3++]]));
+    ({ a: v0, b: v5, c: v10, d: v15 } = G2s(v0, v5, v10, v15, msg[offset3 + s5[j3++]]));
+    ({ a: v1, b: v6, c: v11, d: v12 } = G1s(v1, v6, v11, v12, msg[offset3 + s5[j3++]]));
+    ({ a: v1, b: v6, c: v11, d: v12 } = G2s(v1, v6, v11, v12, msg[offset3 + s5[j3++]]));
+    ({ a: v22, b: v7, c: v8, d: v13 } = G1s(v22, v7, v8, v13, msg[offset3 + s5[j3++]]));
+    ({ a: v22, b: v7, c: v8, d: v13 } = G2s(v22, v7, v8, v13, msg[offset3 + s5[j3++]]));
+    ({ a: v3, b: v4, c: v9, d: v14 } = G1s(v3, v4, v9, v14, msg[offset3 + s5[j3++]]));
+    ({ a: v3, b: v4, c: v9, d: v14 } = G2s(v3, v4, v9, v14, msg[offset3 + s5[j3++]]));
   }
   return { v0, v1, v2: v22, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15 };
 }
@@ -3356,16 +3373,15 @@ var BLAKE2s = class extends BLAKE {
 var blake2s = /* @__PURE__ */ wrapConstructorWithOpts((opts) => new BLAKE2s(opts));
 
 // node_modules/@noble/hashes/esm/blake3.js
-var B3_Flags;
-(function(B3_Flags2) {
-  B3_Flags2[B3_Flags2["CHUNK_START"] = 1] = "CHUNK_START";
-  B3_Flags2[B3_Flags2["CHUNK_END"] = 2] = "CHUNK_END";
-  B3_Flags2[B3_Flags2["PARENT"] = 4] = "PARENT";
-  B3_Flags2[B3_Flags2["ROOT"] = 8] = "ROOT";
-  B3_Flags2[B3_Flags2["KEYED_HASH"] = 16] = "KEYED_HASH";
-  B3_Flags2[B3_Flags2["DERIVE_KEY_CONTEXT"] = 32] = "DERIVE_KEY_CONTEXT";
-  B3_Flags2[B3_Flags2["DERIVE_KEY_MATERIAL"] = 64] = "DERIVE_KEY_MATERIAL";
-})(B3_Flags || (B3_Flags = {}));
+var B3_Flags = {
+  CHUNK_START: 1 << 0,
+  CHUNK_END: 1 << 1,
+  PARENT: 1 << 2,
+  ROOT: 1 << 3,
+  KEYED_HASH: 1 << 4,
+  DERIVE_KEY_CONTEXT: 1 << 5,
+  DERIVE_KEY_MATERIAL: 1 << 6
+};
 var SIGMA2 = /* @__PURE__ */ (() => {
   const Id2 = Array.from({ length: 16 }, (_3, i8) => i8);
   const permute = (arr) => [2, 6, 3, 10, 7, 0, 4, 13, 1, 11, 12, 5, 9, 14, 15, 8].map((i8) => arr[i8]);
@@ -3376,7 +3392,8 @@ var SIGMA2 = /* @__PURE__ */ (() => {
 })();
 var BLAKE3 = class _BLAKE3 extends BLAKE {
   constructor(opts = {}, flags = 0) {
-    super(64, opts.dkLen === void 0 ? 32 : opts.dkLen, {}, Number.MAX_SAFE_INTEGER, 0, 0);
+    const olen = opts.dkLen === void 0 ? 32 : opts.dkLen;
+    super(64, olen, {}, Number.MAX_SAFE_INTEGER, 0, 0);
     this.flags = 0 | 0;
     this.chunkPos = 0;
     this.chunksDone = 0;
@@ -3385,7 +3402,6 @@ var BLAKE3 = class _BLAKE3 extends BLAKE {
     this.bufferOut32 = new Uint32Array(16);
     this.chunkOut = 0;
     this.enableXOF = true;
-    this.outputLen = opts.dkLen === void 0 ? 32 : opts.dkLen;
     anumber(this.outputLen);
     if (opts.key !== void 0 && opts.context !== void 0)
       throw new Error("Blake3: only key or context can be specified at same time");
@@ -3417,17 +3433,17 @@ var BLAKE3 = class _BLAKE3 extends BLAKE {
   set() {
   }
   b2Compress(counter, flags, buf, bufPos = 0) {
-    const { state: s4, pos } = this;
+    const { state: s5, pos } = this;
     const { h: h4, l: l6 } = fromBig(BigInt(counter), true);
-    const { v0, v1, v2: v22, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15 } = compress(SIGMA2, bufPos, buf, 7, s4[0], s4[1], s4[2], s4[3], s4[4], s4[5], s4[6], s4[7], B2S_IV[0], B2S_IV[1], B2S_IV[2], B2S_IV[3], h4, l6, pos, flags);
-    s4[0] = v0 ^ v8;
-    s4[1] = v1 ^ v9;
-    s4[2] = v22 ^ v10;
-    s4[3] = v3 ^ v11;
-    s4[4] = v4 ^ v12;
-    s4[5] = v5 ^ v13;
-    s4[6] = v6 ^ v14;
-    s4[7] = v7 ^ v15;
+    const { v0, v1, v2: v22, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15 } = compress(SIGMA2, bufPos, buf, 7, s5[0], s5[1], s5[2], s5[3], s5[4], s5[5], s5[6], s5[7], B2S_IV[0], B2S_IV[1], B2S_IV[2], B2S_IV[3], h4, l6, pos, flags);
+    s5[0] = v0 ^ v8;
+    s5[1] = v1 ^ v9;
+    s5[2] = v22 ^ v10;
+    s5[3] = v3 ^ v11;
+    s5[4] = v4 ^ v12;
+    s5[5] = v5 ^ v13;
+    s5[6] = v6 ^ v14;
+    s5[7] = v7 ^ v15;
   }
   compress(buf, bufPos = 0, isLast = false) {
     let flags = this.flags;
@@ -3484,11 +3500,11 @@ var BLAKE3 = class _BLAKE3 extends BLAKE {
   }
   // Same as b2Compress, but doesn't modify state and returns 16 u32 array (instead of 8)
   b2CompressOut() {
-    const { state: s4, pos, flags, buffer32, bufferOut32: out32 } = this;
+    const { state: s5, pos, flags, buffer32, bufferOut32: out32 } = this;
     const { h: h4, l: l6 } = fromBig(BigInt(this.chunkOut++));
     if (!isLE)
       byteSwap32(buffer32);
-    const { v0, v1, v2: v22, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15 } = compress(SIGMA2, 0, buffer32, 7, s4[0], s4[1], s4[2], s4[3], s4[4], s4[5], s4[6], s4[7], B2S_IV[0], B2S_IV[1], B2S_IV[2], B2S_IV[3], l6, h4, pos, flags);
+    const { v0, v1, v2: v22, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15 } = compress(SIGMA2, 0, buffer32, 7, s5[0], s5[1], s5[2], s5[3], s5[4], s5[5], s5[6], s5[7], B2S_IV[0], B2S_IV[1], B2S_IV[2], B2S_IV[3], l6, h4, pos, flags);
     out32[0] = v0 ^ v8;
     out32[1] = v1 ^ v9;
     out32[2] = v22 ^ v10;
@@ -3497,14 +3513,14 @@ var BLAKE3 = class _BLAKE3 extends BLAKE {
     out32[5] = v5 ^ v13;
     out32[6] = v6 ^ v14;
     out32[7] = v7 ^ v15;
-    out32[8] = s4[0] ^ v8;
-    out32[9] = s4[1] ^ v9;
-    out32[10] = s4[2] ^ v10;
-    out32[11] = s4[3] ^ v11;
-    out32[12] = s4[4] ^ v12;
-    out32[13] = s4[5] ^ v13;
-    out32[14] = s4[6] ^ v14;
-    out32[15] = s4[7] ^ v15;
+    out32[8] = s5[0] ^ v8;
+    out32[9] = s5[1] ^ v9;
+    out32[10] = s5[2] ^ v10;
+    out32[11] = s5[3] ^ v11;
+    out32[12] = s5[4] ^ v12;
+    out32[13] = s5[5] ^ v13;
+    out32[14] = s5[6] ^ v14;
+    out32[15] = s5[7] ^ v15;
     if (!isLE) {
       byteSwap32(buffer32);
       byteSwap32(out32);
@@ -3705,24 +3721,24 @@ var BLAKE2b = class extends BLAKE {
       BBUF[29] = ~BBUF[29];
     }
     let j3 = 0;
-    const s4 = SIGMA;
+    const s5 = SIGMA;
     for (let i8 = 0; i8 < 12; i8++) {
-      G1b(0, 4, 8, 12, msg, offset3 + 2 * s4[j3++]);
-      G2b(0, 4, 8, 12, msg, offset3 + 2 * s4[j3++]);
-      G1b(1, 5, 9, 13, msg, offset3 + 2 * s4[j3++]);
-      G2b(1, 5, 9, 13, msg, offset3 + 2 * s4[j3++]);
-      G1b(2, 6, 10, 14, msg, offset3 + 2 * s4[j3++]);
-      G2b(2, 6, 10, 14, msg, offset3 + 2 * s4[j3++]);
-      G1b(3, 7, 11, 15, msg, offset3 + 2 * s4[j3++]);
-      G2b(3, 7, 11, 15, msg, offset3 + 2 * s4[j3++]);
-      G1b(0, 5, 10, 15, msg, offset3 + 2 * s4[j3++]);
-      G2b(0, 5, 10, 15, msg, offset3 + 2 * s4[j3++]);
-      G1b(1, 6, 11, 12, msg, offset3 + 2 * s4[j3++]);
-      G2b(1, 6, 11, 12, msg, offset3 + 2 * s4[j3++]);
-      G1b(2, 7, 8, 13, msg, offset3 + 2 * s4[j3++]);
-      G2b(2, 7, 8, 13, msg, offset3 + 2 * s4[j3++]);
-      G1b(3, 4, 9, 14, msg, offset3 + 2 * s4[j3++]);
-      G2b(3, 4, 9, 14, msg, offset3 + 2 * s4[j3++]);
+      G1b(0, 4, 8, 12, msg, offset3 + 2 * s5[j3++]);
+      G2b(0, 4, 8, 12, msg, offset3 + 2 * s5[j3++]);
+      G1b(1, 5, 9, 13, msg, offset3 + 2 * s5[j3++]);
+      G2b(1, 5, 9, 13, msg, offset3 + 2 * s5[j3++]);
+      G1b(2, 6, 10, 14, msg, offset3 + 2 * s5[j3++]);
+      G2b(2, 6, 10, 14, msg, offset3 + 2 * s5[j3++]);
+      G1b(3, 7, 11, 15, msg, offset3 + 2 * s5[j3++]);
+      G2b(3, 7, 11, 15, msg, offset3 + 2 * s5[j3++]);
+      G1b(0, 5, 10, 15, msg, offset3 + 2 * s5[j3++]);
+      G2b(0, 5, 10, 15, msg, offset3 + 2 * s5[j3++]);
+      G1b(1, 6, 11, 12, msg, offset3 + 2 * s5[j3++]);
+      G2b(1, 6, 11, 12, msg, offset3 + 2 * s5[j3++]);
+      G1b(2, 7, 8, 13, msg, offset3 + 2 * s5[j3++]);
+      G2b(2, 7, 8, 13, msg, offset3 + 2 * s5[j3++]);
+      G1b(3, 4, 9, 14, msg, offset3 + 2 * s5[j3++]);
+      G2b(3, 4, 9, 14, msg, offset3 + 2 * s5[j3++]);
     }
     this.v0l ^= BBUF[0] ^ BBUF[16];
     this.v0h ^= BBUF[1] ^ BBUF[17];
@@ -3986,12 +4002,12 @@ function XorAndSalsa(prev, pi, input, ii, out, oi) {
   out[oi++] = y14 + x14 | 0;
   out[oi++] = y15 + x15 | 0;
 }
-function BlockMix(input, ii, out, oi, r9) {
+function BlockMix(input, ii, out, oi, r8) {
   let head = oi + 0;
-  let tail = oi + 16 * r9;
+  let tail = oi + 16 * r8;
   for (let i8 = 0; i8 < 16; i8++)
-    out[tail + i8] = input[ii + (2 * r9 - 1) * 16 + i8];
-  for (let i8 = 0; i8 < r9; i8++, head += 16, ii += 16) {
+    out[tail + i8] = input[ii + (2 * r8 - 1) * 16 + i8];
+  for (let i8 = 0; i8 < r8; i8++, head += 16, ii += 16) {
     XorAndSalsa(out, tail, input, ii, out, head);
     if (i8 > 0)
       tail += 16;
@@ -4004,16 +4020,16 @@ function scryptInit(password, salt, _opts) {
     asyncTick: 10,
     maxmem: 1024 ** 3 + 1024
   }, _opts);
-  const { N: N3, r: r9, p: p4, dkLen, asyncTick, maxmem, onProgress } = opts;
+  const { N: N3, r: r8, p: p4, dkLen, asyncTick, maxmem, onProgress } = opts;
   anumber(N3);
-  anumber(r9);
+  anumber(r8);
   anumber(p4);
   anumber(dkLen);
   anumber(asyncTick);
   anumber(maxmem);
   if (onProgress !== void 0 && typeof onProgress !== "function")
     throw new Error("progressCb should be function");
-  const blockSize = 128 * r9;
+  const blockSize = 128 * r8;
   const blockSize32 = blockSize / 4;
   if (N3 <= 1 || (N3 & N3 - 1) !== 0 || N3 > 2 ** 32) {
     throw new Error("Scrypt: N must be larger than 1, a power of 2, and less than 2^32");
@@ -4044,7 +4060,7 @@ function scryptInit(password, salt, _opts) {
         onProgress(blockMixCnt / totalBlockMix);
     };
   }
-  return { N: N3, r: r9, p: p4, dkLen, blockSize32, V: V3, B32, B: B3, tmp, blockMixCb, asyncTick };
+  return { N: N3, r: r8, p: p4, dkLen, blockSize32, V: V3, B32, B: B3, tmp, blockMixCb, asyncTick };
 }
 function scryptOutput(password, dkLen, B3, V3, tmp) {
   const res = pbkdf2(sha256, password, B3, { c: 1, dkLen });
@@ -4054,7 +4070,7 @@ function scryptOutput(password, dkLen, B3, V3, tmp) {
   return res;
 }
 function scrypt(password, salt, opts) {
-  const { N: N3, r: r9, p: p4, dkLen, blockSize32, V: V3, B32, B: B3, tmp, blockMixCb } = scryptInit(password, salt, opts);
+  const { N: N3, r: r8, p: p4, dkLen, blockSize32, V: V3, B32, B: B3, tmp, blockMixCb } = scryptInit(password, salt, opts);
   if (!isLE)
     byteSwap32(B32);
   for (let pi = 0; pi < p4; pi++) {
@@ -4062,16 +4078,16 @@ function scrypt(password, salt, opts) {
     for (let i8 = 0; i8 < blockSize32; i8++)
       V3[i8] = B32[Pi2 + i8];
     for (let i8 = 0, pos = 0; i8 < N3 - 1; i8++) {
-      BlockMix(V3, pos, V3, pos += blockSize32, r9);
+      BlockMix(V3, pos, V3, pos += blockSize32, r8);
       blockMixCb();
     }
-    BlockMix(V3, (N3 - 1) * blockSize32, B32, Pi2, r9);
+    BlockMix(V3, (N3 - 1) * blockSize32, B32, Pi2, r8);
     blockMixCb();
     for (let i8 = 0; i8 < N3; i8++) {
       const j3 = B32[Pi2 + blockSize32 - 16] % N3;
       for (let k3 = 0; k3 < blockSize32; k3++)
         tmp[k3] = B32[Pi2 + k3] ^ V3[j3 * blockSize32 + k3];
-      BlockMix(tmp, 0, B32, Pi2, r9);
+      BlockMix(tmp, 0, B32, Pi2, r8);
       blockMixCb();
     }
   }
@@ -4080,7 +4096,7 @@ function scrypt(password, salt, opts) {
   return scryptOutput(password, dkLen, B3, V3, tmp);
 }
 async function scryptAsync(password, salt, opts) {
-  const { N: N3, r: r9, p: p4, dkLen, blockSize32, V: V3, B32, B: B3, tmp, blockMixCb, asyncTick } = scryptInit(password, salt, opts);
+  const { N: N3, r: r8, p: p4, dkLen, blockSize32, V: V3, B32, B: B3, tmp, blockMixCb, asyncTick } = scryptInit(password, salt, opts);
   if (!isLE)
     byteSwap32(B32);
   for (let pi = 0; pi < p4; pi++) {
@@ -4089,16 +4105,16 @@ async function scryptAsync(password, salt, opts) {
       V3[i8] = B32[Pi2 + i8];
     let pos = 0;
     await asyncLoop(N3 - 1, asyncTick, () => {
-      BlockMix(V3, pos, V3, pos += blockSize32, r9);
+      BlockMix(V3, pos, V3, pos += blockSize32, r8);
       blockMixCb();
     });
-    BlockMix(V3, (N3 - 1) * blockSize32, B32, Pi2, r9);
+    BlockMix(V3, (N3 - 1) * blockSize32, B32, Pi2, r8);
     blockMixCb();
     await asyncLoop(N3, asyncTick, () => {
       const j3 = B32[Pi2 + blockSize32 - 16] % N3;
       for (let k3 = 0; k3 < blockSize32; k3++)
         tmp[k3] = B32[Pi2 + k3] ^ V3[j3 * blockSize32 + k3];
-      BlockMix(tmp, 0, B32, Pi2, r9);
+      BlockMix(tmp, 0, B32, Pi2, r8);
       blockMixCb();
     });
   }
@@ -4781,7 +4797,7 @@ var component_styles_default = i`
 
 // node_modules/@shoelace-style/shoelace/dist/chunks/chunk.4TUIT776.js
 var _hasRecordedInitialProperties;
-var ShoelaceElement = class extends r4 {
+var ShoelaceElement = class extends i4 {
   constructor() {
     super();
     __privateAdd3(this, _hasRecordedInitialProperties, false);
@@ -4885,51 +4901,51 @@ var e8 = e7(class extends i5 {
     if (super(t7), t7.type !== t5.ATTRIBUTE || "class" !== t7.name || t7.strings?.length > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
   }
   render(t7) {
-    return " " + Object.keys(t7).filter((s4) => t7[s4]).join(" ") + " ";
+    return " " + Object.keys(t7).filter((s5) => t7[s5]).join(" ") + " ";
   }
-  update(s4, [i8]) {
+  update(s5, [i8]) {
     if (void 0 === this.st) {
-      this.st = /* @__PURE__ */ new Set(), void 0 !== s4.strings && (this.nt = new Set(s4.strings.join(" ").split(/\s/).filter((t7) => "" !== t7)));
+      this.st = /* @__PURE__ */ new Set(), void 0 !== s5.strings && (this.nt = new Set(s5.strings.join(" ").split(/\s/).filter((t7) => "" !== t7)));
       for (const t7 in i8) i8[t7] && !this.nt?.has(t7) && this.st.add(t7);
       return this.render(i8);
     }
-    const r9 = s4.element.classList;
-    for (const t7 of this.st) t7 in i8 || (r9.remove(t7), this.st.delete(t7));
+    const r8 = s5.element.classList;
+    for (const t7 of this.st) t7 in i8 || (r8.remove(t7), this.st.delete(t7));
     for (const t7 in i8) {
-      const s5 = !!i8[t7];
-      s5 === this.st.has(t7) || this.nt?.has(t7) || (s5 ? (r9.add(t7), this.st.add(t7)) : (r9.remove(t7), this.st.delete(t7)));
+      const s6 = !!i8[t7];
+      s6 === this.st.has(t7) || this.nt?.has(t7) || (s6 ? (r8.add(t7), this.st.add(t7)) : (r8.remove(t7), this.st.delete(t7)));
     }
     return T;
   }
 });
 
 // node_modules/lit-html/directives/if-defined.js
-var o6 = (o9) => o9 ?? E;
+var o7 = (o10) => o10 ?? E;
 
 // node_modules/lit-html/directive-helpers.js
 var { I: t6 } = Z;
-var e9 = (o9, t7) => void 0 === t7 ? void 0 !== o9?._$litType$ : o9?._$litType$ === t7;
-var f5 = (o9) => void 0 === o9.strings;
+var e9 = (o10, t7) => void 0 === t7 ? void 0 !== o10?._$litType$ : o10?._$litType$ === t7;
+var f5 = (o10) => void 0 === o10.strings;
 var u4 = {};
-var m3 = (o9, t7 = u4) => o9._$AH = t7;
+var m3 = (o10, t7 = u4) => o10._$AH = t7;
 
 // node_modules/lit-html/directives/live.js
 var l4 = e7(class extends i5 {
-  constructor(r9) {
-    if (super(r9), r9.type !== t5.PROPERTY && r9.type !== t5.ATTRIBUTE && r9.type !== t5.BOOLEAN_ATTRIBUTE) throw Error("The `live` directive is not allowed on child or event bindings");
-    if (!f5(r9)) throw Error("`live` bindings can only contain a single expression");
+  constructor(r8) {
+    if (super(r8), r8.type !== t5.PROPERTY && r8.type !== t5.ATTRIBUTE && r8.type !== t5.BOOLEAN_ATTRIBUTE) throw Error("The `live` directive is not allowed on child or event bindings");
+    if (!f5(r8)) throw Error("`live` bindings can only contain a single expression");
   }
-  render(r9) {
-    return r9;
+  render(r8) {
+    return r8;
   }
   update(i8, [t7]) {
     if (t7 === T || t7 === E) return t7;
-    const o9 = i8.element, l6 = i8.name;
+    const o10 = i8.element, l6 = i8.name;
     if (i8.type === t5.PROPERTY) {
-      if (t7 === o9[l6]) return T;
+      if (t7 === o10[l6]) return T;
     } else if (i8.type === t5.BOOLEAN_ATTRIBUTE) {
-      if (!!t7 === o9.hasAttribute(l6)) return T;
-    } else if (i8.type === t5.ATTRIBUTE && o9.getAttribute(l6) === t7 + "") return T;
+      if (!!t7 === o10.hasAttribute(l6)) return T;
+    } else if (i8.type === t5.ATTRIBUTE && o10.getAttribute(l6) === t7 + "") return T;
     return m3(i8), t7;
   }
 });
@@ -5131,21 +5147,21 @@ var SlTextarea = class extends ShoelaceElement {
               id="input"
               class="textarea__control"
               title=${this.title}
-              name=${o6(this.name)}
+              name=${o7(this.name)}
               .value=${l4(this.value)}
               ?disabled=${this.disabled}
               ?readonly=${this.readonly}
               ?required=${this.required}
-              placeholder=${o6(this.placeholder)}
-              rows=${o6(this.rows)}
-              minlength=${o6(this.minlength)}
-              maxlength=${o6(this.maxlength)}
-              autocapitalize=${o6(this.autocapitalize)}
-              autocorrect=${o6(this.autocorrect)}
+              placeholder=${o7(this.placeholder)}
+              rows=${o7(this.rows)}
+              minlength=${o7(this.minlength)}
+              maxlength=${o7(this.maxlength)}
+              autocapitalize=${o7(this.autocapitalize)}
+              autocorrect=${o7(this.autocorrect)}
               ?autofocus=${this.autofocus}
-              spellcheck=${o6(this.spellcheck)}
-              enterkeyhint=${o6(this.enterkeyhint)}
-              inputmode=${o6(this.inputmode)}
+              spellcheck=${o7(this.spellcheck)}
+              enterkeyhint=${o7(this.enterkeyhint)}
+              inputmode=${o7(this.inputmode)}
               aria-describedby="help-text"
               @change=${this.handleChange}
               @input=${this.handleInput}
@@ -5178,7 +5194,7 @@ __decorateClass([
   e6(".textarea__size-adjuster")
 ], SlTextarea.prototype, "sizeAdjuster", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlTextarea.prototype, "hasFocus", 2);
 __decorateClass([
   n5()
@@ -6101,8 +6117,8 @@ function getBasePath(subpath = "") {
     if (configScript) {
       setBasePath(configScript.getAttribute("data-shoelace"));
     } else {
-      const fallbackScript = scripts.find((s4) => {
-        return /shoelace(\.min)?\.js($|\?)/.test(s4.src) || /shoelace-autoloader(\.min)?\.js($|\?)/.test(s4.src);
+      const fallbackScript = scripts.find((s5) => {
+        return /shoelace(\.min)?\.js($|\?)/.test(s5.src) || /shoelace-autoloader(\.min)?\.js($|\?)/.test(s5.src);
       });
       let path = "";
       if (fallbackScript) {
@@ -6407,7 +6423,7 @@ var SlIcon = class extends ShoelaceElement {
 };
 SlIcon.styles = [component_styles_default, icon_styles_default];
 __decorateClass([
-  r7()
+  r6()
 ], SlIcon.prototype, "svg", 2);
 __decorateClass([
   n5({ reflect: true })
@@ -6430,29 +6446,29 @@ __decorateClass([
 
 // node_modules/lit-html/static.js
 var a4 = Symbol.for("");
-var o7 = (t7) => {
+var o8 = (t7) => {
   if (t7?.r === a4) return t7?._$litStatic$;
 };
-var i6 = (t7, ...r9) => ({ _$litStatic$: r9.reduce((r10, e12, a5) => r10 + ((t8) => {
+var i6 = (t7, ...r8) => ({ _$litStatic$: r8.reduce((r9, e12, a5) => r9 + ((t8) => {
   if (void 0 !== t8._$litStatic$) return t8._$litStatic$;
   throw Error(`Value passed to 'literal' function must be a 'literal' result: ${t8}. Use 'unsafeStatic' to pass non-literal values, but
             take care to ensure page security.`);
 })(e12) + t7[a5 + 1], t7[0]), r: a4 });
 var l5 = /* @__PURE__ */ new Map();
-var n6 = (t7) => (r9, ...e12) => {
+var n6 = (t7) => (r8, ...e12) => {
   const a5 = e12.length;
-  let s4, i8;
+  let s5, i8;
   const n7 = [], u6 = [];
   let c6, $4 = 0, f6 = false;
   for (; $4 < a5; ) {
-    for (c6 = r9[$4]; $4 < a5 && void 0 !== (i8 = e12[$4], s4 = o7(i8)); ) c6 += s4 + r9[++$4], f6 = true;
+    for (c6 = r8[$4]; $4 < a5 && void 0 !== (i8 = e12[$4], s5 = o8(i8)); ) c6 += s5 + r8[++$4], f6 = true;
     $4 !== a5 && u6.push(i8), n7.push(c6), $4++;
   }
-  if ($4 === a5 && n7.push(r9[a5]), f6) {
+  if ($4 === a5 && n7.push(r8[a5]), f6) {
     const t8 = n7.join("$$lit$$");
-    void 0 === (r9 = l5.get(t8)) && (n7.raw = n7, l5.set(t8, r9 = n7)), e12 = u6;
+    void 0 === (r8 = l5.get(t8)) && (n7.raw = n7, l5.set(t8, r8 = n7)), e12 = u6;
   }
-  return t7(r9, ...e12);
+  return t7(r8, ...e12);
 };
 var u5 = n6(x);
 var c5 = n6(b2);
@@ -6602,16 +6618,16 @@ var SlButton = class extends ShoelaceElement {
       "button--has-prefix": this.hasSlotController.test("prefix"),
       "button--has-suffix": this.hasSlotController.test("suffix")
     })}
-        ?disabled=${o6(isLink ? void 0 : this.disabled)}
-        type=${o6(isLink ? void 0 : this.type)}
+        ?disabled=${o7(isLink ? void 0 : this.disabled)}
+        type=${o7(isLink ? void 0 : this.type)}
         title=${this.title}
-        name=${o6(isLink ? void 0 : this.name)}
-        value=${o6(isLink ? void 0 : this.value)}
-        href=${o6(isLink && !this.disabled ? this.href : void 0)}
-        target=${o6(isLink ? this.target : void 0)}
-        download=${o6(isLink ? this.download : void 0)}
-        rel=${o6(isLink ? this.rel : void 0)}
-        role=${o6(isLink ? void 0 : "button")}
+        name=${o7(isLink ? void 0 : this.name)}
+        value=${o7(isLink ? void 0 : this.value)}
+        href=${o7(isLink && !this.disabled ? this.href : void 0)}
+        target=${o7(isLink ? this.target : void 0)}
+        download=${o7(isLink ? this.download : void 0)}
+        rel=${o7(isLink ? this.rel : void 0)}
+        role=${o7(isLink ? void 0 : "button")}
         aria-disabled=${this.disabled ? "true" : "false"}
         tabindex=${this.disabled ? "-1" : "0"}
         @blur=${this.handleBlur}
@@ -6637,10 +6653,10 @@ __decorateClass([
   e6(".button")
 ], SlButton.prototype, "button", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlButton.prototype, "hasFocus", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlButton.prototype, "invalid", 2);
 __decorateClass([
   n5()
@@ -6923,13 +6939,13 @@ var SlIconButton = class extends ShoelaceElement {
       "icon-button--disabled": !isLink && this.disabled,
       "icon-button--focused": this.hasFocus
     })}
-        ?disabled=${o6(isLink ? void 0 : this.disabled)}
-        type=${o6(isLink ? void 0 : "button")}
-        href=${o6(isLink ? this.href : void 0)}
-        target=${o6(isLink ? this.target : void 0)}
-        download=${o6(isLink ? this.download : void 0)}
-        rel=${o6(isLink && this.target ? "noreferrer noopener" : void 0)}
-        role=${o6(isLink ? void 0 : "button")}
+        ?disabled=${o7(isLink ? void 0 : this.disabled)}
+        type=${o7(isLink ? void 0 : "button")}
+        href=${o7(isLink ? this.href : void 0)}
+        target=${o7(isLink ? this.target : void 0)}
+        download=${o7(isLink ? this.download : void 0)}
+        rel=${o7(isLink && this.target ? "noreferrer noopener" : void 0)}
+        role=${o7(isLink ? void 0 : "button")}
         aria-disabled=${this.disabled ? "true" : "false"}
         aria-label="${this.label}"
         tabindex=${this.disabled ? "-1" : "0"}
@@ -6939,9 +6955,9 @@ var SlIconButton = class extends ShoelaceElement {
       >
         <sl-icon
           class="icon-button__icon"
-          name=${o6(this.name)}
-          library=${o6(this.library)}
-          src=${o6(this.src)}
+          name=${o7(this.name)}
+          library=${o7(this.library)}
+          src=${o7(this.src)}
           aria-hidden="true"
         ></sl-icon>
       </${tag}>
@@ -6954,7 +6970,7 @@ __decorateClass([
   e6(".icon-button")
 ], SlIconButton.prototype, "button", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlIconButton.prototype, "hasFocus", 2);
 __decorateClass([
   n5()
@@ -8939,12 +8955,12 @@ var computePosition2 = (reference, floating, options) => {
 function e10(t7) {
   return i7(t7);
 }
-function r8(t7) {
+function r7(t7) {
   return t7.assignedSlot ? t7.assignedSlot : t7.parentNode instanceof ShadowRoot ? t7.parentNode.host : t7.parentNode;
 }
 function i7(e12) {
-  for (let t7 = e12; t7; t7 = r8(t7)) if (t7 instanceof Element && "none" === getComputedStyle(t7).display) return null;
-  for (let n7 = r8(e12); n7; n7 = r8(n7)) {
+  for (let t7 = e12; t7; t7 = r7(t7)) if (t7 instanceof Element && "none" === getComputedStyle(t7).display) return null;
+  for (let n7 = r7(e12); n7; n7 = r7(n7)) {
     if (!(n7 instanceof Element)) continue;
     const e13 = getComputedStyle(n7);
     if ("contents" !== e13.display) {
@@ -9425,18 +9441,18 @@ var e11 = class extends i5 {
   constructor(i8) {
     if (super(i8), this.it = E, i8.type !== t5.CHILD) throw Error(this.constructor.directiveName + "() can only be used in child bindings");
   }
-  render(r9) {
-    if (r9 === E || null == r9) return this._t = void 0, this.it = r9;
-    if (r9 === T) return r9;
-    if ("string" != typeof r9) throw Error(this.constructor.directiveName + "() called with a non-string value");
-    if (r9 === this.it) return this._t;
-    this.it = r9;
-    const s4 = [r9];
-    return s4.raw = s4, this._t = { _$litType$: this.constructor.resultType, strings: s4, values: [] };
+  render(r8) {
+    if (r8 === E || null == r8) return this._t = void 0, this.it = r8;
+    if (r8 === T) return r8;
+    if ("string" != typeof r8) throw Error(this.constructor.directiveName + "() called with a non-string value");
+    if (r8 === this.it) return this._t;
+    this.it = r8;
+    const s5 = [r8];
+    return s5.raw = s5, this._t = { _$litType$: this.constructor.resultType, strings: s5, values: [] };
   }
 };
 e11.directiveName = "unsafeHTML", e11.resultType = 1;
-var o8 = e7(e11);
+var o9 = e7(e11);
 
 // node_modules/@shoelace-style/shoelace/dist/chunks/chunk.AILU2HNL.js
 var SlSelect = class extends ShoelaceElement {
@@ -9816,7 +9832,7 @@ var SlSelect = class extends ShoelaceElement {
       if (index < this.maxOptionsVisible || this.maxOptionsVisible <= 0) {
         const tag = this.getTag(option, index);
         return x`<div @sl-remove=${(e12) => this.handleTagRemove(e12, option)}>
-          ${typeof tag === "string" ? o8(tag) : tag}
+          ${typeof tag === "string" ? o9(tag) : tag}
         </div>`;
       } else if (index === this.maxOptionsVisible) {
         return x`<sl-tag size=${this.size}>+${this.selectedOptions.length - index}</sl-tag>`;
@@ -10098,25 +10114,25 @@ __decorateClass([
   e6(".select__listbox")
 ], SlSelect.prototype, "listbox", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlSelect.prototype, "hasFocus", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlSelect.prototype, "displayLabel", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlSelect.prototype, "currentOption", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlSelect.prototype, "selectedOptions", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlSelect.prototype, "valueHasChanged", 2);
 __decorateClass([
   n5()
 ], SlSelect.prototype, "name", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlSelect.prototype, "value", 1);
 __decorateClass([
   n5({ attribute: "value" })
@@ -10374,13 +10390,13 @@ __decorateClass([
   e6(".option__label")
 ], SlOption.prototype, "defaultSlot", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlOption.prototype, "current", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlOption.prototype, "selected", 2);
 __decorateClass([
-  r7()
+  r6()
 ], SlOption.prototype, "hasHover", 2);
 __decorateClass([
   n5({ reflect: true })
@@ -10398,37 +10414,1249 @@ __decorateClass([
   watch("value")
 ], SlOption.prototype, "handleValueChange", 1);
 
+// node_modules/@shoelace-style/shoelace/dist/chunks/chunk.R3NF57O3.js
+var checkbox_styles_default = i`
+  :host {
+    display: inline-block;
+  }
+
+  .checkbox {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+    font-family: var(--sl-input-font-family);
+    font-weight: var(--sl-input-font-weight);
+    color: var(--sl-input-label-color);
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  .checkbox--small {
+    --toggle-size: var(--sl-toggle-size-small);
+    font-size: var(--sl-input-font-size-small);
+  }
+
+  .checkbox--medium {
+    --toggle-size: var(--sl-toggle-size-medium);
+    font-size: var(--sl-input-font-size-medium);
+  }
+
+  .checkbox--large {
+    --toggle-size: var(--sl-toggle-size-large);
+    font-size: var(--sl-input-font-size-large);
+  }
+
+  .checkbox__control {
+    flex: 0 0 auto;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--toggle-size);
+    height: var(--toggle-size);
+    border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+    border-radius: 2px;
+    background-color: var(--sl-input-background-color);
+    color: var(--sl-color-neutral-0);
+    transition:
+      var(--sl-transition-fast) border-color,
+      var(--sl-transition-fast) background-color,
+      var(--sl-transition-fast) color,
+      var(--sl-transition-fast) box-shadow;
+  }
+
+  .checkbox__input {
+    position: absolute;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .checkbox__checked-icon,
+  .checkbox__indeterminate-icon {
+    display: inline-flex;
+    width: var(--toggle-size);
+    height: var(--toggle-size);
+  }
+
+  /* Hover */
+  .checkbox:not(.checkbox--checked):not(.checkbox--disabled) .checkbox__control:hover {
+    border-color: var(--sl-input-border-color-hover);
+    background-color: var(--sl-input-background-color-hover);
+  }
+
+  /* Focus */
+  .checkbox:not(.checkbox--checked):not(.checkbox--disabled) .checkbox__input:focus-visible ~ .checkbox__control {
+    outline: var(--sl-focus-ring);
+    outline-offset: var(--sl-focus-ring-offset);
+  }
+
+  /* Checked/indeterminate */
+  .checkbox--checked .checkbox__control,
+  .checkbox--indeterminate .checkbox__control {
+    border-color: var(--sl-color-primary-600);
+    background-color: var(--sl-color-primary-600);
+  }
+
+  /* Checked/indeterminate + hover */
+  .checkbox.checkbox--checked:not(.checkbox--disabled) .checkbox__control:hover,
+  .checkbox.checkbox--indeterminate:not(.checkbox--disabled) .checkbox__control:hover {
+    border-color: var(--sl-color-primary-500);
+    background-color: var(--sl-color-primary-500);
+  }
+
+  /* Checked/indeterminate + focus */
+  .checkbox.checkbox--checked:not(.checkbox--disabled) .checkbox__input:focus-visible ~ .checkbox__control,
+  .checkbox.checkbox--indeterminate:not(.checkbox--disabled) .checkbox__input:focus-visible ~ .checkbox__control {
+    outline: var(--sl-focus-ring);
+    outline-offset: var(--sl-focus-ring-offset);
+  }
+
+  /* Disabled */
+  .checkbox--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .checkbox__label {
+    display: inline-block;
+    color: var(--sl-input-label-color);
+    line-height: var(--toggle-size);
+    margin-inline-start: 0.5em;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  :host([required]) .checkbox__label::after {
+    content: var(--sl-input-required-content);
+    color: var(--sl-input-required-content-color);
+    margin-inline-start: var(--sl-input-required-content-offset);
+  }
+`;
+
+// node_modules/@shoelace-style/shoelace/dist/chunks/chunk.XSFJLY2D.js
+var SlCheckbox = class extends ShoelaceElement {
+  constructor() {
+    super(...arguments);
+    this.formControlController = new FormControlController(this, {
+      value: (control) => control.checked ? control.value || "on" : void 0,
+      defaultValue: (control) => control.defaultChecked,
+      setValue: (control, checked) => control.checked = checked
+    });
+    this.hasSlotController = new HasSlotController(this, "help-text");
+    this.hasFocus = false;
+    this.title = "";
+    this.name = "";
+    this.size = "medium";
+    this.disabled = false;
+    this.checked = false;
+    this.indeterminate = false;
+    this.defaultChecked = false;
+    this.form = "";
+    this.required = false;
+    this.helpText = "";
+  }
+  /** Gets the validity state object */
+  get validity() {
+    return this.input.validity;
+  }
+  /** Gets the validation message */
+  get validationMessage() {
+    return this.input.validationMessage;
+  }
+  firstUpdated() {
+    this.formControlController.updateValidity();
+  }
+  handleClick() {
+    this.checked = !this.checked;
+    this.indeterminate = false;
+    this.emit("sl-change");
+  }
+  handleBlur() {
+    this.hasFocus = false;
+    this.emit("sl-blur");
+  }
+  handleInput() {
+    this.emit("sl-input");
+  }
+  handleInvalid(event) {
+    this.formControlController.setValidity(false);
+    this.formControlController.emitInvalidEvent(event);
+  }
+  handleFocus() {
+    this.hasFocus = true;
+    this.emit("sl-focus");
+  }
+  handleDisabledChange() {
+    this.formControlController.setValidity(this.disabled);
+  }
+  handleStateChange() {
+    this.input.checked = this.checked;
+    this.input.indeterminate = this.indeterminate;
+    this.formControlController.updateValidity();
+  }
+  /** Simulates a click on the checkbox. */
+  click() {
+    this.input.click();
+  }
+  /** Sets focus on the checkbox. */
+  focus(options) {
+    this.input.focus(options);
+  }
+  /** Removes focus from the checkbox. */
+  blur() {
+    this.input.blur();
+  }
+  /** Checks for validity but does not show a validation message. Returns `true` when valid and `false` when invalid. */
+  checkValidity() {
+    return this.input.checkValidity();
+  }
+  /** Gets the associated form, if one exists. */
+  getForm() {
+    return this.formControlController.getForm();
+  }
+  /** Checks for validity and shows the browser's validation message if the control is invalid. */
+  reportValidity() {
+    return this.input.reportValidity();
+  }
+  /**
+   * Sets a custom validation message. The value provided will be shown to the user when the form is submitted. To clear
+   * the custom validation message, call this method with an empty string.
+   */
+  setCustomValidity(message) {
+    this.input.setCustomValidity(message);
+    this.formControlController.updateValidity();
+  }
+  render() {
+    const hasHelpTextSlot = this.hasSlotController.test("help-text");
+    const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
+    return x`
+      <div
+        class=${e8({
+      "form-control": true,
+      "form-control--small": this.size === "small",
+      "form-control--medium": this.size === "medium",
+      "form-control--large": this.size === "large",
+      "form-control--has-help-text": hasHelpText
+    })}
+      >
+        <label
+          part="base"
+          class=${e8({
+      checkbox: true,
+      "checkbox--checked": this.checked,
+      "checkbox--disabled": this.disabled,
+      "checkbox--focused": this.hasFocus,
+      "checkbox--indeterminate": this.indeterminate,
+      "checkbox--small": this.size === "small",
+      "checkbox--medium": this.size === "medium",
+      "checkbox--large": this.size === "large"
+    })}
+        >
+          <input
+            class="checkbox__input"
+            type="checkbox"
+            title=${this.title}
+            name=${this.name}
+            value=${o7(this.value)}
+            .indeterminate=${l4(this.indeterminate)}
+            .checked=${l4(this.checked)}
+            .disabled=${this.disabled}
+            .required=${this.required}
+            aria-checked=${this.checked ? "true" : "false"}
+            aria-describedby="help-text"
+            @click=${this.handleClick}
+            @input=${this.handleInput}
+            @invalid=${this.handleInvalid}
+            @blur=${this.handleBlur}
+            @focus=${this.handleFocus}
+          />
+
+          <span
+            part="control${this.checked ? " control--checked" : ""}${this.indeterminate ? " control--indeterminate" : ""}"
+            class="checkbox__control"
+          >
+            ${this.checked ? x`
+                  <sl-icon part="checked-icon" class="checkbox__checked-icon" library="system" name="check"></sl-icon>
+                ` : ""}
+            ${!this.checked && this.indeterminate ? x`
+                  <sl-icon
+                    part="indeterminate-icon"
+                    class="checkbox__indeterminate-icon"
+                    library="system"
+                    name="indeterminate"
+                  ></sl-icon>
+                ` : ""}
+          </span>
+
+          <div part="label" class="checkbox__label">
+            <slot></slot>
+          </div>
+        </label>
+
+        <div
+          aria-hidden=${hasHelpText ? "false" : "true"}
+          class="form-control__help-text"
+          id="help-text"
+          part="form-control-help-text"
+        >
+          <slot name="help-text">${this.helpText}</slot>
+        </div>
+      </div>
+    `;
+  }
+};
+SlCheckbox.styles = [component_styles_default, form_control_styles_default, checkbox_styles_default];
+SlCheckbox.dependencies = { "sl-icon": SlIcon };
+__decorateClass([
+  e6('input[type="checkbox"]')
+], SlCheckbox.prototype, "input", 2);
+__decorateClass([
+  r6()
+], SlCheckbox.prototype, "hasFocus", 2);
+__decorateClass([
+  n5()
+], SlCheckbox.prototype, "title", 2);
+__decorateClass([
+  n5()
+], SlCheckbox.prototype, "name", 2);
+__decorateClass([
+  n5()
+], SlCheckbox.prototype, "value", 2);
+__decorateClass([
+  n5({ reflect: true })
+], SlCheckbox.prototype, "size", 2);
+__decorateClass([
+  n5({ type: Boolean, reflect: true })
+], SlCheckbox.prototype, "disabled", 2);
+__decorateClass([
+  n5({ type: Boolean, reflect: true })
+], SlCheckbox.prototype, "checked", 2);
+__decorateClass([
+  n5({ type: Boolean, reflect: true })
+], SlCheckbox.prototype, "indeterminate", 2);
+__decorateClass([
+  defaultValue("checked")
+], SlCheckbox.prototype, "defaultChecked", 2);
+__decorateClass([
+  n5({ reflect: true })
+], SlCheckbox.prototype, "form", 2);
+__decorateClass([
+  n5({ type: Boolean, reflect: true })
+], SlCheckbox.prototype, "required", 2);
+__decorateClass([
+  n5({ attribute: "help-text" })
+], SlCheckbox.prototype, "helpText", 2);
+__decorateClass([
+  watch("disabled", { waitUntilFirstUpdate: true })
+], SlCheckbox.prototype, "handleDisabledChange", 1);
+__decorateClass([
+  watch(["checked", "indeterminate"], { waitUntilFirstUpdate: true })
+], SlCheckbox.prototype, "handleStateChange", 1);
+
+// node_modules/@shoelace-style/shoelace/dist/chunks/chunk.GGT72J62.js
+var input_styles_default = i`
+  :host {
+    display: block;
+  }
+
+  .input {
+    flex: 1 1 auto;
+    display: inline-flex;
+    align-items: stretch;
+    justify-content: start;
+    position: relative;
+    width: 100%;
+    font-family: var(--sl-input-font-family);
+    font-weight: var(--sl-input-font-weight);
+    letter-spacing: var(--sl-input-letter-spacing);
+    vertical-align: middle;
+    overflow: hidden;
+    cursor: text;
+    transition:
+      var(--sl-transition-fast) color,
+      var(--sl-transition-fast) border,
+      var(--sl-transition-fast) box-shadow,
+      var(--sl-transition-fast) background-color;
+  }
+
+  /* Standard inputs */
+  .input--standard {
+    background-color: var(--sl-input-background-color);
+    border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+  }
+
+  .input--standard:hover:not(.input--disabled) {
+    background-color: var(--sl-input-background-color-hover);
+    border-color: var(--sl-input-border-color-hover);
+  }
+
+  .input--standard.input--focused:not(.input--disabled) {
+    background-color: var(--sl-input-background-color-focus);
+    border-color: var(--sl-input-border-color-focus);
+    box-shadow: 0 0 0 var(--sl-focus-ring-width) var(--sl-input-focus-ring-color);
+  }
+
+  .input--standard.input--focused:not(.input--disabled) .input__control {
+    color: var(--sl-input-color-focus);
+  }
+
+  .input--standard.input--disabled {
+    background-color: var(--sl-input-background-color-disabled);
+    border-color: var(--sl-input-border-color-disabled);
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .input--standard.input--disabled .input__control {
+    color: var(--sl-input-color-disabled);
+  }
+
+  .input--standard.input--disabled .input__control::placeholder {
+    color: var(--sl-input-placeholder-color-disabled);
+  }
+
+  /* Filled inputs */
+  .input--filled {
+    border: none;
+    background-color: var(--sl-input-filled-background-color);
+    color: var(--sl-input-color);
+  }
+
+  .input--filled:hover:not(.input--disabled) {
+    background-color: var(--sl-input-filled-background-color-hover);
+  }
+
+  .input--filled.input--focused:not(.input--disabled) {
+    background-color: var(--sl-input-filled-background-color-focus);
+    outline: var(--sl-focus-ring);
+    outline-offset: var(--sl-focus-ring-offset);
+  }
+
+  .input--filled.input--disabled {
+    background-color: var(--sl-input-filled-background-color-disabled);
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .input__control {
+    flex: 1 1 auto;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    min-width: 0;
+    height: 100%;
+    color: var(--sl-input-color);
+    border: none;
+    background: inherit;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    cursor: inherit;
+    -webkit-appearance: none;
+  }
+
+  .input__control::-webkit-search-decoration,
+  .input__control::-webkit-search-cancel-button,
+  .input__control::-webkit-search-results-button,
+  .input__control::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
+
+  .input__control:-webkit-autofill,
+  .input__control:-webkit-autofill:hover,
+  .input__control:-webkit-autofill:focus,
+  .input__control:-webkit-autofill:active {
+    box-shadow: 0 0 0 var(--sl-input-height-large) var(--sl-input-background-color-hover) inset !important;
+    -webkit-text-fill-color: var(--sl-color-primary-500);
+    caret-color: var(--sl-input-color);
+  }
+
+  .input--filled .input__control:-webkit-autofill,
+  .input--filled .input__control:-webkit-autofill:hover,
+  .input--filled .input__control:-webkit-autofill:focus,
+  .input--filled .input__control:-webkit-autofill:active {
+    box-shadow: 0 0 0 var(--sl-input-height-large) var(--sl-input-filled-background-color) inset !important;
+  }
+
+  .input__control::placeholder {
+    color: var(--sl-input-placeholder-color);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .input:hover:not(.input--disabled) .input__control {
+    color: var(--sl-input-color-hover);
+  }
+
+  .input__control:focus {
+    outline: none;
+  }
+
+  .input__prefix,
+  .input__suffix {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    cursor: default;
+  }
+
+  .input__prefix ::slotted(sl-icon),
+  .input__suffix ::slotted(sl-icon) {
+    color: var(--sl-input-icon-color);
+  }
+
+  /*
+   * Size modifiers
+   */
+
+  .input--small {
+    border-radius: var(--sl-input-border-radius-small);
+    font-size: var(--sl-input-font-size-small);
+    height: var(--sl-input-height-small);
+  }
+
+  .input--small .input__control {
+    height: calc(var(--sl-input-height-small) - var(--sl-input-border-width) * 2);
+    padding: 0 var(--sl-input-spacing-small);
+  }
+
+  .input--small .input__clear,
+  .input--small .input__password-toggle {
+    width: calc(1em + var(--sl-input-spacing-small) * 2);
+  }
+
+  .input--small .input__prefix ::slotted(*) {
+    margin-inline-start: var(--sl-input-spacing-small);
+  }
+
+  .input--small .input__suffix ::slotted(*) {
+    margin-inline-end: var(--sl-input-spacing-small);
+  }
+
+  .input--medium {
+    border-radius: var(--sl-input-border-radius-medium);
+    font-size: var(--sl-input-font-size-medium);
+    height: var(--sl-input-height-medium);
+  }
+
+  .input--medium .input__control {
+    height: calc(var(--sl-input-height-medium) - var(--sl-input-border-width) * 2);
+    padding: 0 var(--sl-input-spacing-medium);
+  }
+
+  .input--medium .input__clear,
+  .input--medium .input__password-toggle {
+    width: calc(1em + var(--sl-input-spacing-medium) * 2);
+  }
+
+  .input--medium .input__prefix ::slotted(*) {
+    margin-inline-start: var(--sl-input-spacing-medium);
+  }
+
+  .input--medium .input__suffix ::slotted(*) {
+    margin-inline-end: var(--sl-input-spacing-medium);
+  }
+
+  .input--large {
+    border-radius: var(--sl-input-border-radius-large);
+    font-size: var(--sl-input-font-size-large);
+    height: var(--sl-input-height-large);
+  }
+
+  .input--large .input__control {
+    height: calc(var(--sl-input-height-large) - var(--sl-input-border-width) * 2);
+    padding: 0 var(--sl-input-spacing-large);
+  }
+
+  .input--large .input__clear,
+  .input--large .input__password-toggle {
+    width: calc(1em + var(--sl-input-spacing-large) * 2);
+  }
+
+  .input--large .input__prefix ::slotted(*) {
+    margin-inline-start: var(--sl-input-spacing-large);
+  }
+
+  .input--large .input__suffix ::slotted(*) {
+    margin-inline-end: var(--sl-input-spacing-large);
+  }
+
+  /*
+   * Pill modifier
+   */
+
+  .input--pill.input--small {
+    border-radius: var(--sl-input-height-small);
+  }
+
+  .input--pill.input--medium {
+    border-radius: var(--sl-input-height-medium);
+  }
+
+  .input--pill.input--large {
+    border-radius: var(--sl-input-height-large);
+  }
+
+  /*
+   * Clearable + Password Toggle
+   */
+
+  .input__clear,
+  .input__password-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: inherit;
+    color: var(--sl-input-icon-color);
+    border: none;
+    background: none;
+    padding: 0;
+    transition: var(--sl-transition-fast) color;
+    cursor: pointer;
+  }
+
+  .input__clear:hover,
+  .input__password-toggle:hover {
+    color: var(--sl-input-icon-color-hover);
+  }
+
+  .input__clear:focus,
+  .input__password-toggle:focus {
+    outline: none;
+  }
+
+  /* Don't show the browser's password toggle in Edge */
+  ::-ms-reveal {
+    display: none;
+  }
+
+  /* Hide the built-in number spinner */
+  .input--no-spin-buttons input[type='number']::-webkit-outer-spin-button,
+  .input--no-spin-buttons input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+  }
+
+  .input--no-spin-buttons input[type='number'] {
+    -moz-appearance: textfield;
+  }
+`;
+
+// node_modules/@shoelace-style/shoelace/dist/chunks/chunk.VM65NPGC.js
+var SlInput = class extends ShoelaceElement {
+  constructor() {
+    super(...arguments);
+    this.formControlController = new FormControlController(this, {
+      assumeInteractionOn: ["sl-blur", "sl-input"]
+    });
+    this.hasSlotController = new HasSlotController(this, "help-text", "label");
+    this.localize = new LocalizeController2(this);
+    this.hasFocus = false;
+    this.title = "";
+    this.__numberInput = Object.assign(document.createElement("input"), { type: "number" });
+    this.__dateInput = Object.assign(document.createElement("input"), { type: "date" });
+    this.type = "text";
+    this.name = "";
+    this.value = "";
+    this.defaultValue = "";
+    this.size = "medium";
+    this.filled = false;
+    this.pill = false;
+    this.label = "";
+    this.helpText = "";
+    this.clearable = false;
+    this.disabled = false;
+    this.placeholder = "";
+    this.readonly = false;
+    this.passwordToggle = false;
+    this.passwordVisible = false;
+    this.noSpinButtons = false;
+    this.form = "";
+    this.required = false;
+    this.spellcheck = true;
+  }
+  //
+  // NOTE: We use an in-memory input for these getters/setters instead of the one in the template because the properties
+  // can be set before the component is rendered.
+  //
+  /**
+   * Gets or sets the current value as a `Date` object. Returns `null` if the value can't be converted. This will use the native `<input type="{{type}}">` implementation and may result in an error.
+   */
+  get valueAsDate() {
+    var _a3;
+    this.__dateInput.type = this.type;
+    this.__dateInput.value = this.value;
+    return ((_a3 = this.input) == null ? void 0 : _a3.valueAsDate) || this.__dateInput.valueAsDate;
+  }
+  set valueAsDate(newValue) {
+    this.__dateInput.type = this.type;
+    this.__dateInput.valueAsDate = newValue;
+    this.value = this.__dateInput.value;
+  }
+  /** Gets or sets the current value as a number. Returns `NaN` if the value can't be converted. */
+  get valueAsNumber() {
+    var _a3;
+    this.__numberInput.value = this.value;
+    return ((_a3 = this.input) == null ? void 0 : _a3.valueAsNumber) || this.__numberInput.valueAsNumber;
+  }
+  set valueAsNumber(newValue) {
+    this.__numberInput.valueAsNumber = newValue;
+    this.value = this.__numberInput.value;
+  }
+  /** Gets the validity state object */
+  get validity() {
+    return this.input.validity;
+  }
+  /** Gets the validation message */
+  get validationMessage() {
+    return this.input.validationMessage;
+  }
+  firstUpdated() {
+    this.formControlController.updateValidity();
+  }
+  handleBlur() {
+    this.hasFocus = false;
+    this.emit("sl-blur");
+  }
+  handleChange() {
+    this.value = this.input.value;
+    this.emit("sl-change");
+  }
+  handleClearClick(event) {
+    event.preventDefault();
+    if (this.value !== "") {
+      this.value = "";
+      this.emit("sl-clear");
+      this.emit("sl-input");
+      this.emit("sl-change");
+    }
+    this.input.focus();
+  }
+  handleFocus() {
+    this.hasFocus = true;
+    this.emit("sl-focus");
+  }
+  handleInput() {
+    this.value = this.input.value;
+    this.formControlController.updateValidity();
+    this.emit("sl-input");
+  }
+  handleInvalid(event) {
+    this.formControlController.setValidity(false);
+    this.formControlController.emitInvalidEvent(event);
+  }
+  handleKeyDown(event) {
+    const hasModifier = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+    if (event.key === "Enter" && !hasModifier) {
+      setTimeout(() => {
+        if (!event.defaultPrevented && !event.isComposing) {
+          this.formControlController.submit();
+        }
+      });
+    }
+  }
+  handlePasswordToggle() {
+    this.passwordVisible = !this.passwordVisible;
+  }
+  handleDisabledChange() {
+    this.formControlController.setValidity(this.disabled);
+  }
+  handleStepChange() {
+    this.input.step = String(this.step);
+    this.formControlController.updateValidity();
+  }
+  async handleValueChange() {
+    await this.updateComplete;
+    this.formControlController.updateValidity();
+  }
+  /** Sets focus on the input. */
+  focus(options) {
+    this.input.focus(options);
+  }
+  /** Removes focus from the input. */
+  blur() {
+    this.input.blur();
+  }
+  /** Selects all the text in the input. */
+  select() {
+    this.input.select();
+  }
+  /** Sets the start and end positions of the text selection (0-based). */
+  setSelectionRange(selectionStart, selectionEnd, selectionDirection = "none") {
+    this.input.setSelectionRange(selectionStart, selectionEnd, selectionDirection);
+  }
+  /** Replaces a range of text with a new string. */
+  setRangeText(replacement, start, end, selectMode = "preserve") {
+    const selectionStart = start != null ? start : this.input.selectionStart;
+    const selectionEnd = end != null ? end : this.input.selectionEnd;
+    this.input.setRangeText(replacement, selectionStart, selectionEnd, selectMode);
+    if (this.value !== this.input.value) {
+      this.value = this.input.value;
+    }
+  }
+  /** Displays the browser picker for an input element (only works if the browser supports it for the input type). */
+  showPicker() {
+    if ("showPicker" in HTMLInputElement.prototype) {
+      this.input.showPicker();
+    }
+  }
+  /** Increments the value of a numeric input type by the value of the step attribute. */
+  stepUp() {
+    this.input.stepUp();
+    if (this.value !== this.input.value) {
+      this.value = this.input.value;
+    }
+  }
+  /** Decrements the value of a numeric input type by the value of the step attribute. */
+  stepDown() {
+    this.input.stepDown();
+    if (this.value !== this.input.value) {
+      this.value = this.input.value;
+    }
+  }
+  /** Checks for validity but does not show a validation message. Returns `true` when valid and `false` when invalid. */
+  checkValidity() {
+    return this.input.checkValidity();
+  }
+  /** Gets the associated form, if one exists. */
+  getForm() {
+    return this.formControlController.getForm();
+  }
+  /** Checks for validity and shows the browser's validation message if the control is invalid. */
+  reportValidity() {
+    return this.input.reportValidity();
+  }
+  /** Sets a custom validation message. Pass an empty string to restore validity. */
+  setCustomValidity(message) {
+    this.input.setCustomValidity(message);
+    this.formControlController.updateValidity();
+  }
+  render() {
+    const hasLabelSlot = this.hasSlotController.test("label");
+    const hasHelpTextSlot = this.hasSlotController.test("help-text");
+    const hasLabel = this.label ? true : !!hasLabelSlot;
+    const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
+    const hasClearIcon = this.clearable && !this.disabled && !this.readonly;
+    const isClearIconVisible = hasClearIcon && (typeof this.value === "number" || this.value.length > 0);
+    return x`
+      <div
+        part="form-control"
+        class=${e8({
+      "form-control": true,
+      "form-control--small": this.size === "small",
+      "form-control--medium": this.size === "medium",
+      "form-control--large": this.size === "large",
+      "form-control--has-label": hasLabel,
+      "form-control--has-help-text": hasHelpText
+    })}
+      >
+        <label
+          part="form-control-label"
+          class="form-control__label"
+          for="input"
+          aria-hidden=${hasLabel ? "false" : "true"}
+        >
+          <slot name="label">${this.label}</slot>
+        </label>
+
+        <div part="form-control-input" class="form-control-input">
+          <div
+            part="base"
+            class=${e8({
+      input: true,
+      // Sizes
+      "input--small": this.size === "small",
+      "input--medium": this.size === "medium",
+      "input--large": this.size === "large",
+      // States
+      "input--pill": this.pill,
+      "input--standard": !this.filled,
+      "input--filled": this.filled,
+      "input--disabled": this.disabled,
+      "input--focused": this.hasFocus,
+      "input--empty": !this.value,
+      "input--no-spin-buttons": this.noSpinButtons
+    })}
+          >
+            <span part="prefix" class="input__prefix">
+              <slot name="prefix"></slot>
+            </span>
+
+            <input
+              part="input"
+              id="input"
+              class="input__control"
+              type=${this.type === "password" && this.passwordVisible ? "text" : this.type}
+              title=${this.title}
+              name=${o7(this.name)}
+              ?disabled=${this.disabled}
+              ?readonly=${this.readonly}
+              ?required=${this.required}
+              placeholder=${o7(this.placeholder)}
+              minlength=${o7(this.minlength)}
+              maxlength=${o7(this.maxlength)}
+              min=${o7(this.min)}
+              max=${o7(this.max)}
+              step=${o7(this.step)}
+              .value=${l4(this.value)}
+              autocapitalize=${o7(this.autocapitalize)}
+              autocomplete=${o7(this.autocomplete)}
+              autocorrect=${o7(this.autocorrect)}
+              ?autofocus=${this.autofocus}
+              spellcheck=${this.spellcheck}
+              pattern=${o7(this.pattern)}
+              enterkeyhint=${o7(this.enterkeyhint)}
+              inputmode=${o7(this.inputmode)}
+              aria-describedby="help-text"
+              @change=${this.handleChange}
+              @input=${this.handleInput}
+              @invalid=${this.handleInvalid}
+              @keydown=${this.handleKeyDown}
+              @focus=${this.handleFocus}
+              @blur=${this.handleBlur}
+            />
+
+            ${isClearIconVisible ? x`
+                  <button
+                    part="clear-button"
+                    class="input__clear"
+                    type="button"
+                    aria-label=${this.localize.term("clearEntry")}
+                    @click=${this.handleClearClick}
+                    tabindex="-1"
+                  >
+                    <slot name="clear-icon">
+                      <sl-icon name="x-circle-fill" library="system"></sl-icon>
+                    </slot>
+                  </button>
+                ` : ""}
+            ${this.passwordToggle && !this.disabled ? x`
+                  <button
+                    part="password-toggle-button"
+                    class="input__password-toggle"
+                    type="button"
+                    aria-label=${this.localize.term(this.passwordVisible ? "hidePassword" : "showPassword")}
+                    @click=${this.handlePasswordToggle}
+                    tabindex="-1"
+                  >
+                    ${this.passwordVisible ? x`
+                          <slot name="show-password-icon">
+                            <sl-icon name="eye-slash" library="system"></sl-icon>
+                          </slot>
+                        ` : x`
+                          <slot name="hide-password-icon">
+                            <sl-icon name="eye" library="system"></sl-icon>
+                          </slot>
+                        `}
+                  </button>
+                ` : ""}
+
+            <span part="suffix" class="input__suffix">
+              <slot name="suffix"></slot>
+            </span>
+          </div>
+        </div>
+
+        <div
+          part="form-control-help-text"
+          id="help-text"
+          class="form-control__help-text"
+          aria-hidden=${hasHelpText ? "false" : "true"}
+        >
+          <slot name="help-text">${this.helpText}</slot>
+        </div>
+      </div>
+    `;
+  }
+};
+SlInput.styles = [component_styles_default, form_control_styles_default, input_styles_default];
+SlInput.dependencies = { "sl-icon": SlIcon };
+__decorateClass([
+  e6(".input__control")
+], SlInput.prototype, "input", 2);
+__decorateClass([
+  r6()
+], SlInput.prototype, "hasFocus", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "title", 2);
+__decorateClass([
+  n5({ reflect: true })
+], SlInput.prototype, "type", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "name", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "value", 2);
+__decorateClass([
+  defaultValue()
+], SlInput.prototype, "defaultValue", 2);
+__decorateClass([
+  n5({ reflect: true })
+], SlInput.prototype, "size", 2);
+__decorateClass([
+  n5({ type: Boolean, reflect: true })
+], SlInput.prototype, "filled", 2);
+__decorateClass([
+  n5({ type: Boolean, reflect: true })
+], SlInput.prototype, "pill", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "label", 2);
+__decorateClass([
+  n5({ attribute: "help-text" })
+], SlInput.prototype, "helpText", 2);
+__decorateClass([
+  n5({ type: Boolean })
+], SlInput.prototype, "clearable", 2);
+__decorateClass([
+  n5({ type: Boolean, reflect: true })
+], SlInput.prototype, "disabled", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "placeholder", 2);
+__decorateClass([
+  n5({ type: Boolean, reflect: true })
+], SlInput.prototype, "readonly", 2);
+__decorateClass([
+  n5({ attribute: "password-toggle", type: Boolean })
+], SlInput.prototype, "passwordToggle", 2);
+__decorateClass([
+  n5({ attribute: "password-visible", type: Boolean })
+], SlInput.prototype, "passwordVisible", 2);
+__decorateClass([
+  n5({ attribute: "no-spin-buttons", type: Boolean })
+], SlInput.prototype, "noSpinButtons", 2);
+__decorateClass([
+  n5({ reflect: true })
+], SlInput.prototype, "form", 2);
+__decorateClass([
+  n5({ type: Boolean, reflect: true })
+], SlInput.prototype, "required", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "pattern", 2);
+__decorateClass([
+  n5({ type: Number })
+], SlInput.prototype, "minlength", 2);
+__decorateClass([
+  n5({ type: Number })
+], SlInput.prototype, "maxlength", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "min", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "max", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "step", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "autocapitalize", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "autocorrect", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "autocomplete", 2);
+__decorateClass([
+  n5({ type: Boolean })
+], SlInput.prototype, "autofocus", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "enterkeyhint", 2);
+__decorateClass([
+  n5({
+    type: Boolean,
+    converter: {
+      // Allow "true|false" attribute values but keep the property boolean
+      fromAttribute: (value) => !value || value === "false" ? false : true,
+      toAttribute: (value) => value ? "true" : "false"
+    }
+  })
+], SlInput.prototype, "spellcheck", 2);
+__decorateClass([
+  n5()
+], SlInput.prototype, "inputmode", 2);
+__decorateClass([
+  watch("disabled", { waitUntilFirstUpdate: true })
+], SlInput.prototype, "handleDisabledChange", 1);
+__decorateClass([
+  watch("step", { waitUntilFirstUpdate: true })
+], SlInput.prototype, "handleStepChange", 1);
+__decorateClass([
+  watch("value", { waitUntilFirstUpdate: true })
+], SlInput.prototype, "handleValueChange", 1);
+
+// node_modules/@shoelace-style/shoelace/dist/chunks/chunk.SUSCR7CI.js
+var divider_styles_default = i`
+  :host {
+    --color: var(--sl-panel-border-color);
+    --width: var(--sl-panel-border-width);
+    --spacing: var(--sl-spacing-medium);
+  }
+
+  :host(:not([vertical])) {
+    display: block;
+    border-top: solid var(--width) var(--color);
+    margin: var(--spacing) 0;
+  }
+
+  :host([vertical]) {
+    display: inline-block;
+    height: 100%;
+    border-left: solid var(--width) var(--color);
+    margin: 0 var(--spacing);
+  }
+`;
+
+// node_modules/@shoelace-style/shoelace/dist/chunks/chunk.5ZSXZIE6.js
+var SlDivider = class extends ShoelaceElement {
+  constructor() {
+    super(...arguments);
+    this.vertical = false;
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute("role", "separator");
+  }
+  handleVerticalChange() {
+    this.setAttribute("aria-orientation", this.vertical ? "vertical" : "horizontal");
+  }
+};
+SlDivider.styles = [component_styles_default, divider_styles_default];
+__decorateClass([
+  n5({ type: Boolean, reflect: true })
+], SlDivider.prototype, "vertical", 2);
+__decorateClass([
+  watch("vertical")
+], SlDivider.prototype, "handleVerticalChange", 1);
+
+// widgets/hash-style.ts
+var style = i`
+
+  #container{
+      position: relative;
+      height: 100vh
+  }
+  #context,
+  #draggable {
+      position: absolute;
+      border: 5px solid #fff;
+      border-radius: 10px;
+      padding: 5px;
+      box-shadow: 10px 10px 15px 5px #00466666;
+      background-color: #fff;
+    }
+  #context{
+    display: none;
+    flex-direction: column
+    
+  }
+  #context *,
+  #draggable * {
+    padding: 2px
+  }
+  
+  #header {
+    font-size: 12pt;
+    width: 100%;
+  }
+
+  #hashSelect {
+    width: 200px
+  }
+
+  #saltCheck {
+    font-size: 1.5rem;
+    margin-top: -5px; 
+  }
+  
+  #flexDiv {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  #flexDiv2 {
+    display: none;
+    flex-direction: row;
+  }
+
+  #saltText {
+    width: 200px;
+  }
+
+  sl-divider {
+    margin-block: 0
+  }
+`;
+
+// widgets/material-symbols--text-compare-rounded.svg
+var material_symbols_text_compare_rounded_default = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10 22v-1H5q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h5V2q0-.425.288-.712T11 1t.713.288T12 2v20q0 .425-.288.713T11 23t-.712-.288T10 22m5-1q-.425 0-.712-.288T14 20t.288-.712T15 19h4V5h-4q-.425 0-.712-.288T14 4t.288-.712T15 3h4q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm0-8q-.425 0-.712-.288T14 12t.288-.712T15 11h1q.425 0 .713.288T17 12t-.288.713T16 13zm0-4q-.425 0-.712-.288T14 8t.288-.712T15 7h1q.425 0 .713.288T17 8t-.288.713T16 9zm-7 8h1q.425 0 .713-.288T10 16t-.288-.712T9 15H8q-.425 0-.712.288T7 16t.288.713T8 17m0-4h1q.425 0 .713-.288T10 12t-.288-.712T9 11H8q-.425 0-.712.288T7 12t.288.713T8 13m0-4h1q.425 0 .713-.288T10 8t-.288-.712T9 7H8q-.425 0-.712.288T7 8t.288.713T8 9"/></svg>';
+
+// widgets/material-symbols--code-blocks-outline-rounded.svg
+var material_symbols_code_blocks_outline_rounded_default = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m8.825 12l1.475-1.475q.3-.3.3-.7t-.3-.7t-.712-.3t-.713.3L6.7 11.3q-.15.15-.213.325T6.425 12t.062.375t.213.325l2.175 2.175q.3.3.713.3t.712-.3t.3-.7t-.3-.7zm6.35 0L13.7 13.475q-.3.3-.3.7t.3.7t.713.3t.712-.3L17.3 12.7q.15-.15.213-.325t.062-.375t-.062-.375t-.213-.325l-2.175-2.175q-.15-.15-.337-.225t-.376-.075t-.375.075t-.337.225q-.3.3-.3.7t.3.7zM5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm0-2h14V5H5zM5 5v14z"/></svg>';
+
+// widgets/f7--text-append.svg
+var f7_text_append_default = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56"><path fill="currentColor" d="M6.168 11.36h43.64c1.008 0 1.805-.774 1.805-1.782c0-.984-.797-1.758-1.804-1.758H6.168c-1.008 0-1.781.774-1.781 1.758a1.75 1.75 0 0 0 1.78 1.781m0 12.28h43.64c1.008 0 1.805-.773 1.805-1.78c0-.985-.797-1.758-1.804-1.758H6.168c-1.008 0-1.781.773-1.781 1.757c0 1.008.773 1.782 1.78 1.782M10.058 43h6.891v2.438c0 1.921 1.828 2.624 3.281 1.453l6.352-5.086c.96-.774.96-2.11 0-2.86l-6.352-5.062c-1.406-1.149-3.28-.422-3.28 1.406v2.344h-6.376c-.562 0-.797-.305-.797-.797v-4.5c0-1.898-.984-3.07-2.695-3.07s-2.695 1.172-2.695 3.07v5.32c0 3.305 2.367 5.344 5.672 5.344m23.743-7.078H49.81a1.786 1.786 0 0 0 1.804-1.781c0-.985-.797-1.758-1.804-1.758H33.8c-1.008 0-1.782.773-1.782 1.758c0 .984.774 1.78 1.782 1.78m0 12.258h16.008c1.008 0 1.804-.774 1.804-1.758s-.797-1.781-1.804-1.781H33.8a1.766 1.766 0 0 0-1.782 1.78c0 .985.774 1.759 1.782 1.759"/></svg>';
+
+// widgets/mdi--trash-outline.svg
+var mdi_trash_outline_default = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zM8 9h8v10H8zm7.5-5l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
+
+// widgets/mingcute--link-line.svg
+var mingcute_link_line_default = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.232 10.231a5 5 0 0 1 6.89-.172l.181.172l2.828 2.829a5 5 0 0 1-6.89 7.243l-.18-.172l-2.122-2.122a1 1 0 0 1 1.32-1.497l.094.083l2.122 2.122a3 3 0 0 0 4.377-4.1l-.135-.143l-2.828-2.828a3 3 0 0 0-4.243 0a1 1 0 0 1-1.414-1.415M3.868 3.867a5 5 0 0 1 6.89-.172l.181.172L13.06 5.99a1 1 0 0 1-1.32 1.497l-.094-.083l-2.121-2.121A3 3 0 0 0 5.147 9.38l.135.144l2.829 2.829a3 3 0 0 0 4.242 0a1 1 0 1 1 1.415 1.414a5 5 0 0 1-6.89.172l-.182-.172l-2.828-2.829a5 5 0 0 1 0-7.07Z"/></g></svg>';
+
 // widgets/webwriter-hash.ts
-var _curHash_dec, _conBuffer_dec, _connections_dec, _hex_string_dec, _container_dec, _a2, _WebwriterHash_decorators, _init2, _container, _hex_string, _connections, _conBuffer, _curHash;
+var _useSalt_dec, _curHash_dec, _conBuffer_dec, _connections_dec, _context_dec, _container_dec, _a2, _WebwriterHash_decorators, _init2, _container, _context, _connections, _conBuffer, _curHash, _useSalt;
 _WebwriterHash_decorators = [t4("webwriter-hash")];
-var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#container")], _hex_string_dec = [n5({ attribute: false })], _connections_dec = [n5({ attribute: false })], _conBuffer_dec = [n5({ attribute: false })], _curHash_dec = [n5({ attribute: false })], _a2) {
+var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#container")], _context_dec = [e6("#context")], _connections_dec = [n5({ attribute: false })], _conBuffer_dec = [n5({ attribute: false })], _curHash_dec = [n5({ attribute: false })], _useSalt_dec = [n5({ attribute: false })], _a2) {
   constructor() {
     super(...arguments);
     __privateAdd(this, _container, __runInitializers(_init2, 8, this)), __runInitializers(_init2, 11, this);
-    __privateAdd(this, _hex_string, __runInitializers(_init2, 12, this, "0123456789abcdef")), __runInitializers(_init2, 15, this);
+    __privateAdd(this, _context, __runInitializers(_init2, 12, this)), __runInitializers(_init2, 15, this);
     __privateAdd(this, _connections, __runInitializers(_init2, 16, this, [])), __runInitializers(_init2, 19, this);
     __privateAdd(this, _conBuffer, __runInitializers(_init2, 20, this, null)), __runInitializers(_init2, 23, this);
     __privateAdd(this, _curHash, __runInitializers(_init2, 24, this, "")), __runInitializers(_init2, 27, this);
-    __publicField(this, "allHashes", Object.assign(sha2_exports, sha1, sha3_exports, sha3_addons_exports, ripemd160, blake3, blake2b, blake2s, hmac, hkdf, pbkdf2_exports, scrypt_exports));
+    __privateAdd(this, _useSalt, __runInitializers(_init2, 28, this, false)), __runInitializers(_init2, 31, this);
+    __publicField(this, "currConSelect", null);
+    __publicField(this, "hex_string", "0123456789abcdef");
+    __publicField(this, "allHashes", Object.assign(
+      sha2_exports,
+      sha1,
+      sha3_exports,
+      sha3_addons_exports,
+      ripemd160,
+      blake3,
+      blake2b,
+      blake2s,
+      hmac,
+      hkdf,
+      pbkdf2_exports,
+      scrypt_exports
+    ));
   }
-  /* Optional LOCALIZATION: Uncomment this after first running `npm run localize` in the command line.
-  localize = LOCALIZE
-  */
-  /** Register the classes of custom elements to use in the Shadow DOM here.
-   * @example
-   * import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
-   * ...
-   *   static scopedElements = {"sl-button": SlButton}
-   **/
   static get scopedElements() {
     return {
       "sl-textarea": SlTextarea,
       "sl-button": SlButton,
       "sl-select": SlSelect,
-      "sl-option": SlOption
+      "sl-option": SlOption,
+      "sl-input": SlInput,
+      "sl-checkbox": SlCheckbox,
+      "sl-icon-button": SlIconButton,
+      "sl-divider": SlDivider
     };
   }
   firstUpdated(_changedProperties) {
+    this.addEventListener("contextmenu", (e12) => {
+      this.context.style.top = e12.offsetY + "px";
+      this.context.style.left = e12.offsetX + "px";
+      this.context.style.display = this.context.style.display === "flex" ? "" : "flex";
+    });
   }
   toHex(bytes) {
     return Array.from(bytes || []).map((b4) => this.hex_string[b4 >> 4] + this.hex_string[b4 & 15]).join("");
@@ -10436,33 +11664,62 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
   fillOptions(element) {
     let keys = Object.keys(this.allHashes);
     keys.forEach((key) => {
-      let option = this.shadowRoot.createElement("sl-option");
+      let option = this.shadowRoot.createElement(
+        "sl-option"
+      );
       option.value = key;
       option.innerText = key;
       element.appendChild(option);
     });
   }
-  spawnDiv(type) {
-    let node = this.shadowRoot.createElement("div");
+  spawnDiv(type, x3, y4) {
+    let node = this.shadowRoot.createElement(
+      "div"
+    );
     node.id = "draggable";
     node.setAttribute("type", type);
-    node.style.position = "absolute";
-    node.style.border = "5px solid #fff";
-    node.style.borderRadius = "10px";
-    node.style.padding = "5px";
-    node.style.boxShadow = "10px 10px 15px 5px #00466666";
-    node.style.backgroundColor = "#fff";
-    node.oncontextmenu = (e12) => {
-      this.removeNode(node);
+    node.setAttribute(
+      "identifier",
+      Math.floor(Date.now() / 1e3).toString()
+    );
+    node.style.top = y4 + "px";
+    node.style.left = x3 + "px";
+    let header = this.shadowRoot.createElement(
+      "div"
+    );
+    header.id = "header";
+    header.style.display = "flex";
+    header.style.flexDirection = "row";
+    let title = this.shadowRoot.createElement(
+      "b"
+    );
+    title.innerHTML = type;
+    let remButton = this.shadowRoot.createElement(
+      "sl-icon-button"
+    );
+    remButton.src = mdi_trash_outline_default;
+    remButton.onclick = (e12) => {
+      node.remove();
     };
-    node.ondblclick = (e12) => {
+    let conButton = this.shadowRoot.createElement(
+      "sl-icon-button"
+    );
+    conButton.src = mingcute_link_line_default;
+    conButton.onclick = (e12) => {
       this.establishCon(node);
+      if (this.conBuffer != null) {
+        this.currConSelect = conButton;
+        this.currConSelect.style.color = "#2594c9";
+      } else {
+        this.currConSelect.style.color = "";
+      }
     };
-    let header = this.shadowRoot.createElement("b");
-    header.innerText = type;
-    header.style.fontSize = "12pt";
-    header.style.width = "100%";
-    let text = this.shadowRoot.createElement("sl-textarea");
+    header.appendChild(title);
+    header.appendChild(remButton);
+    header.appendChild(conButton);
+    let text = this.shadowRoot.createElement(
+      "sl-textarea"
+    );
     text.id = "text";
     text.oninput = (e12) => {
       if (!text.disabled) {
@@ -10470,8 +11727,16 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
       }
     };
     text.onmousedown = (e12) => e12.stopPropagation();
-    let select = this.shadowRoot.createElement("sl-select");
+    let flexDiv = this.shadowRoot.createElement(
+      "div"
+    );
+    flexDiv.id = "flexDiv";
+    let select = this.shadowRoot.createElement(
+      "sl-select"
+    );
     this.fillOptions(select);
+    select.id = "hashSelect";
+    select.placeholder = "select hash";
     select.size = "small";
     select.addEventListener("sl-change", (e12) => {
       this.curHash = select.value;
@@ -10480,25 +11745,73 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     setTimeout(() => {
       select.shadowRoot.getElementById("listbox").style.height = "175px";
     });
+    let flexDiv2 = this.shadowRoot.createElement(
+      "div"
+    );
+    flexDiv2.id = "flexDiv2";
+    let saltText = this.shadowRoot.createElement(
+      "sl-input"
+    );
+    saltText.id = "saltText";
+    saltText.disabled = true;
+    saltText.size = "small";
+    let reloadSalt = this.shadowRoot.createElement(
+      "sl-button"
+    );
+    reloadSalt.innerText = "\u21BB";
+    reloadSalt.size = "small";
+    reloadSalt.onclick = (e12) => {
+      saltText.value = this.toHex(randomBytes(32));
+    };
+    let saltCheck = this.shadowRoot.createElement(
+      "sl-icon-button"
+    );
+    saltCheck.id = "saltCheck";
+    saltCheck.src = f7_text_append_default;
+    saltCheck.onclick = (e12) => {
+      console.log(flexDiv2.style.display);
+      if (flexDiv2.style.display === "none" || flexDiv2.style.display === "") {
+        flexDiv2.style.display = "flex";
+        this.useSalt = true;
+        saltCheck.style.color = "#2594c9";
+        if (saltText.value === "") {
+          saltText.value = this.toHex(randomBytes(32));
+        }
+      } else {
+        flexDiv2.style.display = "none";
+        this.useSalt = false;
+        saltCheck.style.color = "";
+      }
+    };
     if (type === "output") {
       text.disabled = true;
       select.style.display = "none";
+      flexDiv.style.display = "none";
+      saltCheck.style.display = "none";
     }
     if (type === "input") {
       select.style.display = "";
+      flexDiv.style.display = "flex";
+      saltCheck.style.display = "";
     }
+    flexDiv.appendChild(select);
+    flexDiv.appendChild(saltCheck);
+    flexDiv2.appendChild(saltText);
+    flexDiv2.appendChild(reloadSalt);
     node.appendChild(header);
-    node.appendChild(select);
+    node.appendChild(flexDiv);
+    node.appendChild(flexDiv2);
     node.appendChild(text);
     this.container.appendChild(node);
     this.dragElement(node);
   }
   changedInput(node, value) {
-    console.log(this.allHashes, this.curHash);
+    console.log(this.connections, node);
     this.connections.forEach((con) => {
-      let index = con.indexOf(node);
-      if (index != void 0) {
-        con[(index + 1) % 2].getElementsByTagName("sl-textarea")[0].value = value != "" ? this.toHex(this.allHashes[this.curHash](value)) : "";
+      if (con[0].getAttribute("identifier") === node.getAttribute("identifier")) {
+        con[1].getElementsByTagName("sl-textarea")[0].value = value != "" ? this.toHex(this.allHashes[this.curHash](value)) : "";
+      } else if (con[1].getAttribute("identifier") === node.getAttribute("identifier")) {
+        con[0].getElementsByTagName("sl-textarea")[0].value = value != "" ? this.toHex(this.allHashes[this.curHash](value)) : "";
       }
     });
   }
@@ -10521,27 +11834,48 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     } else {
       if (this.conBuffer != node && this.conBuffer.getAttribute("type") != node.getAttribute("type")) {
         this.connections.push([this.conBuffer, node]);
-        const stopLineDrwawing = this.drawCon(this.conBuffer, node, this.container, this.getBoundingClientRect());
+        let stopLineDrwawing = this.drawCon(
+          this.conBuffer,
+          node,
+          this.container,
+          this.getBoundingClientRect()
+        );
+        let text1 = this.conBuffer.getElementsByTagName("sl-textarea")[0].value;
+        let text2 = node.getElementsByTagName("sl-textarea")[0].value;
+        if (node.getAttribute("type") === "input") {
+          this.changedInput(node, text2);
+        } else if (this.conBuffer.getAttribute("type") === "input") {
+          this.changedInput(this.conBuffer, text1);
+        }
       }
       this.conBuffer = null;
     }
   }
   drawCon(div1, div2, container, parentDims) {
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.style.position = "relative";
     svg.style.pointerEvents = "none";
     svg.style.zIndex = "-1";
     svg.style.overflow = "visible";
     svg.setAttribute("width", "10");
     svg.setAttribute("height", "10");
-    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    const filter = document.createElementNS("http://www.w3.org/2000/svg", "filter");
+    let defs = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "defs"
+    );
+    let filter = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "filter"
+    );
     filter.setAttribute("id", "curve-shadow");
     filter.setAttribute("x", "-50%");
     filter.setAttribute("y", "-50%");
     filter.setAttribute("width", "200%");
     filter.setAttribute("height", "200%");
-    const dropShadow = document.createElementNS("http://www.w3.org/2000/svg", "feDropShadow");
+    let dropShadow = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "feDropShadow"
+    );
     dropShadow.setAttribute("dx", "5");
     dropShadow.setAttribute("dy", "10");
     dropShadow.setAttribute("stdDeviation", "3");
@@ -10549,7 +11883,10 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     filter.appendChild(dropShadow);
     defs.appendChild(filter);
     svg.appendChild(defs);
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    let path = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "path"
+    );
     path.setAttribute("stroke", "#2594c9");
     path.setAttribute("stroke-width", "2");
     path.setAttribute("fill", "none");
@@ -10557,33 +11894,37 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     path.setAttribute("filter", "url(#curve-shadow)");
     container.appendChild(svg);
     let animationFrameId;
-    console.log(parentDims, div1.getBoundingClientRect(), div2.getBoundingClientRect());
+    console.log(
+      parentDims,
+      div1.getBoundingClientRect(),
+      div2.getBoundingClientRect()
+    );
     function updatePath() {
       if (!container.contains(div1) || !container.contains(div2)) {
         cleanup();
         return;
       }
-      const rect1 = div1.getBoundingClientRect();
-      const rect2 = div2.getBoundingClientRect();
-      const center1 = {
+      let rect1 = div1.getBoundingClientRect();
+      let rect2 = div2.getBoundingClientRect();
+      let center1 = {
         x: rect1.left - parentDims.left - rect1.width / 2,
         y: rect1.top - parentDims.top - rect1.height / 2
       };
-      const center2 = {
+      let center2 = {
         x: rect2.left - parentDims.left - rect2.width / 2,
         y: rect2.top - parentDims.top - rect2.height / 2
       };
-      const horizontal = Math.abs(center1.x - center2.x) > Math.abs(center1.y - center2.y);
-      const x1 = horizontal ? center1.x < center2.x ? rect1.right - parentDims.left - rect1.width * 1.1 : rect1.left - parentDims.left - rect1.width * 1.05 : rect1.left - parentDims.left - rect1.width / 2;
-      const y1 = horizontal ? rect1.top - parentDims.top + rect1.height / 2 : center1.y < center2.y ? rect1.bottom - parentDims.top - 15 : rect1.top - parentDims.top - 15;
-      const x22 = horizontal ? center1.x < center2.x ? rect2.left - parentDims.left - rect2.width * 1.1 : rect2.right - parentDims.left - rect2.width * 1.15 : rect2.left - parentDims.left - rect2.width / 2;
-      const y22 = horizontal ? rect2.top - parentDims.top + rect2.height / 2 : center1.y < center2.y ? rect2.top - parentDims.top - 15 : rect2.bottom - parentDims.top - 15;
-      const curveOffset = 75;
-      const cp1x = horizontal ? x1 + curveOffset * (x1 < x22 ? 1 : -1) : x1;
-      const cp1y = horizontal ? y1 : y1 + curveOffset * (y1 < y22 ? 1 : -1);
-      const cp2x = horizontal ? x22 - curveOffset * (x1 < x22 ? 1 : -1) : x22;
-      const cp2y = horizontal ? y22 : y22 - curveOffset * (y1 < y22 ? 1 : -1);
-      const pathData = `M ${x1},${y1} C ${cp1x},${cp1y} ${cp2x},${cp2y} ${x22},${y22}`;
+      let horizontal = Math.abs(center1.x - center2.x) > Math.abs(center1.y - center2.y);
+      let x1 = horizontal ? center1.x < center2.x ? rect1.right - parentDims.left - rect1.width * 1.1 : rect1.left - parentDims.left - rect1.width * 1.05 : rect1.left - parentDims.left - rect1.width / 2;
+      let y1 = horizontal ? rect1.top - parentDims.top + rect1.height / 2 : center1.y < center2.y ? rect1.bottom - parentDims.top - 15 : rect1.top - parentDims.top - 15;
+      let x22 = horizontal ? center1.x < center2.x ? rect2.left - parentDims.left - rect2.width * 1.1 : rect2.right - parentDims.left - rect2.width * 1.15 : rect2.left - parentDims.left - rect2.width / 2;
+      let y22 = horizontal ? rect2.top - parentDims.top + rect2.height / 2 : center1.y < center2.y ? rect2.top - parentDims.top - 15 : rect2.bottom - parentDims.top - 15;
+      let curveOffset = 75;
+      let cp1x = horizontal ? x1 + curveOffset * (x1 < x22 ? 1 : -1) : x1;
+      let cp1y = horizontal ? y1 : y1 + curveOffset * (y1 < y22 ? 1 : -1);
+      let cp2x = horizontal ? x22 - curveOffset * (x1 < x22 ? 1 : -1) : x22;
+      let cp2y = horizontal ? y22 : y22 - curveOffset * (y1 < y22 ? 1 : -1);
+      let pathData = `M ${x1},${y1} C ${cp1x},${cp1y} ${cp2x},${cp2y} ${x22},${y22}`;
       path.setAttribute("d", pathData);
       path.style.transition = "d 50ms ease";
       animationFrameId = requestAnimationFrame(updatePath);
@@ -10593,7 +11934,7 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
       svg.remove();
       observer.disconnect();
     }
-    const observer = new MutationObserver(() => {
+    let observer = new MutationObserver(() => {
       if (!container.contains(div1) || !container.contains(div2)) {
         cleanup();
       }
@@ -10630,42 +11971,65 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
       document.onmousemove = null;
     }
   }
-  /** Define your template here and return it. */
   render() {
     return x`
-      
-      <div id="container">
-
-        <sl-button @click=${() => {
-      this.spawnDiv("input");
-    }}>spawn input</sl-button>
-        <sl-button @click=${() => {
-      this.spawnDiv("output");
-    }}>spawn output</sl-button>
-      </div>
-      
-      `;
+			<div id="container">
+				<div id="context">
+					<div
+						style="display: flex; flex-direction: row; align-items: center"
+					>
+						<sl-icon-button
+							src=${material_symbols_code_blocks_outline_rounded_default}
+							@click=${(e12) => {
+      this.spawnDiv(
+        "input",
+        e12.screenX - e12.offsetX,
+        e12.screenY - e12.offsetY
+      );
+      this.context.style.display = "none";
+    }}
+							>spawn input</sl-icon-button
+						>
+						<b style="font-size: 10pt; font-weight: 500">input</b>
+					</div>
+					<sl-divider></sl-divider>
+					<div
+						style="display: flex; flex-direction: row; align-items: center"
+					>
+						<sl-icon-button
+							src=${material_symbols_text_compare_rounded_default}
+							@click=${(e12) => {
+      this.spawnDiv(
+        "output",
+        e12.screenX - e12.offsetX,
+        e12.screenY - e12.offsetY
+      );
+      this.context.style.display = "none";
+    }}
+							>spawn output</sl-icon-button
+						>
+						<b style="font-size: 10pt; font-weight: 500">output</b>
+					</div>
+				</div>
+			</div>
+		`;
   }
 };
 _init2 = __decoratorStart(_a2);
 _container = new WeakMap();
-_hex_string = new WeakMap();
+_context = new WeakMap();
 _connections = new WeakMap();
 _conBuffer = new WeakMap();
 _curHash = new WeakMap();
+_useSalt = new WeakMap();
 __decorateElement(_init2, 4, "container", _container_dec, WebwriterHash, _container);
-__decorateElement(_init2, 4, "hex_string", _hex_string_dec, WebwriterHash, _hex_string);
+__decorateElement(_init2, 4, "context", _context_dec, WebwriterHash, _context);
 __decorateElement(_init2, 4, "connections", _connections_dec, WebwriterHash, _connections);
 __decorateElement(_init2, 4, "conBuffer", _conBuffer_dec, WebwriterHash, _conBuffer);
 __decorateElement(_init2, 4, "curHash", _curHash_dec, WebwriterHash, _curHash);
+__decorateElement(_init2, 4, "useSalt", _useSalt_dec, WebwriterHash, _useSalt);
 WebwriterHash = __decorateElement(_init2, 0, "WebwriterHash", _WebwriterHash_decorators, WebwriterHash);
-/** Put the styles for your Shadow DOM (what is rendered through render()) here. */
-__publicField(WebwriterHash, "styles", i`
-  #container{
-     position: relative;
-     height: 100%
-  }
-  `);
+__publicField(WebwriterHash, "styles", style);
 __runInitializers(_init2, 1, WebwriterHash);
 export {
   WebwriterHash
