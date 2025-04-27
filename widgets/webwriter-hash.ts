@@ -42,6 +42,45 @@ export class WebwriterHash extends LitElementWw {
 	@query("#context")
 	private accessor context: HTMLDivElement;
 
+	@property({
+		attribute: true,
+		type: Object,
+		reflect: true,
+		converter: {
+			toAttribute(value) {
+				return value != null ? JSON.stringify(value) : null;
+			},
+			fromAttribute(value) {
+				try {
+					return value ? JSON.parse(value) : null;
+				} catch (e) {
+					console.error("Failed to parse attribute value:", value, e);
+					return null;
+				}
+			},
+		},
+	})
+	private accessor elems: object = {};
+	@property({
+		attribute: true,
+		type: Object,
+		reflect: true,
+		converter: {
+			toAttribute(value) {
+				return value != null ? JSON.stringify(value) : null;
+			},
+			fromAttribute(value) {
+				try {
+					return value ? JSON.parse(value) : null;
+				} catch (e) {
+					console.error("Failed to parse attribute value:", value, e);
+					return null;
+				}
+			},
+		},
+	})
+	private accessor cons: object = {};
+
 	@property({ attribute: false })
 	private accessor connections: HTMLDivElement[][] = [];
 
@@ -52,8 +91,9 @@ export class WebwriterHash extends LitElementWw {
 	private accessor curHash: string = "";
 
 	@property({ attribute: false })
-	private accessor useSalt: boolean = false;
+	private accessor mousePos: [number, number] = [0, 0];
 
+	private drawObject = null;
 	private currConSelect: SlIconButton = null;
 	private hex_string: string = "0123456789abcdef";
 	private allHashes = Object.assign(
@@ -80,23 +120,164 @@ export class WebwriterHash extends LitElementWw {
 			"sl-input": SlInput,
 			"sl-checkbox": SlCheckbox,
 			"sl-icon-button": SlIconButton,
-			"sl-divider": SlDivider
+			"sl-divider": SlDivider,
 		};
 	}
 
 	protected firstUpdated(_changedProperties: PropertyValues): void {
 		this.addEventListener("contextmenu", (e) => {
+			e.preventDefault();
 			this.context.style.top = e.offsetY + "px";
 			this.context.style.left = e.offsetX + "px";
 			this.context.style.display =
 				this.context.style.display === "flex" ? "" : "flex";
 		});
+
+		this.addEventListener("click", (e) => {
+			this.context.style.display = "";
+		});
+
+		this.addEventListener("mousemove", (e) => {
+			this.mousePos[0] = e.offsetX;
+			this.mousePos[1] = e.offsetY;
+		});
+
+		Object.keys(this.elems).forEach((key) => {
+			let object = this.spawnDiv(
+				this.elems[key].type,
+				this.elems[key].x,
+				this.elems[key].y,
+				false
+			);
+			if(object.getAttribute("type") === "input"){
+				object.getElementsByTagName("sl-select")[0].value = this.elems[key].hash
+			}
+			object.getElementsByTagName("sl-textarea")[0].value = this.elems[key].text != undefined ? this.elems[key].text : "" 
+			object.setAttribute("identifier", key)
+		});
+
+		Object.keys(this.cons).forEach((key)=>{
+			let object1: HTMLDivElement
+			let object2: HTMLDivElement
+
+			for (let element of this.container.getElementsByTagName("div")){
+				if(element.getAttribute("identifier") === key){
+					object1 = element as HTMLDivElement
+				}
+				if(element.getAttribute("identifier") === this.cons[key]){
+					object2 = element as HTMLDivElement
+				}
+			}
+
+			if(object1.getAttribute("type") === "input"){
+				this.curHash = object1.getElementsByTagName("sl-select")[0].value
+			}else{
+				this.curHash = object2.getElementsByTagName("sl-select")[0].value
+			}
+			this.establishCon(object1, false, true, object2)
+		})
 	}
 
 	private toHex(bytes): string {
 		return Array.from(bytes || [])
 			.map((b) => this.hex_string[b >> 4] + this.hex_string[b & 15])
 			.join("");
+	}
+
+	private updateElems(path, value, options = {}) {
+		const parts = Array.isArray(path) ? path : path.split(".");
+		let data = { ...this.elems };
+
+		if (options.delete || (value === undefined && !options.rename)) {
+			if (parts.length === 1) {
+				delete data[parts[0]];
+			} else {
+				let current = data;
+				for (let i = 0; i < parts.length - 1; i++) {
+					const part = parts[i];
+					current[part] = { ...(current[part] ?? {}) };
+					current = current[part];
+				}
+				delete current[parts[parts.length - 1]];
+			}
+			this.elems = data;
+			return;
+		}
+
+		if (options.rename) {
+			const fromKey = parts[0];
+			const toKey = options.rename;
+
+			if (data.hasOwnProperty(fromKey)) {
+				data[toKey] = data[fromKey];
+				delete data[fromKey];
+				this.elems = data;
+				return;
+			} else {
+				console.warn(`Key "${fromKey}" not found, cannot rename.`);
+				return;
+			}
+		}
+
+		let current = data;
+		for (let i = 0; i < parts.length - 1; i++) {
+			const part = parts[i];
+			current[part] = { ...(current[part] ?? {}) };
+			current = current[part];
+		}
+
+		const lastKey = parts[parts.length - 1];
+		current[lastKey] = value;
+
+		this.elems = data;
+	}
+
+	private updateCons(path, value, options = {}) {
+		const parts = Array.isArray(path) ? path : path.split(".");
+		let data = { ...this.cons };
+
+		if (options.delete || (value === undefined && !options.rename)) {
+			if (parts.length === 1) {
+				delete data[parts[0]];
+			} else {
+				let current = data;
+				for (let i = 0; i < parts.length - 1; i++) {
+					const part = parts[i];
+					current[part] = { ...(current[part] ?? {}) };
+					current = current[part];
+				}
+				delete current[parts[parts.length - 1]];
+			}
+			this.cons = data;
+			return;
+		}
+
+		if (options.rename) {
+			const fromKey = parts[0];
+			const toKey = options.rename;
+
+			if (data.hasOwnProperty(fromKey)) {
+				data[toKey] = data[fromKey];
+				delete data[fromKey];
+				this.cons = data;
+				return;
+			} else {
+				console.warn(`Key "${fromKey}" not found, cannot rename.`);
+				return;
+			}
+		}
+
+		let current = data;
+		for (let i = 0; i < parts.length - 1; i++) {
+			const part = parts[i];
+			current[part] = { ...(current[part] ?? {}) };
+			current = current[part];
+		}
+
+		const lastKey = parts[parts.length - 1];
+		current[lastKey] = value;
+
+		this.cons = data;
 	}
 
 	private fillOptions(element: SlSelect): void {
@@ -111,7 +292,12 @@ export class WebwriterHash extends LitElementWw {
 		});
 	}
 
-	private spawnDiv(type: string, x: number, y: number): void {
+	private spawnDiv(
+		type: string,
+		x: number,
+		y: number,
+		addToElems?
+	): HTMLDivElement {
 		let node: HTMLDivElement = this.shadowRoot.createElement(
 			"div"
 		) as HTMLDivElement;
@@ -121,8 +307,10 @@ export class WebwriterHash extends LitElementWw {
 			"identifier",
 			Math.floor(Date.now() / 1000).toString()
 		);
+		node.setAttribute("useSalt", "false");
 		node.style.top = y + "px";
 		node.style.left = x + "px";
+		node.style.zIndex = "5";
 		let header: HTMLDivElement = this.shadowRoot.createElement(
 			"div"
 		) as HTMLDivElement;
@@ -132,13 +320,14 @@ export class WebwriterHash extends LitElementWw {
 		let title: HTMLParagraphElement = this.shadowRoot.createElement(
 			"b"
 		) as HTMLParagraphElement;
-		title.innerHTML = type; 
+		title.innerHTML = type;
 		let remButton: SlIconButton = this.shadowRoot.createElement(
 			"sl-icon-button"
 		) as SlIconButton;
 		remButton.src = trash_svg;
 		remButton.onclick = (e) => {
-			node.remove();
+			this.updateElems(node.getAttribute("identifier"), undefined);
+			this.removeNode(node);
 		};
 		let conButton: SlIconButton = this.shadowRoot.createElement(
 			"sl-icon-button"
@@ -162,7 +351,14 @@ export class WebwriterHash extends LitElementWw {
 		text.id = "text";
 		text.oninput = (e) => {
 			if (!text.disabled) {
+				if (this.curHash != select.value) {
+					this.curHash = select.value;
+				}
 				this.changedInput(node, text.value);
+				this.updateElems(
+					`${node.getAttribute("identifier")}.text`,
+					text.value
+				);
 			}
 		};
 		text.onmousedown = (e) => e.stopPropagation();
@@ -179,7 +375,15 @@ export class WebwriterHash extends LitElementWw {
 		select.size = "small";
 		select.addEventListener("sl-change", (e) => {
 			this.curHash = select.value;
-			text.value != "" ? this.changedInput(node, text.value) : "";
+			this.updateElems(
+				`${node.getAttribute("identifier")}.hash`,
+				select.value
+			);
+			if (node.getAttribute("useSalt") === "true") {
+				this.changedInput(node, text.value, saltText.value);
+			} else {
+				text.value != "" ? this.changedInput(node, text.value) : "";
+			}
 		});
 		setTimeout(() => {
 			select.shadowRoot.getElementById("listbox").style.height = "175px";
@@ -201,6 +405,10 @@ export class WebwriterHash extends LitElementWw {
 		reloadSalt.size = "small";
 		reloadSalt.onclick = (e) => {
 			saltText.value = this.toHex(randomBytes(32));
+			if (this.curHash != select.value) {
+				this.curHash = select.value;
+			}
+			this.changedInput(node, text.value, saltText.value);
 		};
 		let saltCheck: SlIconButton = this.shadowRoot.createElement(
 			"sl-icon-button"
@@ -208,21 +416,22 @@ export class WebwriterHash extends LitElementWw {
 		saltCheck.id = "saltCheck";
 		saltCheck.src = salt_svg;
 		saltCheck.onclick = (e) => {
-			console.log(flexDiv2.style.display);
+			if (this.curHash != select.value) {
+				this.curHash = select.value;
+			}
 			if (
 				flexDiv2.style.display === "none" ||
 				flexDiv2.style.display === ""
 			) {
 				flexDiv2.style.display = "flex";
-				this.useSalt = true;
-				saltCheck.style.color = "#2594c9";
-				if (saltText.value === "") {
-					saltText.value = this.toHex(randomBytes(32));
-				}
+				saltText.value = this.toHex(randomBytes(32));
+				node.setAttribute("useSalt", "true");
+				this.changedInput(node, text.value, saltText.value);
 			} else {
 				flexDiv2.style.display = "none";
-				this.useSalt = false;
 				saltCheck.style.color = "";
+				node.setAttribute("useSalt", "false");
+				this.changedInput(node, text.value);
 			}
 		};
 		if (type === "output") {
@@ -246,9 +455,29 @@ export class WebwriterHash extends LitElementWw {
 		node.appendChild(text);
 		this.container.appendChild(node);
 		this.dragElement(node);
+
+		if (addToElems != false) {
+			this.updateElems(
+				`${node.getAttribute("identifier")}.x`,
+				node.getBoundingClientRect().x
+			);
+			this.updateElems(
+				`${node.getAttribute("identifier")}.y`,
+				node.getBoundingClientRect().y
+			);
+			this.updateElems(
+				`${node.getAttribute("identifier")}.type`,
+				node.getAttribute("type")
+			);
+		}
+
+		return node;
 	}
-	private changedInput(node: HTMLDivElement, value: string) {
-		console.log(this.connections, node);
+	private changedInput(
+		node: HTMLDivElement,
+		value: string,
+		saltValue?: string
+	) {
 		this.connections.forEach((con) => {
 			if (
 				con[0].getAttribute("identifier") ===
@@ -258,7 +487,16 @@ export class WebwriterHash extends LitElementWw {
 					con[1].getElementsByTagName("sl-textarea")[0] as SlTextarea
 				).value =
 					value != ""
-						? this.toHex(this.allHashes[this.curHash](value))
+						? this.toHex(
+								this.allHashes[this.curHash](
+									saltValue != undefined
+										? String.prototype.concat(
+												value,
+												saltValue
+										  )
+										: value
+								)
+						  )
 						: "";
 			} else if (
 				con[1].getAttribute("identifier") ===
@@ -268,7 +506,16 @@ export class WebwriterHash extends LitElementWw {
 					con[0].getElementsByTagName("sl-textarea")[0] as SlTextarea
 				).value =
 					value != ""
-						? this.toHex(this.allHashes[this.curHash](value))
+						? this.toHex(
+								this.allHashes[this.curHash](
+									saltValue != undefined
+										? String.prototype.concat(
+												value,
+												saltValue
+										  )
+										: value
+								)
+						  )
 						: "";
 			}
 		});
@@ -283,24 +530,55 @@ export class WebwriterHash extends LitElementWw {
 		});
 		removeIndices.forEach((index) => {
 			this.connections.splice(index, 1);
+			let remKey = ""
+			Object.keys(this.cons).forEach((key)=>{
+				if(key === node.getAttribute("identifier") || this.cons[key] === node.getAttribute("identifier")){
+					remKey = key
+				}
+			})
+			this.updateCons(remKey, undefined)
 		});
 		node.remove();
-		console.log(this.connections);
 	}
-	establishCon(node: HTMLDivElement) {
-		if (this.conBuffer === null) {
+	establishCon(node: HTMLDivElement, addToCons = true, existing?: boolean, partner?: HTMLDivElement) {
+		console.log("ENTER", node, partner)
+		if (this.conBuffer === null && existing != true) {
 			this.conBuffer = node;
+			this.drawObject = this.createMouseLineDrawer(
+				this.mousePos[0],
+				this.mousePos[1],
+				this,
+				this.getBoundingClientRect()
+			);
+			this.drawObject.toggle();
 		} else {
+			let noPriorCon = true;
+			this.connections.forEach((con) => {
+				if (
+					(con[0] === node && con[1] === this.conBuffer) ||
+					(con[1] === node && con[0] === this.conBuffer)
+				) {
+					noPriorCon = false;
+				}
+			});
+			if(existing){
+				this.conBuffer = partner
+			}
 			if (
 				this.conBuffer != node &&
-				this.conBuffer.getAttribute("type") != node.getAttribute("type")
+				this.conBuffer.getAttribute("type") !=
+					node.getAttribute("type") &&
+				noPriorCon
 			) {
 				this.connections.push([this.conBuffer, node]);
+				if(addToCons){
+					this.updateCons(node.getAttribute("identifier"), this.conBuffer.getAttribute("identifier"))
+				}
 				let stopLineDrwawing = this.drawCon(
 					this.conBuffer,
 					node,
 					this.container,
-					this.getBoundingClientRect()
+					this.container.getBoundingClientRect()
 				);
 
 				let text1: string =
@@ -309,12 +587,31 @@ export class WebwriterHash extends LitElementWw {
 					node.getElementsByTagName("sl-textarea")[0].value;
 
 				if (node.getAttribute("type") === "input") {
-					this.changedInput(node, text2);
+					if (node.getAttribute("useSalt") === "true") {
+						let saltText: string =
+							node.getElementsByTagName("sl-input")[0].value;
+						this.changedInput(node, text2, saltText);
+					} else {
+						this.changedInput(node, text2);
+					}
 				} else if (this.conBuffer.getAttribute("type") === "input") {
-					this.changedInput(this.conBuffer, text1);
+					if (this.conBuffer.getAttribute("useSalt") === "true") {
+						let saltText: string =
+							this.conBuffer.getElementsByTagName("sl-input")[0]
+								.value;
+						this.changedInput(this.conBuffer, text1, saltText);
+					} else {
+						this.changedInput(this.conBuffer, text1);
+					}
 				}
 			}
 			this.conBuffer = null;
+			if(existing != true){
+				this.drawObject.toggle();
+				this.drawObject.destroy();
+			}
+			this.drawObject = null;	
+			console.log(this.connections)
 		}
 	}
 
@@ -325,9 +622,14 @@ export class WebwriterHash extends LitElementWw {
 		parentDims: DOMRect
 	): () => void {
 		let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-		svg.style.position = "relative";
+		svg.style.position = "sticky";
 		svg.style.pointerEvents = "none";
-		svg.style.zIndex = "-1";
+		svg.style.zIndex = (
+			Math.min(
+				Number.parseInt(div1.style.zIndex),
+				Number.parseInt(div2.style.zIndex)
+			) - 1
+		).toString();
 		svg.style.overflow = "visible";
 		svg.setAttribute("width", "10");
 		svg.setAttribute("height", "10");
@@ -371,11 +673,6 @@ export class WebwriterHash extends LitElementWw {
 		container.appendChild(svg);
 
 		let animationFrameId: number;
-		console.log(
-			parentDims,
-			div1.getBoundingClientRect(),
-			div2.getBoundingClientRect()
-		);
 		function updatePath() {
 			if (!container.contains(div1) || !container.contains(div2)) {
 				cleanup();
@@ -401,27 +698,27 @@ export class WebwriterHash extends LitElementWw {
 
 			let x1 = horizontal
 				? center1.x < center2.x
-					? rect1.right - parentDims.left - rect1.width * 1.1
-					: rect1.left - parentDims.left - rect1.width * 1.05
-				: rect1.left - parentDims.left - rect1.width / 2;
+					? div1.offsetLeft + rect1.width
+					: div1.offsetLeft
+				: div1.offsetLeft;
 
 			let y1 = horizontal
-				? rect1.top - parentDims.top + rect1.height / 2
+				? div1.offsetTop
 				: center1.y < center2.y
-				? rect1.bottom - parentDims.top - 15
-				: rect1.top - parentDims.top - 15;
+				? div1.offsetTop + rect1.height
+				: div1.offsetTop;
 
 			let x2 = horizontal
 				? center1.x < center2.x
-					? rect2.left - parentDims.left - rect2.width * 1.1
-					: rect2.right - parentDims.left - rect2.width * 1.15
-				: rect2.left - parentDims.left - rect2.width / 2;
+					? div2.offsetLeft
+					: div2.offsetLeft + rect2.width
+				: div2.offsetLeft;
 
 			let y2 = horizontal
-				? rect2.top - parentDims.top + rect2.height / 2
+				? div2.offsetTop
 				: center1.y < center2.y
-				? rect2.top - parentDims.top - 15
-				: rect2.bottom - parentDims.top - 15;
+				? div2.offsetTop + rect2.height
+				: div2.offsetTop;
 
 			let curveOffset = 75;
 
@@ -460,7 +757,7 @@ export class WebwriterHash extends LitElementWw {
 		return cleanup;
 	}
 
-	private dragElement(elmnt) {
+	private dragElement(elmnt, parent = this) {
 		var pos1 = 0,
 			pos2 = 0,
 			pos3 = 0,
@@ -488,12 +785,110 @@ export class WebwriterHash extends LitElementWw {
 
 			elmnt.style.top = elmnt.offsetTop - pos2 + "px";
 			elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+			parent.updateElems(`${elmnt.getAttribute("identifier")}.x`, elmnt.offsetLeft - pos1)
+			parent.updateElems(`${elmnt.getAttribute("identifier")}.y`, elmnt.offsetTop - pos2)
 		}
 
 		function closeDragElement() {
 			document.onmouseup = null;
 			document.onmousemove = null;
 		}
+	}
+
+	private createMouseLineDrawer(
+		fixedX: number,
+		fixedY: number,
+		parent: WebwriterHash,
+		parentRect: DOMRect
+	) {
+		const fixedPoint = { x: fixedX, y: fixedY };
+
+		let svg: SVGSVGElement | null = null;
+		let line: SVGLineElement | null = null;
+		let isDrawing = false;
+		let animationFrameId: number | null = null;
+
+		function setupSVG() {
+			svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+			svg.setAttribute(
+				"style",
+				`
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			pointer-events: none;
+			z-index: 9999;
+		  `
+			);
+			svg.setAttribute("width", "100%");
+			svg.setAttribute("height", "100%");
+
+			line = document.createElementNS(
+				"http://www.w3.org/2000/svg",
+				"line"
+			);
+			line.setAttribute("x1", fixedPoint.x.toString());
+			line.setAttribute("y1", fixedPoint.y.toString());
+			line.setAttribute("x2", fixedPoint.x.toString());
+			line.setAttribute("y2", fixedPoint.y.toString());
+			line.setAttribute("stroke", "darkgrey");
+			line.setAttribute("stroke-opacity", "0.5");
+			line.setAttribute("stroke-linecap", "butt");
+			line.setAttribute("stroke-dasharray", "35,10");
+			line.setAttribute("stroke-width", "2");
+
+			svg.appendChild(line);
+			parent.container.appendChild(svg);
+		}
+
+		function updateLine() {
+			if (line) {
+				line.setAttribute("x2", parent.mousePos[0].toString());
+				line.setAttribute("y2", parent.mousePos[1].toString());
+			}
+		}
+
+		function drawLoop() {
+			if (!isDrawing) return;
+			updateLine();
+			animationFrameId = requestAnimationFrame(drawLoop);
+		}
+
+		function start() {
+			if (!svg) setupSVG();
+			isDrawing = true;
+			drawLoop();
+		}
+
+		function stop() {
+			isDrawing = false;
+			if (animationFrameId !== null) {
+				cancelAnimationFrame(animationFrameId);
+			}
+			if (line) {
+				line.setAttribute("x2", fixedPoint.x.toString());
+				line.setAttribute("y2", fixedPoint.y.toString());
+			}
+		}
+
+		function destroy() {
+			stop();
+			svg?.remove();
+			svg = null;
+			line = null;
+		}
+
+		function toggle() {
+			isDrawing ? stop() : start();
+		}
+
+		return {
+			toggle,
+			stop,
+			destroy,
+		};
 	}
 
 	render() {
@@ -508,8 +903,8 @@ export class WebwriterHash extends LitElementWw {
 							@click=${(e) => {
 								this.spawnDiv(
 									"input",
-									e.screenX - e.offsetX,
-									e.screenY - e.offsetY
+									this.mousePos[0],
+									this.mousePos[1]
 								);
 								this.context.style.display = "none";
 							}}
@@ -526,8 +921,8 @@ export class WebwriterHash extends LitElementWw {
 							@click=${(e) => {
 								this.spawnDiv(
 									"output",
-									e.screenX - e.offsetX,
-									e.screenY - e.offsetY
+									this.mousePos[0],
+									this.mousePos[1]
 								);
 								this.context.style.display = "none";
 							}}

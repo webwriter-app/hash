@@ -15,8 +15,8 @@
     "dependencies": {
         "@noble/hashes": "^1.7.2",
         "@shoelace-style/shoelace": "^2.20.1",
-        "@webwriter/lit": "^2.1.6",
-        "lit": "3.2.1"
+        "@webwriter/lit": "^2.1.7",
+        "lit": "^3.3.0"
     },
     "devDependencies": {
         "@lit/localize-tools": "^0.8.0"

@@ -363,13 +363,13 @@ var V = (t7, i8) => {
   }
   return [P(t7, l6 + (t7[s5] || "<?>") + (2 === i8 ? "</svg>" : 3 === i8 ? "</math>" : "")), o10];
 };
-var N = class _N {
+var N = class _N2 {
   constructor({ strings: t7, _$litType$: s5 }, n7) {
     let r8;
     this.parts = [];
     let c6 = 0, a5 = 0;
     const u6 = t7.length - 1, d4 = this.parts, [f6, v3] = V(t7, s5);
-    if (this.el = _N.createElement(f6, n7), C.currentNode = this.el.content, 2 === s5 || 3 === s5) {
+    if (this.el = _N2.createElement(f6, n7), C.currentNode = this.el.content, 2 === s5 || 3 === s5) {
       const t8 = this.el.content.firstChild;
       t8.replaceWith(...t8.childNodes);
     }
@@ -434,7 +434,7 @@ var M = class {
     for (const s5 of this._$AV) void 0 !== s5 && (void 0 !== s5.strings ? (s5._$AI(t7, s5, i8), i8 += s5.strings.length - 2) : s5._$AI(t7[i8])), i8++;
   }
 };
-var R = class _R {
+var R = class _R2 {
   get _$AU() {
     return this._$AM?._$AU ?? this._$Cv;
   }
@@ -480,7 +480,7 @@ var R = class _R {
     a2(this._$AH) || (this._$AH = [], this._$AR());
     const i8 = this._$AH;
     let s5, e12 = 0;
-    for (const h4 of t7) e12 === i8.length ? i8.push(s5 = new _R(this.O(l2()), this.O(l2()), this, this.options)) : s5 = i8[e12], s5._$AI(h4), e12++;
+    for (const h4 of t7) e12 === i8.length ? i8.push(s5 = new _R2(this.O(l2()), this.O(l2()), this, this.options)) : s5 = i8[e12], s5._$AI(h4), e12++;
     e12 < i8.length && (this._$AR(s5 && s5._$AB.nextSibling, e12), i8.length = e12);
   }
   _$AR(t7 = this._$AA.nextSibling, i8) {
@@ -616,32 +616,32 @@ var __expectFn2 = (fn) => fn !== void 0 && typeof fn !== "function" ? __typeErro
 var __decoratorContext2 = (kind, name, done, metadata, fns) => ({ kind: __decoratorStrings2[kind], name, metadata, addInitializer: (fn) => done._ ? __typeError2("Already initialized") : fns.push(__expectFn2(fn || null)) });
 var __decoratorMetadata2 = (array, target) => __defNormalProp2(target, __knownSymbol2("metadata"), array[3]);
 var __runInitializers2 = (array, flags, self, value) => {
-  for (var i32 = 0, fns = array[flags >> 1], n52 = fns && fns.length; i32 < n52; i32++) flags & 1 ? fns[i32].call(self) : value = fns[i32].call(self, value);
+  for (var i52 = 0, fns = array[flags >> 1], n52 = fns && fns.length; i52 < n52; i52++) flags & 1 ? fns[i52].call(self) : value = fns[i52].call(self, value);
   return value;
 };
 var __decorateElement2 = (array, flags, name, decorators, target, extra) => {
-  var fn, it, done, ctx, access, k22 = flags & 7, s22 = !!(flags & 8), p22 = !!(flags & 16);
-  var j22 = k22 > 3 ? array.length + 1 : k22 ? s22 ? 1 : 2 : 0, key = __decoratorStrings2[k22 + 5];
+  var fn, it, done, ctx, access, k22 = flags & 7, s42 = !!(flags & 8), p33 = !!(flags & 16);
+  var j22 = k22 > 3 ? array.length + 1 : k22 ? s42 ? 1 : 2 : 0, key = __decoratorStrings2[k22 + 5];
   var initializers = k22 > 3 && (array[j22 - 1] = []), extraInitializers = array[j22] || (array[j22] = []);
-  var desc = k22 && (!p22 && !s22 && (target = target.prototype), k22 < 5 && (k22 > 3 || !p22) && __getOwnPropDesc2(k22 < 4 ? target : { get [name]() {
+  var desc = k22 && (!p33 && !s42 && (target = target.prototype), k22 < 5 && (k22 > 3 || !p33) && __getOwnPropDesc2(k22 < 4 ? target : { get [name]() {
     return __privateGet2(this, extra);
   }, set [name](x22) {
     return __privateSet2(this, extra, x22);
   } }, name));
-  k22 ? p22 && k22 < 4 && __name2(extra, (k22 > 2 ? "set " : k22 > 1 ? "get " : "") + name) : __name2(target, name);
-  for (var i32 = decorators.length - 1; i32 >= 0; i32--) {
+  k22 ? p33 && k22 < 4 && __name2(extra, (k22 > 2 ? "set " : k22 > 1 ? "get " : "") + name) : __name2(target, name);
+  for (var i52 = decorators.length - 1; i52 >= 0; i52--) {
     ctx = __decoratorContext2(k22, name, done = {}, array[3], extraInitializers);
     if (k22) {
-      ctx.static = s22, ctx.private = p22, access = ctx.access = { has: p22 ? (x22) => __privateIn2(target, x22) : (x22) => name in x22 };
-      if (k22 ^ 3) access.get = p22 ? (x22) => (k22 ^ 1 ? __privateGet2 : __privateMethod2)(x22, target, k22 ^ 4 ? extra : desc.get) : (x22) => x22[name];
-      if (k22 > 2) access.set = p22 ? (x22, y22) => __privateSet2(x22, target, y22, k22 ^ 4 ? extra : desc.set) : (x22, y22) => x22[name] = y22;
+      ctx.static = s42, ctx.private = p33, access = ctx.access = { has: p33 ? (x22) => __privateIn2(target, x22) : (x22) => name in x22 };
+      if (k22 ^ 3) access.get = p33 ? (x22) => (k22 ^ 1 ? __privateGet2 : __privateMethod2)(x22, target, k22 ^ 4 ? extra : desc.get) : (x22) => x22[name];
+      if (k22 > 2) access.set = p33 ? (x22, y32) => __privateSet2(x22, target, y32, k22 ^ 4 ? extra : desc.set) : (x22, y32) => x22[name] = y32;
     }
-    it = (0, decorators[i32])(k22 ? k22 < 4 ? p22 ? extra : desc[key] : k22 > 4 ? void 0 : { get: desc.get, set: desc.set } : target, ctx), done._ = 1;
-    if (k22 ^ 4 || it === void 0) __expectFn2(it) && (k22 > 4 ? initializers.unshift(it) : k22 ? p22 ? extra = it : desc[key] = it : target = it);
+    it = (0, decorators[i52])(k22 ? k22 < 4 ? p33 ? extra : desc[key] : k22 > 4 ? void 0 : { get: desc.get, set: desc.set } : target, ctx), done._ = 1;
+    if (k22 ^ 4 || it === void 0) __expectFn2(it) && (k22 > 4 ? initializers.unshift(it) : k22 ? p33 ? extra = it : desc[key] = it : target = it);
     else if (typeof it !== "object" || it === null) __typeError2("Object expected");
     else __expectFn2(fn = it.get) && (desc.get = fn), __expectFn2(fn = it.set) && (desc.set = fn), __expectFn2(fn = it.init) && initializers.unshift(fn);
   }
-  return k22 || __decoratorMetadata2(array, target), desc && __defProp2(target, name, desc), p22 ? k22 ^ 4 ? extra : desc : target;
+  return k22 || __decoratorMetadata2(array, target), desc && __defProp2(target, name, desc), p33 ? k22 ^ 4 ? extra : desc : target;
 };
 var __publicField2 = (obj, key, value) => __defNormalProp2(obj, typeof key !== "symbol" ? key + "" : key, value);
 var __accessCheck2 = (obj, member, msg) => member.has(obj) || __typeError2("Cannot " + msg);
@@ -655,203 +655,202 @@ var e4 = t3.ShadowRoot && (void 0 === t3.ShadyCSS || t3.ShadyCSS.nativeShadow) &
 var s4 = Symbol();
 var o5 = /* @__PURE__ */ new WeakMap();
 var n4 = class {
-  constructor(t22, e42, o42) {
-    if (this._$cssResult$ = true, o42 !== s4) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
-    this.cssText = t22, this.t = e42;
+  constructor(t32, e52, o62) {
+    if (this._$cssResult$ = true, o62 !== s4) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
+    this.cssText = t32, this.t = e52;
   }
   get styleSheet() {
-    let t22 = this.o;
-    const s22 = this.t;
-    if (e4 && void 0 === t22) {
-      const e42 = void 0 !== s22 && 1 === s22.length;
-      e42 && (t22 = o5.get(s22)), void 0 === t22 && ((this.o = t22 = new CSSStyleSheet()).replaceSync(this.cssText), e42 && o5.set(s22, t22));
+    let t32 = this.o;
+    const s42 = this.t;
+    if (e4 && void 0 === t32) {
+      const e52 = void 0 !== s42 && 1 === s42.length;
+      e52 && (t32 = o5.get(s42)), void 0 === t32 && ((this.o = t32 = new CSSStyleSheet()).replaceSync(this.cssText), e52 && o5.set(s42, t32));
     }
-    return t22;
+    return t32;
   }
   toString() {
     return this.cssText;
   }
 };
-var r4 = (t22) => new n4("string" == typeof t22 ? t22 : t22 + "", void 0, s4);
-var S3 = (s22, o42) => {
-  if (e4) s22.adoptedStyleSheets = o42.map((t22) => t22 instanceof CSSStyleSheet ? t22 : t22.styleSheet);
-  else for (const e42 of o42) {
-    const o52 = document.createElement("style"), n52 = t3.litNonce;
-    void 0 !== n52 && o52.setAttribute("nonce", n52), o52.textContent = e42.cssText, s22.appendChild(o52);
+var r4 = (t32) => new n4("string" == typeof t32 ? t32 : t32 + "", void 0, s4);
+var S3 = (s42, o62) => {
+  if (e4) s42.adoptedStyleSheets = o62.map((t32) => t32 instanceof CSSStyleSheet ? t32 : t32.styleSheet);
+  else for (const e52 of o62) {
+    const o72 = document.createElement("style"), n52 = t3.litNonce;
+    void 0 !== n52 && o72.setAttribute("nonce", n52), o72.textContent = e52.cssText, s42.appendChild(o72);
   }
 };
-var c4 = e4 ? (t22) => t22 : (t22) => t22 instanceof CSSStyleSheet ? ((t32) => {
-  let e42 = "";
-  for (const s22 of t32.cssRules) e42 += s22.cssText;
-  return r4(e42);
-})(t22) : t22;
-var { is: i22, defineProperty: e22, getOwnPropertyDescriptor: r22, getOwnPropertyNames: h3, getOwnPropertySymbols: o22, getPrototypeOf: n22 } = Object;
+var c4 = e4 ? (t32) => t32 : (t32) => t32 instanceof CSSStyleSheet ? ((t42) => {
+  let e52 = "";
+  for (const s42 of t42.cssRules) e52 += s42.cssText;
+  return r4(e52);
+})(t32) : t32;
+var { is: i22, defineProperty: e22, getOwnPropertyDescriptor: h3, getOwnPropertyNames: r22, getOwnPropertySymbols: o22, getPrototypeOf: n22 } = Object;
 var a3 = globalThis;
 var c22 = a3.trustedTypes;
 var l3 = c22 ? c22.emptyScript : "";
 var p3 = a3.reactiveElementPolyfillSupport;
-var d3 = (t22, s22) => t22;
-var u3 = { toAttribute(t22, s22) {
-  switch (s22) {
+var d3 = (t32, s42) => t32;
+var u3 = { toAttribute(t32, s42) {
+  switch (s42) {
     case Boolean:
-      t22 = t22 ? l3 : null;
+      t32 = t32 ? l3 : null;
       break;
     case Object:
     case Array:
-      t22 = null == t22 ? t22 : JSON.stringify(t22);
+      t32 = null == t32 ? t32 : JSON.stringify(t32);
   }
-  return t22;
-}, fromAttribute(t22, s22) {
-  let i32 = t22;
-  switch (s22) {
+  return t32;
+}, fromAttribute(t32, s42) {
+  let i52 = t32;
+  switch (s42) {
     case Boolean:
-      i32 = null !== t22;
+      i52 = null !== t32;
       break;
     case Number:
-      i32 = null === t22 ? null : Number(t22);
+      i52 = null === t32 ? null : Number(t32);
       break;
     case Object:
     case Array:
       try {
-        i32 = JSON.parse(t22);
-      } catch (t32) {
-        i32 = null;
+        i52 = JSON.parse(t32);
+      } catch (t42) {
+        i52 = null;
       }
   }
-  return i32;
+  return i52;
 } };
-var f3 = (t22, s22) => !i22(t22, s22);
-var y3 = { attribute: true, type: String, converter: u3, reflect: false, hasChanged: f3 };
+var f3 = (t32, s42) => !i22(t32, s42);
+var b3 = { attribute: true, type: String, converter: u3, reflect: false, useDefault: false, hasChanged: f3 };
 Symbol.metadata ??= Symbol("metadata"), a3.litPropertyMetadata ??= /* @__PURE__ */ new WeakMap();
-var b3 = class extends HTMLElement {
-  static addInitializer(t22) {
-    this._$Ei(), (this.l ??= []).push(t22);
+var y3 = class extends HTMLElement {
+  static addInitializer(t32) {
+    this._$Ei(), (this.l ??= []).push(t32);
   }
   static get observedAttributes() {
     return this.finalize(), this._$Eh && [...this._$Eh.keys()];
   }
-  static createProperty(t22, s22 = y3) {
-    if (s22.state && (s22.attribute = false), this._$Ei(), this.elementProperties.set(t22, s22), !s22.noAccessor) {
-      const i32 = Symbol(), r42 = this.getPropertyDescriptor(t22, i32, s22);
-      void 0 !== r42 && e22(this.prototype, t22, r42);
+  static createProperty(t32, s42 = b3) {
+    if (s42.state && (s42.attribute = false), this._$Ei(), this.prototype.hasOwnProperty(t32) && ((s42 = Object.create(s42)).wrapped = true), this.elementProperties.set(t32, s42), !s42.noAccessor) {
+      const i52 = Symbol(), h32 = this.getPropertyDescriptor(t32, i52, s42);
+      void 0 !== h32 && e22(this.prototype, t32, h32);
     }
   }
-  static getPropertyDescriptor(t22, s22, i32) {
-    const { get: e42, set: h4 } = r22(this.prototype, t22) ?? { get() {
-      return this[s22];
-    }, set(t32) {
-      this[s22] = t32;
+  static getPropertyDescriptor(t32, s42, i52) {
+    const { get: e52, set: r52 } = h3(this.prototype, t32) ?? { get() {
+      return this[s42];
+    }, set(t42) {
+      this[s42] = t42;
     } };
-    return { get() {
-      return e42?.call(this);
-    }, set(s32) {
-      const r42 = e42?.call(this);
-      h4.call(this, s32), this.requestUpdate(t22, r42, i32);
+    return { get: e52, set(s5) {
+      const h32 = e52?.call(this);
+      r52?.call(this, s5), this.requestUpdate(t32, h32, i52);
     }, configurable: true, enumerable: true };
   }
-  static getPropertyOptions(t22) {
-    return this.elementProperties.get(t22) ?? y3;
+  static getPropertyOptions(t32) {
+    return this.elementProperties.get(t32) ?? b3;
   }
   static _$Ei() {
     if (this.hasOwnProperty(d3("elementProperties"))) return;
-    const t22 = n22(this);
-    t22.finalize(), void 0 !== t22.l && (this.l = [...t22.l]), this.elementProperties = new Map(t22.elementProperties);
+    const t32 = n22(this);
+    t32.finalize(), void 0 !== t32.l && (this.l = [...t32.l]), this.elementProperties = new Map(t32.elementProperties);
   }
   static finalize() {
     if (this.hasOwnProperty(d3("finalized"))) return;
     if (this.finalized = true, this._$Ei(), this.hasOwnProperty(d3("properties"))) {
-      const t32 = this.properties, s22 = [...h3(t32), ...o22(t32)];
-      for (const i32 of s22) this.createProperty(i32, t32[i32]);
+      const t42 = this.properties, s42 = [...r22(t42), ...o22(t42)];
+      for (const i52 of s42) this.createProperty(i52, t42[i52]);
     }
-    const t22 = this[Symbol.metadata];
-    if (null !== t22) {
-      const s22 = litPropertyMetadata.get(t22);
-      if (void 0 !== s22) for (const [t32, i32] of s22) this.elementProperties.set(t32, i32);
+    const t32 = this[Symbol.metadata];
+    if (null !== t32) {
+      const s42 = litPropertyMetadata.get(t32);
+      if (void 0 !== s42) for (const [t42, i52] of s42) this.elementProperties.set(t42, i52);
     }
     this._$Eh = /* @__PURE__ */ new Map();
-    for (const [t32, s22] of this.elementProperties) {
-      const i32 = this._$Eu(t32, s22);
-      void 0 !== i32 && this._$Eh.set(i32, t32);
+    for (const [t42, s42] of this.elementProperties) {
+      const i52 = this._$Eu(t42, s42);
+      void 0 !== i52 && this._$Eh.set(i52, t42);
     }
     this.elementStyles = this.finalizeStyles(this.styles);
   }
-  static finalizeStyles(s22) {
-    const i32 = [];
-    if (Array.isArray(s22)) {
-      const e42 = new Set(s22.flat(1 / 0).reverse());
-      for (const s32 of e42) i32.unshift(c4(s32));
-    } else void 0 !== s22 && i32.push(c4(s22));
-    return i32;
+  static finalizeStyles(s42) {
+    const i52 = [];
+    if (Array.isArray(s42)) {
+      const e52 = new Set(s42.flat(1 / 0).reverse());
+      for (const s5 of e52) i52.unshift(c4(s5));
+    } else void 0 !== s42 && i52.push(c4(s42));
+    return i52;
   }
-  static _$Eu(t22, s22) {
-    const i32 = s22.attribute;
-    return false === i32 ? void 0 : "string" == typeof i32 ? i32 : "string" == typeof t22 ? t22.toLowerCase() : void 0;
+  static _$Eu(t32, s42) {
+    const i52 = s42.attribute;
+    return false === i52 ? void 0 : "string" == typeof i52 ? i52 : "string" == typeof t32 ? t32.toLowerCase() : void 0;
   }
   constructor() {
     super(), this._$Ep = void 0, this.isUpdatePending = false, this.hasUpdated = false, this._$Em = null, this._$Ev();
   }
   _$Ev() {
-    this._$ES = new Promise((t22) => this.enableUpdating = t22), this._$AL = /* @__PURE__ */ new Map(), this._$E_(), this.requestUpdate(), this.constructor.l?.forEach((t22) => t22(this));
+    this._$ES = new Promise((t32) => this.enableUpdating = t32), this._$AL = /* @__PURE__ */ new Map(), this._$E_(), this.requestUpdate(), this.constructor.l?.forEach((t32) => t32(this));
   }
-  addController(t22) {
-    (this._$EO ??= /* @__PURE__ */ new Set()).add(t22), void 0 !== this.renderRoot && this.isConnected && t22.hostConnected?.();
+  addController(t32) {
+    (this._$EO ??= /* @__PURE__ */ new Set()).add(t32), void 0 !== this.renderRoot && this.isConnected && t32.hostConnected?.();
   }
-  removeController(t22) {
-    this._$EO?.delete(t22);
+  removeController(t32) {
+    this._$EO?.delete(t32);
   }
   _$E_() {
-    const t22 = /* @__PURE__ */ new Map(), s22 = this.constructor.elementProperties;
-    for (const i32 of s22.keys()) this.hasOwnProperty(i32) && (t22.set(i32, this[i32]), delete this[i32]);
-    t22.size > 0 && (this._$Ep = t22);
+    const t32 = /* @__PURE__ */ new Map(), s42 = this.constructor.elementProperties;
+    for (const i52 of s42.keys()) this.hasOwnProperty(i52) && (t32.set(i52, this[i52]), delete this[i52]);
+    t32.size > 0 && (this._$Ep = t32);
   }
   createRenderRoot() {
-    const t22 = this.shadowRoot ?? this.attachShadow(this.constructor.shadowRootOptions);
-    return S3(t22, this.constructor.elementStyles), t22;
+    const t32 = this.shadowRoot ?? this.attachShadow(this.constructor.shadowRootOptions);
+    return S3(t32, this.constructor.elementStyles), t32;
   }
   connectedCallback() {
-    this.renderRoot ??= this.createRenderRoot(), this.enableUpdating(true), this._$EO?.forEach((t22) => t22.hostConnected?.());
+    this.renderRoot ??= this.createRenderRoot(), this.enableUpdating(true), this._$EO?.forEach((t32) => t32.hostConnected?.());
   }
-  enableUpdating(t22) {
+  enableUpdating(t32) {
   }
   disconnectedCallback() {
-    this._$EO?.forEach((t22) => t22.hostDisconnected?.());
+    this._$EO?.forEach((t32) => t32.hostDisconnected?.());
   }
-  attributeChangedCallback(t22, s22, i32) {
-    this._$AK(t22, i32);
+  attributeChangedCallback(t32, s42, i52) {
+    this._$AK(t32, i52);
   }
-  _$EC(t22, s22) {
-    const i32 = this.constructor.elementProperties.get(t22), e42 = this.constructor._$Eu(t22, i32);
-    if (void 0 !== e42 && true === i32.reflect) {
-      const r42 = (void 0 !== i32.converter?.toAttribute ? i32.converter : u3).toAttribute(s22, i32.type);
-      this._$Em = t22, null == r42 ? this.removeAttribute(e42) : this.setAttribute(e42, r42), this._$Em = null;
+  _$ET(t32, s42) {
+    const i52 = this.constructor.elementProperties.get(t32), e52 = this.constructor._$Eu(t32, i52);
+    if (void 0 !== e52 && true === i52.reflect) {
+      const h32 = (void 0 !== i52.converter?.toAttribute ? i52.converter : u3).toAttribute(s42, i52.type);
+      this._$Em = t32, null == h32 ? this.removeAttribute(e52) : this.setAttribute(e52, h32), this._$Em = null;
     }
   }
-  _$AK(t22, s22) {
-    const i32 = this.constructor, e42 = i32._$Eh.get(t22);
-    if (void 0 !== e42 && this._$Em !== e42) {
-      const t32 = i32.getPropertyOptions(e42), r42 = "function" == typeof t32.converter ? { fromAttribute: t32.converter } : void 0 !== t32.converter?.fromAttribute ? t32.converter : u3;
-      this._$Em = e42, this[e42] = r42.fromAttribute(s22, t32.type), this._$Em = null;
+  _$AK(t32, s42) {
+    const i52 = this.constructor, e52 = i52._$Eh.get(t32);
+    if (void 0 !== e52 && this._$Em !== e52) {
+      const t42 = i52.getPropertyOptions(e52), h32 = "function" == typeof t42.converter ? { fromAttribute: t42.converter } : void 0 !== t42.converter?.fromAttribute ? t42.converter : u3;
+      this._$Em = e52, this[e52] = h32.fromAttribute(s42, t42.type) ?? this._$Ej?.get(e52) ?? null, this._$Em = null;
     }
   }
-  requestUpdate(t22, s22, i32) {
-    if (void 0 !== t22) {
-      if (i32 ??= this.constructor.getPropertyOptions(t22), !(i32.hasChanged ?? f3)(this[t22], s22)) return;
-      this.P(t22, s22, i32);
+  requestUpdate(t32, s42, i52) {
+    if (void 0 !== t32) {
+      const e52 = this.constructor, h32 = this[t32];
+      if (i52 ??= e52.getPropertyOptions(t32), !((i52.hasChanged ?? f3)(h32, s42) || i52.useDefault && i52.reflect && h32 === this._$Ej?.get(t32) && !this.hasAttribute(e52._$Eu(t32, i52)))) return;
+      this.C(t32, s42, i52);
     }
-    false === this.isUpdatePending && (this._$ES = this._$ET());
+    false === this.isUpdatePending && (this._$ES = this._$EP());
   }
-  P(t22, s22, i32) {
-    this._$AL.has(t22) || this._$AL.set(t22, s22), true === i32.reflect && this._$Em !== t22 && (this._$Ej ??= /* @__PURE__ */ new Set()).add(t22);
+  C(t32, s42, { useDefault: i52, reflect: e52, wrapped: h32 }, r52) {
+    i52 && !(this._$Ej ??= /* @__PURE__ */ new Map()).has(t32) && (this._$Ej.set(t32, r52 ?? s42 ?? this[t32]), true !== h32 || void 0 !== r52) || (this._$AL.has(t32) || (this.hasUpdated || i52 || (s42 = void 0), this._$AL.set(t32, s42)), true === e52 && this._$Em !== t32 && (this._$Eq ??= /* @__PURE__ */ new Set()).add(t32));
   }
-  async _$ET() {
+  async _$EP() {
     this.isUpdatePending = true;
     try {
       await this._$ES;
-    } catch (t32) {
-      Promise.reject(t32);
+    } catch (t42) {
+      Promise.reject(t42);
     }
-    const t22 = this.scheduleUpdate();
-    return null != t22 && await t22, !this.isUpdatePending;
+    const t32 = this.scheduleUpdate();
+    return null != t32 && await t32, !this.isUpdatePending;
   }
   scheduleUpdate() {
     return this.performUpdate();
@@ -860,27 +859,30 @@ var b3 = class extends HTMLElement {
     if (!this.isUpdatePending) return;
     if (!this.hasUpdated) {
       if (this.renderRoot ??= this.createRenderRoot(), this._$Ep) {
-        for (const [t42, s32] of this._$Ep) this[t42] = s32;
+        for (const [t52, s5] of this._$Ep) this[t52] = s5;
         this._$Ep = void 0;
       }
-      const t32 = this.constructor.elementProperties;
-      if (t32.size > 0) for (const [s32, i32] of t32) true !== i32.wrapped || this._$AL.has(s32) || void 0 === this[s32] || this.P(s32, this[s32], i32);
+      const t42 = this.constructor.elementProperties;
+      if (t42.size > 0) for (const [s5, i52] of t42) {
+        const { wrapped: t52 } = i52, e52 = this[s5];
+        true !== t52 || this._$AL.has(s5) || void 0 === e52 || this.C(s5, void 0, i52, e52);
+      }
     }
-    let t22 = false;
-    const s22 = this._$AL;
+    let t32 = false;
+    const s42 = this._$AL;
     try {
-      t22 = this.shouldUpdate(s22), t22 ? (this.willUpdate(s22), this._$EO?.forEach((t32) => t32.hostUpdate?.()), this.update(s22)) : this._$EU();
-    } catch (s32) {
-      throw t22 = false, this._$EU(), s32;
+      t32 = this.shouldUpdate(s42), t32 ? (this.willUpdate(s42), this._$EO?.forEach((t42) => t42.hostUpdate?.()), this.update(s42)) : this._$EM();
+    } catch (s5) {
+      throw t32 = false, this._$EM(), s5;
     }
-    t22 && this._$AE(s22);
+    t32 && this._$AE(s42);
   }
-  willUpdate(t22) {
+  willUpdate(t32) {
   }
-  _$AE(t22) {
-    this._$EO?.forEach((t32) => t32.hostUpdated?.()), this.hasUpdated || (this.hasUpdated = true, this.firstUpdated(t22)), this.updated(t22);
+  _$AE(t32) {
+    this._$EO?.forEach((t42) => t42.hostUpdated?.()), this.hasUpdated || (this.hasUpdated = true, this.firstUpdated(t32)), this.updated(t32);
   }
-  _$EU() {
+  _$EM() {
     this._$AL = /* @__PURE__ */ new Map(), this.isUpdatePending = false;
   }
   get updateComplete() {
@@ -889,109 +891,109 @@ var b3 = class extends HTMLElement {
   getUpdateComplete() {
     return this._$ES;
   }
-  shouldUpdate(t22) {
+  shouldUpdate(t32) {
     return true;
   }
-  update(t22) {
-    this._$Ej &&= this._$Ej.forEach((t32) => this._$EC(t32, this[t32])), this._$EU();
+  update(t32) {
+    this._$Eq &&= this._$Eq.forEach((t42) => this._$ET(t42, this[t42])), this._$EM();
   }
-  updated(t22) {
+  updated(t32) {
   }
-  firstUpdated(t22) {
+  firstUpdated(t32) {
   }
 };
-b3.elementStyles = [], b3.shadowRootOptions = { mode: "open" }, b3[d3("elementProperties")] = /* @__PURE__ */ new Map(), b3[d3("finalized")] = /* @__PURE__ */ new Map(), p3?.({ ReactiveElement: b3 }), (a3.reactiveElementVersions ??= []).push("2.0.4");
-var n32 = globalThis;
-var c32 = n32.trustedTypes;
-var h22 = c32 ? c32.createPolicy("lit-html", { createHTML: (t22) => t22 }) : void 0;
-var f22 = "$lit$";
-var v2 = `lit$${Math.random().toFixed(9).slice(2)}$`;
-var m2 = "?" + v2;
-var _2 = `<${m2}>`;
-var w2 = document;
-var lt = () => w2.createComment("");
-var st = (t22) => null === t22 || "object" != typeof t22 && "function" != typeof t22;
-var g2 = Array.isArray;
-var $2 = (t22) => g2(t22) || "function" == typeof t22?.[Symbol.iterator];
-var x2 = "[ 	\n\f\r]";
-var T2 = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g;
-var E2 = /-->/g;
-var k2 = />/g;
-var O = RegExp(`>|${x2}(?:([^\\s"'>=/]+)(${x2}*=${x2}*(?:[^ 	
+y3.elementStyles = [], y3.shadowRootOptions = { mode: "open" }, y3[d3("elementProperties")] = /* @__PURE__ */ new Map(), y3[d3("finalized")] = /* @__PURE__ */ new Map(), p3?.({ ReactiveElement: y3 }), (a3.reactiveElementVersions ??= []).push("2.1.0");
+var t22 = globalThis;
+var i32 = t22.trustedTypes;
+var s22 = i32 ? i32.createPolicy("lit-html", { createHTML: (t32) => t32 }) : void 0;
+var e32 = "$lit$";
+var h22 = `lit$${Math.random().toFixed(9).slice(2)}$`;
+var o32 = "?" + h22;
+var n32 = `<${o32}>`;
+var r32 = document;
+var l22 = () => r32.createComment("");
+var c32 = (t32) => null === t32 || "object" != typeof t32 && "function" != typeof t32;
+var a22 = Array.isArray;
+var u22 = (t32) => a22(t32) || "function" == typeof t32?.[Symbol.iterator];
+var d22 = "[ 	\n\f\r]";
+var f22 = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g;
+var v2 = /-->/g;
+var _2 = />/g;
+var m2 = RegExp(`>|${d22}(?:([^\\s"'>=/]+)(${d22}*=${d22}*(?:[^ 	
 \f\r"'\`<>=]|("|')|))|$)`, "g");
-var S22 = /'/g;
-var j2 = /"/g;
-var M2 = /^(?:script|style|textarea|title)$/i;
-var P2 = (t22) => (i32, ...s22) => ({ _$litType$: t22, strings: i32, values: s22 });
-var ke = P2(1);
-var Oe = P2(2);
-var Se = P2(3);
-var R2 = Symbol.for("lit-noChange");
-var D = Symbol.for("lit-nothing");
-var V2 = /* @__PURE__ */ new WeakMap();
-var I2 = w2.createTreeWalker(w2, 129);
-function N2(t22, i32) {
-  if (!g2(t22) || !t22.hasOwnProperty("raw")) throw Error("invalid template strings array");
-  return void 0 !== h22 ? h22.createHTML(i32) : i32;
+var p22 = /'/g;
+var g2 = /"/g;
+var $2 = /^(?:script|style|textarea|title)$/i;
+var y22 = (t32) => (i52, ...s42) => ({ _$litType$: t32, strings: i52, values: s42 });
+var x2 = y22(1);
+var b22 = y22(2);
+var w2 = y22(3);
+var T2 = Symbol.for("lit-noChange");
+var E2 = Symbol.for("lit-nothing");
+var A2 = /* @__PURE__ */ new WeakMap();
+var C2 = r32.createTreeWalker(r32, 129);
+function P2(t32, i52) {
+  if (!a22(t32) || !t32.hasOwnProperty("raw")) throw Error("invalid template strings array");
+  return void 0 !== s22 ? s22.createHTML(i52) : i52;
 }
-var U = (t22, i32) => {
-  const s22 = t22.length - 1, e42 = [];
-  let h4, o42 = 2 === i32 ? "<svg>" : 3 === i32 ? "<math>" : "", n52 = T2;
-  for (let i42 = 0; i42 < s22; i42++) {
-    const s32 = t22[i42];
-    let r42, l22, c42 = -1, a22 = 0;
-    for (; a22 < s32.length && (n52.lastIndex = a22, l22 = n52.exec(s32), null !== l22); ) a22 = n52.lastIndex, n52 === T2 ? "!--" === l22[1] ? n52 = E2 : void 0 !== l22[1] ? n52 = k2 : void 0 !== l22[2] ? (M2.test(l22[2]) && (h4 = RegExp("</" + l22[2], "g")), n52 = O) : void 0 !== l22[3] && (n52 = O) : n52 === O ? ">" === l22[0] ? (n52 = h4 ?? T2, c42 = -1) : void 0 === l22[1] ? c42 = -2 : (c42 = n52.lastIndex - l22[2].length, r42 = l22[1], n52 = void 0 === l22[3] ? O : '"' === l22[3] ? j2 : S22) : n52 === j2 || n52 === S22 ? n52 = O : n52 === E2 || n52 === k2 ? n52 = T2 : (n52 = O, h4 = void 0);
-    const u22 = n52 === O && t22[i42 + 1].startsWith("/>") ? " " : "";
-    o42 += n52 === T2 ? s32 + _2 : c42 >= 0 ? (e42.push(r42), s32.slice(0, c42) + f22 + s32.slice(c42) + v2 + u22) : s32 + v2 + (-2 === c42 ? i42 : u22);
+var V2 = (t32, i52) => {
+  const s42 = t32.length - 1, o62 = [];
+  let r52, l32 = 2 === i52 ? "<svg>" : 3 === i52 ? "<math>" : "", c42 = f22;
+  for (let i62 = 0; i62 < s42; i62++) {
+    const s5 = t32[i62];
+    let a32, u33, d32 = -1, y32 = 0;
+    for (; y32 < s5.length && (c42.lastIndex = y32, u33 = c42.exec(s5), null !== u33); ) y32 = c42.lastIndex, c42 === f22 ? "!--" === u33[1] ? c42 = v2 : void 0 !== u33[1] ? c42 = _2 : void 0 !== u33[2] ? ($2.test(u33[2]) && (r52 = RegExp("</" + u33[2], "g")), c42 = m2) : void 0 !== u33[3] && (c42 = m2) : c42 === m2 ? ">" === u33[0] ? (c42 = r52 ?? f22, d32 = -1) : void 0 === u33[1] ? d32 = -2 : (d32 = c42.lastIndex - u33[2].length, a32 = u33[1], c42 = void 0 === u33[3] ? m2 : '"' === u33[3] ? g2 : p22) : c42 === g2 || c42 === p22 ? c42 = m2 : c42 === v2 || c42 === _2 ? c42 = f22 : (c42 = m2, r52 = void 0);
+    const x22 = c42 === m2 && t32[i62 + 1].startsWith("/>") ? " " : "";
+    l32 += c42 === f22 ? s5 + n32 : d32 >= 0 ? (o62.push(a32), s5.slice(0, d32) + e32 + s5.slice(d32) + h22 + x22) : s5 + h22 + (-2 === d32 ? i62 : x22);
   }
-  return [N2(t22, o42 + (t22[s22] || "<?>") + (2 === i32 ? "</svg>" : 3 === i32 ? "</math>" : "")), e42];
+  return [P2(t32, l32 + (t32[s42] || "<?>") + (2 === i52 ? "</svg>" : 3 === i52 ? "</math>" : "")), o62];
 };
-var B2 = class _B {
-  constructor({ strings: t22, _$litType$: i32 }, s22) {
-    let e42;
+var N2 = class _N {
+  constructor({ strings: t32, _$litType$: s42 }, n52) {
+    let r52;
     this.parts = [];
-    let h4 = 0, o42 = 0;
-    const n52 = t22.length - 1, r42 = this.parts, [l22, a22] = U(t22, i32);
-    if (this.el = _B.createElement(l22, s22), I2.currentNode = this.el.content, 2 === i32 || 3 === i32) {
-      const t32 = this.el.content.firstChild;
-      t32.replaceWith(...t32.childNodes);
+    let c42 = 0, a32 = 0;
+    const u33 = t32.length - 1, d32 = this.parts, [f32, v22] = V2(t32, s42);
+    if (this.el = _N.createElement(f32, n52), C2.currentNode = this.el.content, 2 === s42 || 3 === s42) {
+      const t42 = this.el.content.firstChild;
+      t42.replaceWith(...t42.childNodes);
     }
-    for (; null !== (e42 = I2.nextNode()) && r42.length < n52; ) {
-      if (1 === e42.nodeType) {
-        if (e42.hasAttributes()) for (const t32 of e42.getAttributeNames()) if (t32.endsWith(f22)) {
-          const i42 = a22[o42++], s32 = e42.getAttribute(t32).split(v2), n62 = /([.?@])?(.*)/.exec(i42);
-          r42.push({ type: 1, index: h4, name: n62[2], strings: s32, ctor: "." === n62[1] ? Y : "?" === n62[1] ? Z2 : "@" === n62[1] ? q : G }), e42.removeAttribute(t32);
-        } else t32.startsWith(v2) && (r42.push({ type: 6, index: h4 }), e42.removeAttribute(t32));
-        if (M2.test(e42.tagName)) {
-          const t32 = e42.textContent.split(v2), i42 = t32.length - 1;
-          if (i42 > 0) {
-            e42.textContent = c32 ? c32.emptyScript : "";
-            for (let s32 = 0; s32 < i42; s32++) e42.append(t32[s32], lt()), I2.nextNode(), r42.push({ type: 2, index: ++h4 });
-            e42.append(t32[i42], lt());
+    for (; null !== (r52 = C2.nextNode()) && d32.length < u33; ) {
+      if (1 === r52.nodeType) {
+        if (r52.hasAttributes()) for (const t42 of r52.getAttributeNames()) if (t42.endsWith(e32)) {
+          const i52 = v22[a32++], s5 = r52.getAttribute(t42).split(h22), e52 = /([.?@])?(.*)/.exec(i52);
+          d32.push({ type: 1, index: c42, name: e52[2], strings: s5, ctor: "." === e52[1] ? H2 : "?" === e52[1] ? I2 : "@" === e52[1] ? L2 : k2 }), r52.removeAttribute(t42);
+        } else t42.startsWith(h22) && (d32.push({ type: 6, index: c42 }), r52.removeAttribute(t42));
+        if ($2.test(r52.tagName)) {
+          const t42 = r52.textContent.split(h22), s5 = t42.length - 1;
+          if (s5 > 0) {
+            r52.textContent = i32 ? i32.emptyScript : "";
+            for (let i52 = 0; i52 < s5; i52++) r52.append(t42[i52], l22()), C2.nextNode(), d32.push({ type: 2, index: ++c42 });
+            r52.append(t42[s5], l22());
           }
         }
-      } else if (8 === e42.nodeType) if (e42.data === m2) r42.push({ type: 2, index: h4 });
+      } else if (8 === r52.nodeType) if (r52.data === o32) d32.push({ type: 2, index: c42 });
       else {
-        let t32 = -1;
-        for (; -1 !== (t32 = e42.data.indexOf(v2, t32 + 1)); ) r42.push({ type: 7, index: h4 }), t32 += v2.length - 1;
+        let t42 = -1;
+        for (; -1 !== (t42 = r52.data.indexOf(h22, t42 + 1)); ) d32.push({ type: 7, index: c42 }), t42 += h22.length - 1;
       }
-      h4++;
+      c42++;
     }
   }
-  static createElement(t22, i32) {
-    const s22 = w2.createElement("template");
-    return s22.innerHTML = t22, s22;
+  static createElement(t32, i52) {
+    const s42 = r32.createElement("template");
+    return s42.innerHTML = t32, s42;
   }
 };
-function z2(t22, i32, s22 = t22, e42) {
-  if (i32 === R2) return i32;
-  let h4 = void 0 !== e42 ? s22.o?.[e42] : s22.l;
-  const o42 = st(i32) ? void 0 : i32._$litDirective$;
-  return h4?.constructor !== o42 && (h4?._$AO?.(false), void 0 === o42 ? h4 = void 0 : (h4 = new o42(t22), h4._$AT(t22, s22, e42)), void 0 !== e42 ? (s22.o ??= [])[e42] = h4 : s22.l = h4), void 0 !== h4 && (i32 = z2(t22, h4._$AS(t22, i32.values), h4, e42)), i32;
+function S22(t32, i52, s42 = t32, e52) {
+  if (i52 === T2) return i52;
+  let h32 = void 0 !== e52 ? s42._$Co?.[e52] : s42._$Cl;
+  const o62 = c32(i52) ? void 0 : i52._$litDirective$;
+  return h32?.constructor !== o62 && (h32?._$AO?.(false), void 0 === o62 ? h32 = void 0 : (h32 = new o62(t32), h32._$AT(t32, s42, e52)), void 0 !== e52 ? (s42._$Co ??= [])[e52] = h32 : s42._$Cl = h32), void 0 !== h32 && (i52 = S22(t32, h32._$AS(t32, i52.values), h32, e52)), i52;
 }
-var F = class {
-  constructor(t22, i32) {
-    this._$AV = [], this._$AN = void 0, this._$AD = t22, this._$AM = i32;
+var M2 = class {
+  constructor(t32, i52) {
+    this._$AV = [], this._$AN = void 0, this._$AD = t32, this._$AM = i52;
   }
   get parentNode() {
     return this._$AM.parentNode;
@@ -999,35 +1001,35 @@ var F = class {
   get _$AU() {
     return this._$AM._$AU;
   }
-  u(t22) {
-    const { el: { content: i32 }, parts: s22 } = this._$AD, e42 = (t22?.creationScope ?? w2).importNode(i32, true);
-    I2.currentNode = e42;
-    let h4 = I2.nextNode(), o42 = 0, n52 = 0, r42 = s22[0];
-    for (; void 0 !== r42; ) {
-      if (o42 === r42.index) {
-        let i42;
-        2 === r42.type ? i42 = new et(h4, h4.nextSibling, this, t22) : 1 === r42.type ? i42 = new r42.ctor(h4, r42.name, r42.strings, this, t22) : 6 === r42.type && (i42 = new K(h4, this, t22)), this._$AV.push(i42), r42 = s22[++n52];
+  u(t32) {
+    const { el: { content: i52 }, parts: s42 } = this._$AD, e52 = (t32?.creationScope ?? r32).importNode(i52, true);
+    C2.currentNode = e52;
+    let h32 = C2.nextNode(), o62 = 0, n52 = 0, l32 = s42[0];
+    for (; void 0 !== l32; ) {
+      if (o62 === l32.index) {
+        let i62;
+        2 === l32.type ? i62 = new R2(h32, h32.nextSibling, this, t32) : 1 === l32.type ? i62 = new l32.ctor(h32, l32.name, l32.strings, this, t32) : 6 === l32.type && (i62 = new z2(h32, this, t32)), this._$AV.push(i62), l32 = s42[++n52];
       }
-      o42 !== r42?.index && (h4 = I2.nextNode(), o42++);
+      o62 !== l32?.index && (h32 = C2.nextNode(), o62++);
     }
-    return I2.currentNode = w2, e42;
+    return C2.currentNode = r32, e52;
   }
-  p(t22) {
-    let i32 = 0;
-    for (const s22 of this._$AV) void 0 !== s22 && (void 0 !== s22.strings ? (s22._$AI(t22, s22, i32), i32 += s22.strings.length - 2) : s22._$AI(t22[i32])), i32++;
+  p(t32) {
+    let i52 = 0;
+    for (const s42 of this._$AV) void 0 !== s42 && (void 0 !== s42.strings ? (s42._$AI(t32, s42, i52), i52 += s42.strings.length - 2) : s42._$AI(t32[i52])), i52++;
   }
 };
-var et = class _et {
+var R2 = class _R {
   get _$AU() {
-    return this._$AM?._$AU ?? this.v;
+    return this._$AM?._$AU ?? this._$Cv;
   }
-  constructor(t22, i32, s22, e42) {
-    this.type = 2, this._$AH = D, this._$AN = void 0, this._$AA = t22, this._$AB = i32, this._$AM = s22, this.options = e42, this.v = e42?.isConnected ?? true;
+  constructor(t32, i52, s42, e52) {
+    this.type = 2, this._$AH = E2, this._$AN = void 0, this._$AA = t32, this._$AB = i52, this._$AM = s42, this.options = e52, this._$Cv = e52?.isConnected ?? true;
   }
   get parentNode() {
-    let t22 = this._$AA.parentNode;
-    const i32 = this._$AM;
-    return void 0 !== i32 && 11 === t22?.nodeType && (t22 = i32.parentNode), t22;
+    let t32 = this._$AA.parentNode;
+    const i52 = this._$AM;
+    return void 0 !== i52 && 11 === t32?.nodeType && (t32 = i52.parentNode), t32;
   }
   get startNode() {
     return this._$AA;
@@ -1035,176 +1037,177 @@ var et = class _et {
   get endNode() {
     return this._$AB;
   }
-  _$AI(t22, i32 = this) {
-    t22 = z2(this, t22, i32), st(t22) ? t22 === D || null == t22 || "" === t22 ? (this._$AH !== D && this._$AR(), this._$AH = D) : t22 !== this._$AH && t22 !== R2 && this._(t22) : void 0 !== t22._$litType$ ? this.$(t22) : void 0 !== t22.nodeType ? this.T(t22) : $2(t22) ? this.k(t22) : this._(t22);
+  _$AI(t32, i52 = this) {
+    t32 = S22(this, t32, i52), c32(t32) ? t32 === E2 || null == t32 || "" === t32 ? (this._$AH !== E2 && this._$AR(), this._$AH = E2) : t32 !== this._$AH && t32 !== T2 && this._(t32) : void 0 !== t32._$litType$ ? this.$(t32) : void 0 !== t32.nodeType ? this.T(t32) : u22(t32) ? this.k(t32) : this._(t32);
   }
-  O(t22) {
-    return this._$AA.parentNode.insertBefore(t22, this._$AB);
+  O(t32) {
+    return this._$AA.parentNode.insertBefore(t32, this._$AB);
   }
-  T(t22) {
-    this._$AH !== t22 && (this._$AR(), this._$AH = this.O(t22));
+  T(t32) {
+    this._$AH !== t32 && (this._$AR(), this._$AH = this.O(t32));
   }
-  _(t22) {
-    this._$AH !== D && st(this._$AH) ? this._$AA.nextSibling.data = t22 : this.T(w2.createTextNode(t22)), this._$AH = t22;
+  _(t32) {
+    this._$AH !== E2 && c32(this._$AH) ? this._$AA.nextSibling.data = t32 : this.T(r32.createTextNode(t32)), this._$AH = t32;
   }
-  $(t22) {
-    const { values: i32, _$litType$: s22 } = t22, e42 = "number" == typeof s22 ? this._$AC(t22) : (void 0 === s22.el && (s22.el = B2.createElement(N2(s22.h, s22.h[0]), this.options)), s22);
-    if (this._$AH?._$AD === e42) this._$AH.p(i32);
+  $(t32) {
+    const { values: i52, _$litType$: s42 } = t32, e52 = "number" == typeof s42 ? this._$AC(t32) : (void 0 === s42.el && (s42.el = N2.createElement(P2(s42.h, s42.h[0]), this.options)), s42);
+    if (this._$AH?._$AD === e52) this._$AH.p(i52);
     else {
-      const t32 = new F(e42, this), s32 = t32.u(this.options);
-      t32.p(i32), this.T(s32), this._$AH = t32;
+      const t42 = new M2(e52, this), s5 = t42.u(this.options);
+      t42.p(i52), this.T(s5), this._$AH = t42;
     }
   }
-  _$AC(t22) {
-    let i32 = V2.get(t22.strings);
-    return void 0 === i32 && V2.set(t22.strings, i32 = new B2(t22)), i32;
+  _$AC(t32) {
+    let i52 = A2.get(t32.strings);
+    return void 0 === i52 && A2.set(t32.strings, i52 = new N2(t32)), i52;
   }
-  k(t22) {
-    g2(this._$AH) || (this._$AH = [], this._$AR());
-    const i32 = this._$AH;
-    let s22, e42 = 0;
-    for (const h4 of t22) e42 === i32.length ? i32.push(s22 = new _et(this.O(lt()), this.O(lt()), this, this.options)) : s22 = i32[e42], s22._$AI(h4), e42++;
-    e42 < i32.length && (this._$AR(s22 && s22._$AB.nextSibling, e42), i32.length = e42);
+  k(t32) {
+    a22(this._$AH) || (this._$AH = [], this._$AR());
+    const i52 = this._$AH;
+    let s42, e52 = 0;
+    for (const h32 of t32) e52 === i52.length ? i52.push(s42 = new _R(this.O(l22()), this.O(l22()), this, this.options)) : s42 = i52[e52], s42._$AI(h32), e52++;
+    e52 < i52.length && (this._$AR(s42 && s42._$AB.nextSibling, e52), i52.length = e52);
   }
-  _$AR(t22 = this._$AA.nextSibling, i32) {
-    for (this._$AP?.(false, true, i32); t22 && t22 !== this._$AB; ) {
-      const i42 = t22.nextSibling;
-      t22.remove(), t22 = i42;
+  _$AR(t32 = this._$AA.nextSibling, i52) {
+    for (this._$AP?.(false, true, i52); t32 && t32 !== this._$AB; ) {
+      const i62 = t32.nextSibling;
+      t32.remove(), t32 = i62;
     }
   }
-  setConnected(t22) {
-    void 0 === this._$AM && (this.v = t22, this._$AP?.(t22));
+  setConnected(t32) {
+    void 0 === this._$AM && (this._$Cv = t32, this._$AP?.(t32));
   }
 };
-var G = class {
+var k2 = class {
   get tagName() {
     return this.element.tagName;
   }
   get _$AU() {
     return this._$AM._$AU;
   }
-  constructor(t22, i32, s22, e42, h4) {
-    this.type = 1, this._$AH = D, this._$AN = void 0, this.element = t22, this.name = i32, this._$AM = e42, this.options = h4, s22.length > 2 || "" !== s22[0] || "" !== s22[1] ? (this._$AH = Array(s22.length - 1).fill(new String()), this.strings = s22) : this._$AH = D;
+  constructor(t32, i52, s42, e52, h32) {
+    this.type = 1, this._$AH = E2, this._$AN = void 0, this.element = t32, this.name = i52, this._$AM = e52, this.options = h32, s42.length > 2 || "" !== s42[0] || "" !== s42[1] ? (this._$AH = Array(s42.length - 1).fill(new String()), this.strings = s42) : this._$AH = E2;
   }
-  _$AI(t22, i32 = this, s22, e42) {
-    const h4 = this.strings;
-    let o42 = false;
-    if (void 0 === h4) t22 = z2(this, t22, i32, 0), o42 = !st(t22) || t22 !== this._$AH && t22 !== R2, o42 && (this._$AH = t22);
+  _$AI(t32, i52 = this, s42, e52) {
+    const h32 = this.strings;
+    let o62 = false;
+    if (void 0 === h32) t32 = S22(this, t32, i52, 0), o62 = !c32(t32) || t32 !== this._$AH && t32 !== T2, o62 && (this._$AH = t32);
     else {
-      const e52 = t22;
-      let n52, r42;
-      for (t22 = h4[0], n52 = 0; n52 < h4.length - 1; n52++) r42 = z2(this, e52[s22 + n52], i32, n52), r42 === R2 && (r42 = this._$AH[n52]), o42 ||= !st(r42) || r42 !== this._$AH[n52], r42 === D ? t22 = D : t22 !== D && (t22 += (r42 ?? "") + h4[n52 + 1]), this._$AH[n52] = r42;
+      const e62 = t32;
+      let n52, r52;
+      for (t32 = h32[0], n52 = 0; n52 < h32.length - 1; n52++) r52 = S22(this, e62[s42 + n52], i52, n52), r52 === T2 && (r52 = this._$AH[n52]), o62 ||= !c32(r52) || r52 !== this._$AH[n52], r52 === E2 ? t32 = E2 : t32 !== E2 && (t32 += (r52 ?? "") + h32[n52 + 1]), this._$AH[n52] = r52;
     }
-    o42 && !e42 && this.j(t22);
+    o62 && !e52 && this.j(t32);
   }
-  j(t22) {
-    t22 === D ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t22 ?? "");
+  j(t32) {
+    t32 === E2 ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t32 ?? "");
   }
 };
-var Y = class extends G {
+var H2 = class extends k2 {
   constructor() {
     super(...arguments), this.type = 3;
   }
-  j(t22) {
-    this.element[this.name] = t22 === D ? void 0 : t22;
+  j(t32) {
+    this.element[this.name] = t32 === E2 ? void 0 : t32;
   }
 };
-var Z2 = class extends G {
+var I2 = class extends k2 {
   constructor() {
     super(...arguments), this.type = 4;
   }
-  j(t22) {
-    this.element.toggleAttribute(this.name, !!t22 && t22 !== D);
+  j(t32) {
+    this.element.toggleAttribute(this.name, !!t32 && t32 !== E2);
   }
 };
-var q = class extends G {
-  constructor(t22, i32, s22, e42, h4) {
-    super(t22, i32, s22, e42, h4), this.type = 5;
+var L2 = class extends k2 {
+  constructor(t32, i52, s42, e52, h32) {
+    super(t32, i52, s42, e52, h32), this.type = 5;
   }
-  _$AI(t22, i32 = this) {
-    if ((t22 = z2(this, t22, i32, 0) ?? D) === R2) return;
-    const s22 = this._$AH, e42 = t22 === D && s22 !== D || t22.capture !== s22.capture || t22.once !== s22.once || t22.passive !== s22.passive, h4 = t22 !== D && (s22 === D || e42);
-    e42 && this.element.removeEventListener(this.name, this, s22), h4 && this.element.addEventListener(this.name, this, t22), this._$AH = t22;
+  _$AI(t32, i52 = this) {
+    if ((t32 = S22(this, t32, i52, 0) ?? E2) === T2) return;
+    const s42 = this._$AH, e52 = t32 === E2 && s42 !== E2 || t32.capture !== s42.capture || t32.once !== s42.once || t32.passive !== s42.passive, h32 = t32 !== E2 && (s42 === E2 || e52);
+    e52 && this.element.removeEventListener(this.name, this, s42), h32 && this.element.addEventListener(this.name, this, t32), this._$AH = t32;
   }
-  handleEvent(t22) {
-    "function" == typeof this._$AH ? this._$AH.call(this.options?.host ?? this.element, t22) : this._$AH.handleEvent(t22);
+  handleEvent(t32) {
+    "function" == typeof this._$AH ? this._$AH.call(this.options?.host ?? this.element, t32) : this._$AH.handleEvent(t32);
   }
 };
-var K = class {
-  constructor(t22, i32, s22) {
-    this.element = t22, this.type = 6, this._$AN = void 0, this._$AM = i32, this.options = s22;
+var z2 = class {
+  constructor(t32, i52, s42) {
+    this.element = t32, this.type = 6, this._$AN = void 0, this._$AM = i52, this.options = s42;
   }
   get _$AU() {
     return this._$AM._$AU;
   }
-  _$AI(t22) {
-    z2(this, t22);
+  _$AI(t32) {
+    S22(this, t32);
   }
 };
-var Re = n32.litHtmlPolyfillSupport;
-Re?.(B2, et), (n32.litHtmlVersions ??= []).push("3.2.0");
-var Q = (t22, i32, s22) => {
-  const e42 = s22?.renderBefore ?? i32;
-  let h4 = e42._$litPart$;
-  if (void 0 === h4) {
-    const t32 = s22?.renderBefore ?? null;
-    e42._$litPart$ = h4 = new et(i32.insertBefore(lt(), t32), t32, void 0, s22 ?? {});
+var j2 = t22.litHtmlPolyfillSupport;
+j2?.(N2, R2), (t22.litHtmlVersions ??= []).push("3.3.0");
+var B2 = (t32, i52, s42) => {
+  const e52 = s42?.renderBefore ?? i52;
+  let h32 = e52._$litPart$;
+  if (void 0 === h32) {
+    const t42 = s42?.renderBefore ?? null;
+    e52._$litPart$ = h32 = new R2(i52.insertBefore(l22(), t42), t42, void 0, s42 ?? {});
   }
-  return h4._$AI(t22), h4;
+  return h32._$AI(t32), h32;
 };
-var h32 = class extends b3 {
+var s32 = globalThis;
+var i42 = class extends y3 {
   constructor() {
-    super(...arguments), this.renderOptions = { host: this }, this.o = void 0;
+    super(...arguments), this.renderOptions = { host: this }, this._$Do = void 0;
   }
   createRenderRoot() {
-    const t22 = super.createRenderRoot();
-    return this.renderOptions.renderBefore ??= t22.firstChild, t22;
+    const t32 = super.createRenderRoot();
+    return this.renderOptions.renderBefore ??= t32.firstChild, t32;
   }
-  update(t22) {
-    const e42 = this.render();
-    this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(t22), this.o = Q(e42, this.renderRoot, this.renderOptions);
+  update(t32) {
+    const r52 = this.render();
+    this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(t32), this._$Do = B2(r52, this.renderRoot, this.renderOptions);
   }
   connectedCallback() {
-    super.connectedCallback(), this.o?.setConnected(true);
+    super.connectedCallback(), this._$Do?.setConnected(true);
   }
   disconnectedCallback() {
-    super.disconnectedCallback(), this.o?.setConnected(false);
+    super.disconnectedCallback(), this._$Do?.setConnected(false);
   }
   render() {
-    return R2;
+    return T2;
   }
 };
-h32._$litElement$ = true, h32["finalized"] = true, globalThis.litElementHydrateSupport?.({ LitElement: h32 });
-var f32 = globalThis.litElementPolyfillSupport;
-f32?.({ LitElement: h32 });
-(globalThis.litElementVersions ??= []).push("4.1.0");
-var o32 = { attribute: true, type: String, converter: u3, reflect: false, hasChanged: f3 };
-var r32 = (t22 = o32, e42, r42) => {
-  const { kind: n52, metadata: i32 } = r42;
-  let s22 = globalThis.litPropertyMetadata.get(i32);
-  if (void 0 === s22 && globalThis.litPropertyMetadata.set(i32, s22 = /* @__PURE__ */ new Map()), s22.set(r42.name, t22), "accessor" === n52) {
-    const { name: o42 } = r42;
-    return { set(r52) {
-      const n62 = e42.get.call(this);
-      e42.set.call(this, r52), this.requestUpdate(o42, n62, t22);
-    }, init(e52) {
-      return void 0 !== e52 && this.P(o42, void 0, t22), e52;
+i42._$litElement$ = true, i42["finalized"] = true, s32.litElementHydrateSupport?.({ LitElement: i42 });
+var o42 = s32.litElementPolyfillSupport;
+o42?.({ LitElement: i42 });
+(s32.litElementVersions ??= []).push("4.2.0");
+var o52 = { attribute: true, type: String, converter: u3, reflect: false, hasChanged: f3 };
+var r42 = (t32 = o52, e52, r52) => {
+  const { kind: n52, metadata: i52 } = r52;
+  let s42 = globalThis.litPropertyMetadata.get(i52);
+  if (void 0 === s42 && globalThis.litPropertyMetadata.set(i52, s42 = /* @__PURE__ */ new Map()), "setter" === n52 && ((t32 = Object.create(t32)).wrapped = true), s42.set(r52.name, t32), "accessor" === n52) {
+    const { name: o62 } = r52;
+    return { set(r62) {
+      const n62 = e52.get.call(this);
+      e52.set.call(this, r62), this.requestUpdate(o62, n62, t32);
+    }, init(e62) {
+      return void 0 !== e62 && this.C(o62, void 0, t32, e62), e62;
     } };
   }
   if ("setter" === n52) {
-    const { name: o42 } = r42;
-    return function(r52) {
-      const n62 = this[o42];
-      e42.call(this, r52), this.requestUpdate(o42, n62, t22);
+    const { name: o62 } = r52;
+    return function(r62) {
+      const n62 = this[o62];
+      e52.call(this, r62), this.requestUpdate(o62, n62, t32);
     };
   }
   throw Error("Unsupported decorator location: " + n52);
 };
-function n42(t22) {
-  return (e42, o42) => "object" == typeof o42 ? r32(t22, e42, o42) : ((t32, e52, o52) => {
-    const r42 = e52.hasOwnProperty(o52);
-    return e52.constructor.createProperty(o52, r42 ? { ...t32, wrapped: true } : t32), r42 ? Object.getOwnPropertyDescriptor(e52, o52) : void 0;
-  })(t22, e42, o42);
+function n42(t32) {
+  return (e52, o62) => "object" == typeof o62 ? r42(t32, e52, o62) : ((t42, e62, o72) => {
+    const r52 = e62.hasOwnProperty(o72);
+    return e62.constructor.createProperty(o72, t42), r52 ? Object.getOwnPropertyDescriptor(e62, o72) : void 0;
+  })(t32, e52, o62);
 }
 var appliedClassMixins = /* @__PURE__ */ new WeakMap();
 function wasMixinPreviouslyApplied(mixin, superClass) {
@@ -1317,7 +1320,7 @@ var _a;
 var _init;
 var _contentEditable;
 var _lang;
-var LitElementWw = class extends (_a = ScopedElementsMixin2(h32), _contentEditable_dec = [n42({ type: String, attribute: true, reflect: true })], _lang_dec = [n42({ type: String, attribute: true, reflect: true })], _a) {
+var LitElementWw = class extends (_a = ScopedElementsMixin2(i42), _contentEditable_dec = [n42({ type: String, attribute: true, reflect: true })], _lang_dec = [n42({ type: String, attribute: true, reflect: true })], _a) {
   constructor() {
     super(...arguments);
     __runInitializers2(_init, 5, this);
@@ -1347,7 +1350,7 @@ _lang = /* @__PURE__ */ new WeakMap();
 __decorateElement2(_init, 4, "contentEditable", _contentEditable_dec, LitElementWw, _contentEditable);
 __decorateElement2(_init, 3, "lang", _lang_dec, LitElementWw);
 __decoratorMetadata2(_init, LitElementWw);
-__publicField2(LitElementWw, "shadowRootOptions", { ...h32.shadowRootOptions });
+__publicField2(LitElementWw, "shadowRootOptions", { ...i42.shadowRootOptions });
 __publicField2(LitElementWw, "scopedElements", {});
 __publicField2(LitElementWw, "options", {});
 __publicField2(LitElementWw, "actions", {});
@@ -1766,19 +1769,19 @@ var SHA256 = class extends HashMD {
     this.H = SHA256_IV[7] | 0;
   }
   get() {
-    const { A: A2, B: B3, C: C2, D: D2, E: E3, F: F2, G: G2, H: H2 } = this;
-    return [A2, B3, C2, D2, E3, F2, G2, H2];
+    const { A: A3, B: B3, C: C3, D, E: E3, F, G, H: H3 } = this;
+    return [A3, B3, C3, D, E3, F, G, H3];
   }
   // prettier-ignore
-  set(A2, B3, C2, D2, E3, F2, G2, H2) {
-    this.A = A2 | 0;
+  set(A3, B3, C3, D, E3, F, G, H3) {
+    this.A = A3 | 0;
     this.B = B3 | 0;
-    this.C = C2 | 0;
-    this.D = D2 | 0;
+    this.C = C3 | 0;
+    this.D = D | 0;
     this.E = E3 | 0;
-    this.F = F2 | 0;
-    this.G = G2 | 0;
-    this.H = H2 | 0;
+    this.F = F | 0;
+    this.G = G | 0;
+    this.H = H3 | 0;
   }
   process(view, offset3) {
     for (let i8 = 0; i8 < 16; i8++, offset3 += 4)
@@ -1790,30 +1793,30 @@ var SHA256 = class extends HashMD {
       const s1 = rotr(W2, 17) ^ rotr(W2, 19) ^ W2 >>> 10;
       SHA256_W[i8] = s1 + SHA256_W[i8 - 7] + s0 + SHA256_W[i8 - 16] | 0;
     }
-    let { A: A2, B: B3, C: C2, D: D2, E: E3, F: F2, G: G2, H: H2 } = this;
+    let { A: A3, B: B3, C: C3, D, E: E3, F, G, H: H3 } = this;
     for (let i8 = 0; i8 < 64; i8++) {
       const sigma1 = rotr(E3, 6) ^ rotr(E3, 11) ^ rotr(E3, 25);
-      const T1 = H2 + sigma1 + Chi(E3, F2, G2) + SHA256_K[i8] + SHA256_W[i8] | 0;
-      const sigma0 = rotr(A2, 2) ^ rotr(A2, 13) ^ rotr(A2, 22);
-      const T22 = sigma0 + Maj(A2, B3, C2) | 0;
-      H2 = G2;
-      G2 = F2;
-      F2 = E3;
-      E3 = D2 + T1 | 0;
-      D2 = C2;
-      C2 = B3;
-      B3 = A2;
-      A2 = T1 + T22 | 0;
+      const T1 = H3 + sigma1 + Chi(E3, F, G) + SHA256_K[i8] + SHA256_W[i8] | 0;
+      const sigma0 = rotr(A3, 2) ^ rotr(A3, 13) ^ rotr(A3, 22);
+      const T22 = sigma0 + Maj(A3, B3, C3) | 0;
+      H3 = G;
+      G = F;
+      F = E3;
+      E3 = D + T1 | 0;
+      D = C3;
+      C3 = B3;
+      B3 = A3;
+      A3 = T1 + T22 | 0;
     }
-    A2 = A2 + this.A | 0;
+    A3 = A3 + this.A | 0;
     B3 = B3 + this.B | 0;
-    C2 = C2 + this.C | 0;
-    D2 = D2 + this.D | 0;
+    C3 = C3 + this.C | 0;
+    D = D + this.D | 0;
     E3 = E3 + this.E | 0;
-    F2 = F2 + this.F | 0;
-    G2 = G2 + this.G | 0;
-    H2 = H2 + this.H | 0;
-    this.set(A2, B3, C2, D2, E3, F2, G2, H2);
+    F = F + this.F | 0;
+    G = G + this.G | 0;
+    H3 = H3 + this.H | 0;
+    this.set(A3, B3, C3, D, E3, F, G, H3);
   }
   roundClean() {
     SHA256_W.fill(0);
@@ -2391,14 +2394,14 @@ var SHA1 = class extends HashMD {
     this.E = SHA1_IV[4] | 0;
   }
   get() {
-    const { A: A2, B: B3, C: C2, D: D2, E: E3 } = this;
-    return [A2, B3, C2, D2, E3];
+    const { A: A3, B: B3, C: C3, D, E: E3 } = this;
+    return [A3, B3, C3, D, E3];
   }
-  set(A2, B3, C2, D2, E3) {
-    this.A = A2 | 0;
+  set(A3, B3, C3, D, E3) {
+    this.A = A3 | 0;
     this.B = B3 | 0;
-    this.C = C2 | 0;
-    this.D = D2 | 0;
+    this.C = C3 | 0;
+    this.D = D | 0;
     this.E = E3 | 0;
   }
   process(view, offset3) {
@@ -2406,35 +2409,35 @@ var SHA1 = class extends HashMD {
       SHA1_W[i8] = view.getUint32(offset3, false);
     for (let i8 = 16; i8 < 80; i8++)
       SHA1_W[i8] = rotl(SHA1_W[i8 - 3] ^ SHA1_W[i8 - 8] ^ SHA1_W[i8 - 14] ^ SHA1_W[i8 - 16], 1);
-    let { A: A2, B: B3, C: C2, D: D2, E: E3 } = this;
+    let { A: A3, B: B3, C: C3, D, E: E3 } = this;
     for (let i8 = 0; i8 < 80; i8++) {
-      let F2, K2;
+      let F, K;
       if (i8 < 20) {
-        F2 = Chi(B3, C2, D2);
-        K2 = 1518500249;
+        F = Chi(B3, C3, D);
+        K = 1518500249;
       } else if (i8 < 40) {
-        F2 = B3 ^ C2 ^ D2;
-        K2 = 1859775393;
+        F = B3 ^ C3 ^ D;
+        K = 1859775393;
       } else if (i8 < 60) {
-        F2 = Maj(B3, C2, D2);
-        K2 = 2400959708;
+        F = Maj(B3, C3, D);
+        K = 2400959708;
       } else {
-        F2 = B3 ^ C2 ^ D2;
-        K2 = 3395469782;
+        F = B3 ^ C3 ^ D;
+        K = 3395469782;
       }
-      const T3 = rotl(A2, 5) + F2 + E3 + K2 + SHA1_W[i8] | 0;
-      E3 = D2;
-      D2 = C2;
-      C2 = rotl(B3, 30);
-      B3 = A2;
-      A2 = T3;
+      const T3 = rotl(A3, 5) + F + E3 + K + SHA1_W[i8] | 0;
+      E3 = D;
+      D = C3;
+      C3 = rotl(B3, 30);
+      B3 = A3;
+      A3 = T3;
     }
-    A2 = A2 + this.A | 0;
+    A3 = A3 + this.A | 0;
     B3 = B3 + this.B | 0;
-    C2 = C2 + this.C | 0;
-    D2 = D2 + this.D | 0;
+    C3 = C3 + this.C | 0;
+    D = D + this.D | 0;
     E3 = E3 + this.E | 0;
-    this.set(A2, B3, C2, D2, E3);
+    this.set(A3, B3, C3, D, E3);
   }
   roundClean() {
     SHA1_W.fill(0);
@@ -2666,10 +2669,10 @@ var parallelhash256 = /* @__PURE__ */ (() => genPrl(136, 256 / 8, cshake256))();
 var parallelhash128xof = /* @__PURE__ */ (() => genPrl(168, 128 / 8, cshake128, true))();
 var parallelhash256xof = /* @__PURE__ */ (() => genPrl(136, 256 / 8, cshake256, true))();
 var genTurboshake = (blockLen, outputLen) => wrapXOFConstructorWithOpts((opts = {}) => {
-  const D2 = opts.D === void 0 ? 31 : opts.D;
-  if (!Number.isSafeInteger(D2) || D2 < 1 || D2 > 127)
-    throw new Error("invalid domain separation byte must be 0x01..0x7f, got: " + D2);
-  return new Keccak(blockLen, D2, opts.dkLen === void 0 ? outputLen : opts.dkLen, true, 12);
+  const D = opts.D === void 0 ? 31 : opts.D;
+  if (!Number.isSafeInteger(D) || D < 1 || D > 127)
+    throw new Error("invalid domain separation byte must be 0x01..0x7f, got: " + D);
+  return new Keccak(blockLen, D, opts.dkLen === void 0 ? outputLen : opts.dkLen, true, 12);
 });
 var turboshake128 = /* @__PURE__ */ genTurboshake(168, 256 / 8);
 var turboshake256 = /* @__PURE__ */ genTurboshake(136, 512 / 8);
@@ -2865,14 +2868,14 @@ var RIPEMD160 = class extends HashMD {
     this.h4 = 3285377520 | 0;
   }
   get() {
-    const { h0, h1, h2: h23, h3: h33, h4 } = this;
-    return [h0, h1, h23, h33, h4];
+    const { h0, h1, h2: h23, h3: h32, h4 } = this;
+    return [h0, h1, h23, h32, h4];
   }
-  set(h0, h1, h23, h33, h4) {
+  set(h0, h1, h23, h32, h4) {
     this.h0 = h0 | 0;
     this.h1 = h1 | 0;
     this.h2 = h23 | 0;
-    this.h3 = h33 | 0;
+    this.h3 = h32 | 0;
     this.h4 = h4 | 0;
   }
   process(view, offset3) {
@@ -11541,21 +11544,27 @@ var style = i`
 
   #container{
       position: relative;
-      height: 100vh
+      height: 50vh;
+      border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: #6a6a6a;
   }
   #context,
   #draggable {
       position: absolute;
       border: 5px solid #fff;
+      outline: 10px solid #fff; 
       border-radius: 10px;
       padding: 5px;
-      box-shadow: 10px 10px 15px 5px #00466666;
+      box-shadow: 10px 10px 25px 10px #00466666;
       background-color: #fff;
     }
   #context{
     display: none;
-    flex-direction: column
-    
+    flex-direction: column;
+    outline: 4px solid #fff;
+    box-shadow: 8px 8px 20px 2px #00466666;
   }
   #context *,
   #draggable * {
@@ -11611,17 +11620,54 @@ var mdi_trash_outline_default = 'data:image/svg+xml,<svg xmlns="http://www.w3.or
 var mingcute_link_line_default = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.232 10.231a5 5 0 0 1 6.89-.172l.181.172l2.828 2.829a5 5 0 0 1-6.89 7.243l-.18-.172l-2.122-2.122a1 1 0 0 1 1.32-1.497l.094.083l2.122 2.122a3 3 0 0 0 4.377-4.1l-.135-.143l-2.828-2.828a3 3 0 0 0-4.243 0a1 1 0 0 1-1.414-1.415M3.868 3.867a5 5 0 0 1 6.89-.172l.181.172L13.06 5.99a1 1 0 0 1-1.32 1.497l-.094-.083l-2.121-2.121A3 3 0 0 0 5.147 9.38l.135.144l2.829 2.829a3 3 0 0 0 4.242 0a1 1 0 1 1 1.415 1.414a5 5 0 0 1-6.89.172l-.182-.172l-2.828-2.829a5 5 0 0 1 0-7.07Z"/></g></svg>';
 
 // widgets/webwriter-hash.ts
-var _useSalt_dec, _curHash_dec, _conBuffer_dec, _connections_dec, _context_dec, _container_dec, _a2, _WebwriterHash_decorators, _init2, _container, _context, _connections, _conBuffer, _curHash, _useSalt;
+var _mousePos_dec, _curHash_dec, _conBuffer_dec, _connections_dec, _cons_dec, _elems_dec, _context_dec, _container_dec, _a2, _WebwriterHash_decorators, _init2, _container, _context, _elems, _cons, _connections, _conBuffer, _curHash, _mousePos;
 _WebwriterHash_decorators = [t4("webwriter-hash")];
-var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#container")], _context_dec = [e6("#context")], _connections_dec = [n5({ attribute: false })], _conBuffer_dec = [n5({ attribute: false })], _curHash_dec = [n5({ attribute: false })], _useSalt_dec = [n5({ attribute: false })], _a2) {
+var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#container")], _context_dec = [e6("#context")], _elems_dec = [n5({
+  attribute: true,
+  type: Object,
+  reflect: true,
+  converter: {
+    toAttribute(value) {
+      return value != null ? JSON.stringify(value) : null;
+    },
+    fromAttribute(value) {
+      try {
+        return value ? JSON.parse(value) : null;
+      } catch (e12) {
+        console.error("Failed to parse attribute value:", value, e12);
+        return null;
+      }
+    }
+  }
+})], _cons_dec = [n5({
+  attribute: true,
+  type: Object,
+  reflect: true,
+  converter: {
+    toAttribute(value) {
+      return value != null ? JSON.stringify(value) : null;
+    },
+    fromAttribute(value) {
+      try {
+        return value ? JSON.parse(value) : null;
+      } catch (e12) {
+        console.error("Failed to parse attribute value:", value, e12);
+        return null;
+      }
+    }
+  }
+})], _connections_dec = [n5({ attribute: false })], _conBuffer_dec = [n5({ attribute: false })], _curHash_dec = [n5({ attribute: false })], _mousePos_dec = [n5({ attribute: false })], _a2) {
   constructor() {
     super(...arguments);
     __privateAdd(this, _container, __runInitializers(_init2, 8, this)), __runInitializers(_init2, 11, this);
     __privateAdd(this, _context, __runInitializers(_init2, 12, this)), __runInitializers(_init2, 15, this);
-    __privateAdd(this, _connections, __runInitializers(_init2, 16, this, [])), __runInitializers(_init2, 19, this);
-    __privateAdd(this, _conBuffer, __runInitializers(_init2, 20, this, null)), __runInitializers(_init2, 23, this);
-    __privateAdd(this, _curHash, __runInitializers(_init2, 24, this, "")), __runInitializers(_init2, 27, this);
-    __privateAdd(this, _useSalt, __runInitializers(_init2, 28, this, false)), __runInitializers(_init2, 31, this);
+    __privateAdd(this, _elems, __runInitializers(_init2, 16, this, {})), __runInitializers(_init2, 19, this);
+    __privateAdd(this, _cons, __runInitializers(_init2, 20, this, {})), __runInitializers(_init2, 23, this);
+    __privateAdd(this, _connections, __runInitializers(_init2, 24, this, [])), __runInitializers(_init2, 27, this);
+    __privateAdd(this, _conBuffer, __runInitializers(_init2, 28, this, null)), __runInitializers(_init2, 31, this);
+    __privateAdd(this, _curHash, __runInitializers(_init2, 32, this, "")), __runInitializers(_init2, 35, this);
+    __privateAdd(this, _mousePos, __runInitializers(_init2, 36, this, [0, 0])), __runInitializers(_init2, 39, this);
+    __publicField(this, "drawObject", null);
     __publicField(this, "currConSelect", null);
     __publicField(this, "hex_string", "0123456789abcdef");
     __publicField(this, "allHashes", Object.assign(
@@ -11653,13 +11699,134 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
   }
   firstUpdated(_changedProperties) {
     this.addEventListener("contextmenu", (e12) => {
+      e12.preventDefault();
       this.context.style.top = e12.offsetY + "px";
       this.context.style.left = e12.offsetX + "px";
       this.context.style.display = this.context.style.display === "flex" ? "" : "flex";
     });
+    this.addEventListener("click", (e12) => {
+      this.context.style.display = "";
+    });
+    this.addEventListener("mousemove", (e12) => {
+      this.mousePos[0] = e12.offsetX;
+      this.mousePos[1] = e12.offsetY;
+    });
+    Object.keys(this.elems).forEach((key) => {
+      let object = this.spawnDiv(
+        this.elems[key].type,
+        this.elems[key].x,
+        this.elems[key].y,
+        false
+      );
+      if (object.getAttribute("type") === "input") {
+        object.getElementsByTagName("sl-select")[0].value = this.elems[key].hash;
+      }
+      object.getElementsByTagName("sl-textarea")[0].value = this.elems[key].text != void 0 ? this.elems[key].text : "";
+      object.setAttribute("identifier", key);
+    });
+    Object.keys(this.cons).forEach((key) => {
+      let object1;
+      let object2;
+      for (let element of this.container.getElementsByTagName("div")) {
+        if (element.getAttribute("identifier") === key) {
+          object1 = element;
+        }
+        if (element.getAttribute("identifier") === this.cons[key]) {
+          object2 = element;
+        }
+      }
+      if (object1.getAttribute("type") === "input") {
+        this.curHash = object1.getElementsByTagName("sl-select")[0].value;
+      } else {
+        this.curHash = object2.getElementsByTagName("sl-select")[0].value;
+      }
+      this.establishCon(object1, false, true, object2);
+    });
   }
   toHex(bytes) {
     return Array.from(bytes || []).map((b4) => this.hex_string[b4 >> 4] + this.hex_string[b4 & 15]).join("");
+  }
+  updateElems(path, value, options = {}) {
+    const parts = Array.isArray(path) ? path : path.split(".");
+    let data = { ...this.elems };
+    if (options.delete || value === void 0 && !options.rename) {
+      if (parts.length === 1) {
+        delete data[parts[0]];
+      } else {
+        let current2 = data;
+        for (let i8 = 0; i8 < parts.length - 1; i8++) {
+          const part = parts[i8];
+          current2[part] = { ...current2[part] ?? {} };
+          current2 = current2[part];
+        }
+        delete current2[parts[parts.length - 1]];
+      }
+      this.elems = data;
+      return;
+    }
+    if (options.rename) {
+      const fromKey = parts[0];
+      const toKey = options.rename;
+      if (data.hasOwnProperty(fromKey)) {
+        data[toKey] = data[fromKey];
+        delete data[fromKey];
+        this.elems = data;
+        return;
+      } else {
+        console.warn(`Key "${fromKey}" not found, cannot rename.`);
+        return;
+      }
+    }
+    let current = data;
+    for (let i8 = 0; i8 < parts.length - 1; i8++) {
+      const part = parts[i8];
+      current[part] = { ...current[part] ?? {} };
+      current = current[part];
+    }
+    const lastKey = parts[parts.length - 1];
+    current[lastKey] = value;
+    this.elems = data;
+  }
+  updateCons(path, value, options = {}) {
+    const parts = Array.isArray(path) ? path : path.split(".");
+    let data = { ...this.cons };
+    if (options.delete || value === void 0 && !options.rename) {
+      if (parts.length === 1) {
+        delete data[parts[0]];
+      } else {
+        let current2 = data;
+        for (let i8 = 0; i8 < parts.length - 1; i8++) {
+          const part = parts[i8];
+          current2[part] = { ...current2[part] ?? {} };
+          current2 = current2[part];
+        }
+        delete current2[parts[parts.length - 1]];
+      }
+      this.cons = data;
+      return;
+    }
+    if (options.rename) {
+      const fromKey = parts[0];
+      const toKey = options.rename;
+      if (data.hasOwnProperty(fromKey)) {
+        data[toKey] = data[fromKey];
+        delete data[fromKey];
+        this.cons = data;
+        return;
+      } else {
+        console.warn(`Key "${fromKey}" not found, cannot rename.`);
+        return;
+      }
+    }
+    let current = data;
+    for (let i8 = 0; i8 < parts.length - 1; i8++) {
+      const part = parts[i8];
+      current[part] = { ...current[part] ?? {} };
+      current = current[part];
+    }
+    const lastKey = parts[parts.length - 1];
+    current[lastKey] = value;
+    this.cons = data;
   }
   fillOptions(element) {
     let keys = Object.keys(this.allHashes);
@@ -11672,7 +11839,7 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
       element.appendChild(option);
     });
   }
-  spawnDiv(type, x3, y4) {
+  spawnDiv(type, x3, y4, addToElems) {
     let node = this.shadowRoot.createElement(
       "div"
     );
@@ -11682,8 +11849,10 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
       "identifier",
       Math.floor(Date.now() / 1e3).toString()
     );
+    node.setAttribute("useSalt", "false");
     node.style.top = y4 + "px";
     node.style.left = x3 + "px";
+    node.style.zIndex = "5";
     let header = this.shadowRoot.createElement(
       "div"
     );
@@ -11699,7 +11868,8 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     );
     remButton.src = mdi_trash_outline_default;
     remButton.onclick = (e12) => {
-      node.remove();
+      this.updateElems(node.getAttribute("identifier"), void 0);
+      this.removeNode(node);
     };
     let conButton = this.shadowRoot.createElement(
       "sl-icon-button"
@@ -11723,7 +11893,14 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     text.id = "text";
     text.oninput = (e12) => {
       if (!text.disabled) {
+        if (this.curHash != select.value) {
+          this.curHash = select.value;
+        }
         this.changedInput(node, text.value);
+        this.updateElems(
+          `${node.getAttribute("identifier")}.text`,
+          text.value
+        );
       }
     };
     text.onmousedown = (e12) => e12.stopPropagation();
@@ -11740,7 +11917,15 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     select.size = "small";
     select.addEventListener("sl-change", (e12) => {
       this.curHash = select.value;
-      text.value != "" ? this.changedInput(node, text.value) : "";
+      this.updateElems(
+        `${node.getAttribute("identifier")}.hash`,
+        select.value
+      );
+      if (node.getAttribute("useSalt") === "true") {
+        this.changedInput(node, text.value, saltText.value);
+      } else {
+        text.value != "" ? this.changedInput(node, text.value) : "";
+      }
     });
     setTimeout(() => {
       select.shadowRoot.getElementById("listbox").style.height = "175px";
@@ -11762,6 +11947,10 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     reloadSalt.size = "small";
     reloadSalt.onclick = (e12) => {
       saltText.value = this.toHex(randomBytes(32));
+      if (this.curHash != select.value) {
+        this.curHash = select.value;
+      }
+      this.changedInput(node, text.value, saltText.value);
     };
     let saltCheck = this.shadowRoot.createElement(
       "sl-icon-button"
@@ -11769,18 +11958,19 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     saltCheck.id = "saltCheck";
     saltCheck.src = f7_text_append_default;
     saltCheck.onclick = (e12) => {
-      console.log(flexDiv2.style.display);
+      if (this.curHash != select.value) {
+        this.curHash = select.value;
+      }
       if (flexDiv2.style.display === "none" || flexDiv2.style.display === "") {
         flexDiv2.style.display = "flex";
-        this.useSalt = true;
-        saltCheck.style.color = "#2594c9";
-        if (saltText.value === "") {
-          saltText.value = this.toHex(randomBytes(32));
-        }
+        saltText.value = this.toHex(randomBytes(32));
+        node.setAttribute("useSalt", "true");
+        this.changedInput(node, text.value, saltText.value);
       } else {
         flexDiv2.style.display = "none";
-        this.useSalt = false;
         saltCheck.style.color = "";
+        node.setAttribute("useSalt", "false");
+        this.changedInput(node, text.value);
       }
     };
     if (type === "output") {
@@ -11804,14 +11994,42 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     node.appendChild(text);
     this.container.appendChild(node);
     this.dragElement(node);
+    if (addToElems != false) {
+      this.updateElems(
+        `${node.getAttribute("identifier")}.x`,
+        node.getBoundingClientRect().x
+      );
+      this.updateElems(
+        `${node.getAttribute("identifier")}.y`,
+        node.getBoundingClientRect().y
+      );
+      this.updateElems(
+        `${node.getAttribute("identifier")}.type`,
+        node.getAttribute("type")
+      );
+    }
+    return node;
   }
-  changedInput(node, value) {
-    console.log(this.connections, node);
+  changedInput(node, value, saltValue) {
     this.connections.forEach((con) => {
       if (con[0].getAttribute("identifier") === node.getAttribute("identifier")) {
-        con[1].getElementsByTagName("sl-textarea")[0].value = value != "" ? this.toHex(this.allHashes[this.curHash](value)) : "";
+        con[1].getElementsByTagName("sl-textarea")[0].value = value != "" ? this.toHex(
+          this.allHashes[this.curHash](
+            saltValue != void 0 ? String.prototype.concat(
+              value,
+              saltValue
+            ) : value
+          )
+        ) : "";
       } else if (con[1].getAttribute("identifier") === node.getAttribute("identifier")) {
-        con[0].getElementsByTagName("sl-textarea")[0].value = value != "" ? this.toHex(this.allHashes[this.curHash](value)) : "";
+        con[0].getElementsByTagName("sl-textarea")[0].value = value != "" ? this.toHex(
+          this.allHashes[this.curHash](
+            saltValue != void 0 ? String.prototype.concat(
+              value,
+              saltValue
+            ) : value
+          )
+        ) : "";
       }
     });
   }
@@ -11824,38 +12042,83 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     });
     removeIndices.forEach((index) => {
       this.connections.splice(index, 1);
+      let remKey = "";
+      Object.keys(this.cons).forEach((key) => {
+        if (key === node.getAttribute("identifier") || this.cons[key] === node.getAttribute("identifier")) {
+          remKey = key;
+        }
+      });
+      this.updateCons(remKey, void 0);
     });
     node.remove();
-    console.log(this.connections);
   }
-  establishCon(node) {
-    if (this.conBuffer === null) {
+  establishCon(node, addToCons = true, existing, partner) {
+    console.log("ENTER", node, partner);
+    if (this.conBuffer === null && existing != true) {
       this.conBuffer = node;
+      this.drawObject = this.createMouseLineDrawer(
+        this.mousePos[0],
+        this.mousePos[1],
+        this,
+        this.getBoundingClientRect()
+      );
+      this.drawObject.toggle();
     } else {
-      if (this.conBuffer != node && this.conBuffer.getAttribute("type") != node.getAttribute("type")) {
+      let noPriorCon = true;
+      this.connections.forEach((con) => {
+        if (con[0] === node && con[1] === this.conBuffer || con[1] === node && con[0] === this.conBuffer) {
+          noPriorCon = false;
+        }
+      });
+      if (existing) {
+        this.conBuffer = partner;
+      }
+      if (this.conBuffer != node && this.conBuffer.getAttribute("type") != node.getAttribute("type") && noPriorCon) {
         this.connections.push([this.conBuffer, node]);
+        if (addToCons) {
+          this.updateCons(node.getAttribute("identifier"), this.conBuffer.getAttribute("identifier"));
+        }
         let stopLineDrwawing = this.drawCon(
           this.conBuffer,
           node,
           this.container,
-          this.getBoundingClientRect()
+          this.container.getBoundingClientRect()
         );
         let text1 = this.conBuffer.getElementsByTagName("sl-textarea")[0].value;
         let text2 = node.getElementsByTagName("sl-textarea")[0].value;
         if (node.getAttribute("type") === "input") {
-          this.changedInput(node, text2);
+          if (node.getAttribute("useSalt") === "true") {
+            let saltText = node.getElementsByTagName("sl-input")[0].value;
+            this.changedInput(node, text2, saltText);
+          } else {
+            this.changedInput(node, text2);
+          }
         } else if (this.conBuffer.getAttribute("type") === "input") {
-          this.changedInput(this.conBuffer, text1);
+          if (this.conBuffer.getAttribute("useSalt") === "true") {
+            let saltText = this.conBuffer.getElementsByTagName("sl-input")[0].value;
+            this.changedInput(this.conBuffer, text1, saltText);
+          } else {
+            this.changedInput(this.conBuffer, text1);
+          }
         }
       }
       this.conBuffer = null;
+      if (existing != true) {
+        this.drawObject.toggle();
+        this.drawObject.destroy();
+      }
+      this.drawObject = null;
+      console.log(this.connections);
     }
   }
   drawCon(div1, div2, container, parentDims) {
     let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.style.position = "relative";
+    svg.style.position = "sticky";
     svg.style.pointerEvents = "none";
-    svg.style.zIndex = "-1";
+    svg.style.zIndex = (Math.min(
+      Number.parseInt(div1.style.zIndex),
+      Number.parseInt(div2.style.zIndex)
+    ) - 1).toString();
     svg.style.overflow = "visible";
     svg.setAttribute("width", "10");
     svg.setAttribute("height", "10");
@@ -11894,11 +12157,6 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     path.setAttribute("filter", "url(#curve-shadow)");
     container.appendChild(svg);
     let animationFrameId;
-    console.log(
-      parentDims,
-      div1.getBoundingClientRect(),
-      div2.getBoundingClientRect()
-    );
     function updatePath() {
       if (!container.contains(div1) || !container.contains(div2)) {
         cleanup();
@@ -11915,16 +12173,16 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
         y: rect2.top - parentDims.top - rect2.height / 2
       };
       let horizontal = Math.abs(center1.x - center2.x) > Math.abs(center1.y - center2.y);
-      let x1 = horizontal ? center1.x < center2.x ? rect1.right - parentDims.left - rect1.width * 1.1 : rect1.left - parentDims.left - rect1.width * 1.05 : rect1.left - parentDims.left - rect1.width / 2;
-      let y1 = horizontal ? rect1.top - parentDims.top + rect1.height / 2 : center1.y < center2.y ? rect1.bottom - parentDims.top - 15 : rect1.top - parentDims.top - 15;
-      let x22 = horizontal ? center1.x < center2.x ? rect2.left - parentDims.left - rect2.width * 1.1 : rect2.right - parentDims.left - rect2.width * 1.15 : rect2.left - parentDims.left - rect2.width / 2;
-      let y22 = horizontal ? rect2.top - parentDims.top + rect2.height / 2 : center1.y < center2.y ? rect2.top - parentDims.top - 15 : rect2.bottom - parentDims.top - 15;
+      let x1 = horizontal ? center1.x < center2.x ? div1.offsetLeft + rect1.width : div1.offsetLeft : div1.offsetLeft;
+      let y1 = horizontal ? div1.offsetTop : center1.y < center2.y ? div1.offsetTop + rect1.height : div1.offsetTop;
+      let x22 = horizontal ? center1.x < center2.x ? div2.offsetLeft : div2.offsetLeft + rect2.width : div2.offsetLeft;
+      let y23 = horizontal ? div2.offsetTop : center1.y < center2.y ? div2.offsetTop + rect2.height : div2.offsetTop;
       let curveOffset = 75;
       let cp1x = horizontal ? x1 + curveOffset * (x1 < x22 ? 1 : -1) : x1;
-      let cp1y = horizontal ? y1 : y1 + curveOffset * (y1 < y22 ? 1 : -1);
+      let cp1y = horizontal ? y1 : y1 + curveOffset * (y1 < y23 ? 1 : -1);
       let cp2x = horizontal ? x22 - curveOffset * (x1 < x22 ? 1 : -1) : x22;
-      let cp2y = horizontal ? y22 : y22 - curveOffset * (y1 < y22 ? 1 : -1);
-      let pathData = `M ${x1},${y1} C ${cp1x},${cp1y} ${cp2x},${cp2y} ${x22},${y22}`;
+      let cp2y = horizontal ? y23 : y23 - curveOffset * (y1 < y23 ? 1 : -1);
+      let pathData = `M ${x1},${y1} C ${cp1x},${cp1y} ${cp2x},${cp2y} ${x22},${y23}`;
       path.setAttribute("d", pathData);
       path.style.transition = "d 50ms ease";
       animationFrameId = requestAnimationFrame(updatePath);
@@ -11946,7 +12204,7 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
     updatePath();
     return cleanup;
   }
-  dragElement(elmnt) {
+  dragElement(elmnt, parent = this) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     elmnt.onmousedown = dragMouseDown;
     function dragMouseDown(e12) {
@@ -11965,11 +12223,92 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
       pos4 = e12.clientY;
       elmnt.style.top = elmnt.offsetTop - pos2 + "px";
       elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+      parent.updateElems(`${elmnt.getAttribute("identifier")}.x`, elmnt.offsetLeft - pos1);
+      parent.updateElems(`${elmnt.getAttribute("identifier")}.y`, elmnt.offsetTop - pos2);
     }
     function closeDragElement() {
       document.onmouseup = null;
       document.onmousemove = null;
     }
+  }
+  createMouseLineDrawer(fixedX, fixedY, parent, parentRect) {
+    const fixedPoint = { x: fixedX, y: fixedY };
+    let svg = null;
+    let line = null;
+    let isDrawing = false;
+    let animationFrameId = null;
+    function setupSVG() {
+      svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute(
+        "style",
+        `
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			pointer-events: none;
+			z-index: 9999;
+		  `
+      );
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
+      line = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "line"
+      );
+      line.setAttribute("x1", fixedPoint.x.toString());
+      line.setAttribute("y1", fixedPoint.y.toString());
+      line.setAttribute("x2", fixedPoint.x.toString());
+      line.setAttribute("y2", fixedPoint.y.toString());
+      line.setAttribute("stroke", "darkgrey");
+      line.setAttribute("stroke-opacity", "0.5");
+      line.setAttribute("stroke-linecap", "butt");
+      line.setAttribute("stroke-dasharray", "35,10");
+      line.setAttribute("stroke-width", "2");
+      svg.appendChild(line);
+      parent.container.appendChild(svg);
+    }
+    function updateLine() {
+      if (line) {
+        line.setAttribute("x2", parent.mousePos[0].toString());
+        line.setAttribute("y2", parent.mousePos[1].toString());
+      }
+    }
+    function drawLoop() {
+      if (!isDrawing) return;
+      updateLine();
+      animationFrameId = requestAnimationFrame(drawLoop);
+    }
+    function start() {
+      if (!svg) setupSVG();
+      isDrawing = true;
+      drawLoop();
+    }
+    function stop() {
+      isDrawing = false;
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      if (line) {
+        line.setAttribute("x2", fixedPoint.x.toString());
+        line.setAttribute("y2", fixedPoint.y.toString());
+      }
+    }
+    function destroy() {
+      stop();
+      svg?.remove();
+      svg = null;
+      line = null;
+    }
+    function toggle() {
+      isDrawing ? stop() : start();
+    }
+    return {
+      toggle,
+      stop,
+      destroy
+    };
   }
   render() {
     return x`
@@ -11983,8 +12322,8 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
 							@click=${(e12) => {
       this.spawnDiv(
         "input",
-        e12.screenX - e12.offsetX,
-        e12.screenY - e12.offsetY
+        this.mousePos[0],
+        this.mousePos[1]
       );
       this.context.style.display = "none";
     }}
@@ -12001,8 +12340,8 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
 							@click=${(e12) => {
       this.spawnDiv(
         "output",
-        e12.screenX - e12.offsetX,
-        e12.screenY - e12.offsetY
+        this.mousePos[0],
+        this.mousePos[1]
       );
       this.context.style.display = "none";
     }}
@@ -12018,16 +12357,20 @@ var WebwriterHash = class extends (_a2 = LitElementWw, _container_dec = [e6("#co
 _init2 = __decoratorStart(_a2);
 _container = new WeakMap();
 _context = new WeakMap();
+_elems = new WeakMap();
+_cons = new WeakMap();
 _connections = new WeakMap();
 _conBuffer = new WeakMap();
 _curHash = new WeakMap();
-_useSalt = new WeakMap();
+_mousePos = new WeakMap();
 __decorateElement(_init2, 4, "container", _container_dec, WebwriterHash, _container);
 __decorateElement(_init2, 4, "context", _context_dec, WebwriterHash, _context);
+__decorateElement(_init2, 4, "elems", _elems_dec, WebwriterHash, _elems);
+__decorateElement(_init2, 4, "cons", _cons_dec, WebwriterHash, _cons);
 __decorateElement(_init2, 4, "connections", _connections_dec, WebwriterHash, _connections);
 __decorateElement(_init2, 4, "conBuffer", _conBuffer_dec, WebwriterHash, _conBuffer);
 __decorateElement(_init2, 4, "curHash", _curHash_dec, WebwriterHash, _curHash);
-__decorateElement(_init2, 4, "useSalt", _useSalt_dec, WebwriterHash, _useSalt);
+__decorateElement(_init2, 4, "mousePos", _mousePos_dec, WebwriterHash, _mousePos);
 WebwriterHash = __decorateElement(_init2, 0, "WebwriterHash", _WebwriterHash_decorators, WebwriterHash);
 __publicField(WebwriterHash, "styles", style);
 __runInitializers(_init2, 1, WebwriterHash);

@@ -3,21 +3,27 @@ export const style = css`
 
   #container{
       position: relative;
-      height: 100vh
+      height: 50vh;
+      border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: #6a6a6a;
   }
   #context,
   #draggable {
       position: absolute;
       border: 5px solid #fff;
+      outline: 10px solid #fff; 
       border-radius: 10px;
       padding: 5px;
-      box-shadow: 10px 10px 15px 5px #00466666;
+      box-shadow: 10px 10px 25px 10px #00466666;
       background-color: #fff;
     }
   #context{
     display: none;
-    flex-direction: column
-    
+    flex-direction: column;
+    outline: 4px solid #fff;
+    box-shadow: 8px 8px 20px 2px #00466666;
   }
   #context *,
   #draggable * {
