@@ -3,7 +3,7 @@ import { LitElementWw } from "@webwriter/lit";
 import { customElement, property, query } from "lit/decorators.js";
 import * as sha2 from "@noble/hashes/sha2";
 import * as sha3 from "@noble/hashes/sha3";
-import { sha1 } from "@noble/hashes/sha1";
+import { SHA1, sha1 } from "@noble/hashes/legacy";
 import * as sha3a from "@noble/hashes/sha3-addons";
 import { ripemd160 } from "@noble/hashes/ripemd160";
 import { blake3 } from "@noble/hashes/blake3";
@@ -100,15 +100,6 @@ export class WebwriterHash extends LitElementWw {
 		sha2,
 		sha1,
 		sha3,
-		sha3a,
-		ripemd160,
-		blake3,
-		blake2b,
-		blake2s,
-		hmac,
-		hkdf,
-		pbkdf2,
-		scrypt
 	);
 
 	static get scopedElements() {
@@ -125,6 +116,7 @@ export class WebwriterHash extends LitElementWw {
 	}
 
 	protected firstUpdated(_changedProperties: PropertyValues): void {
+
 		this.addEventListener("contextmenu", (e) => {
 			e.preventDefault();
 			this.context.style.top = e.offsetY + "px";
