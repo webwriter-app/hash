@@ -620,28 +620,28 @@ var __runInitializers2 = (array, flags, self, value) => {
   return value;
 };
 var __decorateElement2 = (array, flags, name, decorators, target, extra) => {
-  var fn, it, done, ctx, access, k22 = flags & 7, s42 = !!(flags & 8), p32 = !!(flags & 16);
+  var fn, it, done, ctx, access, k22 = flags & 7, s42 = !!(flags & 8), p33 = !!(flags & 16);
   var j22 = k22 > 3 ? array.length + 1 : k22 ? s42 ? 1 : 2 : 0, key = __decoratorStrings2[k22 + 5];
   var initializers = k22 > 3 && (array[j22 - 1] = []), extraInitializers = array[j22] || (array[j22] = []);
-  var desc = k22 && (!p32 && !s42 && (target = target.prototype), k22 < 5 && (k22 > 3 || !p32) && __getOwnPropDesc2(k22 < 4 ? target : { get [name]() {
+  var desc = k22 && (!p33 && !s42 && (target = target.prototype), k22 < 5 && (k22 > 3 || !p33) && __getOwnPropDesc2(k22 < 4 ? target : { get [name]() {
     return __privateGet2(this, extra);
   }, set [name](x22) {
     return __privateSet2(this, extra, x22);
   } }, name));
-  k22 ? p32 && k22 < 4 && __name2(extra, (k22 > 2 ? "set " : k22 > 1 ? "get " : "") + name) : __name2(target, name);
+  k22 ? p33 && k22 < 4 && __name2(extra, (k22 > 2 ? "set " : k22 > 1 ? "get " : "") + name) : __name2(target, name);
   for (var i52 = decorators.length - 1; i52 >= 0; i52--) {
     ctx = __decoratorContext2(k22, name, done = {}, array[3], extraInitializers);
     if (k22) {
-      ctx.static = s42, ctx.private = p32, access = ctx.access = { has: p32 ? (x22) => __privateIn2(target, x22) : (x22) => name in x22 };
-      if (k22 ^ 3) access.get = p32 ? (x22) => (k22 ^ 1 ? __privateGet2 : __privateMethod2)(x22, target, k22 ^ 4 ? extra : desc.get) : (x22) => x22[name];
-      if (k22 > 2) access.set = p32 ? (x22, y32) => __privateSet2(x22, target, y32, k22 ^ 4 ? extra : desc.set) : (x22, y32) => x22[name] = y32;
+      ctx.static = s42, ctx.private = p33, access = ctx.access = { has: p33 ? (x22) => __privateIn2(target, x22) : (x22) => name in x22 };
+      if (k22 ^ 3) access.get = p33 ? (x22) => (k22 ^ 1 ? __privateGet2 : __privateMethod2)(x22, target, k22 ^ 4 ? extra : desc.get) : (x22) => x22[name];
+      if (k22 > 2) access.set = p33 ? (x22, y32) => __privateSet2(x22, target, y32, k22 ^ 4 ? extra : desc.set) : (x22, y32) => x22[name] = y32;
     }
-    it = (0, decorators[i52])(k22 ? k22 < 4 ? p32 ? extra : desc[key] : k22 > 4 ? void 0 : { get: desc.get, set: desc.set } : target, ctx), done._ = 1;
-    if (k22 ^ 4 || it === void 0) __expectFn2(it) && (k22 > 4 ? initializers.unshift(it) : k22 ? p32 ? extra = it : desc[key] = it : target = it);
+    it = (0, decorators[i52])(k22 ? k22 < 4 ? p33 ? extra : desc[key] : k22 > 4 ? void 0 : { get: desc.get, set: desc.set } : target, ctx), done._ = 1;
+    if (k22 ^ 4 || it === void 0) __expectFn2(it) && (k22 > 4 ? initializers.unshift(it) : k22 ? p33 ? extra = it : desc[key] = it : target = it);
     else if (typeof it !== "object" || it === null) __typeError2("Object expected");
     else __expectFn2(fn = it.get) && (desc.get = fn), __expectFn2(fn = it.set) && (desc.set = fn), __expectFn2(fn = it.init) && initializers.unshift(fn);
   }
-  return k22 || __decoratorMetadata2(array, target), desc && __defProp2(target, name, desc), p32 ? k22 ^ 4 ? extra : desc : target;
+  return k22 || __decoratorMetadata2(array, target), desc && __defProp2(target, name, desc), p33 ? k22 ^ 4 ? extra : desc : target;
 };
 var __publicField2 = (obj, key, value) => __defNormalProp2(obj, typeof key !== "symbol" ? key + "" : key, value);
 var __accessCheck2 = (obj, member, msg) => member.has(obj) || __typeError2("Cannot " + msg);
@@ -1350,6 +1350,7 @@ _lang = /* @__PURE__ */ new WeakMap();
 __decorateElement2(_init, 4, "contentEditable", _contentEditable_dec, LitElementWw, _contentEditable);
 __decorateElement2(_init, 3, "lang", _lang_dec, LitElementWw);
 __decoratorMetadata2(_init, LitElementWw);
+__publicField2(LitElementWw, "shadowRootOptions", { ...i42.shadowRootOptions });
 __publicField2(LitElementWw, "scopedElements", {});
 __publicField2(LitElementWw, "options", {});
 __publicField2(LitElementWw, "actions", {});
@@ -1426,12 +1427,6 @@ function e6(e12, r8) {
 // node_modules/@noble/hashes/esm/sha2.js
 var sha2_exports = {};
 __export(sha2_exports, {
-  SHA224: () => SHA224,
-  SHA256: () => SHA256,
-  SHA384: () => SHA384,
-  SHA512: () => SHA512,
-  SHA512_224: () => SHA512_224,
-  SHA512_256: () => SHA512_256,
   sha224: () => sha224,
   sha256: () => sha256,
   sha384: () => sha384,
@@ -1440,16 +1435,13 @@ __export(sha2_exports, {
   sha512_256: () => sha512_256
 });
 
-// node_modules/@noble/hashes/esm/crypto.js
-var crypto = typeof globalThis === "object" && "crypto" in globalThis ? globalThis.crypto : void 0;
-
-// node_modules/@noble/hashes/esm/utils.js
-function isBytes(a5) {
-  return a5 instanceof Uint8Array || ArrayBuffer.isView(a5) && a5.constructor.name === "Uint8Array";
-}
+// node_modules/@noble/hashes/esm/_assert.js
 function anumber(n7) {
   if (!Number.isSafeInteger(n7) || n7 < 0)
     throw new Error("positive integer expected, got " + n7);
+}
+function isBytes(a5) {
+  return a5 instanceof Uint8Array || ArrayBuffer.isView(a5) && a5.constructor.name === "Uint8Array";
 }
 function abytes(b4, ...lengths) {
   if (!isBytes(b4))
@@ -1470,13 +1462,13 @@ function aoutput(out, instance) {
     throw new Error("digestInto() expects output buffer of length at least " + min2);
   }
 }
+
+// node_modules/@noble/hashes/esm/crypto.js
+var crypto = typeof globalThis === "object" && "crypto" in globalThis ? globalThis.crypto : void 0;
+
+// node_modules/@noble/hashes/esm/utils.js
 function u32(arr) {
   return new Uint32Array(arr.buffer, arr.byteOffset, Math.floor(arr.byteLength / 4));
-}
-function clean(...arrays) {
-  for (let i8 = 0; i8 < arrays.length; i8++) {
-    arrays[i8].fill(0);
-  }
 }
 function createView(arr) {
   return new DataView(arr.buffer, arr.byteOffset, arr.byteLength);
@@ -1495,12 +1487,14 @@ function byteSwap32(arr) {
   for (let i8 = 0; i8 < arr.length; i8++) {
     arr[i8] = byteSwap(arr[i8]);
   }
-  return arr;
 }
-var swap32IfBE = isLE ? (u6) => u6 : byteSwap32;
+var hasHexBuiltin = (
+  // @ts-ignore
+  typeof Uint8Array.from([]).toHex === "function" && typeof Uint8Array.fromHex === "function"
+);
 function utf8ToBytes(str) {
   if (typeof str !== "string")
-    throw new Error("string expected");
+    throw new Error("utf8ToBytes expected string, got " + typeof str);
   return new Uint8Array(new TextEncoder().encode(str));
 }
 function toBytes(data) {
@@ -1510,8 +1504,12 @@ function toBytes(data) {
   return data;
 }
 var Hash = class {
+  // Safe version that clones internal state
+  clone() {
+    return this._cloneInto();
+  }
 };
-function createHasher(hashCons) {
+function wrapConstructor(hashCons) {
   const hashC = (msg) => hashCons().update(toBytes(msg)).digest();
   const tmp = hashCons();
   hashC.outputLen = tmp.outputLen;
@@ -1519,7 +1517,7 @@ function createHasher(hashCons) {
   hashC.create = () => hashCons();
   return hashC;
 }
-function createXOFer(hashCons) {
+function wrapXOFConstructorWithOpts(hashCons) {
   const hashC = (msg, opts) => hashCons(opts).update(toBytes(msg)).digest();
   const tmp = hashCons({});
   hashC.outputLen = tmp.outputLen;
@@ -1572,9 +1570,8 @@ var HashMD = class extends Hash {
   }
   update(data) {
     aexists(this);
-    data = toBytes(data);
-    abytes(data);
     const { view, buffer, blockLen } = this;
+    data = toBytes(data);
     const len = data.length;
     for (let pos = 0; pos < len; ) {
       const take = Math.min(blockLen - this.pos, len - pos);
@@ -1603,7 +1600,7 @@ var HashMD = class extends Hash {
     const { buffer, view, blockLen, isLE: isLE2 } = this;
     let { pos } = this;
     buffer[pos++] = 128;
-    clean(this.buffer.subarray(pos));
+    this.buffer.subarray(pos).fill(0);
     if (this.padOffset > blockLen - pos) {
       this.process(view, 0);
       pos = 0;
@@ -1634,116 +1631,18 @@ var HashMD = class extends Hash {
     to || (to = new this.constructor());
     to.set(...this.get());
     const { blockLen, buffer, length, finished, destroyed, pos } = this;
-    to.destroyed = destroyed;
-    to.finished = finished;
     to.length = length;
     to.pos = pos;
+    to.finished = finished;
+    to.destroyed = destroyed;
     if (length % blockLen)
       to.buffer.set(buffer);
     return to;
   }
-  clone() {
-    return this._cloneInto();
-  }
 };
-var SHA256_IV = /* @__PURE__ */ Uint32Array.from([
-  1779033703,
-  3144134277,
-  1013904242,
-  2773480762,
-  1359893119,
-  2600822924,
-  528734635,
-  1541459225
-]);
-var SHA224_IV = /* @__PURE__ */ Uint32Array.from([
-  3238371032,
-  914150663,
-  812702999,
-  4144912697,
-  4290775857,
-  1750603025,
-  1694076839,
-  3204075428
-]);
-var SHA384_IV = /* @__PURE__ */ Uint32Array.from([
-  3418070365,
-  3238371032,
-  1654270250,
-  914150663,
-  2438529370,
-  812702999,
-  355462360,
-  4144912697,
-  1731405415,
-  4290775857,
-  2394180231,
-  1750603025,
-  3675008525,
-  1694076839,
-  1203062813,
-  3204075428
-]);
-var SHA512_IV = /* @__PURE__ */ Uint32Array.from([
-  1779033703,
-  4089235720,
-  3144134277,
-  2227873595,
-  1013904242,
-  4271175723,
-  2773480762,
-  1595750129,
-  1359893119,
-  2917565137,
-  2600822924,
-  725511199,
-  528734635,
-  4215389547,
-  1541459225,
-  327033209
-]);
 
-// node_modules/@noble/hashes/esm/_u64.js
-var U32_MASK64 = /* @__PURE__ */ BigInt(2 ** 32 - 1);
-var _32n = /* @__PURE__ */ BigInt(32);
-function fromBig(n7, le = false) {
-  if (le)
-    return { h: Number(n7 & U32_MASK64), l: Number(n7 >> _32n & U32_MASK64) };
-  return { h: Number(n7 >> _32n & U32_MASK64) | 0, l: Number(n7 & U32_MASK64) | 0 };
-}
-function split(lst, le = false) {
-  const len = lst.length;
-  let Ah = new Uint32Array(len);
-  let Al = new Uint32Array(len);
-  for (let i8 = 0; i8 < len; i8++) {
-    const { h: h4, l: l6 } = fromBig(lst[i8], le);
-    [Ah[i8], Al[i8]] = [h4, l6];
-  }
-  return [Ah, Al];
-}
-var shrSH = (h4, _l, s5) => h4 >>> s5;
-var shrSL = (h4, l6, s5) => h4 << 32 - s5 | l6 >>> s5;
-var rotrSH = (h4, l6, s5) => h4 >>> s5 | l6 << 32 - s5;
-var rotrSL = (h4, l6, s5) => h4 << 32 - s5 | l6 >>> s5;
-var rotrBH = (h4, l6, s5) => h4 << 64 - s5 | l6 >>> s5 - 32;
-var rotrBL = (h4, l6, s5) => h4 >>> s5 - 32 | l6 << 64 - s5;
-var rotlSH = (h4, l6, s5) => h4 << s5 | l6 >>> 32 - s5;
-var rotlSL = (h4, l6, s5) => l6 << s5 | h4 >>> 32 - s5;
-var rotlBH = (h4, l6, s5) => l6 << s5 - 32 | h4 >>> 64 - s5;
-var rotlBL = (h4, l6, s5) => h4 << s5 - 32 | l6 >>> 64 - s5;
-function add(Ah, Al, Bh, Bl) {
-  const l6 = (Al >>> 0) + (Bl >>> 0);
-  return { h: Ah + Bh + (l6 / 2 ** 32 | 0) | 0, l: l6 | 0 };
-}
-var add3L = (Al, Bl, Cl) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0);
-var add3H = (low, Ah, Bh, Ch) => Ah + Bh + Ch + (low / 2 ** 32 | 0) | 0;
-var add4L = (Al, Bl, Cl, Dl) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >>> 0);
-var add4H = (low, Ah, Bh, Ch, Dh) => Ah + Bh + Ch + Dh + (low / 2 ** 32 | 0) | 0;
-var add5L = (Al, Bl, Cl, Dl, El) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >>> 0) + (El >>> 0);
-var add5H = (low, Ah, Bh, Ch, Dh, Eh) => Ah + Bh + Ch + Dh + Eh + (low / 2 ** 32 | 0) | 0;
-
-// node_modules/@noble/hashes/esm/sha2.js
-var SHA256_K = /* @__PURE__ */ Uint32Array.from([
+// node_modules/@noble/hashes/esm/sha256.js
+var SHA256_K = /* @__PURE__ */ new Uint32Array([
   1116352408,
   1899447441,
   3049323471,
@@ -1809,6 +1708,16 @@ var SHA256_K = /* @__PURE__ */ Uint32Array.from([
   3204031479,
   3329325298
 ]);
+var SHA256_IV = /* @__PURE__ */ new Uint32Array([
+  1779033703,
+  3144134277,
+  1013904242,
+  2773480762,
+  1359893119,
+  2600822924,
+  528734635,
+  1541459225
+]);
 var SHA256_W = /* @__PURE__ */ new Uint32Array(64);
 var SHA256 = class extends HashMD {
   constructor(outputLen = 32) {
@@ -1873,27 +1782,97 @@ var SHA256 = class extends HashMD {
     this.set(A3, B3, C3, D, E3, F, G, H3);
   }
   roundClean() {
-    clean(SHA256_W);
+    SHA256_W.fill(0);
   }
   destroy() {
     this.set(0, 0, 0, 0, 0, 0, 0, 0);
-    clean(this.buffer);
+    this.buffer.fill(0);
   }
 };
 var SHA224 = class extends SHA256 {
   constructor() {
     super(28);
-    this.A = SHA224_IV[0] | 0;
-    this.B = SHA224_IV[1] | 0;
-    this.C = SHA224_IV[2] | 0;
-    this.D = SHA224_IV[3] | 0;
-    this.E = SHA224_IV[4] | 0;
-    this.F = SHA224_IV[5] | 0;
-    this.G = SHA224_IV[6] | 0;
-    this.H = SHA224_IV[7] | 0;
+    this.A = 3238371032 | 0;
+    this.B = 914150663 | 0;
+    this.C = 812702999 | 0;
+    this.D = 4144912697 | 0;
+    this.E = 4290775857 | 0;
+    this.F = 1750603025 | 0;
+    this.G = 1694076839 | 0;
+    this.H = 3204075428 | 0;
   }
 };
-var K512 = /* @__PURE__ */ (() => split([
+var sha256 = /* @__PURE__ */ wrapConstructor(() => new SHA256());
+var sha224 = /* @__PURE__ */ wrapConstructor(() => new SHA224());
+
+// node_modules/@noble/hashes/esm/_u64.js
+var U32_MASK64 = /* @__PURE__ */ BigInt(2 ** 32 - 1);
+var _32n = /* @__PURE__ */ BigInt(32);
+function fromBig(n7, le = false) {
+  if (le)
+    return { h: Number(n7 & U32_MASK64), l: Number(n7 >> _32n & U32_MASK64) };
+  return { h: Number(n7 >> _32n & U32_MASK64) | 0, l: Number(n7 & U32_MASK64) | 0 };
+}
+function split(lst, le = false) {
+  let Ah = new Uint32Array(lst.length);
+  let Al = new Uint32Array(lst.length);
+  for (let i8 = 0; i8 < lst.length; i8++) {
+    const { h: h4, l: l6 } = fromBig(lst[i8], le);
+    [Ah[i8], Al[i8]] = [h4, l6];
+  }
+  return [Ah, Al];
+}
+var toBig = (h4, l6) => BigInt(h4 >>> 0) << _32n | BigInt(l6 >>> 0);
+var shrSH = (h4, _l, s5) => h4 >>> s5;
+var shrSL = (h4, l6, s5) => h4 << 32 - s5 | l6 >>> s5;
+var rotrSH = (h4, l6, s5) => h4 >>> s5 | l6 << 32 - s5;
+var rotrSL = (h4, l6, s5) => h4 << 32 - s5 | l6 >>> s5;
+var rotrBH = (h4, l6, s5) => h4 << 64 - s5 | l6 >>> s5 - 32;
+var rotrBL = (h4, l6, s5) => h4 >>> s5 - 32 | l6 << 64 - s5;
+var rotr32H = (_h, l6) => l6;
+var rotr32L = (h4, _l) => h4;
+var rotlSH = (h4, l6, s5) => h4 << s5 | l6 >>> 32 - s5;
+var rotlSL = (h4, l6, s5) => l6 << s5 | h4 >>> 32 - s5;
+var rotlBH = (h4, l6, s5) => l6 << s5 - 32 | h4 >>> 64 - s5;
+var rotlBL = (h4, l6, s5) => h4 << s5 - 32 | l6 >>> 64 - s5;
+function add(Ah, Al, Bh, Bl) {
+  const l6 = (Al >>> 0) + (Bl >>> 0);
+  return { h: Ah + Bh + (l6 / 2 ** 32 | 0) | 0, l: l6 | 0 };
+}
+var add3L = (Al, Bl, Cl) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0);
+var add3H = (low, Ah, Bh, Ch) => Ah + Bh + Ch + (low / 2 ** 32 | 0) | 0;
+var add4L = (Al, Bl, Cl, Dl) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >>> 0);
+var add4H = (low, Ah, Bh, Ch, Dh) => Ah + Bh + Ch + Dh + (low / 2 ** 32 | 0) | 0;
+var add5L = (Al, Bl, Cl, Dl, El) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >>> 0) + (El >>> 0);
+var add5H = (low, Ah, Bh, Ch, Dh, Eh) => Ah + Bh + Ch + Dh + Eh + (low / 2 ** 32 | 0) | 0;
+var u64 = {
+  fromBig,
+  split,
+  toBig,
+  shrSH,
+  shrSL,
+  rotrSH,
+  rotrSL,
+  rotrBH,
+  rotrBL,
+  rotr32H,
+  rotr32L,
+  rotlSH,
+  rotlSL,
+  rotlBH,
+  rotlBL,
+  add,
+  add3L,
+  add3H,
+  add4L,
+  add4H,
+  add5H,
+  add5L
+};
+var u64_default = u64;
+
+// node_modules/@noble/hashes/esm/sha512.js
+var [SHA512_Kh, SHA512_Kl] = /* @__PURE__ */ (() => u64_default.split([
   "0x428a2f98d728ae22",
   "0x7137449123ef65cd",
   "0xb5c0fbcfec4d3b2f",
@@ -1975,29 +1954,27 @@ var K512 = /* @__PURE__ */ (() => split([
   "0x5fcb6fab3ad6faec",
   "0x6c44198c4a475817"
 ].map((n7) => BigInt(n7))))();
-var SHA512_Kh = /* @__PURE__ */ (() => K512[0])();
-var SHA512_Kl = /* @__PURE__ */ (() => K512[1])();
 var SHA512_W_H = /* @__PURE__ */ new Uint32Array(80);
 var SHA512_W_L = /* @__PURE__ */ new Uint32Array(80);
 var SHA512 = class extends HashMD {
   constructor(outputLen = 64) {
     super(128, outputLen, 16, false);
-    this.Ah = SHA512_IV[0] | 0;
-    this.Al = SHA512_IV[1] | 0;
-    this.Bh = SHA512_IV[2] | 0;
-    this.Bl = SHA512_IV[3] | 0;
-    this.Ch = SHA512_IV[4] | 0;
-    this.Cl = SHA512_IV[5] | 0;
-    this.Dh = SHA512_IV[6] | 0;
-    this.Dl = SHA512_IV[7] | 0;
-    this.Eh = SHA512_IV[8] | 0;
-    this.El = SHA512_IV[9] | 0;
-    this.Fh = SHA512_IV[10] | 0;
-    this.Fl = SHA512_IV[11] | 0;
-    this.Gh = SHA512_IV[12] | 0;
-    this.Gl = SHA512_IV[13] | 0;
-    this.Hh = SHA512_IV[14] | 0;
-    this.Hl = SHA512_IV[15] | 0;
+    this.Ah = 1779033703 | 0;
+    this.Al = 4089235720 | 0;
+    this.Bh = 3144134277 | 0;
+    this.Bl = 2227873595 | 0;
+    this.Ch = 1013904242 | 0;
+    this.Cl = 4271175723 | 0;
+    this.Dh = 2773480762 | 0;
+    this.Dl = 1595750129 | 0;
+    this.Eh = 1359893119 | 0;
+    this.El = 2917565137 | 0;
+    this.Fh = 2600822924 | 0;
+    this.Fl = 725511199 | 0;
+    this.Gh = 528734635 | 0;
+    this.Gl = 4215389547 | 0;
+    this.Hh = 1541459225 | 0;
+    this.Hl = 327033209 | 0;
   }
   // prettier-ignore
   get() {
@@ -2031,28 +2008,28 @@ var SHA512 = class extends HashMD {
     for (let i8 = 16; i8 < 80; i8++) {
       const W15h = SHA512_W_H[i8 - 15] | 0;
       const W15l = SHA512_W_L[i8 - 15] | 0;
-      const s0h = rotrSH(W15h, W15l, 1) ^ rotrSH(W15h, W15l, 8) ^ shrSH(W15h, W15l, 7);
-      const s0l = rotrSL(W15h, W15l, 1) ^ rotrSL(W15h, W15l, 8) ^ shrSL(W15h, W15l, 7);
+      const s0h = u64_default.rotrSH(W15h, W15l, 1) ^ u64_default.rotrSH(W15h, W15l, 8) ^ u64_default.shrSH(W15h, W15l, 7);
+      const s0l = u64_default.rotrSL(W15h, W15l, 1) ^ u64_default.rotrSL(W15h, W15l, 8) ^ u64_default.shrSL(W15h, W15l, 7);
       const W2h = SHA512_W_H[i8 - 2] | 0;
       const W2l = SHA512_W_L[i8 - 2] | 0;
-      const s1h = rotrSH(W2h, W2l, 19) ^ rotrBH(W2h, W2l, 61) ^ shrSH(W2h, W2l, 6);
-      const s1l = rotrSL(W2h, W2l, 19) ^ rotrBL(W2h, W2l, 61) ^ shrSL(W2h, W2l, 6);
-      const SUMl = add4L(s0l, s1l, SHA512_W_L[i8 - 7], SHA512_W_L[i8 - 16]);
-      const SUMh = add4H(SUMl, s0h, s1h, SHA512_W_H[i8 - 7], SHA512_W_H[i8 - 16]);
+      const s1h = u64_default.rotrSH(W2h, W2l, 19) ^ u64_default.rotrBH(W2h, W2l, 61) ^ u64_default.shrSH(W2h, W2l, 6);
+      const s1l = u64_default.rotrSL(W2h, W2l, 19) ^ u64_default.rotrBL(W2h, W2l, 61) ^ u64_default.shrSL(W2h, W2l, 6);
+      const SUMl = u64_default.add4L(s0l, s1l, SHA512_W_L[i8 - 7], SHA512_W_L[i8 - 16]);
+      const SUMh = u64_default.add4H(SUMl, s0h, s1h, SHA512_W_H[i8 - 7], SHA512_W_H[i8 - 16]);
       SHA512_W_H[i8] = SUMh | 0;
       SHA512_W_L[i8] = SUMl | 0;
     }
     let { Ah, Al, Bh, Bl, Ch, Cl, Dh, Dl, Eh, El, Fh, Fl, Gh, Gl, Hh, Hl } = this;
     for (let i8 = 0; i8 < 80; i8++) {
-      const sigma1h = rotrSH(Eh, El, 14) ^ rotrSH(Eh, El, 18) ^ rotrBH(Eh, El, 41);
-      const sigma1l = rotrSL(Eh, El, 14) ^ rotrSL(Eh, El, 18) ^ rotrBL(Eh, El, 41);
+      const sigma1h = u64_default.rotrSH(Eh, El, 14) ^ u64_default.rotrSH(Eh, El, 18) ^ u64_default.rotrBH(Eh, El, 41);
+      const sigma1l = u64_default.rotrSL(Eh, El, 14) ^ u64_default.rotrSL(Eh, El, 18) ^ u64_default.rotrBL(Eh, El, 41);
       const CHIh = Eh & Fh ^ ~Eh & Gh;
       const CHIl = El & Fl ^ ~El & Gl;
-      const T1ll = add5L(Hl, sigma1l, CHIl, SHA512_Kl[i8], SHA512_W_L[i8]);
-      const T1h = add5H(T1ll, Hh, sigma1h, CHIh, SHA512_Kh[i8], SHA512_W_H[i8]);
+      const T1ll = u64_default.add5L(Hl, sigma1l, CHIl, SHA512_Kl[i8], SHA512_W_L[i8]);
+      const T1h = u64_default.add5H(T1ll, Hh, sigma1h, CHIh, SHA512_Kh[i8], SHA512_W_H[i8]);
       const T1l = T1ll | 0;
-      const sigma0h = rotrSH(Ah, Al, 28) ^ rotrBH(Ah, Al, 34) ^ rotrBH(Ah, Al, 39);
-      const sigma0l = rotrSL(Ah, Al, 28) ^ rotrBL(Ah, Al, 34) ^ rotrBL(Ah, Al, 39);
+      const sigma0h = u64_default.rotrSH(Ah, Al, 28) ^ u64_default.rotrBH(Ah, Al, 34) ^ u64_default.rotrBH(Ah, Al, 39);
+      const sigma0l = u64_default.rotrSL(Ah, Al, 28) ^ u64_default.rotrBL(Ah, Al, 34) ^ u64_default.rotrBL(Ah, Al, 39);
       const MAJh = Ah & Bh ^ Ah & Ch ^ Bh & Ch;
       const MAJl = Al & Bl ^ Al & Cl ^ Bl & Cl;
       Hh = Gh | 0;
@@ -2061,140 +2038,103 @@ var SHA512 = class extends HashMD {
       Gl = Fl | 0;
       Fh = Eh | 0;
       Fl = El | 0;
-      ({ h: Eh, l: El } = add(Dh | 0, Dl | 0, T1h | 0, T1l | 0));
+      ({ h: Eh, l: El } = u64_default.add(Dh | 0, Dl | 0, T1h | 0, T1l | 0));
       Dh = Ch | 0;
       Dl = Cl | 0;
       Ch = Bh | 0;
       Cl = Bl | 0;
       Bh = Ah | 0;
       Bl = Al | 0;
-      const All = add3L(T1l, sigma0l, MAJl);
-      Ah = add3H(All, T1h, sigma0h, MAJh);
+      const All = u64_default.add3L(T1l, sigma0l, MAJl);
+      Ah = u64_default.add3H(All, T1h, sigma0h, MAJh);
       Al = All | 0;
     }
-    ({ h: Ah, l: Al } = add(this.Ah | 0, this.Al | 0, Ah | 0, Al | 0));
-    ({ h: Bh, l: Bl } = add(this.Bh | 0, this.Bl | 0, Bh | 0, Bl | 0));
-    ({ h: Ch, l: Cl } = add(this.Ch | 0, this.Cl | 0, Ch | 0, Cl | 0));
-    ({ h: Dh, l: Dl } = add(this.Dh | 0, this.Dl | 0, Dh | 0, Dl | 0));
-    ({ h: Eh, l: El } = add(this.Eh | 0, this.El | 0, Eh | 0, El | 0));
-    ({ h: Fh, l: Fl } = add(this.Fh | 0, this.Fl | 0, Fh | 0, Fl | 0));
-    ({ h: Gh, l: Gl } = add(this.Gh | 0, this.Gl | 0, Gh | 0, Gl | 0));
-    ({ h: Hh, l: Hl } = add(this.Hh | 0, this.Hl | 0, Hh | 0, Hl | 0));
+    ({ h: Ah, l: Al } = u64_default.add(this.Ah | 0, this.Al | 0, Ah | 0, Al | 0));
+    ({ h: Bh, l: Bl } = u64_default.add(this.Bh | 0, this.Bl | 0, Bh | 0, Bl | 0));
+    ({ h: Ch, l: Cl } = u64_default.add(this.Ch | 0, this.Cl | 0, Ch | 0, Cl | 0));
+    ({ h: Dh, l: Dl } = u64_default.add(this.Dh | 0, this.Dl | 0, Dh | 0, Dl | 0));
+    ({ h: Eh, l: El } = u64_default.add(this.Eh | 0, this.El | 0, Eh | 0, El | 0));
+    ({ h: Fh, l: Fl } = u64_default.add(this.Fh | 0, this.Fl | 0, Fh | 0, Fl | 0));
+    ({ h: Gh, l: Gl } = u64_default.add(this.Gh | 0, this.Gl | 0, Gh | 0, Gl | 0));
+    ({ h: Hh, l: Hl } = u64_default.add(this.Hh | 0, this.Hl | 0, Hh | 0, Hl | 0));
     this.set(Ah, Al, Bh, Bl, Ch, Cl, Dh, Dl, Eh, El, Fh, Fl, Gh, Gl, Hh, Hl);
   }
   roundClean() {
-    clean(SHA512_W_H, SHA512_W_L);
+    SHA512_W_H.fill(0);
+    SHA512_W_L.fill(0);
   }
   destroy() {
-    clean(this.buffer);
+    this.buffer.fill(0);
     this.set(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
 };
-var SHA384 = class extends SHA512 {
-  constructor() {
-    super(48);
-    this.Ah = SHA384_IV[0] | 0;
-    this.Al = SHA384_IV[1] | 0;
-    this.Bh = SHA384_IV[2] | 0;
-    this.Bl = SHA384_IV[3] | 0;
-    this.Ch = SHA384_IV[4] | 0;
-    this.Cl = SHA384_IV[5] | 0;
-    this.Dh = SHA384_IV[6] | 0;
-    this.Dl = SHA384_IV[7] | 0;
-    this.Eh = SHA384_IV[8] | 0;
-    this.El = SHA384_IV[9] | 0;
-    this.Fh = SHA384_IV[10] | 0;
-    this.Fl = SHA384_IV[11] | 0;
-    this.Gh = SHA384_IV[12] | 0;
-    this.Gl = SHA384_IV[13] | 0;
-    this.Hh = SHA384_IV[14] | 0;
-    this.Hl = SHA384_IV[15] | 0;
-  }
-};
-var T224_IV = /* @__PURE__ */ Uint32Array.from([
-  2352822216,
-  424955298,
-  1944164710,
-  2312950998,
-  502970286,
-  855612546,
-  1738396948,
-  1479516111,
-  258812777,
-  2077511080,
-  2011393907,
-  79989058,
-  1067287976,
-  1780299464,
-  286451373,
-  2446758561
-]);
-var T256_IV = /* @__PURE__ */ Uint32Array.from([
-  573645204,
-  4230739756,
-  2673172387,
-  3360449730,
-  596883563,
-  1867755857,
-  2520282905,
-  1497426621,
-  2519219938,
-  2827943907,
-  3193839141,
-  1401305490,
-  721525244,
-  746961066,
-  246885852,
-  2177182882
-]);
 var SHA512_224 = class extends SHA512 {
   constructor() {
     super(28);
-    this.Ah = T224_IV[0] | 0;
-    this.Al = T224_IV[1] | 0;
-    this.Bh = T224_IV[2] | 0;
-    this.Bl = T224_IV[3] | 0;
-    this.Ch = T224_IV[4] | 0;
-    this.Cl = T224_IV[5] | 0;
-    this.Dh = T224_IV[6] | 0;
-    this.Dl = T224_IV[7] | 0;
-    this.Eh = T224_IV[8] | 0;
-    this.El = T224_IV[9] | 0;
-    this.Fh = T224_IV[10] | 0;
-    this.Fl = T224_IV[11] | 0;
-    this.Gh = T224_IV[12] | 0;
-    this.Gl = T224_IV[13] | 0;
-    this.Hh = T224_IV[14] | 0;
-    this.Hl = T224_IV[15] | 0;
+    this.Ah = 2352822216 | 0;
+    this.Al = 424955298 | 0;
+    this.Bh = 1944164710 | 0;
+    this.Bl = 2312950998 | 0;
+    this.Ch = 502970286 | 0;
+    this.Cl = 855612546 | 0;
+    this.Dh = 1738396948 | 0;
+    this.Dl = 1479516111 | 0;
+    this.Eh = 258812777 | 0;
+    this.El = 2077511080 | 0;
+    this.Fh = 2011393907 | 0;
+    this.Fl = 79989058 | 0;
+    this.Gh = 1067287976 | 0;
+    this.Gl = 1780299464 | 0;
+    this.Hh = 286451373 | 0;
+    this.Hl = 2446758561 | 0;
   }
 };
 var SHA512_256 = class extends SHA512 {
   constructor() {
     super(32);
-    this.Ah = T256_IV[0] | 0;
-    this.Al = T256_IV[1] | 0;
-    this.Bh = T256_IV[2] | 0;
-    this.Bl = T256_IV[3] | 0;
-    this.Ch = T256_IV[4] | 0;
-    this.Cl = T256_IV[5] | 0;
-    this.Dh = T256_IV[6] | 0;
-    this.Dl = T256_IV[7] | 0;
-    this.Eh = T256_IV[8] | 0;
-    this.El = T256_IV[9] | 0;
-    this.Fh = T256_IV[10] | 0;
-    this.Fl = T256_IV[11] | 0;
-    this.Gh = T256_IV[12] | 0;
-    this.Gl = T256_IV[13] | 0;
-    this.Hh = T256_IV[14] | 0;
-    this.Hl = T256_IV[15] | 0;
+    this.Ah = 573645204 | 0;
+    this.Al = 4230739756 | 0;
+    this.Bh = 2673172387 | 0;
+    this.Bl = 3360449730 | 0;
+    this.Ch = 596883563 | 0;
+    this.Cl = 1867755857 | 0;
+    this.Dh = 2520282905 | 0;
+    this.Dl = 1497426621 | 0;
+    this.Eh = 2519219938 | 0;
+    this.El = 2827943907 | 0;
+    this.Fh = 3193839141 | 0;
+    this.Fl = 1401305490 | 0;
+    this.Gh = 721525244 | 0;
+    this.Gl = 746961066 | 0;
+    this.Hh = 246885852 | 0;
+    this.Hl = 2177182882 | 0;
   }
 };
-var sha256 = /* @__PURE__ */ createHasher(() => new SHA256());
-var sha224 = /* @__PURE__ */ createHasher(() => new SHA224());
-var sha512 = /* @__PURE__ */ createHasher(() => new SHA512());
-var sha384 = /* @__PURE__ */ createHasher(() => new SHA384());
-var sha512_256 = /* @__PURE__ */ createHasher(() => new SHA512_256());
-var sha512_224 = /* @__PURE__ */ createHasher(() => new SHA512_224());
+var SHA384 = class extends SHA512 {
+  constructor() {
+    super(48);
+    this.Ah = 3418070365 | 0;
+    this.Al = 3238371032 | 0;
+    this.Bh = 1654270250 | 0;
+    this.Bl = 914150663 | 0;
+    this.Ch = 2438529370 | 0;
+    this.Cl = 812702999 | 0;
+    this.Dh = 355462360 | 0;
+    this.Dl = 4144912697 | 0;
+    this.Eh = 1731405415 | 0;
+    this.El = 4290775857 | 0;
+    this.Fh = 2394180231 | 0;
+    this.Fl = 1750603025 | 0;
+    this.Gh = 3675008525 | 0;
+    this.Gl = 1694076839 | 0;
+    this.Hh = 1203062813 | 0;
+    this.Hl = 3204075428 | 0;
+  }
+};
+var sha512 = /* @__PURE__ */ wrapConstructor(() => new SHA512());
+var sha512_224 = /* @__PURE__ */ wrapConstructor(() => new SHA512_224());
+var sha512_256 = /* @__PURE__ */ wrapConstructor(() => new SHA512_256());
+var sha384 = /* @__PURE__ */ wrapConstructor(() => new SHA384());
 
 // node_modules/@noble/hashes/esm/sha3.js
 var sha3_exports = {};
@@ -2212,15 +2152,15 @@ __export(sha3_exports, {
   shake128: () => shake128,
   shake256: () => shake256
 });
-var _0n = BigInt(0);
-var _1n = BigInt(1);
-var _2n = BigInt(2);
-var _7n = BigInt(7);
-var _256n = BigInt(256);
-var _0x71n = BigInt(113);
 var SHA3_PI = [];
 var SHA3_ROTL = [];
 var _SHA3_IOTA = [];
+var _0n = /* @__PURE__ */ BigInt(0);
+var _1n = /* @__PURE__ */ BigInt(1);
+var _2n = /* @__PURE__ */ BigInt(2);
+var _7n = /* @__PURE__ */ BigInt(7);
+var _256n = /* @__PURE__ */ BigInt(256);
+var _0x71n = /* @__PURE__ */ BigInt(113);
 for (let round2 = 0, R3 = _1n, x3 = 1, y4 = 0; round2 < 24; round2++) {
   [x3, y4] = [y4, (2 * x3 + 3 * y4) % 5];
   SHA3_PI.push(2 * (5 * y4 + x3));
@@ -2233,9 +2173,7 @@ for (let round2 = 0, R3 = _1n, x3 = 1, y4 = 0; round2 < 24; round2++) {
   }
   _SHA3_IOTA.push(t7);
 }
-var IOTAS = split(_SHA3_IOTA, true);
-var SHA3_IOTA_H = IOTAS[0];
-var SHA3_IOTA_L = IOTAS[1];
+var [SHA3_IOTA_H, SHA3_IOTA_L] = /* @__PURE__ */ split(_SHA3_IOTA, true);
 var rotlH = (h4, l6, s5) => s5 > 32 ? rotlBH(h4, l6, s5) : rotlSH(h4, l6, s5);
 var rotlL = (h4, l6, s5) => s5 > 32 ? rotlBL(h4, l6, s5) : rotlSL(h4, l6, s5);
 function keccakP(s5, rounds = 24) {
@@ -2276,7 +2214,7 @@ function keccakP(s5, rounds = 24) {
     s5[0] ^= SHA3_IOTA_H[round2];
     s5[1] ^= SHA3_IOTA_L[round2];
   }
-  clean(B3);
+  B3.fill(0);
 }
 var Keccak = class _Keccak extends Hash {
   // NOTE: we accept arguments in bytes instead of bits here.
@@ -2293,26 +2231,24 @@ var Keccak = class _Keccak extends Hash {
     this.enableXOF = enableXOF;
     this.rounds = rounds;
     anumber(outputLen);
-    if (!(0 < blockLen && blockLen < 200))
-      throw new Error("only keccak-f1600 function is supported");
+    if (0 >= this.blockLen || this.blockLen >= 200)
+      throw new Error("Sha3 supports only keccak-f1600 function");
     this.state = new Uint8Array(200);
     this.state32 = u32(this.state);
   }
-  clone() {
-    return this._cloneInto();
-  }
   keccak() {
-    swap32IfBE(this.state32);
+    if (!isLE)
+      byteSwap32(this.state32);
     keccakP(this.state32, this.rounds);
-    swap32IfBE(this.state32);
+    if (!isLE)
+      byteSwap32(this.state32);
     this.posOut = 0;
     this.pos = 0;
   }
   update(data) {
     aexists(this);
-    data = toBytes(data);
-    abytes(data);
     const { blockLen, state } = this;
+    data = toBytes(data);
     const len = data.length;
     for (let pos = 0; pos < len; ) {
       const take = Math.min(blockLen - this.pos, len - pos);
@@ -2372,7 +2308,7 @@ var Keccak = class _Keccak extends Hash {
   }
   destroy() {
     this.destroyed = true;
-    clean(this.state);
+    this.state.fill(0);
   }
   _cloneInto(to) {
     const { blockLen, suffix, outputLen, rounds, enableXOF } = this;
@@ -2389,21 +2325,21 @@ var Keccak = class _Keccak extends Hash {
     return to;
   }
 };
-var gen = (suffix, blockLen, outputLen) => createHasher(() => new Keccak(blockLen, suffix, outputLen));
-var sha3_224 = /* @__PURE__ */ (() => gen(6, 144, 224 / 8))();
-var sha3_256 = /* @__PURE__ */ (() => gen(6, 136, 256 / 8))();
-var sha3_384 = /* @__PURE__ */ (() => gen(6, 104, 384 / 8))();
-var sha3_512 = /* @__PURE__ */ (() => gen(6, 72, 512 / 8))();
-var keccak_224 = /* @__PURE__ */ (() => gen(1, 144, 224 / 8))();
-var keccak_256 = /* @__PURE__ */ (() => gen(1, 136, 256 / 8))();
-var keccak_384 = /* @__PURE__ */ (() => gen(1, 104, 384 / 8))();
-var keccak_512 = /* @__PURE__ */ (() => gen(1, 72, 512 / 8))();
-var genShake = (suffix, blockLen, outputLen) => createXOFer((opts = {}) => new Keccak(blockLen, suffix, opts.dkLen === void 0 ? outputLen : opts.dkLen, true));
-var shake128 = /* @__PURE__ */ (() => genShake(31, 168, 128 / 8))();
-var shake256 = /* @__PURE__ */ (() => genShake(31, 136, 256 / 8))();
+var gen = (suffix, blockLen, outputLen) => wrapConstructor(() => new Keccak(blockLen, suffix, outputLen));
+var sha3_224 = /* @__PURE__ */ gen(6, 144, 224 / 8);
+var sha3_256 = /* @__PURE__ */ gen(6, 136, 256 / 8);
+var sha3_384 = /* @__PURE__ */ gen(6, 104, 384 / 8);
+var sha3_512 = /* @__PURE__ */ gen(6, 72, 512 / 8);
+var keccak_224 = /* @__PURE__ */ gen(1, 144, 224 / 8);
+var keccak_256 = /* @__PURE__ */ gen(1, 136, 256 / 8);
+var keccak_384 = /* @__PURE__ */ gen(1, 104, 384 / 8);
+var keccak_512 = /* @__PURE__ */ gen(1, 72, 512 / 8);
+var genShake = (suffix, blockLen, outputLen) => wrapXOFConstructorWithOpts((opts = {}) => new Keccak(blockLen, suffix, opts.dkLen === void 0 ? outputLen : opts.dkLen, true));
+var shake128 = /* @__PURE__ */ genShake(31, 168, 128 / 8);
+var shake256 = /* @__PURE__ */ genShake(31, 136, 256 / 8);
 
 // node_modules/@noble/hashes/esm/legacy.js
-var SHA1_IV = /* @__PURE__ */ Uint32Array.from([
+var SHA1_IV = /* @__PURE__ */ new Uint32Array([
   1732584193,
   4023233417,
   2562383102,
@@ -2467,14 +2403,15 @@ var SHA1 = class extends HashMD {
     this.set(A3, B3, C3, D, E3);
   }
   roundClean() {
-    clean(SHA1_W);
+    SHA1_W.fill(0);
   }
   destroy() {
     this.set(0, 0, 0, 0, 0);
-    clean(this.buffer);
+    this.buffer.fill(0);
   }
 };
-var sha1 = /* @__PURE__ */ createHasher(() => new SHA1());
+var sha1 = /* @__PURE__ */ wrapConstructor(() => new SHA1());
+var p32 = 2 ** 32;
 
 // node_modules/@shoelace-style/shoelace/dist/chunks/chunk.6KE6SBMU.js
 var textarea_styles_default = i`
