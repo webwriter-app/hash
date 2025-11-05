@@ -2,44 +2,66 @@ import { css } from "lit";
 
 export const style = css`
     :host {
-        display: block;
+        width: 100%;
+        height: fit-content;
+        box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+    }
+    .instruction {
+        font-weight: bold;  
+        text-align: center;
+        margin: 0;
+        color: #333;
     }
     .container {
-        display: flex;
-        gap: 20px;
-        padding: 20px;
-        background: #f5f5f5;
-        border: 2px solid #4A90E2;
-        border-radius: 8px;
-    }
-    .node-item {
+        height: 50vh;
+        max-width: 840px;
         display: flex;
         flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        background: white;
+    }
+
+    .node-item,
+    .node-item-insert {
+        position: relative;
         align-items: center;
         padding: 20px;
-        border: 2px dashed #ccc;
         border-radius: 8px;
         background: white;
         min-width: 150px;
         min-height: 100px;
-        cursor: pointer;
         transition: border-color 0.3s;
+        margin: 5px;
+        align-self: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
     }
 
-    .node-item:hover {
-        border-color: #4A90E2;
+    .node-item {
+        border: 2px solid #ccc;
     }
-    .node-item.hash-function {
-        border-radius: 50px; /* Oval shape for hash function */
+    .node-item-insert {
+        border: 2px dashed #ccc;
+    }
+
+    .key {
+        border-color: #4A90E2;
+        background: #4A90E207
+    }
+
+    .hash-function {
+        border-radius: 50px;
         border-color: #FFA500;
+        background: #FFA50007;
     }
 
-    .node-item.key {
-        border-color: #4A90E2;
-    }
-
-    .node-item.hash-value {
-        border-color: #666;
+    .hash-value {
+        border-color: rgb(102, 102, 102);
+        background: rgba(159, 159, 159, 0.07);
     }
 
     .plus-icon {
@@ -53,12 +75,12 @@ export const style = css`
         margin-bottom: 10px;
         color: #333;
     }
-    
+
     .hash-palette {
         padding: 20px;
         background: #f8f9fa;
         border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .palette-header h3 {
@@ -75,38 +97,23 @@ export const style = css`
         flex-wrap: wrap;
     }
 
-    .node-container {
-        border: 2px dashed #ccc;
-        border-radius: 8px;
+    .nodes-container {
+        position: relative;
+        display: flex;
+        flex-direction: row;
         padding: 16px;
         min-width: 150px;
+        height: 80%;
         text-align: center;
-        cursor: pointer;
         transition: all 0.2s ease;
-        background: white;
+        align-items: center;
     }
-
-    .node-container:hover {
-        border-color: #0066cc;
-        box-shadow: 0 2px 8px rgba(0,102,204,0.2);
-    }
-
-    .node-container.key-node {
-        border-color: #007bff;
-    }
-
-    .node-container.hash-function-node {
-        border-color: #ff8c00;
-    }
-
-    .node-container.hash-value-node {
-        border-color: #666;
-    }
-
+    
     .header {
         font-weight: bold;
         margin-bottom: 12px;
         color: #333;
+        font-size: 16px;
     }
 
     .insert-button {
@@ -116,12 +123,20 @@ export const style = css`
     }
 
     .connection-point {
+        position: absolute;
         width: 12px;
         height: 12px;
-        border: 2px solid #666;
         border-radius: 50%;
-        background: white;
-        position: absolute;
+        background-color: #fff;
+        border: 2px solid #333;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .connection-point.right {
+        right: -6px; 
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     .connection-point.left {
@@ -129,11 +144,4 @@ export const style = css`
         top: 50%;
         transform: translateY(-50%);
     }
-
-    .connection-point.right {
-        right: -6px;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
 `;

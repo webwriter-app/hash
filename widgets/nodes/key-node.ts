@@ -2,23 +2,25 @@ import { html, PropertyValues } from "lit";
 import { LitElementWw } from "@webwriter/lit";
 import { customElement, property } from "lit/decorators.js";
 import "@shoelace-style/shoelace/dist/themes/light.css";
-import SlInput from "@shoelace-style/shoelace/dist/components/input/input.component.js";
+import SLTextarea from "@shoelace-style/shoelace/dist/components/textarea/textarea.component.js";
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
+import { style } from "../hash-style";
 
 @customElement("key-node")
 export class KeyNode extends LitElementWw {
 
+    static styles = style;
+
     static scopedElements = {
-        "sl-input": SlInput,
+        "sl-textarea": SLTextarea,
         "sl-button": SlButton
     };
 
     @property({ type: String }) keyValue = "";
-    @property({ type: Boolean }) insertable = true;
-    @property({ type: Boolean }) isPlaced = false;
+    @property({ type: Boolean, reflect: true }) isCreated = false;
 
     private onKeyChange = (e: Event) => {
-        const input = e.currentTarget as SlInput;
+        const input = e.currentTarget as SLTextarea;
         this.keyValue = String(input.value ?? "");
         this.dispatchEvent(new CustomEvent("key-changed", {
             detail: { value: this.keyValue },
@@ -27,34 +29,37 @@ export class KeyNode extends LitElementWw {
         }));
     };
 
-    private onInsert = (e?: Event) => {
-        e?.stopPropagation();
-        if (!this.insertable || this.isPlaced) return;
+    private onInsert = (e: Event) => {
+        e.stopPropagation();
+        this.isCreated = true;  // Add this line
+        this.requestUpdate("isCreated");
+
         this.dispatchEvent(new CustomEvent("e-insert-node", {
             detail: { kind: "key-node" },
             bubbles: true,
             composed: true
         }));
+        console.log("Inserted key node");
     };
+
+    protected updated(changed: PropertyValues<this>) {
+        if (changed.has("isCreated")) {
+            console.debug("[key-node] isCreated ->", this.isCreated);
+        }
+    }
+
 
     render() {
         return html`
-            <div class="node-container key-node" @click=${this.onInsert}>
+            <div class="node-container key-node">
                 <div class="header">Key</div>
-                ${this.insertable && !this.isPlaced ? html`
-                    <div class="insert-button">
-                        <sl-button size="large" circle> + </sl-button>
-                    </div>
-                ` : html`
-                    <sl-input 
-                            placeholder="Enter key text" 
-                            .value=${this.keyValue} 
+                    <sl-textarea
+                            placeholder="Enter key text"
+                            .value=${this.keyValue}
                             @sl-input=${this.onKeyChange}
-                    ></sl-input>
-                `} 
-                ${this.isPlaced ? html`
+                    ></sl-textarea>
                     <div class="connection-point right"></div>
-                ` : ''}
+                </> 
             </div>
         `;
     }

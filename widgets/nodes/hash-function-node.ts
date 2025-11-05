@@ -5,10 +5,12 @@ import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js";
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js";
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
+import {style} from "../hash-style";
 
 @customElement("hash-function-node")
 export class HashFunctionNode extends LitElementWw {
 
+    static styles = style;
     static scopedElements = {
         "sl-select": SlSelect,
         "sl-option": SlOption,
@@ -16,8 +18,8 @@ export class HashFunctionNode extends LitElementWw {
     };
 
     @property({ type: String }) hashFunction = "sha256";
-    @property({ type: Boolean }) insertable = true;
-    @property({ type: Boolean }) isPlaced = false;
+    @property({ type: Boolean, reflect: true }) isCreated = false;
+
 
     private onAlgorithmChange = (e: Event) => {
         const select = e.currentTarget as SlSelect;
@@ -29,25 +31,20 @@ export class HashFunctionNode extends LitElementWw {
         }));
     };
 
-    private onInsert = (e?: Event) => {
-        e?.stopPropagation();
-        if (!this.insertable || this.isPlaced) return;
+    private onInsert = () => {
         this.dispatchEvent(new CustomEvent("e-insert-node", {
             detail: { kind: "hash-function-node" },
             bubbles: true,
             composed: true
         }));
+        console.log("Inserted hash function node");
     };
+
 
     render() {
         return html`
-            <div class="node-container hash-function-node" @click=${this.onInsert}>
+            <div class="node-container hash-function-node" >
                 <div class="header">Hash Function</div>
-                ${this.insertable && !this.isPlaced ? html`
-                    <div class="insert-button">
-                        <sl-button size="large" circle>+</sl-button>
-                    </div>
-                ` : html`
                     <sl-select 
                             placeholder="Select Hash" 
                             .value=${this.hashFunction} 
@@ -56,12 +53,8 @@ export class HashFunctionNode extends LitElementWw {
                         <sl-option value="sha256">SHA-256</sl-option>
                         <sl-option value="md5">MD5</sl-option>
                     </sl-select>
-                `}
-                
-                ${this.isPlaced ? html`
-                    <div class="connection-point left"></div>
-                    <div class="connection-point right"></div>
-                ` : ''}
+                <div class="connection-point left"></div>
+                <div class="connection-point right"></div>
             </div>
         `;
     }
