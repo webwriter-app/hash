@@ -21,7 +21,7 @@ export class HashValueNode extends LitElementWw {
     @property({ type: Boolean, reflect: true }) isCreated = false;
 
 
-    private generateMockHash(input: string): string {
+    /*private generateMockHash(input: string): string {
         // replace with robin's hash library
         const chars = 'abcdef0123456789';
         let result = '';
@@ -49,6 +49,7 @@ export class HashValueNode extends LitElementWw {
             }
         }
     }
+*/
 
     render() {
         return html`
@@ -60,11 +61,7 @@ export class HashValueNode extends LitElementWw {
                             placeholder="Hashed value"
                             disabled="true"
                     ></sl-textarea>
-                    <sl-icon-button 
-                            name="copy" 
-                            @click=${this.onInsert} 
-                            label="Copy hash"
-                    ></sl-icon-button>
+                    
                     <div class="connection-point left"></div>
             </div>
         `;

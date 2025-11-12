@@ -20,8 +20,9 @@ export class KeyNode extends LitElementWw {
     @property({ type: Boolean, reflect: true }) isCreated = false;
 
     private onKeyChange = (e: Event) => {
-        const input = e.currentTarget as SLTextarea;
-        this.keyValue = String(input.value ?? "");
+        const target = e.target as HTMLTextAreaElement;
+        this.keyValue = target.value;
+
         this.dispatchEvent(new CustomEvent("key-changed", {
             detail: { value: this.keyValue },
             bubbles: true,
