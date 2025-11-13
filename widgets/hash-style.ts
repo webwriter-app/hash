@@ -8,6 +8,27 @@ export const style = css`
         overflow: hidden;
         display: flex;
     }
+
+    .graph-section {
+        margin-top: 24px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .graph-toolbar {
+        display: flex;
+        gap: 8px;
+        padding: 8px;
+        background: #f5f5f5;
+        border-bottom: 1px solid #ddd;
+    }
+    .graph-container {
+        width: 100%;
+        height: 500px;
+        position: relative;
+        background: #fafafa;
+    }
+    
     .instruction {
         font-weight: bold;  
         text-align: center;

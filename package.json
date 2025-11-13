@@ -1,29 +1,34 @@
 {
-  "name": "@webwriter/hash-new",
-  "version": "0.0.1",
-  "keywords": [
-    "webwriter-widget"
-  ],
-  "license": "MIT",
-  "author": "nura.zimmermann@rwth-aachen.de",
-  "scripts": {
-    "prepublishOnly": "npx @webwriter/build",
-    "dev": "npx @webwriter/build dev",
-    "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
-  },
-  "dependencies": {
-    "@noble/hashes": "^1.7.2",
-    "@shoelace-style/shoelace": "^2.20.1",
-    "@webwriter/lit": "^2",
-    "lit": "^3"
-  },
-  "devDependencies": {
-    "@lit/localize-tools": "^0.8"
-  },
-  "exports": {
-    "./widgets/webwriter-hash-new.*": {
-      "source": "./widgets/webwriter-hash-new.ts",
-      "default": "./dist/widgets/webwriter-hash-new.*"
+    "name": "@webwriter/hash-new",
+    "version": "0.0.1",
+    "keywords": [
+        "webwriter-widget"
+    ],
+    "license": "MIT",
+    "author": "nura.zimmermann@rwth-aachen.de",
+    "scripts": {
+        "prepublishOnly": "npx @webwriter/build",
+        "dev": "npx @webwriter/build dev",
+        "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
+    },
+    "dependencies": {
+        "@noble/hashes": "^1.7.2",
+        "@retejs/lit-plugin": "^2.0.7",
+        "@shoelace-style/shoelace": "^2.20.1",
+        "@webwriter/lit": "^2",
+        "lit": "^3.3.1",
+        "rete": "^2.0.6",
+        "rete-area-plugin": "^2.1.5",
+        "rete-connection-plugin": "^2.0.5",
+        "rete-render-utils": "^2.0.3"
+    },
+    "devDependencies": {
+        "@lit/localize-tools": "^0.8"
+    },
+    "exports": {
+        "./widgets/webwriter-hash-new.*": {
+            "source": "./widgets/webwriter-hash-new.ts",
+            "default": "./dist/widgets/webwriter-hash-new.*"
+        }
     }
-  }
 }
