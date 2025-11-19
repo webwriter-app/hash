@@ -5,12 +5,11 @@ import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js";
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js";
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
-import {style} from "../hash-style";
+import "../../hash-styles.css";
+import "../styles.css";
 
 @customElement("hash-function-node")
 export class HashFunctionNode extends LitElementWw {
-
-    static styles = style;
     static scopedElements = {
         "sl-select": SlSelect,
         "sl-option": SlOption,

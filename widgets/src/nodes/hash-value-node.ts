@@ -5,12 +5,12 @@ import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlTextarea from "@shoelace-style/shoelace/dist/components/textarea/textarea.component.js";
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
 import SlIconButton from "@shoelace-style/shoelace/dist/components/icon-button/icon-button.component.js";
-import {style} from "../hash-style";
+import "../../hash-styles.css";
+import "../styles.css";
 
 @customElement("hash-value-node")
 export class HashValueNode extends LitElementWw {
 
-    static styles = style;
     static scopedElements = {
         "sl-textarea": SlTextarea,
         "sl-button": SlButton,

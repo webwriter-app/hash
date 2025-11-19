@@ -4,12 +4,11 @@ import { customElement, property } from "lit/decorators.js";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SLTextarea from "@shoelace-style/shoelace/dist/components/textarea/textarea.component.js";
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
-import { style } from "../hash-style";
+import "../../hash-styles.css";
+import "../styles.css";
 
 @customElement("key-node")
 export class KeyNode extends LitElementWw {
-
-    static styles = style;
 
     static scopedElements = {
         "sl-textarea": SLTextarea,
