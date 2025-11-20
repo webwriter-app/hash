@@ -5,6 +5,16 @@ import {
     Presets as ConnectionPresets,
 } from "rete-connection-plugin";
 import { LitPlugin, Presets, LitArea2D } from "@retejs/lit-plugin";
+import { html } from "lit";
+
+import "./nodes/key-node";
+import "./nodes/hash-function-node";
+import "./nodes/hash-value-node";
+import "./nodes/node-connection";
+import "./nodes/node-socket";
+
+
+
 
 type Schemes = GetSchemes<
     ClassicPreset.Node,
@@ -24,7 +34,34 @@ export async function createEditor(container: HTMLElement) {
         accumulating: AreaExtensions.accumulateOnCtrl(),
     });
 
-    render.addPreset(Presets.classic.setup());
+    render.addPreset(
+        Presets.classic.setup({
+           customize: {
+                node(data) {
+                    const { label } = data.payload;
+
+                    if (label === "Key") {
+                        return (props) => html`<key-node .data=${data.payload} .emit=${props.emit}></key-node>`;
+                    }
+                    if (label === "HashFunction") {
+                        return (props) => html`<hash-function-node .data=${data.payload} .emit=${props.emit}></hash-function-node>`;
+                    }
+                    if (label === "HashValue") {
+                        return (props) => html`<hash-value-node .data=${data.payload} .emit=${props.emit}></hash-value-node>`;
+                    }
+                },
+                connection(data) {
+                    // Assuming your node-connection component expects the connection data
+                    return () => html`<node-connection .data=${data}></node-connection>`;
+                },
+                socket(data) {
+                    // Use your custom node-socket component
+                    return () => html`<node-socket .data=${data}></node-socket>`;
+                }
+            }
+        })
+    );
+
 
     connection.addPreset(ConnectionPresets.classic.setup());
 
@@ -34,26 +71,28 @@ export async function createEditor(container: HTMLElement) {
 
     AreaExtensions.simpleNodesOrder(area);
 
-    const a = new ClassicPreset.Node("A");
-    a.addControl("a", new ClassicPreset.InputControl("text", { initial: "a" }));
-    a.addOutput("a", new ClassicPreset.Output(socket));
-    await editor.addNode(a);
+    const key_node = new ClassicPreset.Node("Key");
+    key_node.addOutput("a", new ClassicPreset.Output(socket));
+    await editor.addNode(key_node);
 
-    const b = new ClassicPreset.Node("B");
-    b.addControl("b", new ClassicPreset.InputControl("text", { initial: "b" }));
-    b.addInput("b", new ClassicPreset.Input(socket));
-    await editor.addNode(b);
+    const hash_function_node = new ClassicPreset.Node("HashFunction");
+    hash_function_node.addInput("a", new ClassicPreset.Input(socket));
+    hash_function_node.addOutput("a", new ClassicPreset.Output(socket));
+    await editor.addNode(hash_function_node);
 
-    await editor.addConnection(new ClassicPreset.Connection(a, "a", b, "b"));
+    const hash_value_node = new ClassicPreset.Node("HashValue");
+    hash_value_node.addInput("a", new ClassicPreset.Input(socket));
+    await editor.addNode(hash_value_node);
 
-    await area.translate(a.id, { x: 0, y: 0 });
-    await area.translate(b.id, { x: 270, y: 0 });
+    await area.translate(hash_function_node.id, { x: 270, y: 0 });
+    await area.translate(hash_value_node.id, { x: 540, y: 0 });
 
-    setTimeout(() => {
-        // wait until nodes rendered because they dont have predefined width and height
-        AreaExtensions.zoomAt(area, editor.getNodes());
-    }, 10);
+    await editor.addConnection(new ClassicPreset.Connection(key_node, "a", hash_function_node, "a"));
+    await editor.addConnection(new ClassicPreset.Connection(hash_function_node, "a", hash_value_node, "a"));
+
+    AreaExtensions.zoomAt(area, editor.getNodes());
+
     return {
-        destroy: () => area.destroy(),
+        destroy: () => area.destroy()
     };
 }
