@@ -3,8 +3,6 @@ import { LitElementWw } from "@webwriter/lit";
 import { customElement } from "lit/decorators.js";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlInput from "@shoelace-style/shoelace/dist/components/input/input.component.js";
-import "../../hash-styles.css";
-import "../styles.css";
 import { ClassicScheme } from "@retejs/lit-plugin";
 import { createRef, Ref } from "lit/directives/ref.js";
 type NodeExtraData = { width?: number; height?: number };
@@ -25,10 +23,10 @@ export class KeyNode extends LitElementWw {
             emit: { type: Function }
         };
     }
-    createRenderRoot() {
+  /*  createRenderRoot() {
         // WebWriter wants light DOM
         return this;
-    }
+    }*/
 
     declare width: number;
     declare height: number;
@@ -37,62 +35,65 @@ export class KeyNode extends LitElementWw {
     declare emit: ((type: string, payload: any) => void) | null;
 
     static styles = css`
-    :host {
-      display: block;
-      background: #3b82f6;
-      color: white;
-      border: 2px solid #3b82f6;
-      border-radius: 10px;
-      cursor: pointer;
-      box-sizing: border-box;
-      padding-bottom: 6px;
-      position: relative;
-      user-select: none;
-      --socket-size: 16px;
-      --socket-margin: 6px;
-      --node-width: 220px;
-    }
+        .key-node {
+            display: block;
+            background: #3b82f6;
+            color: white;
+            border: 2px solid #3b82f6;
+            border-radius: 10px;
+            cursor: pointer;
+            box-sizing: border-box;
+            padding: 6px;
+            position: relative;
+            user-select: none;
+            --socket-size: 16px;
+            --socket-margin: 6px;
+            --node-width: 220px;
+        },
 
-    :host(.selected) {
-      border-color: #f97316;
-    }
+        .key-node.selected {
+            border-color: #f97316;
+        },
+        .key-node .title {
+            color: white;
+            font-family: sans-serif;
+            font-size: 18px;
+            padding: 8px;
+        },
 
-    .title {
-      color: white;
-      font-family: sans-serif;
-      font-size: 18px;
-      padding: 8px;
-    }
+        .key-node .input,
+        .key-node .output {
+            text-align: right;
+        },
 
-    .output {
-      text-align: right;
-    }
+        .key-node .input-socket,
+        .key-node .output-socket {
+            text-align: right;
+            margin-right: -1px;
+            display: inline-block;
+        },
+        .key-node .input-title,
+        .key-node .output-title {
+            vertical-align: middle;
+            color: white;
+            display: inline-block;
+            font-family: sans-serif;
+            font-size: 14px;
+            margin: var(--socket-margin);
+            line-height: var(--socket-size);
+        },
 
-    .output-socket {
-      text-align: right;
-      margin-right: -1px;
-      display: inline-block;
-    }
+        .key-node .control {
+            display: block;
+            padding: var(--socket-margin)
+            calc(var(--socket-size) / 2 + var(--socket-margin));
+        },
 
-    .output-title {
-      vertical-align: middle;
-      color: white;
-      display: inline-block;
-      font-family: sans-serif;
-      font-size: 14px;
-      margin: var(--socket-margin);
-      line-height: var(--socket-size);
-    }
-
-    .control {
-      display: block;
-      padding: var(--socket-margin)
-        calc(var(--socket-size) / 2 + var(--socket-margin));
-    }
-
-    sl-input {
-      width: 100%;
-    }
+        .key-node sl-input {
+            width: 100%;
+            padding: var(--socket-margin);
+            
+        }
   `;
 
     private onInputChange(e: Event) {
@@ -108,9 +109,25 @@ export class KeyNode extends LitElementWw {
         (this.data as any).key = value;
     }
 
+    sortByIndex(entries: any[]) {
+        entries.sort((a, b) => {
+            const ai = a[1]?.index || 0;
+            const bi = b[1]?.index || 0;
+
+            return ai - bi;
+        });
+    }
+
     render() {
+        const inputs = Object.entries(this.data.inputs || {});
         const outputs = Object.entries(this.data.outputs || {});
+        const controls = Object.entries(this.data.controls || {});
         const { id, label, width, height } = this.data;
+        const selectedClass = this.data.selected ? "selected" : "";
+
+        this.sortByIndex(inputs);
+        this.sortByIndex(outputs);
+        this.sortByIndex(controls);
 
         if (this.data.selected) {
             this.classList.add("selected");
@@ -120,46 +137,48 @@ export class KeyNode extends LitElementWw {
 
         return html`
       <style>
-        :host {
-          width: ${Number.isFinite(width) ? `${width}px` : "var(--node-width)"};
-          height: ${Number.isFinite(height) ? `${height}px` : "auto"};
-        }
-        ${this.styles && this.styles(this)}
+          .key-node {
+              width: ${Number.isFinite(width) ? `${width}px` : "var(--node-width)"};
+              height: ${Number.isFinite(height) ? `${height}px` : "auto"};
+          }
+          ${this.styles && this.styles(this)}
       </style>
 
-      <div class="title">${label}</div>
+      <div class="key-node ${selectedClass}">
+          <div class="title">${label}</div>
 
-      ${outputs.map(([key, output]: any) =>
-            output
-                ? html`
-              <div class="output" key=${key}>
-                <div class="output-title">${output?.label}</div>
-                <span class="output-socket" data-testid="output-socket">
-                  <rete-ref
-                    .data=${{
-                    type: "socket",
-                    side: "output",
-                    key,
-                    nodeId: id,
-                    payload: output.socket
-                }}
-                    .emit=${this.emit}
-                  ></rete-ref>
-                </span>
-              </div>
-            `
-                : null
-        )}
+          ${outputs.map(([key, output]: any) =>
+                  output
+                          ? html`
+                              <div class="output" key=${key}>
+                                  <div class="output-title">${output?.label}</div>
+                                  <span class="output-socket" data-testid="output-socket">
+                    <rete-ref
+                            .data=${{
+                                type: "socket",
+                                side: "output",
+                                key,
+                                nodeId: id,
+                                payload: output.socket
+                            }}
+                            .emit=${this.emit}
+                    ></rete-ref>
+                  </span>
+                              </div>
+                          `
+                          : null
+          )}
 
-      <div class="control">
-        <sl-input
-          placeholder="Enter key…"
-          value=${(this.data as any).key ?? ""}
-          @sl-input=${this.onInputChange}
-        ></sl-input>
+          <div class="control">
+              <sl-input
+                      placeholder="Enter key…"
+                      value=${(this.data as any).key ?? ""}
+                      @sl-input=${this.onInputChange}
+              ></sl-input>
+          </div>
+
+          <slot></slot>
       </div>
-
-      <slot></slot>
-    `;
+        `;
     }
 }

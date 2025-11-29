@@ -13,9 +13,6 @@ import "./nodes/hash-value-node";
 import "./nodes/node-connection";
 import "./nodes/node-socket";
 
-
-
-
 type Schemes = GetSchemes<
     ClassicPreset.Node,
     ClassicPreset.Connection<ClassicPreset.Node, ClassicPreset.Node>
@@ -23,6 +20,7 @@ type Schemes = GetSchemes<
 type AreaExtra = LitArea2D<Schemes>;
 
 export async function createEditor(container: HTMLElement) {
+
     const socket = new ClassicPreset.Socket("socket");
 
     const editor = new NodeEditor<Schemes>();

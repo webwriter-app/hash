@@ -4,8 +4,6 @@ import { customElement } from "lit/decorators.js";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js";
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js";
-import "../../hash-styles.css";
-import "../styles.css";
 import { ClassicScheme } from "@retejs/lit-plugin";
 import { createRef, Ref } from "lit/directives/ref.js";
 type NodeExtraData = { width?: number; height?: number };
@@ -28,11 +26,6 @@ export class HashFunctionNode extends LitElementWw {
         };
     }
 
-    createRenderRoot() {
-        // WebWriter wants light DOM
-        return this;
-    }
-
     declare width: number;
     declare height: number;
     declare data: ClassicScheme["Node"] & NodeExtraData;
@@ -40,7 +33,7 @@ export class HashFunctionNode extends LitElementWw {
     declare emit: ((type: string, payload: any) => void) | null;
 
     static styles = css`
-        :host {
+        .hf-node {
             display: block;
             background: #ffa500;
             color: white;
@@ -48,67 +41,51 @@ export class HashFunctionNode extends LitElementWw {
             border-radius: 10px;
             cursor: pointer;
             box-sizing: border-box;
-            padding-bottom: 6px;
+            padding: 6px;
             position: relative;
             user-select: none;
-
             --socket-size: 16px;
             --socket-margin: 6px;
-            --socket-color: #96b38a;
             --node-width: 220px;
         }
 
-        :host(.selected) {
-            border-color: #f97316;
-        }
-
-        .title {
-            color: white;
-            font-family: sans-serif;
-            font-size: 18px;
-            padding: 8px;
-        }
-
-        .output {
-            text-align: right;
-        }
-
-        .input {
-            text-align: left;
-        }
-
-        .output-socket {
-            text-align: right;
-            margin-right: -1px;
-            display: inline-block;
-        }
-
-        .input-socket {
-            text-align: left;
-            margin-left: -1px;
-            display: inline-block;
-        }
-
-        .input-title,
-        .output-title {
-            vertical-align: middle;
-            color: white;
-            display: inline-block;
-            font-family: sans-serif;
-            font-size: 14px;
-            margin: var(--socket-margin);
-            line-height: var(--socket-size);
-        }
-
-        .control {
-            display: block;
-            padding: var(--socket-margin)
-            calc(var(--socket-size) / 2 + var(--socket-margin));
-        }
-
-        sl-select {
-            width: 100%;
-        }
+    ,
+    . hf-node . selected {
+        border-color: #f97316;
+    },
+    . hf-node . title {
+        color: white;
+        font-family: sans-serif;
+        font-size: 18px;
+        padding: 8px;
+    },
+    . hf-node . input,
+    . hf-node . output {
+        text-align: right;
+    },
+    . hf-node . input-socket,
+    . hf-node . output-socket {
+        text-align: right;
+        margin-right: -1px;
+        display: inline-block;
+    },
+    . hf-node . input-title,
+    . hf-node . output-title {
+        vertical-align: middle;
+        color: white;
+        display: inline-block;
+        font-family: sans-serif;
+        font-size: 14px;
+        margin: var(--socket-margin);
+        line-height: var(--socket-size);
+    },
+    . hf-node . control {
+        display: block;
+        padding: var(--socket-margin) calc(var(--socket-size) / 2 + var(--socket-margin));
+    },
+    . hf-node sl-select {
+        width: 100%;
+    }
     `;
 
     private handleSelect(e: CustomEvent) {
@@ -137,6 +114,7 @@ export class HashFunctionNode extends LitElementWw {
         const outputs = Object.entries(this.data.outputs || {});
         const controls = Object.entries(this.data.controls || {});
         const { id, label, width, height } = this.data;
+        const selectedClass = this.data.selected ? "selected" : "";
 
         this.sortByIndex(inputs);
         this.sortByIndex(outputs);
@@ -156,6 +134,8 @@ export class HashFunctionNode extends LitElementWw {
                 }
                 ${this.styles && this.styles(this)}
             </style>
+
+            <div class="hf-node ${selectedClass}">
 
             <div class="title">${label}</div>
 
@@ -248,6 +228,7 @@ export class HashFunctionNode extends LitElementWw {
             </div>
 
             <slot></slot>
+            </div>
         `;
     }
 }

@@ -9,9 +9,7 @@ export class NodeSocket extends LitElement {
             emit: { type: Function }
         };
     }
-    createRenderRoot() {
-        return this;
-    }
+
     declare data: { name?: string } | any;
     declare emit: ((type: string, payload: any) => void) | null;
 

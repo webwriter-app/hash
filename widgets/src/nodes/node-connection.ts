@@ -17,10 +17,10 @@ export class NodeConnection extends LitElement {
     declare path: string;
 
     static styles = css`
-       /* :host {
+       :host {
             position: absolute;
             pointer-events: none;
-        }*/
+        }
 
         svg {
             overflow: visible;
