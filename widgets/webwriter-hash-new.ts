@@ -16,30 +16,30 @@ export class WebwriterHashNew extends LitElementWw {
     .rete {
         width: 100%;
         height: 600px;
-    },
+    }
     :host {
         width: 100%;
         height: fit-content;
         box-sizing: border-box;
         overflow: hidden;
         display: flex;
-    },
+    }
     //body {
     //    overflow: hidden;
     //    margin: 0;
     //    padding: 0;
-    //},
-
+    //}
     #rete {
         height: 100vh;
         width: 100vw;
-    },
+    }
     .instruction {
-    //    font-weight: bold;
-    //    text-align: center;
-    //    margin: 0;
-    //    color: #333;
-    //},
+        font-weight: bold;
+        text-align: center;
+        margin: 15px;
+        color: #333;
+        font-size: 16px;
+    }
     .container {
         height: 50vh;
         max-width: 840px;
@@ -70,8 +70,7 @@ export class WebwriterHashNew extends LitElementWw {
 
     render() {
         return html`
-			<strong>Rete.js Test</strong>
-            <p class="instruction">Connect the nodes to create a hashing</p>
+            <div class="instruction">Connect the Nodes to Create a Hashing</div>
             <div id="app">
                 <div ${ref(this.reteRef)} class="rete"></div>
             </div>

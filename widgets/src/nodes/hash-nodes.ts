@@ -64,22 +64,24 @@ export class HashNode extends LitElement {
             border-color: #f97316;
         }*/
         :host(.key) {
-            background: #3b82f6;
-            border-color: #3b82f6;
+            background: #f3f7f9;
+            border-color: #085886;
         }
         :host(.hash-function) {
-            background: #ffa500;
-            border-color: #ffa500;
+            background: #fdf8ef;
+            border-color: #e78c1f;
         }
         :host(.hash-value) {
-            background: rgba(159, 159, 159, 0.7);
-            border-color: rgba(159, 159, 159, 1);
+            background: #eef0f2;
+            border-color: #0f3048;
         }
         .title {
-            color: white;
+            color: #3b4451;
             font-family: sans-serif;
             font-size: 18px;
+            font-weight: 600;
             padding: 8px;
+            text-align: center;
         }
         .output {
             text-align: right;
@@ -167,13 +169,11 @@ export class HashNode extends LitElement {
                 <hash-input></hash-input>
             `;
         }
-
         if (label === "HashFunction") {
             return html`
                 <hash-select></hash-select>
             `;
         }
-
         if (label === "HashValue") {
             return html`
                 <hash-textarea></hash-textarea>
@@ -207,7 +207,7 @@ export class HashNode extends LitElement {
         return html`
             <style>
                 :host {
-                    width: ${Number.isFinite(width) ? `${width + 10}px` : "calc(var(--node-width) + 10px)"};
+                    width: ${Number.isFinite(width) ? `${width + 20}px` : "calc(var(--node-width) + 20px)"};
                     height: ${Number.isFinite(height) ? `${height}px` : "auto"};
                 }
                 ${this.styles && this.styles(this)}

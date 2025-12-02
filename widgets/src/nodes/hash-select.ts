@@ -18,7 +18,7 @@ export class HashSelect extends LitElementWw {
     render() {
         return html`
             <sl-select
-                    placeholder="Select hash function..."
+                    placeholder="Select a hash function"
                     
                     @sl-change=${this.onSelectChange}
             >
