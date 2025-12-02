@@ -19,13 +19,12 @@ export class NodeSocket extends LitElement {
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background: var(--socket-color, #96b38a);
+      background: whitesmoke;
       box-sizing: border-box;
       border: 2px solid white;
     }
-
     :host(:hover) {
-      background: #c4e4b0;
+      background: lightgrey;
       cursor: pointer;
     }
   `;

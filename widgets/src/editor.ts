@@ -6,12 +6,13 @@ import {
 } from "rete-connection-plugin";
 import { LitPlugin, Presets, LitArea2D } from "@retejs/lit-plugin";
 import { html } from "lit";
-
+import "@shoelace-style/shoelace/dist/themes/light.css";
 import "./nodes/key-node";
 import "./nodes/hash-function-node";
 import "./nodes/hash-value-node";
 import "./nodes/node-connection";
 import "./nodes/node-socket";
+import "./nodes/hash-nodes";
 
 type Schemes = GetSchemes<
     ClassicPreset.Node,
@@ -31,35 +32,24 @@ export async function createEditor(container: HTMLElement) {
     AreaExtensions.selectableNodes(area, AreaExtensions.selector(), {
         accumulating: AreaExtensions.accumulateOnCtrl(),
     });
-
     render.addPreset(
         Presets.classic.setup({
-           customize: {
+            customize: {
                 node(data) {
-                    const { label } = data.payload;
-
-                    if (label === "Key") {
-                        return (props) => html`<key-node .data=${data.payload} .emit=${props.emit}></key-node>`;
-                    }
-                    if (label === "HashFunction") {
-                        return (props) => html`<hash-function-node .data=${data.payload} .emit=${props.emit}></hash-function-node>`;
-                    }
-                    if (label === "HashValue") {
-                        return (props) => html`<hash-value-node .data=${data.payload} .emit=${props.emit}></hash-value-node>`;
-                    }
+                    return ({ emit }) =>
+                        html`<hash-node .data=${data.payload} .emit=${emit}></rete-custom>`;
                 },
-                connection(data) {
-                    // Assuming your node-connection component expects the connection data
-                    return () => html`<node-connection .data=${data}></node-connection>`;
+                connection() {
+                    return ({ path }) =>
+                        html`<node-connection .path=${path}></node-connection>`;
                 },
                 socket(data) {
-                    // Use your custom node-socket component
-                    return () => html`<node-socket .data=${data}></node-socket>`;
+                    return () =>
+                        html`<node-socket .data=${data}></node-socket>`;
                 }
             }
         })
     );
-
 
     connection.addPreset(ConnectionPresets.classic.setup());
 
@@ -88,7 +78,7 @@ export async function createEditor(container: HTMLElement) {
     await editor.addConnection(new ClassicPreset.Connection(key_node, "a", hash_function_node, "a"));
     await editor.addConnection(new ClassicPreset.Connection(hash_function_node, "a", hash_value_node, "a"));
 
-    AreaExtensions.zoomAt(area, editor.getNodes());
+    await AreaExtensions.zoomAt(area, editor.getNodes());
 
     return {
         destroy: () => area.destroy()
