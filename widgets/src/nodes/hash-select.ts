@@ -1,13 +1,13 @@
 import { css, html, LitElement } from "lit";
 import {LitElementWw} from "@webwriter/lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js";
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 
 @customElement("hash-select")
 export class HashSelect extends LitElementWw {
-
+    @property() value: string = "sha256";
     static get scopedElements() {
         return {
             "sl-select": SlSelect,
@@ -19,7 +19,7 @@ export class HashSelect extends LitElementWw {
         return html`
             <sl-select
                     placeholder="Select a hash function"
-                    
+                    .value=${this.value}
                     @sl-change=${this.onSelectChange}
             >
                 <sl-option value="sha1">SHA-1</sl-option>
@@ -32,7 +32,10 @@ export class HashSelect extends LitElementWw {
             </sl-select>
         `;
     }
-    private onSelectChange(e: CustomEvent) {
+    private onSelectChange(e: any) {
+        this.dispatchEvent(new CustomEvent('val-change', {
+            detail: { value: e.target.value }
+        }));
     }
 }
 
