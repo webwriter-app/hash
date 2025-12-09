@@ -12,13 +12,24 @@ import { blake3 } from "@noble/hashes/blake3";
 import { keccak_256 } from "@noble/hashes/sha3";
 import { bytesToHex } from "@noble/hashes/utils";
 import "@shoelace-style/shoelace/dist/themes/light.css";
+import {
+    ContextMenuExtra,
+    ContextMenuPlugin,
+    Presets as ContextMenuPresets
+} from "rete-context-menu-plugin";
 
 import "./nodes/node-connection";
 import "./nodes/node-socket";
 import "./nodes/hash-nodes";
 
-const HASH_ALGOS: Record<string, any> = {
-    sha1, sha256, sha384, sha512, sha3_256, keccak_256, blake3
+const hash_algorithms: Record<string, any> = {
+    sha1, 
+    sha256, 
+    sha384, // not working 
+    sha512, 
+    sha3_256, 
+    keccak_256, //not working 
+    blake3, //not working 
 };
 
 type Nodes = KeyNode | HashFunctionNode | HashValueNode;
@@ -28,13 +39,7 @@ type Schemes = GetSchemes<
     ClassicPreset.Connection<ClassicPreset.Node, ClassicPreset.Node>
 >;
 
-
-/*type Schemes = GetSchemes<
-    ClassicPreset.Node,
-    ClassicPreset.Connection<ClassicPreset.Node, ClassicPreset.Node>
->;*/
-
-type AreaExtra = LitArea2D<Schemes>;
+type AreaExtra = LitArea2D<Schemes> | ContextMenuExtra;
 
 class Connection<N extends Nodes> extends ClassicPreset.Connection<N, N> {}
 
@@ -62,18 +67,26 @@ class HashFunctionNode extends ClassicPreset.Node {
     data(inputs: Record<string, any[]>) {
         const inputKey = inputs["hash-function-input"]?.[0];
 
-        if (!inputKey || typeof inputKey !== "string") {
+        if (typeof inputKey !== "string" || inputKey.length === 0) {
             return { "hash-function-output": "" };
         }
 
-        const algo = HASH_ALGOS[this.selectedFunction];
-        if (!algo) return { "hash-function-output": "Unknown Algo" };
+        const algo = hash_algorithms[this.selectedFunction];
+        
+        if (!algo) {
+            return { "hash-function-output": "Unknown Algo" };
+        }
 
         try {
-            const hash = algo(inputKey);
+            const data = new TextEncoder().encode(inputKey);
+            
+            const hash = algo(data);
+            
             const hex = bytesToHex(hash);
+            
             return { "hash-function-output": hex };
         } catch (e) {
+            console.error("Hashing error:", e);
             return { "hash-function-output": "Error" };
         }
     }
@@ -102,22 +115,47 @@ export async function createEditor(container: HTMLElement) {
     const dock = new DockPlugin<Schemes>();
     const engine = new DataflowEngine<Schemes>();
 
+    const contextMenu = new ContextMenuPlugin<Schemes>({
+        items: ContextMenuPresets.classic.setup([
+            ["KeyNode", () => new KeyNode(socket)],
+            ["HashFunctionNode", () => new HashFunctionNode(socket)],
+            ["HashValueNode", () => new HashValueNode(socket)],
+        ])
+    });
+
+    AreaExtensions.restrictor(area, {
+        scaling: { min: 0.1, max: 1 },
+        translation: {
+            left: 0,
+            top: 0,
+            right: 500,
+            bottom: 500
+        }
+    });
 
     dock.addPreset(DockPresets.classic.setup({ area, size: 150, scale: 0.55 }));
+
+    area.use(contextMenu);
 
     AreaExtensions.selectableNodes(area, AreaExtensions.selector(), {
         accumulating: AreaExtensions.accumulateOnCtrl(),
     });
+
+    render.addPreset(Presets.contextMenu.setup()); // <--- This was missing!
+
     render.addPreset(
         Presets.classic.setup({
             customize: {
                 node(data) {
-                    if (data.payload instanceof ClassicPreset.Node) {
+                    if (data.payload instanceof KeyNode || 
+                        data.payload instanceof HashFunctionNode || 
+                        data.payload instanceof HashValueNode) {
+                        
                         return ({ emit }) =>
                             html`<hash-node 
                             .data=${data.payload} 
                             .emit=${emit}
-                            .seed=${Date.now()}
+                            .deleteNode=${() => removeNodeWithConnections(data.payload.id)} 
                         ></hash-node>`;
                     }
                     return null;
@@ -148,22 +186,6 @@ export async function createEditor(container: HTMLElement) {
 
     AreaExtensions.simpleNodesOrder(area);
 
-    /*const key_node = new ClassicPreset.Node("Key");
-    key_node.addOutput("a", new ClassicPreset.Output(socket));
-    await editor.addNode(key_node);
-
-    const hash_function_node = new ClassicPreset.Node("HashFunction");
-    hash_function_node.addInput("a", new ClassicPreset.Input(socket));
-    hash_function_node.addOutput("a", new ClassicPreset.Output(socket));
-    await editor.addNode(hash_function_node);
-
-    const temp_hash_value_node = new ClassicPreset.Node("HashValue");
-    temp_hash_value_node.addInput("a", new ClassicPreset.Input(socket));
-    await editor.addNode(temp_hash_value_node);
-
-    await area.translate(hash_function_node.id, { x: 270, y: 0 });
-    await area.translate(temp_hash_value_node.id, { x: 540, y: 0 });*/
-
     const key_node = new KeyNode(socket);
     await editor.addNode(key_node);
 
@@ -180,9 +202,16 @@ export async function createEditor(container: HTMLElement) {
         new ClassicPreset.Connection(key_node, "key-output", hash_function_node, "hash-function-input") as any
     );
 
-   /*await editor.addConnection(
-        new ClassicPreset.Connection(hash_function_node, "hash-function-output", temp_hash_value_node, "hash-value-input") as any
-    );*/
+    const removeNodeWithConnections = async (nodeId: string) => {
+        const connections = editor.getConnections();
+        const relatedConnections = connections.filter(c => c.source === nodeId || c.target === nodeId);
+
+        for (const connection of relatedConnections) {
+            await editor.removeConnection(connection.id);
+        }
+        await editor.removeNode(nodeId);
+        process();
+    };
 
     async function process() {
         engine.reset();
@@ -192,7 +221,7 @@ export async function createEditor(container: HTMLElement) {
                 const inputs = await engine.fetchInputs(node.id);
                 const incomingVal = inputs["hash-value-input"]?.[0];
 
-                console.log("Hash Value Received:", incomingVal); // Check console
+                console.log("Hash Value Received:", incomingVal);
 
                 node.displayValue = (incomingVal as string) || "";
                 await area.update("node", node.id);
@@ -207,15 +236,45 @@ export async function createEditor(container: HTMLElement) {
         return context;
     });
 
+    editor.addPipe(context => {
+        if (context.type === 'connectioncreate') {
+            const sourceNode = editor.getNode(context.data.source);
+            const targetNode = editor.getNode(context.data.target);
+
+            if (sourceNode instanceof KeyNode) {
+                if (!(targetNode instanceof HashFunctionNode)) {
+                    console.warn("Key nodes can only be connected to hash function nodes");
+                    return; 
+                }
+            }
+
+            if (sourceNode instanceof HashFunctionNode) {
+                if (!(targetNode instanceof HashValueNode)) {
+                    console.warn("Hash function nodes can only be connected to hash value nodes");
+                    return; 
+                }
+            }
+
+            if (sourceNode instanceof HashValueNode) {
+                 console.warn("Hash value nodes cannot have outputs");
+                 return;
+            }
+        }
+        return context; 
+    });
+
     process();
 
     try {
-       await AreaExtensions.zoomAt(area, editor.getNodes());
+        await AreaExtensions.zoomAt(area, editor.getNodes());
     } finally {
         await editor.removeNode(temp_hash_value_node.id);
     }
 
     return {
-        destroy: () => area.destroy()
+        destroy: () => area.destroy(),
+        zoomToNodes: () => AreaExtensions.zoomAt(area, editor.getNodes())
     };
+
+   
 }
