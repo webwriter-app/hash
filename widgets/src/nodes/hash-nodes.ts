@@ -2,11 +2,14 @@ import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ClassicScheme } from "@retejs/lit-plugin";
 import "@shoelace-style/shoelace/dist/themes/light.css";
-import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js";
-import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js";
-import SlInput from "@shoelace-style/shoelace/dist/components/input/input.component.js";
-import SlTextarea from "@shoelace-style/shoelace/dist/components/textarea/textarea.component.js";
-import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.component.js";
+
+// --- FIXED IMPORTS (Use classes, not component.js) ---
+import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.js";
+import SlOption from "@shoelace-style/shoelace/dist/components/option/option.js";
+import SlInput from "@shoelace-style/shoelace/dist/components/input/input.js";
+import SlTextarea from "@shoelace-style/shoelace/dist/components/textarea/textarea.js";
+import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.js";
+
 import IconTrashFilled from "@tabler/icons/outline/trash.svg";
 
 import {HashInput} from "./hash-input";
@@ -26,7 +29,11 @@ export class HashNode extends LitElement {
             "hash-input": HashInput,
             "hash-select": HashSelect,
             "hash-textarea": HashTextarea,
-            "sl-icon":SlIcon
+            "sl-icon": SlIcon,
+            "sl-select": SlSelect,   // Added missing registrations
+            "sl-option": SlOption,
+            "sl-input": SlInput,
+            "sl-textarea": SlTextarea
         };
     }
 
@@ -59,6 +66,7 @@ export class HashNode extends LitElement {
             box-sizing: border-box;
             min-height: 100px;
         }
+        /* Uses technical names for classes */
         :host(.key) { 
             background: #f3f7f9; 
             border-color: #085886; 
@@ -83,18 +91,16 @@ export class HashNode extends LitElement {
         textarea {
             border: 1px solid #d4d4d8;
             border-radius: 4px;
-            font-family: -apple-system, BlinkMacSystemFont, ‘Segoe UI’, Roboto, Helvetica, Arial, sans-serif, ‘Apple Color Emoji’, ‘Segoe UI Emoji’, ‘Segoe UI Symbol’ ;
+            font-family: sans-serif;
             font-size: medium;
             width: 97%;
             height: 100%;
             background-color: white;
         }
-        textarea:focus{
-            outline: none;        
-        }
-        textarea::placeholder{
-            padding: 5px
-        }
+        textarea:hover { cursor: not-allowed; }
+        textarea:focus { outline: none; }
+        textarea::placeholder { padding: 5px; }
+        
         .socket-container {
             display: flex; justify-content: space-between; margin-top: auto;
         }
@@ -131,7 +137,9 @@ export class HashNode extends LitElement {
     }
 
     renderNodeContent() {
+        // Keep using the internal technical label here
         const { label } = this.data;
+
         if (label === "Key") {
             return html`
                 <hash-input 
@@ -166,11 +174,17 @@ export class HashNode extends LitElement {
         const outputs = Object.entries(this.data.outputs || {});
         const { id, label, width, height, selected } = this.data;
 
+        // 1. CSS Class Mapping (Technical Names)
         const nodeClass = label === "Key" ? "key" :
             label === "HashFunction" ? "hash-function" :
-                label === "HashValue" ? "hash-value" : "";
+            label === "HashValue" ? "hash-value" : "";
 
         this.className = `${nodeClass} ${selected ? "selected" : ""}`;
+
+        // 2. Display Name Mapping (Visual Names) 
+        let displayTitle = label;
+        if (label === "HashFunction") displayTitle = "Hash Function";
+        if (label === "HashValue") displayTitle = "Hash Value";
 
         return html`
             <style>
@@ -180,7 +194,8 @@ export class HashNode extends LitElement {
                 }
             </style>
             
-            <div class="title">${label}</div>
+            <div class="title">${displayTitle}</div>
+            
             <sl-icon
                     class="delete-button"
                     src=${IconTrashFilled}

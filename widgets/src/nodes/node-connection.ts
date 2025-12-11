@@ -1,9 +1,10 @@
 import { html, css, LitElement, PropertyDeclarations } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property} from "lit/decorators.js";
 import type { Position } from "@retejs/lit-plugin";
 
 @customElement("node-connection")
 export class NodeConnection extends LitElement {
+   
     static get properties(): PropertyDeclarations {
         return {
             start: { type: Object },
@@ -54,5 +55,3 @@ export class NodeConnection extends LitElement {
         `;
     }
 }
-
-// go back 1

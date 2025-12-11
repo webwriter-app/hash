@@ -1,107 +1,73 @@
 import { html, css } from "lit";
 import { LitElementWw } from "@webwriter/lit";
-import { customElement, query} from "lit/decorators.js";
+import { customElement, query, state } from "lit/decorators.js"; 
 import "@shoelace-style/shoelace/dist/themes/light.css";
-import "@shoelace-style/shoelace/dist/components/button/button.component.js";
-import * as sha2 from "@noble/hashes/sha2";
-import * as sha3 from "@noble/hashes/sha3";
-import { sha1 } from "@noble/hashes/legacy";
-import { blake3 } from "@noble/hashes/blake3";
+
 import { createRef, ref } from "lit/directives/ref.js";
 import { createEditor } from "./src/editor";
-import IconFocus2 from "@tabler/icons/outline/focus-2.svg";
 import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.component.js";
-import {HashInput} from "./src/nodes/hash-input";
-import {HashSelect} from "./src/nodes/hash-select";
-import {HashTextarea} from "./src/nodes/hash-textarea";
+import SlDrawer from "@shoelace-style/shoelace/dist/components/drawer/drawer.js";
+import SlButton from "@shoelace-style/shoelace/dist/components/button/button.js";
+
+import IconFocus2 from "@tabler/icons/outline/focus-2.svg";
+import IconSquareRoundedPlus2 from "@tabler/icons/outline/square-rounded-plus-2.svg"; 
+import { EditorDock } from "./src/editor-dock";
 
 @customElement("webwriter-hash-new")
 export class WebwriterHashNew extends LitElementWw {
 
     static get scopedElements() {
         return {
-            "sl-icon": SlIcon
+            "sl-icon": SlIcon,
+            "sl-drawer": SlDrawer,
+            "editor-dock": EditorDock 
         };
     }
 
     static styles = css`
-        .rete {
-            width: 100%;
-            height: 600px;
-            background-image: radial-gradient(lightgrey 1px, transparent 0);  
-            background-size: 20px 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-        }
         :host {
+            display: block;
             width: 100%;
             height: fit-content;
-            box-sizing: border-box;
-            overflow: hidden;
-            display: flex;
-        } 
-        #app{
-            width: 99%;
-            padding: 2px;
+            font-family: sans-serif;
         }
-        //body {
-        //    overflow: hidden;
-        //    margin: 0;
-        //    padding: 0;
-        //}
-        #rete {
-            height: 100vh;
-            width: 100vw;
-        }
-        .instruction {
-            font-weight: bold;
-            text-align: center;
-            margin: 15px;
-            color: #333;
-            font-size: 16px;
-        }
-        .container {
-            height: 50vh;
-            max-width: 840px;
+
+        .widget-container {
+            position: relative; 
+            border: 1px solid #ccc; 
+            border-radius: 8px;
+            height: 600px;
+            overflow: hidden; 
+            background: white;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            padding: 20px;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            background: white;
         }
-        .dock {
-            border: 2px solid #ccc; /* Adds a light grey border */
-            border-radius: 8px; /* Optional: adds rounded corners */
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
-        }
-        .controls{
+
+        .controls {
             position: absolute;
-            top: 20px; 
-            z-index: 10;  
-            left:25%;
-            right: 25%;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50; 
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
-            padding: 5px 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            justify-content: space-between;
-            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 16px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
         }
 
         .instruction {
-            font-weight: bold;
+            font-weight: 600;
             color: #333;
             font-size: 14px;
-            width: 100%;
+            white-space: nowrap;
         }
 
         sl-icon {
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
             color: #555;
             transition: color 0.2s;
@@ -109,14 +75,56 @@ export class WebwriterHashNew extends LitElementWw {
         sl-icon:hover {
             color: #000;
         }
-	`;
+
+        /* Drawer Styling */
+        .drawer-dock {
+            --size: 170px;
+        }
+        
+        /* HIDE OVERLAY so we can drag-drop */
+        .drawer-dock::part(overlay) {
+            display: none; 
+            pointer-events: none;
+        }
+
+        .drawer-dock::part(panel) {
+            box-shadow: 1px 0 0 #e5e5e5; 
+            border-right: 1px solid #ccc;
+        }
+
+        .drawer-dock::part(body) {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .rete {
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#d1d5db 1px, transparent 0);
+            background-size: 20px 20px;
+            background-color: #f9fafb;
+        }
+    `;
 
     private reteRef = createRef<HTMLDivElement>();
-    private editorInstance?: { destroy: () => void; zoomToNodes: () => Promise<void> };
+    private editorInstance?: { 
+        destroy: () => void; 
+        zoomToNodes: () => Promise<void>;
+        addNode: (type: string, x: number, y: number) => Promise<void>;
+        process: () => Promise<void>;
+     };
 
-    async firstUpdated() {
+     async firstUpdated() {
         if (this.reteRef.value) {
-            this.editorInstance = await createEditor(this.reteRef.value);
+            setTimeout(async () => {
+                this.editorInstance = await createEditor(this.reteRef.value!);
+            }, 50);
         }
     }
 
@@ -124,28 +132,70 @@ export class WebwriterHashNew extends LitElementWw {
         super.disconnectedCallback();
         this.editorInstance?.destroy();
     }
+    
+    private handleDragOver(e: DragEvent) {
+        e.preventDefault();
+        e.dataTransfer!.dropEffect = "copy";
+    }
+
+    private async handleDrop(e: DragEvent) {
+        e.preventDefault();
+        const type = e.dataTransfer?.getData("nodeType");
+        if (type && this.editorInstance) {
+            const rect = this.reteRef.value?.getBoundingClientRect();
+            if (rect) {
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                await this.editorInstance.addNode(type, x, y);
+            }
+        }
+    }
+
+    private toggleDock(){
+        debugger; 
+        const drawer = this.renderRoot.querySelector("#drawer") as SlDrawer
+        if(drawer){
+            if (drawer.open) {
+                drawer.hide(); 
+            } else {
+                drawer.show();
+            }
+        }
+    }
 
     render() {
         return html`
-            <div class="controls">
-                    <div class="instruction">Connect the Nodes to Create a Hashing</div>
-                    <div class="controls-icon">
-                        <sl-icon
-                                src=${IconFocus2}
-                                label="Focus on Nodes"
-                                @click=${() => this.editorInstance?.zoomToNodes()}>
-                        </sl-icon>
-                    </div>
+            <div class="widget-container">
+                <div class="controls">
+                    <sl-icon 
+                        src=${IconSquareRoundedPlus2} 
+                        @click=${() => this.toggleDock()}
+                    ></sl-icon>
+                    
+                    <span class="instruction">Hash Editor</span>
+                    
+                    <sl-icon
+                        src=${IconFocus2}
+                        @click=${() => this.editorInstance?.zoomToNodes()}
+                    ></sl-icon>
                 </div>
-                
 
+                <sl-drawer 
+                    label="Tools" 
+                    id="drawer"
+                    placement="start" 
+                    class="drawer-dock" 
+                    contained 
+                    no-header
+                    open                   
+                >
+                    <editor-dock></editor-dock>
+                </sl-drawer>
 
+                <div id="app">
+                    <div ${ref(this.reteRef)} class="rete"></div>
+                </div>
             </div>
-            
-            <div id="app">
-                <div ${ref(this.reteRef)} class="rete"></div>
-            </div>
-			
-		`;
+        `;
     }
 }

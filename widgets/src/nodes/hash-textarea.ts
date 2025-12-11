@@ -32,12 +32,7 @@ export class HashTextarea extends LitElementWw {
                     readonly 
                     .value=${live(this.value)}
             ></sl-textarea>
-            <!--<textarea
-                placeholder="Resulting hash value"
-                readonly
-                .value=${live(this.value)}
-                style="width: 100%; height: 100px; box-sizing: border-box;"
-            ></textarea>-->
+        
             <div style="font-size: 10px; color: green;">Raw Value: ${this.value}</div>
         `;
     }
