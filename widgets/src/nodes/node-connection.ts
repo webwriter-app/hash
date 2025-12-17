@@ -46,8 +46,6 @@ export class NodeConnection extends LitElement {
     `;
 
     render() {
-        console.log('NodeConnection rendering, path:', this.path);
-
         return html`
             <svg data-testid="connection">
                 <path d=${this.path}></path>

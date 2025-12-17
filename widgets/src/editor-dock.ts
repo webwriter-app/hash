@@ -18,7 +18,7 @@ export class EditorDock extends LitElement {
         .dock-header {
             font-size: 12px;
             font-weight: bold;
-            color: #6c757d;
+            color: #3f3f48;
             text-transform: uppercase;
             margin-bottom: 5px;
         }
@@ -78,7 +78,9 @@ export class EditorDock extends LitElement {
             <div 
                 class="dock-item hash-function" 
                 draggable="true" 
-                @dragstart=${(e: DragEvent) => this.handleDragStart(e, 'HashFunction')}
+                @dragstart=${(e: DragEvent) => {
+                    e.dataTransfer!.setData("nodeType", "HashFunction"); 
+                }}            
             >
                 Hash Function
             </div>
@@ -86,7 +88,9 @@ export class EditorDock extends LitElement {
             <div 
                 class="dock-item hash-value" 
                 draggable="true" 
-                @dragstart=${(e: DragEvent) => this.handleDragStart(e, 'HashValue')}
+                @dragstart=${(e: DragEvent) => {
+                    e.dataTransfer!.setData("nodeType", "HashValue"); 
+                }}              
             >
                 Hash Value
             </div>

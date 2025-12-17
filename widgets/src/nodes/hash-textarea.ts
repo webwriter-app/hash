@@ -16,7 +16,7 @@ export class HashTextarea extends LitElementWw {
 
     static styles = css`
         :host {
-            display: block; /* Essential for the component to take up space */
+            display: block;
             width: 100%;
         }
         sl-textarea {

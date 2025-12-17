@@ -212,23 +212,29 @@ export async function createEditor(container: HTMLElement) {
     await editor.addNode(func_node);
     await editor.addNode(val_node);
 
-    await area.translate(func_node.id, { x: 270, y: 0 });
-    await area.translate(val_node.id, { x: 540, y: 0 });
+    await area.translate(func_node.id, { x: 260, y: 0 });
+    await area.translate(val_node.id, { x: 520, y: 0 });
 
     await editor.addConnection(new Connection(key_node, "key-output", func_node, "hash-function-input"));
 
-    setTimeout(() => AreaExtensions.zoomAt(area, editor.getNodes()), 100);
+    
+    const zoomToFit = async () => {
+        await AreaExtensions.zoomAt(area, editor.getNodes(), { 
+            scale: 0.65,
+        });
+
+        const { k, x, y } = area.area.transform;
+       
+        await area.area.translate(x + 90, y); 
+    };
+
+    setTimeout(() => zoomToFit(), 100);
 
     return {
         destroy: () => area.destroy(),
-        zoomToNodes: async () => {
-            await AreaExtensions.zoomAt(area, editor.getNodes());
-            
-            const { k, x, y } = area.area.transform;
-            await area.area.translate(x + 150, y);
-            
-        },        
+        zoomToNodes: zoomToFit,
         addNode: async (type: string, x: number, y: number) => {
+            
             let node: Nodes | undefined;
 
             if (type === 'Key' || type === 'KeyNode') {
@@ -245,9 +251,7 @@ export async function createEditor(container: HTMLElement) {
                 await editor.addNode(node);
                 await area.translate(node.id, { x, y });
                 process(); 
-            } else {
-                console.warn(`Attempted to add unknown node type: ${type}`);
-            }
+            } 
         },
         
         process: process

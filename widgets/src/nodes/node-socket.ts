@@ -6,7 +6,7 @@ export class NodeSocket extends LitElement {
     static get properties() {
         return {
             data: { type: Object },
-            emit: { type: Function }
+            emit: { attribute: false }
         };
     }
 

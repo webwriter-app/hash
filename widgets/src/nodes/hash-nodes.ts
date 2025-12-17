@@ -20,9 +20,10 @@ type NodeExtraData = { width?: number; height?: number };
 
 @customElement("hash-node")
 export class HashNode extends LitElement {
-    @property() process!: () => void;
-    @property() seed!: number;
-    @property({ type: Function }) deleteNode: any;
+    @property({ attribute: false }) process!: () => void;
+    @property({ type: Number }) seed!: number;
+    @property({ attribute: false }) deleteNode!: () => void;
+
 
     static get scopedElements() {
         return {
@@ -30,7 +31,7 @@ export class HashNode extends LitElement {
             "hash-select": HashSelect,
             "hash-textarea": HashTextarea,
             "sl-icon": SlIcon,
-            "sl-select": SlSelect,   // Added missing registrations
+            "sl-select": SlSelect,  
             "sl-option": SlOption,
             "sl-input": SlInput,
             "sl-textarea": SlTextarea
@@ -42,8 +43,8 @@ export class HashNode extends LitElement {
             width: { type: Number },
             height: { type: Number },
             data: { type: Object },
-            styles: { type: Function },
-            emit: { type: Function },
+            styles: { attribute: false },
+            emit: { attribute: false },
         };
     }
 
@@ -66,7 +67,6 @@ export class HashNode extends LitElement {
             box-sizing: border-box;
             min-height: 100px;
         }
-        /* Uses technical names for classes */
         :host(.key) { 
             background: #f3f7f9; 
             border-color: #085886; 
@@ -78,6 +78,7 @@ export class HashNode extends LitElement {
         :host(.hash-value) { 
             background: #eef0f2; 
             border-color: #0f3048;
+            width: 110%;
         }
         .title { 
             padding: 8px; 
@@ -96,11 +97,32 @@ export class HashNode extends LitElement {
             width: 97%;
             height: 100%;
             background-color: white;
+            box-sizing: border-box; 
+            padding: 8px;
+            height: 125px;
+            word-break: break-all;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            resize: none;
+            color: 3f3f48;
         }
         textarea:hover { cursor: not-allowed; }
         textarea:focus { outline: none; }
         textarea::placeholder { padding: 5px; }
-        
+        textarea::-webkit-scrollbar {
+            width: 6px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }  
         .socket-container {
             display: flex; justify-content: space-between; margin-top: auto;
         }
@@ -116,7 +138,7 @@ export class HashNode extends LitElement {
         }
         sl-icon {
             font-size: 24px;
-            padding: 2px;
+            padding: 4px;
         }
     `;
 
@@ -137,7 +159,6 @@ export class HashNode extends LitElement {
     }
 
     renderNodeContent() {
-        // Keep using the internal technical label here
         const { label } = this.data;
 
         if (label === "Key") {
@@ -174,14 +195,12 @@ export class HashNode extends LitElement {
         const outputs = Object.entries(this.data.outputs || {});
         const { id, label, width, height, selected } = this.data;
 
-        // 1. CSS Class Mapping (Technical Names)
         const nodeClass = label === "Key" ? "key" :
-            label === "HashFunction" ? "hash-function" :
-            label === "HashValue" ? "hash-value" : "";
+        label === "HashFunction" ? "hash-function" :
+        label === "HashValue" ? "hash-value" : "";
 
         this.className = `${nodeClass} ${selected ? "selected" : ""}`;
 
-        // 2. Display Name Mapping (Visual Names) 
         let displayTitle = label;
         if (label === "HashFunction") displayTitle = "Hash Function";
         if (label === "HashValue") displayTitle = "Hash Value";

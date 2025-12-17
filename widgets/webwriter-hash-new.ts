@@ -67,6 +67,8 @@ export class WebwriterHashNew extends LitElementWw {
         }
 
         sl-icon {
+            margin-top: 2px; 
+            margin-right: 2px;
             font-size: 20px;
             cursor: pointer;
             color: #555;
@@ -76,12 +78,10 @@ export class WebwriterHashNew extends LitElementWw {
             color: #000;
         }
 
-        /* Drawer Styling */
         .drawer-dock {
             --size: 170px;
         }
         
-        /* HIDE OVERLAY so we can drag-drop */
         .drawer-dock::part(overlay) {
             display: none; 
             pointer-events: none;
@@ -141,18 +141,27 @@ export class WebwriterHashNew extends LitElementWw {
     private async handleDrop(e: DragEvent) {
         e.preventDefault();
         const type = e.dataTransfer?.getData("nodeType");
-        if (type && this.editorInstance) {
+
+        if (!this.editorInstance) {
+            console.error("Debug Drop: Editor instance is undefined!");
+            return;
+        }
+
+        if (type) {
             const rect = this.reteRef.value?.getBoundingClientRect();
             if (rect) {
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                await this.editorInstance.addNode(type, x, y);
+                const clientX = e.clientX - rect.left;
+                const clientY = e.clientY - rect.top;                
+                try {
+                    await this.editorInstance.addNode(type, clientX, clientY);
+                } catch (err) {
+                    console.error("Drop error: addNode crashed:", err);
+                }
             }
-        }
+        } 
     }
-
+    
     private toggleDock(){
-        debugger; 
         const drawer = this.renderRoot.querySelector("#drawer") as SlDrawer
         if(drawer){
             if (drawer.open) {
@@ -165,7 +174,11 @@ export class WebwriterHashNew extends LitElementWw {
 
     render() {
         return html`
-            <div class="widget-container">
+            <div 
+                class="widget-container"
+                @drop=${this.handleDrop} 
+                @dragover=${this.handleDragOver}
+            >
                 <div class="controls">
                     <sl-icon 
                         src=${IconSquareRoundedPlus2} 
