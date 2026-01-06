@@ -37,10 +37,8 @@ export class NodeConnection extends LitElement {
             stroke-width: 3px;
             stroke: grey;
             pointer-events: auto;
-            cursor: pointer;
         }
         path:hover {
-            stroke: #f97316;
             stroke-width: 4px;
         }
     `;
