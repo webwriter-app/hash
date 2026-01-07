@@ -10,14 +10,14 @@ import SlDrawer from "@shoelace-style/shoelace/dist/components/drawer/drawer.js"
 import SlSwitch from "@shoelace-style/shoelace/dist/components/switch/switch.js";
 
 import IconFocus2 from "@tabler/icons/outline/focus-2.svg";
-import IconSquareRoundedPlus2 from "@tabler/icons/outline/square-rounded-plus-2.svg"; 
+import IconLayoutSidebar from "@tabler/icons/outline/layout-sidebar.svg"; 
 import { EditorDock } from "./src/editor-dock";
 
 @customElement("webwriter-hash-new")
 export class WebwriterHashNew extends LitElementWw {
 
-    @property({ type: Boolean, reflect: true }) allowAdding = true;
-    @property({ type: Boolean, reflect: true }) allowDeleting = true;
+    @property({ type: Boolean, attribute: true, reflect: true }) accessor allowAdding;
+    @property({ type: Boolean, attribute: true, reflect: true }) accessor allowDeleting;
     @property({ type: Object, attribute: true, reflect: true }) accessor editorState: any = {}; 
 
     static get scopedElements() {
@@ -98,6 +98,11 @@ export class WebwriterHashNew extends LitElementWw {
             color: #888;
         }
 
+        .icon-disabled {
+            color: #ccc !important;
+            opacity: 0.6;
+        }
+
         .drawer-dock {
             --size: 170px;
         }
@@ -129,9 +134,13 @@ export class WebwriterHashNew extends LitElementWw {
         :host(:not([contenteditable=true]):not([contenteditable=""])) .author-only {
             display: none !important;
         }
+        .options {
+            padding-left: 5px; 
+        }
     `;
 
     private reteRef = createRef<HTMLDivElement>();
+    
     private editorInstance?: { 
         destroy: () => void; 
         zoomToNodes: (sidebarOpen?: boolean) => Promise<void>;
@@ -139,46 +148,40 @@ export class WebwriterHashNew extends LitElementWw {
         importGraph: (data: any) => Promise<void>;
         process: () => Promise<void>;
         getGraph: () => any;
-        updatePermissions: (p: {canAdd: boolean, canDelete: boolean}) => void;
-     };
+        updatePermissions: (p: { canDelete: boolean, isAuthor: boolean }) => void;
+    };
 
-     async firstUpdated() {
+    async firstUpdated() {
         if (this.reteRef.value) {
-
-            setTimeout(async () => {
-                const isAuthor = this.isContentEditable;
-                const canAdd = isAuthor || this.allowAdding;
-                const canDelete = isAuthor || this.allowDeleting;
-
                 this.editorInstance = await createEditor(
                     this.reteRef.value!, 
-                    { canAdd, canDelete }, 
-                    this.editorState 
+                    this.allowDeleting,     // canDelete
+                    this.isContentEditable, // isAuthor
+                    this.editorState        // initialData
                 );
-                debugger;
-
+                
                 this.reteRef.value!.addEventListener('rete-update', (e: any) => {
                     this.handleEditorChange(e.detail);
                 });
 
-                const showSidebar = isAuthor || this.allowAdding;
-                this.editorInstance.zoomToNodes(showSidebar); 
-            }, 50);
+                const shouldZoomSidebar = this.allowAdding;
+                this.editorInstance.zoomToNodes(shouldZoomSidebar); 
+
         }
     }
 
     private handleEditorChange(data: any) {
         this.editorState = data;
-        debugger; 
     }
 
     updated(changedProperties: Map<string, any>) {
-        if (changedProperties.has('allowAdding') || changedProperties.has('allowDeleting')) {
+
+        if (changedProperties.has('allowDeleting') || changedProperties.has('isContentEditable')) {
              if (this.editorInstance) {
-                 const isAuthor = this.isContentEditable;
-                 const canAdd = isAuthor || this.allowAdding;
-                 const canDelete = isAuthor || this.allowDeleting;
-                 this.editorInstance.updatePermissions({ canAdd, canDelete });
+                 this.editorInstance.updatePermissions({ 
+                     canDelete: this.allowDeleting,
+                     isAuthor: this.isContentEditable 
+                 });
              }
         }
     }
@@ -193,21 +196,26 @@ export class WebwriterHashNew extends LitElementWw {
     
     private handleDragOver(e: DragEvent) {
         e.preventDefault();
-        e.dataTransfer!.dropEffect = "copy";
+        if(this.allowAdding) {
+            e.dataTransfer!.dropEffect = "copy";
+        } else {
+            e.dataTransfer!.dropEffect = "none";
+        }
     }
 
     private async handleDrop(e: DragEvent) {
         e.preventDefault();
-        const type = e.dataTransfer?.getData("nodeType");
-        if (!this.editorInstance) return;
+        
+        if (!this.allowAdding) return;
 
+        const type = e.dataTransfer?.getData("nodeType");
         if (type) {
             const rect = this.reteRef.value?.getBoundingClientRect();
             if (rect) {
                 const clientX = e.clientX - rect.left;
                 const clientY = e.clientY - rect.top;                
                 try {
-                    await this.editorInstance.addNode(type, clientX, clientY);
+                    await this.editorInstance?.addNode(type, clientX, clientY);
                 } catch (err) {
                     console.error("Drop error: addNode crashed:", err);
                 }
@@ -215,8 +223,10 @@ export class WebwriterHashNew extends LitElementWw {
         } 
     }
     
-    private toggleDock(){
-        const drawer = this.renderRoot.querySelector("#drawer") as SlDrawer
+    private toggleDock() {
+        if(!this.allowAdding) return;
+
+        const drawer = this.renderRoot.querySelector("#drawer") as SlDrawer;
         if(drawer){
             if (drawer.open) {
                 drawer.hide(); 
@@ -229,8 +239,7 @@ export class WebwriterHashNew extends LitElementWw {
     }
 
     render() {
-        const isAuthor = this.isContentEditable;
-        const showDockControls = isAuthor || this.allowAdding;
+        const showDrawer = this.allowAdding || this.isContentEditable;
 
         return html`
             <div 
@@ -243,14 +252,16 @@ export class WebwriterHashNew extends LitElementWw {
                 </div>
 
                 <div class="pill pill-right">
-                    ${showDockControls ? html`
-                        <div style="display:flex; align-items:center;">
-                            <sl-icon 
-                                src=${IconSquareRoundedPlus2} 
-                                @click=${() => this.toggleDock()}
-                                style="margin-right: 12px;" 
-                            ></sl-icon>
-                        </div>
+
+                    ${showDrawer ? html`
+                    <div style="display:flex; align-items:center;">
+                        <sl-icon 
+                            src=${IconLayoutSidebar} 
+                            class=${this.allowAdding ? '' : 'icon-disabled'}
+                            @click=${() => this.toggleDock()}
+                            style="margin-right: 12px;" 
+                        ></sl-icon>
+                    </div>
                     ` : ''}
                     
                     <sl-icon
@@ -263,12 +274,12 @@ export class WebwriterHashNew extends LitElementWw {
                     ></sl-icon>
                 </div>
 
-                ${showDockControls ? html`
+                ${showDrawer ? html`
                     <sl-drawer 
                         label="Tools" 
                         id="drawer"
                         placement="start" 
-                        class="drawer-dock" 
+                        class=${this.allowAdding ? 'drawer-dock' : 'drawer-dock icon-disabled'}
                         contained 
                         no-header
                         open                   
@@ -278,14 +289,15 @@ export class WebwriterHashNew extends LitElementWw {
                 ` : ''}
 
                 <div id="app">
-                    <div ${ref(this.reteRef)} 
-                    class="rete" 
-                    .state=${this.editorState} 
+                    <div 
+                        ${ref(this.reteRef)} 
+                        class="rete" 
+                        .state=${this.editorState} 
                     ></div>
                 </div>
             </div>
 
-            <div part="options" class="author-only">
+            <div part="options" class="author-only options">
                 <sl-switch 
                     ?checked=${this.allowAdding}
                     @sl-change=${(e: any) => this.allowAdding = e.target.checked}

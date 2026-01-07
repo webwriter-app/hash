@@ -103,28 +103,20 @@ export class Connection extends ClassicPreset.Connection<Nodes, Nodes> {
 type Schemes = GetSchemes<Nodes, Connection>;
 type AreaExtra = LitArea2D<Schemes> | ContextMenuExtra;
 
-type EditorPermissions = {
-    canAdd: boolean;
-    canDelete: boolean;
-};
-
 export async function createEditor(
     container: HTMLElement, 
-    permissions: EditorPermissions = { canAdd: true, canDelete: true },
+    canDelete: boolean,
+    isAuthor: boolean, 
     initialData?: any 
 ) {
-    debugger;
     const socket = new ClassicPreset.Socket("socket");
     const editor = new NodeEditor<Schemes>();
     const area = new AreaPlugin<Schemes, AreaExtra>(container);
     const connection = new ConnectionPlugin<Schemes, AreaExtra>();
     const render = new LitPlugin<Schemes, AreaExtra>();
     const engine = new DataflowEngine<Schemes>();
-    
-    let currentPermissions = { ...permissions };
 
     const dispatchChange = () => {
-        debugger
         const detail = exportState();
         container.dispatchEvent(new CustomEvent("rete-update", {
             detail,
@@ -135,9 +127,6 @@ export async function createEditor(
 
     const contextMenu = new ContextMenuPlugin<Schemes>({
         items: (context, plugin) => {
-            if (!currentPermissions.canAdd) {
-                return { list: [] }; 
-            }
             return ContextMenuPresets.classic.setup([
                 ["KeyNode", () => new KeyNode(socket)],
                 ["HashFunctionNode", () => new HashFunctionNode(socket)],
@@ -238,7 +227,8 @@ export async function createEditor(
                             .emit=${emit}
                             .process=${() => process()} 
                             .deleteNode=${() => removeNodeWithConnections(data.payload.id)}
-                            .canDelete=${currentPermissions.canDelete} 
+                            .canDelete=${canDelete} 
+                            .isAuthor=${isAuthor}
                         ></hash-node>`;
                 },
                 connection() {
@@ -260,7 +250,7 @@ export async function createEditor(
     area.use(render);
 
     const removeNodeWithConnections = async (nodeId: string) => {
-        if (!currentPermissions.canDelete) return;
+        if (!canDelete) return;
         const connections = editor.getConnections();
         const relatedConnections = connections.filter(c => c.source === nodeId || c.target === nodeId);
         for (const connection of relatedConnections) {
@@ -287,7 +277,9 @@ export async function createEditor(
     area.addPipe(context => {
         if (context.type === 'rendered' || context.type === 'translated' || context.type === 'zoomed') {
             updateBackground();
-            if (context.type === 'translated') dispatchChange(); // Export on move
+        }
+        if (context.type === 'translated' || context.type === 'nodedragged') {
+            dispatchChange(); 
         }
         return context;
     });
@@ -384,7 +376,6 @@ export async function createEditor(
 
 
     if (initialData && initialData.nodes && initialData.nodes.length > 0) {
-        debugger;
         await importState(initialData);
     } else {
         const key_node = new KeyNode(socket);
@@ -414,7 +405,7 @@ export async function createEditor(
     };
 
     setTimeout(() => {
-        if (!initialData) zoomToFit(true);
+        if (!initialData || editor.getNodes().length > 0) zoomToFit(true);
         else updateBackground(); 
     }, 100);
 
@@ -422,7 +413,6 @@ export async function createEditor(
         destroy: () => area.destroy(),
         zoomToNodes: zoomToFit,
         addNode: async (type: string, x: number, y: number) => {
-            if (!currentPermissions.canAdd) return;
             let node: Nodes | undefined;
             if (type === 'Key' || type === 'KeyNode') node = new KeyNode(socket);
             else if (type === 'HashFunction' || type === 'HashFunctionNode') node = new HashFunctionNode(socket);
@@ -436,9 +426,7 @@ export async function createEditor(
         importGraph: importState, 
         process: process,
         getGraph: () => exportState(),
-        updatePermissions: (newPerms: EditorPermissions) => {
-            currentPermissions = { ...newPerms };
-            editor.getNodes().forEach(n => area.update("node", n.id));
+        updatePermissions: (newPerms: { canDelete: boolean, isAuthor: boolean }) => {
         }
     };
 }

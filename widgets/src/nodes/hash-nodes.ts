@@ -17,7 +17,6 @@ type NodeExtraData = { width?: number; height?: number };
 
 @customElement("hash-node")
 export class HashNode extends LitElement {
-  // ... (properties and styles remain the same)
   @property({ attribute: false }) process!: () => void;
   @property({ attribute: false }) deleteNode!: () => void;
   @property({ type: Boolean }) canDelete = true;
