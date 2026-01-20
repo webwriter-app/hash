@@ -25,7 +25,17 @@ const hash_algorithms: Record<string, any> = {
     sha1, sha256, sha384, sha512, sha3_256, keccak_256, blake3, 
 };
 
-export class KeyNode extends ClassicPreset.Node {
+/** * Base class to handle custom titles for all nodes
+ */
+export class BaseNode extends ClassicPreset.Node {
+    public customTitle: string = ""; 
+    constructor(label: string) {
+        super(label);
+        this.customTitle = label;
+    }
+}
+
+export class KeyNode extends BaseNode {
     public value = "";
     constructor(socket: ClassicPreset.Socket) {
         super("Key");
@@ -34,7 +44,7 @@ export class KeyNode extends ClassicPreset.Node {
     data() { return { "key-output": this.value }; }
 }
 
-export class HashFunctionNode extends ClassicPreset.Node {
+export class HashFunctionNode extends BaseNode {
     public selectedFunction = "sha256";
     public socket: ClassicPreset.Socket;
 
@@ -85,7 +95,7 @@ export class HashFunctionNode extends ClassicPreset.Node {
     }
 }
 
-export class HashValueNode extends ClassicPreset.Node {
+export class HashValueNode extends BaseNode {
     public displayValue = "";
     constructor(socket: ClassicPreset.Socket) {
         super("HashValue");
@@ -115,6 +125,9 @@ export async function createEditor(
     const connection = new ConnectionPlugin<Schemes, AreaExtra>();
     const render = new LitPlugin<Schemes, AreaExtra>();
     const engine = new DataflowEngine<Schemes>();
+
+    let currentCanDelete = canDelete;
+    let currentIsAuthor = isAuthor;
 
     const dispatchChange = () => {
         const detail = exportState();
@@ -227,8 +240,8 @@ export async function createEditor(
                             .emit=${emit}
                             .process=${() => process()} 
                             .deleteNode=${() => removeNodeWithConnections(data.payload.id)}
-                            .canDelete=${canDelete} 
-                            .isAuthor=${isAuthor}
+                            .canDelete=${currentCanDelete} 
+                            .isAuthor=${currentIsAuthor}
                         ></hash-node>`;
                 },
                 connection() {
@@ -250,7 +263,8 @@ export async function createEditor(
     area.use(render);
 
     const removeNodeWithConnections = async (nodeId: string) => {
-        if (!canDelete) return;
+        if (!currentCanDelete) return;
+        
         const connections = editor.getConnections();
         const relatedConnections = connections.filter(c => c.source === nodeId || c.target === nodeId);
         for (const connection of relatedConnections) {
@@ -263,14 +277,18 @@ export async function createEditor(
     async function process() {
         engine.reset();
         const hashFuncs = editor.getNodes().filter(n => n instanceof HashFunctionNode);
-        for (const node of hashFuncs) await engine.fetchInputs(node.id);
-        const valNodes = editor.getNodes().filter(n => n instanceof HashValueNode);
-        for (const node of valNodes) {
-            const inputs = await engine.fetchInputs(node.id);
-            const incomingVal = inputs["hash-value-input"]?.[0];
-            (node as HashValueNode).displayValue = (incomingVal as string) || "";
-            await area.update("node", node.id);
-        }
+    for (const node of hashFuncs) await engine.fetchInputs(node.id);
+    
+    const valNodes = editor.getNodes().filter(n => n instanceof HashValueNode);
+    for (const node of valNodes) {
+        const inputs = await engine.fetchInputs(node.id);
+        const incomingVal = inputs["hash-value-input"]?.[0];
+        (node as HashValueNode).displayValue = (incomingVal as string) || "";
+    }
+
+    for (const node of editor.getNodes()) {
+        await area.update("node", node.id);
+    }
         dispatchChange();
     }
 
@@ -324,6 +342,7 @@ export async function createEditor(
                 return {
                     id: n.id,
                     label: n.label,
+                    customTitle: (n as any).customTitle, 
                     x,
                     y,
                     value: (n as any).value,
@@ -358,6 +377,7 @@ export async function createEditor(
 
             if (node) {
                 node.id = nData.id;
+                (node as any).customTitle = nData.customTitle || nData.label;
                 await editor.addNode(node);
                 await area.translate(node.id, { x: nData.x, y: nData.y });
             }
@@ -373,7 +393,6 @@ export async function createEditor(
             }
         }
     };
-
 
     if (initialData && initialData.nodes && initialData.nodes.length > 0) {
         await importState(initialData);
@@ -396,37 +415,59 @@ export async function createEditor(
     process();
 
     const zoomToFit = async (sidebarOpen: boolean = true) => {
-        await AreaExtensions.zoomAt(area, editor.getNodes(), { scale: 0.65 });
-        if (sidebarOpen) {
-            const { k, x, y } = area.area.transform;
-            await area.area.translate(x + 90, y); 
+        const nodes = editor.getNodes();
+        if (nodes.length > 0) {
+            await AreaExtensions.zoomAt(area, nodes, { scale: 0.65 });
+            if (sidebarOpen) {
+                const { k, x, y } = area.area.transform;
+                await area.area.translate(x + 90, y); 
+            }
         }
         updateBackground();
     };
 
     setTimeout(() => {
-        if (!initialData || editor.getNodes().length > 0) zoomToFit(true);
+        if (editor.getNodes().length > 0) zoomToFit(true);
         else updateBackground(); 
     }, 100);
 
     return {
         destroy: () => area.destroy(),
         zoomToNodes: zoomToFit,
-        addNode: async (type: string, x: number, y: number) => {
+        addNode: async (type: string, clientX: number, clientY: number) => {
             let node: Nodes | undefined;
             if (type === 'Key' || type === 'KeyNode') node = new KeyNode(socket);
             else if (type === 'HashFunction' || type === 'HashFunctionNode') node = new HashFunctionNode(socket);
             else if (type === 'HashValue' || type === 'HashValueNode') node = new HashValueNode(socket);
+            
             if (node) {
                 await editor.addNode(node);
-                await area.translate(node.id, { x, y });
+                const { k, x, y } = area.area.transform;
+                const translatedX = (clientX - x) / k;
+                const translatedY = (clientY - y) / k;
+
+                await area.translate(node.id, { x: translatedX, y: translatedY });
                 process(); 
-            } 
+            }
         },
-        importGraph: importState, 
+        importGraph: importState,
         process: process,
         getGraph: () => exportState(),
+        
         updatePermissions: (newPerms: { canDelete: boolean, isAuthor: boolean }) => {
+            currentCanDelete = newPerms.canDelete;
+            currentIsAuthor = newPerms.isAuthor;
+            editor.getNodes().forEach(node => {
+                const view = area.nodeViews.get(node.id);
+                if (view && view.element) {
+                    const hashNodeEl = view.element.querySelector("hash-node") as any;
+                    if (hashNodeEl) {
+                        hashNodeEl.canDelete = currentCanDelete;
+                        hashNodeEl.isAuthor = currentIsAuthor;
+                        if (hashNodeEl.requestUpdate) hashNodeEl.requestUpdate();
+                    }
+                }
+            });
         }
     };
 }

@@ -8,6 +8,7 @@ import { createEditor } from "./src/editor";
 import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.component.js";
 import SlDrawer from "@shoelace-style/shoelace/dist/components/drawer/drawer.js";
 import SlSwitch from "@shoelace-style/shoelace/dist/components/switch/switch.js";
+import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js";
 
 import IconFocus2 from "@tabler/icons/outline/focus-2.svg";
 import IconLayoutSidebar from "@tabler/icons/outline/layout-sidebar.svg"; 
@@ -26,6 +27,7 @@ export class WebwriterHashNew extends LitElementWw {
             "sl-drawer": SlDrawer,
             "editor-dock": EditorDock,
             "sl-switch": SlSwitch,
+            "sl-tooltip": SlTooltip
         };
     }
 
@@ -137,6 +139,9 @@ export class WebwriterHashNew extends LitElementWw {
         .options {
             padding-left: 5px; 
         }
+        sl-tooltip {
+            --show-delay: 1200ms;
+        }
     `;
 
     private reteRef = createRef<HTMLDivElement>();
@@ -153,42 +158,43 @@ export class WebwriterHashNew extends LitElementWw {
 
     async firstUpdated() {
         if (this.reteRef.value) {
-                this.editorInstance = await createEditor(
-                    this.reteRef.value!, 
-                    this.allowDeleting,     // canDelete
-                    this.isContentEditable, // isAuthor
-                    this.editorState        // initialData
-                );
-                
-                this.reteRef.value!.addEventListener('rete-update', (e: any) => {
-                    this.handleEditorChange(e.detail);
-                });
+            this.editorInstance = await createEditor(
+                this.reteRef.value!, 
+                this.allowDeleting,     // canDelete
+                this.isContentEditable, // isAuthor
+                this.editorState        // initialData
+            );
+            
+            this.reteRef.value!.addEventListener('rete-update', (e: any) => {
+                this.handleEditorChange(e.detail);
+            });
 
-                const shouldZoomSidebar = this.allowAdding;
-                this.editorInstance.zoomToNodes(shouldZoomSidebar); 
-
-        }
+            const shouldZoomSidebar = this.allowAdding;
+            this.editorInstance.zoomToNodes(shouldZoomSidebar); 
+            
+        } 
     }
 
     private handleEditorChange(data: any) {
         this.editorState = data;
     }
 
-    updated(changedProperties: Map<string, any>) {
-
+    async updated(changedProperties: Map<string, any>) {
         if (changedProperties.has('allowDeleting') || changedProperties.has('isContentEditable')) {
-             if (this.editorInstance) {
-                 this.editorInstance.updatePermissions({ 
-                     canDelete: this.allowDeleting,
-                     isAuthor: this.isContentEditable 
-                 });
-             }
+            
+            if (this.editorInstance) {
+                this.editorInstance.updatePermissions({ 
+                    canDelete: this.allowDeleting,
+                    isAuthor: this.isContentEditable 
+                });
+            }
         }
     }
 
     disconnectedCallback(): void {
         super.disconnectedCallback();
         this.editorInstance?.destroy();
+
         if(this.reteRef.value) {
             this.reteRef.value.removeEventListener('rete-update', (e: any) => this.handleEditorChange(e.detail));
         }
@@ -196,6 +202,7 @@ export class WebwriterHashNew extends LitElementWw {
     
     private handleDragOver(e: DragEvent) {
         e.preventDefault();
+
         if(this.allowAdding) {
             e.dataTransfer!.dropEffect = "copy";
         } else {
@@ -212,12 +219,13 @@ export class WebwriterHashNew extends LitElementWw {
         if (type) {
             const rect = this.reteRef.value?.getBoundingClientRect();
             if (rect) {
-                const clientX = e.clientX - rect.left;
-                const clientY = e.clientY - rect.top;                
+                const relativeX = e.clientX - rect.left;
+                const relativeY = e.clientY - rect.top;                
+                
                 try {
-                    await this.editorInstance?.addNode(type, clientX, clientY);
+                    await this.editorInstance?.addNode(type, relativeX, relativeY);
                 } catch (err) {
-                    console.error("Drop error: addNode crashed:", err);
+                    console.error("Drop error:", err);
                 }
             }
         } 
@@ -227,6 +235,7 @@ export class WebwriterHashNew extends LitElementWw {
         if(!this.allowAdding) return;
 
         const drawer = this.renderRoot.querySelector("#drawer") as SlDrawer;
+        
         if(drawer){
             if (drawer.open) {
                 drawer.hide(); 
@@ -255,23 +264,26 @@ export class WebwriterHashNew extends LitElementWw {
 
                     ${showDrawer ? html`
                     <div style="display:flex; align-items:center;">
-                        <sl-icon 
-                            src=${IconLayoutSidebar} 
-                            class=${this.allowAdding ? '' : 'icon-disabled'}
-                            @click=${() => this.toggleDock()}
-                            style="margin-right: 12px;" 
-                        ></sl-icon>
+                        <sl-tooltip content="Toggle node menu" placement="bottom-end">
+                            <sl-icon 
+                                src=${IconLayoutSidebar} 
+                                class=${this.allowAdding ? '' : 'icon-disabled'}
+                                @click=${() => this.toggleDock()}
+                                style="margin-right: 12px;" 
+                            ></sl-icon>
+                        </sl-tooltip>
                     </div>
                     ` : ''}
-                    
-                    <sl-icon
-                        src=${IconFocus2}
-                        @click=${() => {
-                            const drawer = this.renderRoot.querySelector("#drawer") as SlDrawer;
-                            const isOpen = drawer ? drawer.open : false;
-                            this.editorInstance?.zoomToNodes(isOpen);
-                        }}
-                    ></sl-icon>
+                    <sl-tooltip content="Focus on nodes" placement="bottom-end"> 
+                        <sl-icon
+                            src=${IconFocus2}
+                            @click=${() => {
+                                const drawer = this.renderRoot.querySelector("#drawer") as SlDrawer;
+                                const isOpen = drawer ? drawer.open : false;
+                                this.editorInstance?.zoomToNodes(isOpen);
+                            }}
+                        ></sl-icon>
+                    </sl-tooltip>    
                 </div>
 
                 ${showDrawer ? html`

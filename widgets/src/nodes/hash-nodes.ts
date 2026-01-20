@@ -2,13 +2,17 @@ import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ClassicScheme } from "@retejs/lit-plugin";
 import "@shoelace-style/shoelace/dist/themes/light.css";
-// ... (keep your other imports)
+
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.js";
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.js";
 import SlInput from "@shoelace-style/shoelace/dist/components/input/input.js";
 import SlTextarea from "@shoelace-style/shoelace/dist/components/textarea/textarea.js";
 import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.js";
+import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js";
+
 import IconTrashFilled from "@tabler/icons/outline/trash.svg";
+import IconCopy from "@tabler/icons/outline/copy.svg";
+
 import { HashInput } from "./hash-input";
 import { HashSelect } from "./hash-select";
 import { HashTextarea } from "./hash-textarea";
@@ -19,7 +23,11 @@ type NodeExtraData = { width?: number; height?: number };
 export class HashNode extends LitElement {
   @property({ attribute: false }) process!: () => void;
   @property({ attribute: false }) deleteNode!: () => void;
-  @property({ type: Boolean }) canDelete = true;
+  @property({ type: Boolean }) isEditingTitle = false;
+
+  @property({ type: Boolean, attribute: true, reflect: true })
+  accessor canDelete;
+  @property({ type: Boolean, reflect: true }) accessor isAuthor;
 
   static get scopedElements() {
     return {
@@ -31,14 +39,15 @@ export class HashNode extends LitElement {
       "sl-option": SlOption,
       "sl-input": SlInput,
       "sl-textarea": SlTextarea,
+      "sl-tooltip": SlTooltip,
     };
   }
+
   static get properties() {
     return {
       width: { type: Number },
       height: { type: Number },
       data: { type: Object },
-      styles: { attribute: false },
       emit: { attribute: false },
     };
   }
@@ -46,7 +55,6 @@ export class HashNode extends LitElement {
   declare width: number;
   declare height: number;
   declare data: ClassicScheme["Node"] & NodeExtraData;
-  declare styles: ((props: any) => any) | null;
   declare emit: ((type: string, payload: any) => void) | null;
 
   static styles = css`
@@ -55,13 +63,13 @@ export class HashNode extends LitElement {
       flex-direction: column;
       border: 2px solid grey;
       border-radius: 10px;
-      cursor: pointer;
       padding: 6px;
       position: relative;
       background: white;
       box-sizing: border-box;
+      min-width: 200px; 
       min-height: 100px;
-      transition: height 0.2s ease;
+      transition: height 0.1s ease-out; 
     }
     :host(.key) {
       background: #f3f7f9;
@@ -76,58 +84,50 @@ export class HashNode extends LitElement {
       border-color: #0f3048;
       width: 110%;
     }
+
     .title {
-      padding: 8px;
-      font-weight: bold;
-      text-align: center;
+        padding: 8px 28px; 
+        font-weight: bold;
+        text-align: center;
+        min-height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        cursor: text;
+        width: 100%;
+        box-sizing: border-box;
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word; 
+        line-height: 1.2;
     }
-    hash-input,
-    hash-select,
-    hash-textarea,
+
+    .title-input {
+        width: 100%;
+        max-width: 160px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-align: center;
+        border: none;
+        border-radius: 4px;
+        outline: none;
+        background: transparent
+    }
+
     textarea {
       display: block;
-      width: 100%;
-    }
-    textarea {
+      width: 97%;
+      height: 125px;
       border: 1px solid #d4d4d8;
       border-radius: 4px;
       font-family: sans-serif;
       font-size: medium;
-      width: 97%;
-      height: 125px;
       word-break: break-all;
       white-space: pre-wrap;
-      overflow-y: auto;
       resize: none;
       color: #3f3f48;
-    }
-    textarea:hover {
-      cursor: not-allowed;
-    }
-    textarea:focus {
-      outline: none;
-    }
-    textarea::placeholder {
-      padding: 5px;
-    }
-    textarea::-webkit-scrollbar {
-      width: 6px;
-    }
-    textarea::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 3px;
-    }
-    textarea::-webkit-scrollbar-thumb {
-      background: #ccc;
-      border-radius: 3px;
-    }
-    textarea::-webkit-scrollbar-thumb:hover {
-      background: #999;
-    }
-    .socket-container {
-      display: flex;
-      justify-content: space-between;
-      margin-top: auto;
     }
 
     .delete-button {
@@ -135,10 +135,29 @@ export class HashNode extends LitElement {
       top: 14px;
       right: 7px;
       font-size: 1.2rem;
+      color: #555;
+      cursor: pointer;
+    }
+    .delete-button.disabled {
+      color: #ccc;
+      pointer-events: none;
+    }
+
+    .copy-button {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      cursor: pointer;
+      color: #555;
+    }
+    .copy-button:hover {
       color: #888;
     }
-    .delete-button:hover {
-      color: #555;
+
+    .socket-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: auto;
     }
   `;
 
@@ -147,63 +166,87 @@ export class HashNode extends LitElement {
       new CustomEvent("node-change", {
         bubbles: true,
         composed: true,
-        detail: {
-          nodeId: this.data.id,
-          label: this.data.label,
-          key: key,
-          value: value,
-        },
+        detail: { nodeId: this.data.id, label: this.data.label, key, value },
       })
     );
   }
 
   private handleInput(e: CustomEvent) {
-    const value = e.detail.value;
-    if (this.data) {
-      (this.data as any).value = value;
-      this.dispatchNodeChange("value", value);
-      this.process?.();
-    }
+    (this.data as any).value = e.detail.value;
+    this.dispatchNodeChange("value", e.detail.value);
+    this.process?.();
   }
 
   private handleSelect(e: CustomEvent) {
-    const value = e.detail.value;
-    if (this.data) {
-      (this.data as any).selectedFunction = value;
-      this.dispatchNodeChange("selectedFunction", value);
-      this.process?.();
+    (this.data as any).selectedFunction = e.detail.value;
+    this.dispatchNodeChange("selectedFunction", e.detail.value);
+    this.process?.();
+  }
+
+  private async handleCopy() {
+    const value = (this.data as any).displayValue || "";
+    if (value) await navigator.clipboard.writeText(value);
+  }
+
+  private toggleEditTitle() {
+    if (this.isAuthor) this.isEditingTitle = true;
+  }
+
+  private handleKeyDown(e: KeyboardEvent) {
+    if (e.key === "Enter") {
+      this.handleTitleChange({
+        target: { value: (e.target as HTMLInputElement).value },
+      });
+    } else if (e.key === "Escape") {
+      this.isEditingTitle = false;
     }
+  }
+
+  private handleTitleChange(e: any) {
+    const newTitle = e.target.value;
+    if (this.data) {
+      (this.data as any).customTitle = newTitle;
+      this.dispatchNodeChange("customTitle", newTitle); 
+      this.isEditingTitle = false;
+      
+      this.requestUpdate(); 
+      setTimeout(() => this.process?.(), 0);
+    } 
   }
 
   renderNodeContent() {
     const { label } = this.data;
-    if (label === "Key")
+    const data = this.data as any;
+    if (label === "Key") 
       return html`<hash-input
-        .value=${(this.data as any).value || ""}
+        .value=${data.value || ""}
         @val-change=${this.handleInput}
-      ></hash-input>`;
+        ></hash-input>`;
+
     if (label === "HashFunction")
       return html`<hash-select
-        .value=${(this.data as any).selectedFunction || "sha256"}
+        .value=${data.selectedFunction || "sha256"}
         @val-change=${this.handleSelect}
       ></hash-select>`;
+
     if (label === "HashValue")
-      return html`<textarea
+      return html` <textarea
         placeholder="Hashed value result"
         readonly
-        .value=${(this.data as any).displayValue || ""}
-      ></textarea>`;
+        .value=${data.displayValue || ""}
+        ></textarea>
+        
+        <sl-icon
+          src=${IconCopy}
+          @click=${this.handleCopy}
+          class="copy-button"
+        ></sl-icon>`;
+    
     return html``;
   }
 
   render() {
-    const inputs = Object.entries(this.data.inputs || {}).sort((a, b) =>
-      a[0].localeCompare(b[0])
-    );
-    const outputs = Object.entries(this.data.outputs || {}).sort((a, b) =>
-      a[0].localeCompare(b[0])
-    );
-    const { id, label, width, height, selected } = this.data;
+    const { id, label, width, height, selected, inputs = {}, outputs = {}, } = this.data;
     const nodeClass =
       label === "Key"
         ? "key"
@@ -213,9 +256,14 @@ export class HashNode extends LitElement {
         ? "hash-value"
         : "";
     this.className = `${nodeClass} ${selected ? "selected" : ""}`;
-    let displayTitle = label;
-    if (label === "HashFunction") displayTitle = "Hash Function";
-    if (label === "HashValue") displayTitle = "Hash Value";
+
+    const displayTitle =
+      (this.data as any).customTitle ||
+      (label === "HashFunction"
+        ? "Hash Function"
+        : label === "HashValue"
+        ? "Hash Value"
+        : label);
 
     return html`
       <style>
@@ -224,42 +272,63 @@ export class HashNode extends LitElement {
           height: ${height ? `${height}px` : "auto"};
         }
       </style>
-      <div class="title">${displayTitle}</div>
-      ${this.canDelete
-        ? html`<sl-icon
-            class="delete-button"
-            src=${IconTrashFilled}
-            @pointerdown=${(e: Event) => e.stopPropagation()}
-            @click=${this.deleteNode}
-          ></sl-icon>`
+      <div class="title" @click=${this.toggleEditTitle}>
+        ${this.isEditingTitle
+          ? html`<input
+              class="title-input"
+              .value=${displayTitle}
+              @blur=${this.handleTitleChange}
+              @keydown=${this.handleKeyDown}
+              @pointerdown=${(e: Event) => e.stopPropagation()}
+              autofocus
+            />`
+          : html`<span style="max-width: 100%">${displayTitle}</span>`}
+      </div>
+
+      ${this.canDelete || this.isAuthor
+        ? html` <sl-tooltip content="Delete node" placement="top-start">
+            <sl-icon
+              class="delete-button ${!this.canDelete && this.isAuthor
+                ? "disabled"
+                : ""}"
+              src=${IconTrashFilled}
+              @pointerdown=${(e: Event) => e.stopPropagation()}
+              @click=${this.canDelete ? this.deleteNode : null}
+            ></sl-icon>
+          </sl-tooltip>`
         : ""}
       ${this.renderNodeContent()}
+
       <div class="socket-container">
         <div class="inputs">
-          ${inputs.map(([key, input]: any, index) => {
-            const isPhantom =
-              label === "HashFunction" && index === inputs.length - 1;
-            return html`<div
-              class="socket-row ${isPhantom ? "phantom" : ""}"
-              title="${key}"
-            >
-              <rete-ref
-                .emit=${this.emit}
-                .data=${{
-                  type: "socket",
-                  side: "input",
-                  key,
-                  nodeId: id,
-                  payload: input.socket,
-                }}
-              ></rete-ref>
-            </div>`;
-          })}
+          ${Object.entries(inputs)
+            .sort()
+            .map(
+              ([key, input]: any) => html` <div
+                class="socket-row"
+                title="${key}"
+              >
+                <rete-ref
+                  .emit=${this.emit}
+                  .data=${{
+                    type: "socket",
+                    side: "input",
+                    key,
+                    nodeId: id,
+                    payload: input.socket,
+                  }}
+                ></rete-ref>
+              </div>`
+            )}
         </div>
         <div class="outputs">
-          ${outputs.map(
-            ([key, output]: any) =>
-              html`<div class="socket-row" title="${key}">
+          ${Object.entries(outputs)
+            .sort()
+            .map(
+              ([key, output]: any) => html` <div
+                class="socket-row"
+                title="${key}"
+              >
                 <rete-ref
                   .emit=${this.emit}
                   .data=${{
@@ -271,7 +340,7 @@ export class HashNode extends LitElement {
                   }}
                 ></rete-ref>
               </div>`
-          )}
+            )}
         </div>
       </div>
     `;
