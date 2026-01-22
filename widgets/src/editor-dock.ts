@@ -20,7 +20,7 @@ export class EditorDock extends LitElement {
             font-weight: bold;
             color: #3f3f48;
             text-transform: uppercase;
-            margin-bottom: 5px;
+            margin-top: 5px;
         }
 
         .dock-item {
@@ -35,7 +35,6 @@ export class EditorDock extends LitElement {
             font-size: 14px;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
             font-weight: 550; 
-            margin-bottom: px;
         }
         .dock-item:hover {
             box-shadow: 0 2px 4px gray
@@ -56,6 +55,15 @@ export class EditorDock extends LitElement {
             background: #eef0f2; 
             border-color: #0f3048;
         }
+        .dock-instruction {
+            color: #3f3f48;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: 4px;
+            line-height: 1.4;
+        }
     `;
 
     private handleDragStart(e: DragEvent, type: string) {
@@ -66,7 +74,9 @@ export class EditorDock extends LitElement {
     render() {
         return html`
             <div class="dock-header">Nodes</div>
-            
+            <div class="dock-instruction">
+                Drag and drop the nodes into the editor
+            </div>
             <div 
                 class="dock-item key" 
                 draggable="true" 

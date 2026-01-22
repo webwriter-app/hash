@@ -138,6 +138,10 @@ export class HashNode extends LitElement {
       color: #555;
       cursor: pointer;
     }
+    .delete-button:hover {
+      color: #39bdf8;
+    }
+
     .delete-button.disabled {
       color: #ccc;
       pointer-events: none;
@@ -151,7 +155,7 @@ export class HashNode extends LitElement {
       color: #555;
     }
     .copy-button:hover {
-      color: #888;
+      color: #39bdf8;
     }
 
     .socket-container {
@@ -159,6 +163,18 @@ export class HashNode extends LitElement {
       justify-content: space-between;
       margin-top: auto;
     }
+    sl-tooltip {
+      --sl-tooltip-arrow-size: 0;
+      --show-delay:1000ms;
+    }
+  
+    sl-tooltip::part(body) {
+      background: #f1f1f1;
+      border: #a1a1aa 1px solid;
+      color: #131316;
+      font-size: 14px;
+      font-family: sans-serif;
+    }  
   `;
 
   private dispatchNodeChange(key: string, value: any) {
@@ -235,12 +251,13 @@ export class HashNode extends LitElement {
         readonly
         .value=${data.displayValue || ""}
         ></textarea>
-        
-        <sl-icon
-          src=${IconCopy}
-          @click=${this.handleCopy}
-          class="copy-button"
-        ></sl-icon>`;
+        <sl-tooltip content="Copy to clipboard" placement="right-end">
+          <sl-icon
+            src=${IconCopy}
+            @click=${this.handleCopy}
+            class="copy-button"
+          ></sl-icon>
+          </sl-tooltip>`;
     
     return html``;
   }

@@ -17,8 +17,8 @@ import { EditorDock } from "./src/editor-dock";
 @customElement("webwriter-hash-new")
 export class WebwriterHashNew extends LitElementWw {
 
-    @property({ type: Boolean, attribute: true, reflect: true }) accessor allowAdding;
-    @property({ type: Boolean, attribute: true, reflect: true }) accessor allowDeleting;
+    @property({ type: Boolean, attribute: true, reflect: true }) accessor allowAdding = false;
+    @property({ type: Boolean, attribute: true, reflect: true }) accessor allowDeleting = false;
     @property({ type: Object, attribute: true, reflect: true }) accessor editorState: any = {}; 
 
     static get scopedElements() {
@@ -76,17 +76,11 @@ export class WebwriterHashNew extends LitElementWw {
             right: 15px;
         }
 
-        .pill > div {
-            display: flex;
-            align-items: center;
-        }
-
         .instruction {
             font-weight: 600;
-            color: #333;
+            color: #3f3f48;
             font-size: 14px;
             white-space: nowrap;
-            line-height: 1;
         }
 
         sl-icon {
@@ -97,82 +91,106 @@ export class WebwriterHashNew extends LitElementWw {
         }
         
         sl-icon:hover {
-            color: #888;
+            color: #39bdf8;
         }
 
         .icon-disabled {
             color: #ccc !important;
             opacity: 0.6;
+            pointer-events: none;
         }
 
-        .drawer-dock {
-            --size: 170px;
-        }
-        
-        .drawer-dock::part(overlay) { display: none; pointer-events: none; }
+        .drawer-dock { --size: 170px; }
+        .drawer-dock::part(overlay) { display: none; }
         .drawer-dock::part(panel) { box-shadow: 1px 0 0 #e5e5e5; border-right: 1px solid #ccc; }
         .drawer-dock::part(body) { padding: 0; overflow: hidden; }
 
-        #app {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
+        #app { width: 100%; height: 100%; position: relative; }
 
         .rete {
             width: 100%;
             height: 100%;
-            --bg-size: 20px;
-            --dot-size: 1px;
-            --bg-pos-x: 0px;
-            --bg-pos-y: 0px;
-
-            background-image: radial-gradient(#d1d5db var(--dot-size), transparent 0);
-            background-size: var(--bg-size) var(--bg-size);
-            background-position: var(--bg-pos-x) var(--bg-pos-y);
+            background-image: radial-gradient(#d1d5db 1px, transparent 0);
+            background-size: 20px 20px;
             background-color: #f9fafb;
         }
         
         :host(:not([contenteditable=true]):not([contenteditable=""])) .author-only {
             display: none !important;
         }
-        .options {
-            padding-left: 5px; 
-        }
         sl-tooltip {
-            --show-delay: 1200ms;
+            --sl-tooltip-arrow-size: 0;
+            --show-delay:1000ms;
+        }
+
+        sl-tooltip::part(body) {
+            background: #f1f1f1;
+            border: #a1a1aa 1px solid;
+            color: #131316;
+            font-size: 14px;
+            font-family: sans-serif;
+        } 
+        .description {
+            font-size: 13px;
+            color: #3f3f48;
+            margin-bottom: 8px;
+        }   
+        sl-switch {
+            color: #3f3f48
         }
     `;
 
     private reteRef = createRef<HTMLDivElement>();
-    
-    private editorInstance?: { 
-        destroy: () => void; 
-        zoomToNodes: (sidebarOpen?: boolean) => Promise<void>;
-        addNode: (type: string, x: number, y: number) => Promise<void>;
-        importGraph: (data: any) => Promise<void>;
-        process: () => Promise<void>;
-        getGraph: () => any;
-        updatePermissions: (p: { canDelete: boolean, isAuthor: boolean }) => void;
-    };
+    private editorInstance?: any;
+
+    connectedCallback() {
+        super.connectedCallback();
+        const isEmpty = !this.editorState?.nodes || this.editorState.nodes.length === 0;
+        
+        if (this.isContentEditable && isEmpty) {
+            if (!this.hasAttribute('allowadding')) this.allowAdding = true;
+            if (!this.hasAttribute('allowdeleting')) this.allowDeleting = true;
+        }
+    }
 
     async firstUpdated() {
-        if (this.reteRef.value) {
-            this.editorInstance = await createEditor(
-                this.reteRef.value!, 
-                this.allowDeleting,     // canDelete
-                this.isContentEditable, // isAuthor
-                this.editorState        // initialData
-            );
-            
-            this.reteRef.value!.addEventListener('rete-update', (e: any) => {
-                this.handleEditorChange(e.detail);
-            });
+        if (this.reteRef.value && !this.editorInstance) {
+            requestAnimationFrame(async () => {
+                try {                    
+                    this.editorInstance = await createEditor(
+                        this.reteRef.value!, 
+                        this.allowDeleting, // canDelete
+                        this.isContentEditable, // isAuthor
+                        this.editorState        // initialData
+                    );
+                    
+                    this.reteRef.value!.addEventListener('rete-update', (e: any) => {
+                        this.handleEditorChange(e.detail);
+                    });
+                    
+                    this.editorInstance?.zoomToNodes(!!this.renderRoot.querySelector("#drawer[open]"))           
 
-            const shouldZoomSidebar = this.allowAdding;
-            this.editorInstance.zoomToNodes(shouldZoomSidebar); 
-            
+                } catch (err: any) {
+                    const massage = err?.message || String(err);
+                    if (massage.includes('already been used') || massage.includes('cannot find parent')) {
+                        console.warn("Rete recovering from initialization, please refresh page.");
+                    } else {
+                        console.error("Initialization error, please refresh page.");                 
+                    }
+                }
+            });
         } 
+    }
+
+    disconnectedCallback(): void {
+        super.disconnectedCallback();
+        if (this.editorInstance) {
+            this.editorInstance.destroy();
+            this.editorInstance = null;
+        }
+        if (this.reteRef.value) {
+            this.reteRef.value.removeEventListener('rete-update', (e: any) => this.handleEditorChange(e.detail));
+        }
     }
 
     private handleEditorChange(data: any) {
@@ -180,145 +198,74 @@ export class WebwriterHashNew extends LitElementWw {
     }
 
     async updated(changedProperties: Map<string, any>) {
-        if (changedProperties.has('allowDeleting') || changedProperties.has('isContentEditable')) {
             
+        if (
+        changedProperties.has('allowAdding') || 
+        changedProperties.has('allowDeleting') || 
+        changedProperties.has('isContentEditable')
+        ) {
             if (this.editorInstance) {
-                this.editorInstance.updatePermissions({ 
+                await this.editorInstance.updatePermissions({ 
                     canDelete: this.allowDeleting,
-                    isAuthor: this.isContentEditable 
+                    isAuthor: this.isContentEditable,
+                    allowAdding: this.allowAdding 
                 });
             }
         }
     }
-
-    disconnectedCallback(): void {
-        super.disconnectedCallback();
-        this.editorInstance?.destroy();
-
-        if(this.reteRef.value) {
-            this.reteRef.value.removeEventListener('rete-update', (e: any) => this.handleEditorChange(e.detail));
-        }
-    }
     
+
     private handleDragOver(e: DragEvent) {
         e.preventDefault();
-
-        if(this.allowAdding) {
-            e.dataTransfer!.dropEffect = "copy";
-        } else {
-            e.dataTransfer!.dropEffect = "none";
-        }
+        e.dataTransfer!.dropEffect = this.allowAdding ? "copy" : "none";
     }
 
     private async handleDrop(e: DragEvent) {
         e.preventDefault();
-        
         if (!this.allowAdding) return;
-
         const type = e.dataTransfer?.getData("nodeType");
-        if (type) {
-            const rect = this.reteRef.value?.getBoundingClientRect();
-            if (rect) {
-                const relativeX = e.clientX - rect.left;
-                const relativeY = e.clientY - rect.top;                
-                
-                try {
-                    await this.editorInstance?.addNode(type, relativeX, relativeY);
-                } catch (err) {
-                    console.error("Drop error:", err);
-                }
-            }
+        const rect = this.reteRef.value?.getBoundingClientRect();
+        if (type && rect) {
+            await this.editorInstance?.addNode(type, e.clientX - rect.left, e.clientY - rect.top);
         } 
     }
     
     private toggleDock() {
         if(!this.allowAdding) return;
-
         const drawer = this.renderRoot.querySelector("#drawer") as SlDrawer;
-        
         if(drawer){
-            if (drawer.open) {
-                drawer.hide(); 
-                this.editorInstance?.zoomToNodes(false);
-            } else {
-                drawer.show();
-                this.editorInstance?.zoomToNodes(true);
-            }
+            drawer.open ? drawer.hide() : drawer.show();
+            this.editorInstance?.zoomToNodes(drawer.open);
         }
     }
 
     render() {
         const showDrawer = this.allowAdding || this.isContentEditable;
-
         return html`
-            <div 
-                class="widget-container"
-                @drop=${this.handleDrop} 
-                @dragover=${this.handleDragOver}
-            >
-                <div class="pill pill-center">
-                    <span class="instruction">Hash Editor</span>
-                </div>
-
+            <div class="widget-container" @drop=${this.handleDrop} @dragover=${this.handleDragOver}>
+                <div class="pill pill-center"><span class="instruction">Hash Editor</span></div>
                 <div class="pill pill-right">
-
                     ${showDrawer ? html`
-                    <div style="display:flex; align-items:center;">
-                        <sl-tooltip content="Toggle node menu" placement="bottom-end">
-                            <sl-icon 
-                                src=${IconLayoutSidebar} 
-                                class=${this.allowAdding ? '' : 'icon-disabled'}
-                                @click=${() => this.toggleDock()}
-                                style="margin-right: 12px;" 
-                            ></sl-icon>
+                        <sl-tooltip content="Toggle node menu">
+                            <sl-icon src=${IconLayoutSidebar} class=${this.allowAdding ? '' : 'icon-disabled'} @click=${() => this.toggleDock()}></sl-icon>
                         </sl-tooltip>
-                    </div>
                     ` : ''}
-                    <sl-tooltip content="Focus on nodes" placement="bottom-end"> 
-                        <sl-icon
-                            src=${IconFocus2}
-                            @click=${() => {
-                                const drawer = this.renderRoot.querySelector("#drawer") as SlDrawer;
-                                const isOpen = drawer ? drawer.open : false;
-                                this.editorInstance?.zoomToNodes(isOpen);
-                            }}
-                        ></sl-icon>
+                    <sl-tooltip content="Focus on nodes"> 
+                        <sl-icon src=${IconFocus2} @click=${() => this.editorInstance?.zoomToNodes(!!this.renderRoot.querySelector("#drawer[open]"))}></sl-icon>
                     </sl-tooltip>    
                 </div>
 
-                ${showDrawer ? html`
-                    <sl-drawer 
-                        label="Tools" 
-                        id="drawer"
-                        placement="start" 
-                        class=${this.allowAdding ? 'drawer-dock' : 'drawer-dock icon-disabled'}
-                        contained 
-                        no-header
-                        open                   
-                    >
-                        <editor-dock></editor-dock>
-                    </sl-drawer>
-                ` : ''}
+                <sl-drawer label="Tools" id="drawer" placement="start" class="drawer-dock" contained no-header ?open=${this.allowAdding}>
+                    <editor-dock></editor-dock>
+                </sl-drawer>
 
-                <div id="app">
-                    <div 
-                        ${ref(this.reteRef)} 
-                        class="rete" 
-                        .state=${this.editorState} 
-                    ></div>
-                </div>
+                <div id="app"><div ${ref(this.reteRef)} class="rete"></div></div>
             </div>
 
-            <div part="options" class="author-only options">
-                <sl-switch 
-                    ?checked=${this.allowAdding}
-                    @sl-change=${(e: any) => this.allowAdding = e.target.checked}
-                >Adding Nodes</sl-switch>
-                
-                <sl-switch 
-                    ?checked=${this.allowDeleting}
-                    @sl-change=${(e: any) => this.allowDeleting = e.target.checked}
-                >Deleting Nodes</sl-switch>
+            <div class="author-only options" part="options">
+                <div class="description">Toggle these settings for the author and student view.</div>
+                <sl-switch ?checked=${this.allowAdding} @sl-change=${(e: any) => this.allowAdding = e.target.checked}>Adding Nodes</sl-switch>
+                <sl-switch ?checked=${this.allowDeleting} @sl-change=${(e: any) => this.allowDeleting = e.target.checked}>Deleting Nodes</sl-switch>
             </div>
         `;
     }

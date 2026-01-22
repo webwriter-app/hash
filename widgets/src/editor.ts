@@ -11,11 +11,6 @@ import { blake3 } from "@noble/hashes/blake3";
 import { keccak_256 } from "@noble/hashes/sha3";
 import { bytesToHex } from "@noble/hashes/utils";
 import "@shoelace-style/shoelace/dist/themes/light.css";
-import {
-    ContextMenuExtra,
-    ContextMenuPlugin,
-    Presets as ContextMenuPresets
-} from "rete-context-menu-plugin";
 
 import "./nodes/node-connection";
 import "./nodes/node-socket";
@@ -25,8 +20,6 @@ const hash_algorithms: Record<string, any> = {
     sha1, sha256, sha384, sha512, sha3_256, keccak_256, blake3, 
 };
 
-/** * Base class to handle custom titles for all nodes
- */
 export class BaseNode extends ClassicPreset.Node {
     public customTitle: string = ""; 
     constructor(label: string) {
@@ -111,7 +104,7 @@ export class Connection extends ClassicPreset.Connection<Nodes, Nodes> {
 }
 
 type Schemes = GetSchemes<Nodes, Connection>;
-type AreaExtra = LitArea2D<Schemes> | ContextMenuExtra;
+type AreaExtra = LitArea2D<Schemes>;
 
 export async function createEditor(
     container: HTMLElement, 
@@ -128,7 +121,7 @@ export async function createEditor(
 
     let currentCanDelete = canDelete;
     let currentIsAuthor = isAuthor;
-
+    
     const dispatchChange = () => {
         const detail = exportState();
         container.dispatchEvent(new CustomEvent("rete-update", {
@@ -137,20 +130,7 @@ export async function createEditor(
             composed: true
         }));
     };
-
-    const contextMenu = new ContextMenuPlugin<Schemes>({
-        items: (context, plugin) => {
-            return ContextMenuPresets.classic.setup([
-                ["KeyNode", () => new KeyNode(socket)],
-                ["HashFunctionNode", () => new HashFunctionNode(socket)],
-                ["HashValueNode", () => new HashValueNode(socket)],
-            ])(context, plugin);
-        }
-    });
     
-    area.use(contextMenu);
-    render.addPreset(Presets.contextMenu.setup());
-
     const updateBackground = () => {
         const { k, x, y } = area.area.transform;
         const bgSize = 20 * k;  
@@ -214,7 +194,7 @@ export async function createEditor(
         }
 
         if (shifted) {
-            setTimeout(() => reconcileSockets(node), 10);
+            reconcileSockets(node);
             return;
         }
 
@@ -277,18 +257,18 @@ export async function createEditor(
     async function process() {
         engine.reset();
         const hashFuncs = editor.getNodes().filter(n => n instanceof HashFunctionNode);
-    for (const node of hashFuncs) await engine.fetchInputs(node.id);
-    
-    const valNodes = editor.getNodes().filter(n => n instanceof HashValueNode);
-    for (const node of valNodes) {
-        const inputs = await engine.fetchInputs(node.id);
-        const incomingVal = inputs["hash-value-input"]?.[0];
-        (node as HashValueNode).displayValue = (incomingVal as string) || "";
-    }
+        for (const node of hashFuncs) await engine.fetchInputs(node.id);
+        
+        const valNodes = editor.getNodes().filter(n => n instanceof HashValueNode);
+        for (const node of valNodes) {
+            const inputs = await engine.fetchInputs(node.id);
+            const incomingVal = inputs["hash-value-input"]?.[0];
+            (node as HashValueNode).displayValue = (incomingVal as string) || "";
+        }
 
-    for (const node of editor.getNodes()) {
-        await area.update("node", node.id);
-    }
+        for (const node of editor.getNodes()) {
+            await area.update("node", node.id);
+        }
         dispatchChange();
     }
 
@@ -307,7 +287,7 @@ export async function createEditor(
             const nodes = editor.getNodes();
             for (const node of nodes) {
                 if (node instanceof HashFunctionNode) {
-                    setTimeout(() => reconcileSockets(node), 20);
+                    reconcileSockets(node);
                 }
             }
             setTimeout(() => {
@@ -394,7 +374,7 @@ export async function createEditor(
         }
     };
 
-    if (initialData && initialData.nodes && initialData.nodes.length > 0) {
+    if (initialData && Array.isArray(initialData.nodes) && initialData.nodes.length > 0) {
         await importState(initialData);
     } else {
         const key_node = new KeyNode(socket);
@@ -414,25 +394,33 @@ export async function createEditor(
 
     process();
 
-    const zoomToFit = async (sidebarOpen: boolean = true) => {
+    const zoomToFit = async (sidebarOpen: boolean) => {
         const nodes = editor.getNodes();
         if (nodes.length > 0) {
-            await AreaExtensions.zoomAt(area, nodes, { scale: 0.65 });
+            await AreaExtensions.zoomAt(area, nodes, { scale: 0.64 });
+            
+            const { k, x, y } = area.area.transform;
             if (sidebarOpen) {
-                const { k, x, y } = area.area.transform;
-                await area.area.translate(x + 90, y); 
+                await area.area.translate(x + 85, y);
+            } else {
+                await area.area.translate(x, y);
             }
         }
         updateBackground();
     };
 
-    setTimeout(() => {
-        if (editor.getNodes().length > 0) zoomToFit(true);
-        else updateBackground(); 
-    }, 100);
+    try {
+        await AreaExtensions.zoomAt(area, [], { scale: 1 });
+    } catch (e) {
+        console.warn("Passive zoom initialization failed.");
+    }
 
     return {
-        destroy: () => area.destroy(),
+        destroy: () => { 
+            area.destroy(); 
+            editor.clear();
+            engine.reset();
+        },
         zoomToNodes: zoomToFit,
         addNode: async (type: string, clientX: number, clientY: number) => {
             let node: Nodes | undefined;
@@ -454,9 +442,10 @@ export async function createEditor(
         process: process,
         getGraph: () => exportState(),
         
-        updatePermissions: (newPerms: { canDelete: boolean, isAuthor: boolean }) => {
+        updatePermissions: async (newPerms: { canDelete: boolean, isAuthor: boolean, allowAdding: boolean }) => {
             currentCanDelete = newPerms.canDelete;
             currentIsAuthor = newPerms.isAuthor;
+
             editor.getNodes().forEach(node => {
                 const view = area.nodeViews.get(node.id);
                 if (view && view.element) {
@@ -468,6 +457,7 @@ export async function createEditor(
                     }
                 }
             });
-        }
+            await zoomToFit(newPerms.allowAdding);
+        },
     };
 }
