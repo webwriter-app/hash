@@ -300,8 +300,11 @@ export async function createEditor(
         process();
     };
 
+        let isProcessing = false;
+        let hasPendingProcess = false;
+
     // main logic to process data flow
-    async function process() {
+    async function processInternal() {
         engine.reset();
         
         // fetch and update inputs for salt nodes
@@ -336,6 +339,23 @@ export async function createEditor(
             }
         }
         dispatchChange();
+    }
+
+    // serialize processing to avoid overlapping fetch/reset cancellations
+    async function process() {
+        if (isProcessing) {
+            hasPendingProcess = true;
+            return Promise.resolve();
+        }
+        isProcessing = true;
+        try {
+            do {
+                hasPendingProcess = false;
+                await processInternal();
+            } while (hasPendingProcess);
+        } finally {
+            isProcessing = false;
+        }
     }
 
     // update values for current view 
