@@ -16,6 +16,7 @@ import "./nodes/node-connection";
 import "./nodes/node-socket";
 import "./nodes/hash-nodes";
 
+// available hash algorithms
 const hash_algorithms: Record<string, any> = {
     sha1, sha256, sha384, sha512, sha3_256, keccak_256, blake3, 
 };
@@ -28,6 +29,7 @@ export class BaseNode extends ClassicPreset.Node {
     }
 }
 
+// node for user input
 export class KeyNode extends BaseNode {
     public value = "";
     constructor(socket: ClassicPreset.Socket) {
@@ -37,6 +39,39 @@ export class KeyNode extends BaseNode {
     data() { return { "key-output": this.value }; }
 }
 
+// node for adding a random salt string
+export class SaltNode extends BaseNode {
+    public saltValue: string = "";
+    public incomingValue: string = "";
+
+    constructor(socket: ClassicPreset.Socket, initialSalt?: string) {
+        super("Salt");
+
+        // set initial salt or generate random 5-char string
+        if (initialSalt !== undefined) {
+            this.saltValue = initialSalt;
+        } else {
+            this.saltValue = Math.random().toString(36).substring(2, 7);
+        }
+        
+        this.addInput("salt-input", new ClassicPreset.Input(socket));
+        this.addOutput("salt-output", new ClassicPreset.Output(socket));
+    }
+
+    regenerateSalt() {
+        this.saltValue = Math.random().toString(36).substring(2, 7);
+    }
+
+    data(inputs: Record<string, any[]>) {
+        const inputVal = inputs["salt-input"]?.[0];
+        this.incomingValue = inputVal ? String(inputVal) : "";
+        
+        // combine input and salt for output
+        return { "salt-output": this.incomingValue + this.saltValue };
+    }
+}
+
+// node that performs the hashing 
 export class HashFunctionNode extends BaseNode {
     public selectedFunction = "sha256";
     public socket: ClassicPreset.Socket;
@@ -48,6 +83,7 @@ export class HashFunctionNode extends BaseNode {
         this.addOutput("out-0", new ClassicPreset.Output(socket));
     }
 
+    // adds or removes input/output pairs dynamically
     setChannelCount(count: number) {
         const currentCount = Object.keys(this.inputs).length;
         if (count > currentCount) {
@@ -64,6 +100,7 @@ export class HashFunctionNode extends BaseNode {
         }
     }
 
+    // executes the selected hash algorithm
     data(inputs: Record<string, any[]>) {
         const result: Record<string, string> = {};
         const algo = hash_algorithms[this.selectedFunction];
@@ -88,6 +125,7 @@ export class HashFunctionNode extends BaseNode {
     }
 }
 
+// node that displays the final hash result
 export class HashValueNode extends BaseNode {
     public displayValue = "";
     constructor(socket: ClassicPreset.Socket) {
@@ -97,7 +135,7 @@ export class HashValueNode extends BaseNode {
     data() { return {}; }
 }
 
-export type Nodes = KeyNode | HashFunctionNode | HashValueNode;
+export type Nodes = KeyNode | HashFunctionNode | HashValueNode | SaltNode;
 
 export class Connection extends ClassicPreset.Connection<Nodes, Nodes> {
     public color?: string; 
@@ -106,6 +144,35 @@ export class Connection extends ClassicPreset.Connection<Nodes, Nodes> {
 type Schemes = GetSchemes<Nodes, Connection>;
 type AreaExtra = LitArea2D<Schemes>;
 
+const globalLITrender = new LitPlugin<Schemes, AreaExtra>();
+
+// configure custom rendering for nodes and connections (LIT custom registry issues)
+globalLITrender.addPreset(
+    Presets.classic.setup({
+        customize: {
+            node(data) {
+                return ({ emit }) =>
+                    html`<hash-node 
+                        .data=${data.payload} 
+                        .emit=${emit}
+                        .process=${() => (data.payload as any)._process?.()} 
+                        .deleteNode=${() => (data.payload as any)._delete?.()}
+                        .canDelete=${(data.payload as any)._canDelete} 
+                        .isAuthor=${(data.payload as any)._isAuthor}
+                    ></hash-node>`;
+            },
+            connection() {
+                return (data: any) =>
+                    html`<node-connection .path=${data.path} .data=${data.payload}></node-connection>`;
+            },
+            socket(data) {
+                return () => html`<node-socket .data=${data}></node-socket>`;
+            }
+        }
+    })
+);
+
+// main editor creation through rete function
 export async function createEditor(
     container: HTMLElement, 
     canDelete: boolean,
@@ -116,12 +183,12 @@ export async function createEditor(
     const editor = new NodeEditor<Schemes>();
     const area = new AreaPlugin<Schemes, AreaExtra>(container);
     const connection = new ConnectionPlugin<Schemes, AreaExtra>();
-    const render = new LitPlugin<Schemes, AreaExtra>();
     const engine = new DataflowEngine<Schemes>();
 
     let currentCanDelete = canDelete;
     let currentIsAuthor = isAuthor;
     
+    // dispatch event to update external state
     const dispatchChange = () => {
         const detail = exportState();
         container.dispatchEvent(new CustomEvent("rete-update", {
@@ -131,6 +198,7 @@ export async function createEditor(
         }));
     };
     
+    // updates the grid background based on zoom/pan
     const updateBackground = () => {
         const { k, x, y } = area.area.transform;
         const bgSize = 20 * k;  
@@ -151,11 +219,13 @@ export async function createEditor(
         accumulating: AreaExtensions.accumulateOnCtrl(),
     });
 
+    // manages number of sockets on hash function nodes
     const reconcileSockets = async (node: HashFunctionNode) => {
         const MAX_CHANNELS = 4;
         const inputs = Object.keys(node.inputs).sort();
         let highestConnectedIndex = -1;
 
+        // find the highest index currently connected
         inputs.forEach((key) => {
             const index = parseInt(key.split("-")[1]);
             const hasInputConn = editor.getConnections().some(c => c.target === node.id && c.targetInput === key);
@@ -167,6 +237,7 @@ export async function createEditor(
             }
         });
 
+        // shift connections if there are gaps
         let shifted = false;
         for (let i = 0; i < highestConnectedIndex; i++) {
             const currentKey = `in-${i}`;
@@ -198,6 +269,7 @@ export async function createEditor(
             return;
         }
 
+        // update channel count based on connections
         let targetCount = highestConnectedIndex + 2; 
         if (targetCount < 1) targetCount = 1;
         if (targetCount > MAX_CHANNELS) targetCount = MAX_CHANNELS;
@@ -210,41 +282,15 @@ export async function createEditor(
         }
     };
 
-    render.addPreset(
-        Presets.classic.setup({
-            customize: {
-                node(data) {
-                    return ({ emit }) =>
-                        html`<hash-node 
-                            .data=${data.payload} 
-                            .emit=${emit}
-                            .process=${() => process()} 
-                            .deleteNode=${() => removeNodeWithConnections(data.payload.id)}
-                            .canDelete=${currentCanDelete} 
-                            .isAuthor=${currentIsAuthor}
-                        ></hash-node>`;
-                },
-                connection() {
-                    return (data: any) =>
-                        html`<node-connection .path=${data.path} .data=${data.payload}></node-connection>`;
-                },
-                socket(data) {
-                    return () => html`<node-socket .data=${data}></node-socket>`;
-                }
-            }
-        })
-    );
-
     connection.addPreset(ConnectionPresets.classic.setup());
 
     editor.use(engine);
     editor.use(area);
     area.use(connection);
-    area.use(render);
+    area.use(globalLITrender);
 
     const removeNodeWithConnections = async (nodeId: string) => {
         if (!currentCanDelete) return;
-        
         const connections = editor.getConnections();
         const relatedConnections = connections.filter(c => c.source === nodeId || c.target === nodeId);
         for (const connection of relatedConnections) {
@@ -254,11 +300,23 @@ export async function createEditor(
         process();
     };
 
+    // main logic to process data flow
     async function process() {
         engine.reset();
+        
+        // fetch and update inputs for salt nodes
+        const saltNodes = editor.getNodes().filter(n => n instanceof SaltNode);
+        for (const node of saltNodes) {
+            const inputs = await engine.fetchInputs(node.id);
+            const inputVal = inputs["salt-input"]?.[0];
+            (node as SaltNode).incomingValue = inputVal ? String(inputVal) : "";
+        }
+
+        // fetch inputs for hash functions
         const hashFuncs = editor.getNodes().filter(n => n instanceof HashFunctionNode);
         for (const node of hashFuncs) await engine.fetchInputs(node.id);
         
+        // update hash value nodes with results
         const valNodes = editor.getNodes().filter(n => n instanceof HashValueNode);
         for (const node of valNodes) {
             const inputs = await engine.fetchInputs(node.id);
@@ -266,12 +324,29 @@ export async function createEditor(
             (node as HashValueNode).displayValue = (incomingVal as string) || "";
         }
 
+        // update node views and force lit re-render
         for (const node of editor.getNodes()) {
             await area.update("node", node.id);
+            const view = area.nodeViews.get(node.id);
+            if (view && view.element) {
+                const hashNodeEl = view.element.querySelector("hash-node") as any;
+                if (hashNodeEl && hashNodeEl.requestUpdate) {
+                     hashNodeEl.requestUpdate();
+                }
+            }
         }
         dispatchChange();
     }
 
+    // update values for current view 
+    const setupNode = (node: Nodes) => {
+        (node as any)._process = process;
+        (node as any)._delete = () => removeNodeWithConnections(node.id);
+        (node as any)._canDelete = currentCanDelete;
+        (node as any)._isAuthor = currentIsAuthor;
+    };
+
+    // visual updates on interaction
     area.addPipe(context => {
         if (context.type === 'rendered' || context.type === 'translated' || context.type === 'zoomed') {
             updateBackground();
@@ -282,6 +357,7 @@ export async function createEditor(
         return context;
     });
     
+    // trigger processing when connections change
     editor.addPipe(context => {
         if (context.type === 'connectioncreated' || context.type === 'connectionremoved') {
             const nodes = editor.getNodes();
@@ -301,17 +377,41 @@ export async function createEditor(
         return context;
     });
 
-    editor.addPipe(context => {
+    // validate connections and restricts moves
+    editor.addPipe(async context => {
         if (context.type === 'connectioncreate') {
             const sourceNode = editor.getNode(context.data.source);
             const targetNode = editor.getNode(context.data.target);
-            if (sourceNode instanceof KeyNode && !(targetNode instanceof HashFunctionNode)) return;
-            if (sourceNode instanceof HashFunctionNode && !(targetNode instanceof HashValueNode)) return;
+            
+            // key node logic
+            if (sourceNode instanceof KeyNode) {
+                // allow only hash function or salt as target
+                if (!(targetNode instanceof HashFunctionNode) && !(targetNode instanceof SaltNode)) return;
+                
+                // enforce single output node connection
+                const existingConnections = editor.getConnections().filter(c => c.source === sourceNode.id);
+                for (const conn of existingConnections) {
+                    await editor.removeConnection(conn.id);
+                }
+            }
+            
+            // salt node logic
+            if (sourceNode instanceof SaltNode) {
+                if (!(targetNode instanceof HashFunctionNode)) return;
+            }
+
+            // hash function logic
+            if (sourceNode instanceof HashFunctionNode) {
+                if (!(targetNode instanceof HashValueNode)) return;
+            }
+            
+            // prevent connections starting from hash value
             if (sourceNode instanceof HashValueNode) return;
         }
         return context; 
     });
 
+    // serializes the editor state for rerender
     const exportState = () => {
         return {
             nodes: editor.getNodes().map(n => {
@@ -319,16 +419,19 @@ export async function createEditor(
                 const x = view ? view.position.x : 0;
                 const y = view ? view.position.y : 0;
                 
-                return {
+                const baseData = {
                     id: n.id,
                     label: n.label,
                     customTitle: (n as any).customTitle, 
                     x,
                     y,
-                    value: (n as any).value,
-                    selectedFunction: (n as any).selectedFunction,
-                    inputsCount: Object.keys(n.inputs).length
                 };
+
+                if (n instanceof KeyNode) return { ...baseData, value: n.value };
+                if (n instanceof HashFunctionNode) return { ...baseData, selectedFunction: n.selectedFunction, inputsCount: Object.keys(n.inputs).length };
+                if (n instanceof SaltNode) return { ...baseData, saltValue: n.saltValue };
+                
+                return baseData;
             }),
             connections: editor.getConnections().map(c => ({
                 source: c.source, sourceOutput: c.sourceOutput,
@@ -337,6 +440,7 @@ export async function createEditor(
         };
     };
 
+    // loads editor state from data
     const importState = async (data: any) => {
         if (!data || !data.nodes) return;
         for(const c of editor.getConnections()) await editor.removeConnection(c.id);
@@ -353,11 +457,16 @@ export async function createEditor(
                 if (nData.inputsCount) (node as HashFunctionNode).setChannelCount(nData.inputsCount);
             } else if (nData.label === 'HashValue') {
                 node = new HashValueNode(socket);
+            } else if (nData.label === 'Salt') {
+                node = new SaltNode(socket, nData.saltValue);
             }
 
             if (node) {
                 node.id = nData.id;
                 (node as any).customTitle = nData.customTitle || nData.label;
+                
+                setupNode(node); 
+
                 await editor.addNode(node);
                 await area.translate(node.id, { x: nData.x, y: nData.y });
             }
@@ -374,21 +483,31 @@ export async function createEditor(
         }
     };
 
+    // initialize default or saved state
     if (initialData && Array.isArray(initialData.nodes) && initialData.nodes.length > 0) {
         await importState(initialData);
     } else {
         const key_node = new KeyNode(socket);
+        const salt_node = new SaltNode(socket);
         const func_node = new HashFunctionNode(socket);
         const val_node = new HashValueNode(socket);
 
+        setupNode(key_node);
+        setupNode(salt_node);
+        setupNode(func_node);
+        setupNode(val_node);
+
         await editor.addNode(key_node);
+        await editor.addNode(salt_node); 
         await editor.addNode(func_node);
         await editor.addNode(val_node);
 
-        await area.translate(func_node.id, { x: 260, y: 0 });
-        await area.translate(val_node.id, { x: 520, y: 0 });
+        await area.translate(func_node.id, { x: 520, y: 0 });
+        await area.translate(val_node.id, { x: 780, y: 0 });
+        await area.translate(salt_node.id, { x: 260, y: 0 });
 
-        await editor.addConnection(new Connection(key_node, "key-output", func_node, "in-0"));
+        await editor.addConnection(new Connection(key_node, "key-output", salt_node, "salt-input"));
+        await editor.addConnection(new Connection(salt_node, "salt-output", func_node, "in-0"));
         await editor.addConnection(new Connection(func_node, "out-0", val_node, "hash-value-input"));
     }
 
@@ -427,8 +546,12 @@ export async function createEditor(
             if (type === 'Key' || type === 'KeyNode') node = new KeyNode(socket);
             else if (type === 'HashFunction' || type === 'HashFunctionNode') node = new HashFunctionNode(socket);
             else if (type === 'HashValue' || type === 'HashValueNode') node = new HashValueNode(socket);
+            else if (type === 'Salt' || type === 'SaltNode') {
+                 node = new SaltNode(socket); 
+            }
             
             if (node) {
+                setupNode(node); 
                 await editor.addNode(node);
                 const { k, x, y } = area.area.transform;
                 const translatedX = (clientX - x) / k;
@@ -442,10 +565,11 @@ export async function createEditor(
         process: process,
         getGraph: () => exportState(),
         
+        // updates permissions and propagates them to nodes
         updatePermissions: async (newPerms: { canDelete: boolean, isAuthor: boolean, allowAdding: boolean }) => {
             currentCanDelete = newPerms.canDelete;
             currentIsAuthor = newPerms.isAuthor;
-
+            
             editor.getNodes().forEach(node => {
                 const view = area.nodeViews.get(node.id);
                 if (view && view.element) {
@@ -456,6 +580,10 @@ export async function createEditor(
                         if (hashNodeEl.requestUpdate) hashNodeEl.requestUpdate();
                     }
                 }
+                
+                (node as any)._delete = () => removeNodeWithConnections(node.id);
+                (node as any)._canDelete = currentCanDelete;
+                (node as any)._isAuthor = currentIsAuthor;
             });
             await zoomToFit(newPerms.allowAdding);
         },

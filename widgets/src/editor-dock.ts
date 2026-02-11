@@ -1,8 +1,10 @@
 import { LitElement, html, css } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 
 @customElement("editor-dock")
 export class EditorDock extends LitElement {
+    
+    @property({ type: Boolean }) allowSalting = false;
 
     static styles = css`
         :host {
@@ -55,6 +57,17 @@ export class EditorDock extends LitElement {
             background: #eef0f2; 
             border-color: #0f3048;
         }
+        .salt {
+            background: #e8f5e9;
+            border-color: #2e7d32;
+        }
+        .disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+            filter: grayscale(1);
+        }
+
         .dock-instruction {
             color: #3f3f48;
             font-size: 11px;
@@ -83,6 +96,14 @@ export class EditorDock extends LitElement {
                 @dragstart=${(e: DragEvent) => this.handleDragStart(e, 'Key')}
             >
                 Key
+            </div>
+
+            <div 
+                class="dock-item salt ${this.allowSalting ? '' : 'disabled'}" 
+                draggable="${this.allowSalting}" 
+                @dragstart=${(e: DragEvent) => this.handleDragStart(e, 'Salt')}
+            >
+                Salt
             </div>
 
             <div 

@@ -12,6 +12,7 @@ import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.
 
 import IconTrashFilled from "@tabler/icons/outline/trash.svg";
 import IconCopy from "@tabler/icons/outline/copy.svg";
+import IconRefresh from "@tabler/icons/outline/refresh.svg";
 
 import { HashInput } from "./hash-input";
 import { HashSelect } from "./hash-select";
@@ -70,21 +71,16 @@ export class HashNode extends LitElement {
       min-width: 200px; 
       min-height: 100px;
       transition: height 0.1s ease-out; 
-    }
-    :host(.key) {
-      background: #f3f7f9;
-      border-color: #085886;
-    }
-    :host(.hash-function) {
-      background: #fdf8ef;
-      border-color: #e78c1f;
-    }
-    :host(.hash-value) {
-      background: #eef0f2;
-      border-color: #0f3048;
-      width: 110%;
+      font-family: sans-serif;
     }
 
+    /* Node Colors */
+    :host(.key) { background: #f3f7f9; border-color: #085886; }
+    :host(.hash-function) { background: #fdf8ef; border-color: #e78c1f; }
+    :host(.hash-value) { background: #eef0f2; border-color: #0f3048; width: 110%; }
+    :host(.salt) { background: #e8f5e9; border-color: #2e7d32; }
+
+    /* Title Styling */
     .title {
         padding: 8px 28px; 
         font-weight: bold;
@@ -97,10 +93,7 @@ export class HashNode extends LitElement {
         cursor: text;
         width: 100%;
         box-sizing: border-box;
-        white-space: normal;
         overflow-wrap: break-word;
-        word-wrap: break-word;
-        word-break: break-word; 
         line-height: 1.2;
     }
 
@@ -111,63 +104,128 @@ export class HashNode extends LitElement {
         font-weight: bold;
         text-align: center;
         border: none;
-        border-radius: 4px;
         outline: none;
-        background: transparent
+        background: transparent;
     }
 
-    textarea {
+    /* Reusable Box for Textarea (HashValue) */
+    .data-box {
+      box-sizing: border-box;
       display: block;
-      width: 97%;
-      height: 125px;
+      width: 100%;
       border: 1px solid #d4d4d8;
+      background: #fcfcfc;
       border-radius: 4px;
       font-family: sans-serif;
       font-size: medium;
-      word-break: break-all;
-      white-space: pre-wrap;
-      resize: none;
       color: #3f3f48;
+      padding: 6px 8px;
     }
+    .data-box:focus { outline: none; }
+    
+    textarea.data-box {
+      height: 125px;
+      resize: none;
+      white-space: pre-wrap;
+      word-break: break-all;
+      cursor: not-allowed;
+    }
+
+    /* Salt Layout */
+    .salt-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 4px;
+        cursor: not-allowed;
+    }
+
+    /* RICH TEXT INPUT SIMULATION */
+    /* Mimics Shoelace Label */
+    .shoelace-label {
+        font-size: var(--sl-input-label-font-size-small, 0.85rem);
+        color: var(--sl-input-label-color, black);
+        font-weight: 500;
+        margin-bottom: 2px;
+        display: block;
+    }
+
+    /* Mimics the style of .data-box (Hash Value) and Hash Input */
+    .salt-key-input {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #d4d4d8; 
+        border-radius: 4px;
+        background-color: white; 
+        font-family: sans-serif;
+        font-size: medium; 
+        color: #3f3f48;    
+        padding: 6px 8px; 
+        line-height: 1.4;
+        min-height: 40px; 
+        //word-break: break-all;
+        cursor: not-allowed 
+    }
+
+    /* Text Coloring Classes */
+    .key-part { color: inherit; } 
+    .salt-part { font-weight: bold; color: black; } 
+    .placeholder { color: #aaa; font-style: italic; }
+
+
+    /* Buttons & Icons */
+    .icon-btn {
+        cursor: pointer;
+        color: #555;
+    }
+    .icon-btn:hover { color: #39bdf8; }
 
     .delete-button {
       position: absolute;
       top: 14px;
       right: 7px;
       font-size: 1.2rem;
-      color: #555;
-      cursor: pointer;
+      z-index: 50; 
     }
-    .delete-button:hover {
-      color: #39bdf8;
-    }
-
-    .delete-button.disabled {
-      color: #ccc;
-      pointer-events: none;
-    }
+    .delete-button.disabled { color: #ccc; pointer-events: none; }
 
     .copy-button {
       position: absolute;
       bottom: 8px;
       right: 8px;
-      cursor: pointer;
-      color: #555;
-    }
-    .copy-button:hover {
-      color: #39bdf8;
     }
 
+    /* Shoelace overrides */
+    sl-input::part(form-control-label) {
+        font-size: 0.85rem;
+        color: black;
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+    sl-input::part(base) {
+        background: white;
+        border-color: #d3d3d3;
+    }
+
+    .refresh-icon {
+        font-size: 1.1rem;
+        cursor: pointer;
+        padding: 2px;
+    }
+    .refresh-icon:hover {
+        color: #2e7d32;
+    }
+
+    /* Rete Sockets */
     .socket-container {
       display: flex;
       justify-content: space-between;
       margin-top: auto;
+      padding-top: 8px;
     }
-    sl-tooltip {
-      --sl-tooltip-arrow-size: 0;
-      --show-delay:1000ms;
-    }
-  
+    
+    sl-tooltip { --sl-tooltip-arrow-size: 0; --show-delay:1000ms; }
     sl-tooltip::part(body) {
       background: #f1f1f1;
       border: #a1a1aa 1px solid;
@@ -230,6 +288,12 @@ export class HashNode extends LitElement {
     } 
   }
 
+  private regenerateSalt() {
+     (this.data as any).saltValue = Math.random().toString(36).substring(2, 9);
+     this.requestUpdate();
+     this.process?.();
+  }
+
   renderNodeContent() {
     const { label } = this.data;
     const data = this.data as any;
@@ -248,6 +312,7 @@ export class HashNode extends LitElement {
     if (label === "HashValue")
       return html` <textarea
         placeholder="Hashed value result"
+        class="data-box"
         readonly
         .value=${data.displayValue || ""}
         ></textarea>
@@ -255,9 +320,41 @@ export class HashNode extends LitElement {
           <sl-icon
             src=${IconCopy}
             @click=${this.handleCopy}
-            class="copy-button"
+            class="copy-button icon-btn"
           ></sl-icon>
           </sl-tooltip>`;
+
+    if (label === "Salt") {
+        const salt = data.saltValue || "";
+        const incoming = data.incomingValue || "";
+        
+        return html`
+            <div class="salt-container">
+                <sl-input 
+                    label="Salt text" 
+                    size="small"
+                    readonly 
+                    .value=${salt}
+                    @pointerdown=${(e: Event) => e.stopPropagation()}
+                >
+                    <sl-icon 
+                        slot="suffix" 
+                        src="${IconRefresh}" 
+                        class="refresh-icon" 
+                        @click=${this.regenerateSalt}
+                    ></sl-icon>
+                </sl-input>
+
+                <div>
+                    <label class="shoelace-label">Key + <b>Salt</b></label>
+                    <div class="salt-key-input">
+                        ${!incoming && !salt ? html`<span class="placeholder">Key input + Salt</span>` : ''}
+                        <span class="key-part">${incoming}</span><span class="salt-part">${salt}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
     
     return html``;
   }
@@ -265,21 +362,17 @@ export class HashNode extends LitElement {
   render() {
     const { id, label, width, height, selected, inputs = {}, outputs = {}, } = this.data;
     const nodeClass =
-      label === "Key"
-        ? "key"
-        : label === "HashFunction"
-        ? "hash-function"
-        : label === "HashValue"
-        ? "hash-value"
+      label === "Key" ? "key"
+        : label === "HashFunction" ? "hash-function"
+        : label === "HashValue" ? "hash-value"
+        : label === "Salt" ? "salt"
         : "";
     this.className = `${nodeClass} ${selected ? "selected" : ""}`;
 
     const displayTitle =
       (this.data as any).customTitle ||
-      (label === "HashFunction"
-        ? "Hash Function"
-        : label === "HashValue"
-        ? "Hash Value"
+      (label === "HashFunction" ? "Hash Function"
+        : label === "HashValue" ? "Hash Value"
         : label);
 
     return html`
@@ -305,7 +398,7 @@ export class HashNode extends LitElement {
       ${this.canDelete || this.isAuthor
         ? html` <sl-tooltip content="Delete node" placement="top-start">
             <sl-icon
-              class="delete-button ${!this.canDelete && this.isAuthor
+              class="delete-button icon-btn ${!this.canDelete && this.isAuthor
                 ? "disabled"
                 : ""}"
               src=${IconTrashFilled}

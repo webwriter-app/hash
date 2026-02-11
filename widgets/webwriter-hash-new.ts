@@ -17,6 +17,7 @@ import { EditorDock } from "./src/editor-dock";
 @customElement("webwriter-hash-new")
 export class WebwriterHashNew extends LitElementWw {
 
+    // widget properties synchronized with attributes
     @property({ type: Boolean, attribute: true, reflect: true }) accessor allowAdding = false;
     @property({ type: Boolean, attribute: true, reflect: true }) accessor allowDeleting = false;
     @property({ type: Object, attribute: true, reflect: true }) accessor editorState: any = {}; 
@@ -143,6 +144,7 @@ export class WebwriterHashNew extends LitElementWw {
     private reteRef = createRef<HTMLDivElement>();
     private editorInstance?: any;
 
+    //
     connectedCallback() {
         super.connectedCallback();
         const isEmpty = !this.editorState?.nodes || this.editorState.nodes.length === 0;
@@ -153,7 +155,9 @@ export class WebwriterHashNew extends LitElementWw {
         }
     }
 
+    // initialize editor.ts createEditor function values, add listeners and permissions
     async firstUpdated() {
+        // debugger;
         if (this.reteRef.value && !this.editorInstance) {
             requestAnimationFrame(async () => {
                 try {                    
@@ -164,6 +168,12 @@ export class WebwriterHashNew extends LitElementWw {
                         this.editorState        // initialData
                     );
                     
+                    await this.editorInstance.updatePermissions({
+                        canDelete: this.allowDeleting,
+                        isAuthor: this.isContentEditable,
+                        allowAdding: this.allowAdding
+                    });
+
                     this.reteRef.value!.addEventListener('rete-update', (e: any) => {
                         this.handleEditorChange(e.detail);
                     });
@@ -171,17 +181,13 @@ export class WebwriterHashNew extends LitElementWw {
                     this.editorInstance?.zoomToNodes(!!this.renderRoot.querySelector("#drawer[open]"))           
 
                 } catch (err: any) {
-                    const massage = err?.message || String(err);
-                    if (massage.includes('already been used') || massage.includes('cannot find parent')) {
-                        console.warn("Rete recovering from initialization, please refresh page.");
-                    } else {
-                        console.error("Initialization error, please refresh page.");                 
-                    }
+                    console.error("Initialization error, please refresh page.");                 
                 }
             });
         } 
     }
 
+    // reset, destroy editor and remove listeners
     disconnectedCallback(): void {
         super.disconnectedCallback();
         if (this.editorInstance) {
@@ -193,10 +199,12 @@ export class WebwriterHashNew extends LitElementWw {
         }
     }
 
+    // stores editor state changes
     private handleEditorChange(data: any) {
         this.editorState = data;
     }
 
+    // lifecycle when property changed
     async updated(changedProperties: Map<string, any>) {
             
         if (
@@ -208,28 +216,35 @@ export class WebwriterHashNew extends LitElementWw {
                 await this.editorInstance.updatePermissions({ 
                     canDelete: this.allowDeleting,
                     isAuthor: this.isContentEditable,
-                    allowAdding: this.allowAdding 
+                    allowAdding: this.allowAdding
                 });
             }
         }
     }
     
-
+    // visual feedback for drag over
     private handleDragOver(e: DragEvent) {
         e.preventDefault();
+        e.stopPropagation(); 
+        const type = e.dataTransfer?.getData("nodeType");
         e.dataTransfer!.dropEffect = this.allowAdding ? "copy" : "none";
     }
 
+    // node dropping onto canvas
     private async handleDrop(e: DragEvent) {
         e.preventDefault();
+        e.stopPropagation(); 
+        
         if (!this.allowAdding) return;
         const type = e.dataTransfer?.getData("nodeType");
+                
         const rect = this.reteRef.value?.getBoundingClientRect();
         if (type && rect) {
             await this.editorInstance?.addNode(type, e.clientX - rect.left, e.clientY - rect.top);
         } 
     }
     
+    // toggles side drawer
     private toggleDock() {
         if(!this.allowAdding) return;
         const drawer = this.renderRoot.querySelector("#drawer") as SlDrawer;
@@ -256,7 +271,7 @@ export class WebwriterHashNew extends LitElementWw {
                 </div>
 
                 <sl-drawer label="Tools" id="drawer" placement="start" class="drawer-dock" contained no-header ?open=${this.allowAdding}>
-                    <editor-dock></editor-dock>
+                    <editor-dock .allowSalting=${true}></editor-dock> 
                 </sl-drawer>
 
                 <div id="app"><div ${ref(this.reteRef)} class="rete"></div></div>
@@ -266,7 +281,7 @@ export class WebwriterHashNew extends LitElementWw {
                 <div class="description">Toggle these settings for the author and student view.</div>
                 <sl-switch ?checked=${this.allowAdding} @sl-change=${(e: any) => this.allowAdding = e.target.checked}>Adding Nodes</sl-switch>
                 <sl-switch ?checked=${this.allowDeleting} @sl-change=${(e: any) => this.allowDeleting = e.target.checked}>Deleting Nodes</sl-switch>
-            </div>
+                </div>
         `;
     }
 }

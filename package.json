@@ -33,6 +33,9 @@
         "./widgets/webwriter-hash-new.*": {
             "source": "./widgets/webwriter-hash-new.ts",
             "default": "./dist/widgets/webwriter-hash-new.*"
-        }
+        },
+        "./snippets/password-pioniere-station-1.html": "./snippets/password-pioneers-station-1.html",
+        "./snippets/password-pioniere-station-2.html": "./snippets/password-pioneers-station-2.html",
+        "./snippets/password-pioniere-station-3.html": "./snippets/password-pioneers-station-3.html"
     }
 }

@@ -29,8 +29,8 @@ export class NodeConnection extends LitElement {
             overflow: visible !important;
             position: absolute;
             pointer-events: none;
-            width: 9999px;
-            height: 9999px;
+            width: 1px;
+            height: 1px;
         }
         path {
             fill: none;
