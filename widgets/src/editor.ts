@@ -144,34 +144,6 @@ export class Connection extends ClassicPreset.Connection<Nodes, Nodes> {
 type Schemes = GetSchemes<Nodes, Connection>;
 type AreaExtra = LitArea2D<Schemes>;
 
-const globalLITrender = new LitPlugin<Schemes, AreaExtra>();
-
-// configure custom rendering for nodes and connections (LIT custom registry issues)
-globalLITrender.addPreset(
-    Presets.classic.setup({
-        customize: {
-            node(data) {
-                return ({ emit }) =>
-                    html`<hash-node 
-                        .data=${data.payload} 
-                        .emit=${emit}
-                        .process=${() => (data.payload as any)._process?.()} 
-                        .deleteNode=${() => (data.payload as any)._delete?.()}
-                        .canDelete=${(data.payload as any)._canDelete} 
-                        .isAuthor=${(data.payload as any)._isAuthor}
-                    ></hash-node>`;
-            },
-            connection() {
-                return (data: any) =>
-                    html`<node-connection .path=${data.path} .data=${data.payload}></node-connection>`;
-            },
-            socket(data) {
-                return () => html`<node-socket .data=${data}></node-socket>`;
-            }
-        }
-    })
-);
-
 // main editor creation through rete function
 export async function createEditor(
     container: HTMLElement, 
@@ -184,6 +156,33 @@ export async function createEditor(
     const area = new AreaPlugin<Schemes, AreaExtra>(container);
     const connection = new ConnectionPlugin<Schemes, AreaExtra>();
     const engine = new DataflowEngine<Schemes>();
+    const litRenderer = new LitPlugin<Schemes, AreaExtra>();
+
+    // configure custom rendering for nodes and connections (LIT custom registry issues)
+    litRenderer.addPreset(
+        Presets.classic.setup({
+            customize: {
+                node(data) {
+                    return ({ emit }) =>
+                        html`<hash-node 
+                            .data=${data.payload} 
+                            .emit=${emit}
+                            .process=${() => (data.payload as any)._process?.()} 
+                            .deleteNode=${() => (data.payload as any)._delete?.()}
+                            .canDelete=${(data.payload as any)._canDelete} 
+                            .isAuthor=${(data.payload as any)._isAuthor}
+                        ></hash-node>`;
+                },
+                connection() {
+                    return (data: any) =>
+                        html`<node-connection .path=${data.path} .data=${data.payload}></node-connection>`;
+                },
+                socket(data) {
+                    return () => html`<node-socket .data=${data}></node-socket>`;
+                }
+            }
+        })
+    );
 
     let currentCanDelete = canDelete;
     let currentIsAuthor = isAuthor;
@@ -287,7 +286,7 @@ export async function createEditor(
     editor.use(engine);
     editor.use(area);
     area.use(connection);
-    area.use(globalLITrender);
+    area.use(litRenderer);
 
     const removeNodeWithConnections = async (nodeId: string) => {
         if (!currentCanDelete) return;
@@ -300,8 +299,11 @@ export async function createEditor(
         process();
     };
 
+        let isProcessing = false;
+        let hasPendingProcess = false;
+
     // main logic to process data flow
-    async function process() {
+    async function processInternal() {
         engine.reset();
         
         // fetch and update inputs for salt nodes
@@ -336,6 +338,23 @@ export async function createEditor(
             }
         }
         dispatchChange();
+    }
+
+    // serialize processing to avoid overlapping fetch/reset cancellations
+    async function process() {
+        if (isProcessing) {
+            hasPendingProcess = true;
+            return Promise.resolve();
+        }
+        isProcessing = true;
+        try {
+            do {
+                hasPendingProcess = false;
+                await processInternal();
+            } while (hasPendingProcess);
+        } finally {
+            isProcessing = false;
+        }
     }
 
     // update values for current view 
