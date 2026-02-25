@@ -119,6 +119,10 @@ export class WebwriterHashNew extends LitElementWw {
         :host(:not([contenteditable=true]):not([contenteditable=""])) .author-only {
             display: none !important;
         }
+        .options {
+            padding-left: 15px;
+
+        }
         sl-tooltip {
             --sl-tooltip-arrow-size: 0;
             --show-delay:1000ms;
@@ -135,7 +139,10 @@ export class WebwriterHashNew extends LitElementWw {
             font-size: 13px;
             color: #3f3f48;
             margin-bottom: 8px;
-        }   
+        } 
+        .warning {
+            color: #d28547;
+        }  
         sl-switch {
             color: #3f3f48
         }

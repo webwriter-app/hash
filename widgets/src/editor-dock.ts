@@ -1,10 +1,17 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js";
 
 @customElement("editor-dock")
 export class EditorDock extends LitElement {
     
     @property({ type: Boolean }) allowSalting = false;
+
+    static get scopedElements() {
+        return {
+            "sl-tooltip": SlTooltip,
+        };
+    }
 
     static styles = css`
         :host {
@@ -59,7 +66,7 @@ export class EditorDock extends LitElement {
         }
         .salt {
             background: #e8f5e9;
-            border-color: #2e7d32;
+            border:1.5px #2e7d32 dashed;
         }
         .disabled {
             opacity: 0.5;
@@ -77,6 +84,14 @@ export class EditorDock extends LitElement {
             border-radius: 4px;
             line-height: 1.4;
         }
+        sl-tooltip { --sl-tooltip-arrow-size: 0; --show-delay:1000ms; }
+            sl-tooltip::part(body) {
+            background: #f1f1f1;
+            border: #a1a1aa 1px solid;
+            color: #131316;
+            font-size: 14px;
+            font-family: sans-serif;
+        }  
     `;
 
     private handleDragStart(e: DragEvent, type: string) {
@@ -90,41 +105,51 @@ export class EditorDock extends LitElement {
             <div class="dock-instruction">
                 Drag and drop the nodes into the editor
             </div>
-            <div 
-                class="dock-item key" 
-                draggable="true" 
-                @dragstart=${(e: DragEvent) => this.handleDragStart(e, 'Key')}
-            >
-                Key
-            </div>
 
-            <div 
-                class="dock-item salt ${this.allowSalting ? '' : 'disabled'}" 
-                draggable="${this.allowSalting}" 
-                @dragstart=${(e: DragEvent) => this.handleDragStart(e, 'Salt')}
-            >
-                Salt
-            </div>
+            <sl-tooltip content="Required node for Hashing" placement="right-end" hoist>
+                <div 
+                    class="dock-item key" 
+                    draggable="true" 
+                    @dragstart=${(e: DragEvent) => this.handleDragStart(e, 'Key')}
+                >
+                    Key
+                </div>
+            </sl-tooltip>
 
-            <div 
-                class="dock-item hash-function" 
-                draggable="true" 
-                @dragstart=${(e: DragEvent) => {
-                    e.dataTransfer!.setData("nodeType", "HashFunction"); 
-                }}            
-            >
-                Hash Function
-            </div>
+            <sl-tooltip content="Optional node for Salting" placement="right-end" hoist>
+                <div 
+                    class="dock-item salt ${this.allowSalting ? '' : 'disabled'}" 
+                    draggable="${this.allowSalting}" 
+                    @dragstart=${(e: DragEvent) => this.handleDragStart(e, 'Salt')}
+                >
+                    Salt
+                </div>
+            </sl-tooltip>
 
-            <div 
-                class="dock-item hash-value" 
-                draggable="true" 
-                @dragstart=${(e: DragEvent) => {
-                    e.dataTransfer!.setData("nodeType", "HashValue"); 
-                }}              
-            >
-                Hash Value
-            </div>
+            <sl-tooltip content="Required node for Hashing" placement="right-end" hoist>
+                <div 
+                    class="dock-item hash-function" 
+                    draggable="true" 
+                    @dragstart=${(e: DragEvent) => {
+                        e.dataTransfer!.setData("nodeType", "HashFunction"); 
+                    }}            
+                >
+                    Hash Function
+                </div>
+            </sl-tooltip>
+
+            <sl-tooltip content="Required node for Hashing" placement="right-end" hoist>
+                <div 
+                    class="dock-item hash-value" 
+                    draggable="true" 
+                    @dragstart=${(e: DragEvent) => {
+                        e.dataTransfer!.setData("nodeType", "HashValue"); 
+                    }}              
+                >
+                    Hash Value
+                </div>
+            </sl-tooltip>
+           
         `;
     }
 }

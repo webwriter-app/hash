@@ -78,7 +78,7 @@ export class HashNode extends LitElement {
     :host(.key) { background: #f3f7f9; border-color: #085886; }
     :host(.hash-function) { background: #fdf8ef; border-color: #e78c1f; }
     :host(.hash-value) { background: #eef0f2; border-color: #0f3048; width: 110%; }
-    :host(.salt) { background: #e8f5e9; border-color: #2e7d32; }
+    :host(.salt) { background: #e8f5e9; border: 2px #2e7d32 dashed; }
 
     /* Title Styling */
     .title {
@@ -163,9 +163,28 @@ export class HashNode extends LitElement {
         color: #3f3f48;    
         padding: 6px 8px; 
         line-height: 1.4;
-        min-height: 40px; 
-        //word-break: break-all;
-        cursor: not-allowed 
+        word-break: break-all;
+        overflow-y: scroll;
+        cursor: not-allowed;
+        height: 125px;
+    }
+
+    .salt-key-input::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .salt-key-input::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px;
+    }
+
+    .salt-key-input::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+
+    .salt-key-input:hover {
+      border-color: var(--sl-input-border-color-hover, #a8aaad);
     }
 
     /* Text Coloring Classes */
@@ -301,6 +320,7 @@ export class HashNode extends LitElement {
       return html`<hash-input
         .value=${data.value || ""}
         @val-change=${this.handleInput}
+        @wheel=${(e: Event) => e.stopPropagation()}
         ></hash-input>`;
 
     if (label === "HashFunction")
@@ -332,7 +352,6 @@ export class HashNode extends LitElement {
             <div class="salt-container">
                 <sl-input 
                     label="Salt text" 
-                    size="small"
                     readonly 
                     .value=${salt}
                     @pointerdown=${(e: Event) => e.stopPropagation()}
@@ -347,7 +366,7 @@ export class HashNode extends LitElement {
 
                 <div>
                     <label class="shoelace-label">Key + <b>Salt</b></label>
-                    <div class="salt-key-input">
+                    <div class="salt-key-input" @wheel=${(e: Event) => e.stopPropagation()}>
                         ${!incoming && !salt ? html`<span class="placeholder">Key input + Salt</span>` : ''}
                         <span class="key-part">${incoming}</span><span class="salt-part">${salt}</span>
                     </div>
