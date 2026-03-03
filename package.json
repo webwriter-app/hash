@@ -1,8 +1,9 @@
 {
-    "name": "@webwriter/hash-new",
-    "version": "0.0.1",
+    "name": "@webwriter/hash",
+    "version": "1.0.0",
     "keywords": [
-        "webwriter-widget"
+        "webwriter-widget",
+        "hashing"
     ],
     "license": "MIT",
     "author": "nura.zimmermann@rwth-aachen.de",
@@ -30,9 +31,9 @@
         "@lit/localize-tools": "^0.8"
     },
     "exports": {
-        "./widgets/webwriter-hash-new.*": {
-            "source": "./widgets/webwriter-hash-new.ts",
-            "default": "./dist/widgets/webwriter-hash-new.*"
+        "./widgets/webwriter-hash.*": {
+            "source": "./widgets/webwriter-hash.ts",
+            "default": "./dist/widgets/webwriter-hash.*"
         },
         "./snippets/password-pioniere-station-1.html": "./snippets/password-pioneers-station-1.html",
         "./snippets/password-pioniere-station-2.html": "./snippets/password-pioneers-station-2.html",

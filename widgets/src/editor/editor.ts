@@ -4,142 +4,22 @@ import { ConnectionPlugin, Presets as ConnectionPresets } from "rete-connection-
 import { LitPlugin, Presets, LitArea2D } from "@retejs/lit-plugin";
 import { DataflowEngine } from "rete-engine";
 import { html } from "lit";
-import { sha256, sha384, sha512 } from "@noble/hashes/sha2";
-import { sha3_256 } from "@noble/hashes/sha3";
-import { sha1 } from "@noble/hashes/legacy";
-import { blake3 } from "@noble/hashes/blake3";
-import { keccak_256 } from "@noble/hashes/sha3";
-import { bytesToHex } from "@noble/hashes/utils";
+
 import "@shoelace-style/shoelace/dist/themes/light.css";
 
-import "./nodes/node-connection";
-import "./nodes/node-socket";
-import "./nodes/hash-nodes";
+import "../nodes/node-connection";
+import "../nodes/node-socket";
+import "../nodes/node.component";
 
-// available hash algorithms
-const hash_algorithms: Record<string, any> = {
-    sha1, sha256, sha384, sha512, sha3_256, keccak_256, blake3, 
-};
-
-export class BaseNode extends ClassicPreset.Node {
-    public customTitle: string = ""; 
-    constructor(label: string) {
-        super(label);
-        this.customTitle = label;
-    }
-}
-
-// node for user input
-export class KeyNode extends BaseNode {
-    public value = "";
-    constructor(socket: ClassicPreset.Socket) {
-        super("Key");
-        this.addOutput("key-output", new ClassicPreset.Output(socket));
-    }
-    data() { return { "key-output": this.value }; }
-}
-
-// node for adding a random salt string
-export class SaltNode extends BaseNode {
-    public saltValue: string = "";
-    public incomingValue: string = "";
-
-    constructor(socket: ClassicPreset.Socket, initialSalt?: string) {
-        super("Salt");
-
-        // set initial salt or generate random 5-char string
-        if (initialSalt !== undefined) {
-            this.saltValue = initialSalt;
-        } else {
-            this.saltValue = Math.random().toString(36).substring(2, 7);
-        }
-        
-        this.addInput("salt-input", new ClassicPreset.Input(socket));
-        this.addOutput("salt-output", new ClassicPreset.Output(socket));
-    }
-
-    regenerateSalt() {
-        this.saltValue = Math.random().toString(36).substring(2, 7);
-    }
-
-    data(inputs: Record<string, any[]>) {
-        const inputVal = inputs["salt-input"]?.[0];
-        this.incomingValue = inputVal ? String(inputVal) : "";
-        
-        // combine input and salt for output
-        return { "salt-output": this.incomingValue + this.saltValue };
-    }
-}
-
-// node that performs the hashing 
-export class HashFunctionNode extends BaseNode {
-    public selectedFunction = "sha256";
-    public socket: ClassicPreset.Socket;
-
-    constructor(socket: ClassicPreset.Socket) {
-        super("HashFunction");
-        this.socket = socket;
-        this.addInput("in-0", new ClassicPreset.Input(socket));
-        this.addOutput("out-0", new ClassicPreset.Output(socket));
-    }
-
-    // adds or removes input/output pairs dynamically
-    setChannelCount(count: number) {
-        const currentCount = Object.keys(this.inputs).length;
-        if (count > currentCount) {
-            for (let i = currentCount; i < count; i++) {
-                this.addInput(`in-${i}`, new ClassicPreset.Input(this.socket));
-                this.addOutput(`out-${i}`, new ClassicPreset.Output(this.socket));
-            }
-        }
-        if (count < currentCount) {
-            for (let i = currentCount - 1; i >= count; i--) {
-                this.removeInput(`in-${i}`);
-                this.removeOutput(`out-${i}`);
-            }
-        }
-    }
-
-    // executes the selected hash algorithm
-    data(inputs: Record<string, any[]>) {
-        const result: Record<string, string> = {};
-        const algo = hash_algorithms[this.selectedFunction];
-        Object.keys(this.outputs).forEach((outKey) => {
-            const index = outKey.split("-")[1];
-            const inKey = `in-${index}`;
-            const inputValues = inputs[inKey] || [];
-            const val = inputValues.length > 0 ? String(inputValues[0]) : "";
-            if (!val || !algo) {
-                result[outKey] = "";
-            } else {
-                try {
-                    const data = new TextEncoder().encode(val);
-                    const hash = algo(data);
-                    result[outKey] = bytesToHex(hash);
-                } catch (e) {
-                    result[outKey] = "Error";
-                }
-            }
-        });
-        return result;
-    }
-}
-
-// node that displays the final hash result
-export class HashValueNode extends BaseNode {
-    public displayValue = "";
-    constructor(socket: ClassicPreset.Socket) {
-        super("HashValue");
-        this.addInput("hash-value-input", new ClassicPreset.Input(socket));
-    }
-    data() { return {}; }
-}
-
-export type Nodes = KeyNode | HashFunctionNode | HashValueNode | SaltNode;
-
-export class Connection extends ClassicPreset.Connection<Nodes, Nodes> {
-    public color?: string; 
-}
+import { 
+    BaseNode,
+    KeyNode, 
+    SaltNode, 
+    HashFunctionNode, 
+    HashValueNode, 
+    Connection, 
+    Nodes 
+} from "./editor.nodes";
 
 type Schemes = GetSchemes<Nodes, Connection>;
 type AreaExtra = LitArea2D<Schemes>;
@@ -158,7 +38,7 @@ export async function createEditor(
     const engine = new DataflowEngine<Schemes>();
     const litRenderer = new LitPlugin<Schemes, AreaExtra>();
 
-    // configure custom rendering for nodes and connections (LIT custom registry issues)
+    // configure custom rendering for nodes and connections
     litRenderer.addPreset(
         Presets.classic.setup({
             customize: {
@@ -210,7 +90,7 @@ export async function createEditor(
 
     AreaExtensions.restrictor(area, {
         scaling: { min: 0.1, max: 1 },
-        translation: { left: 0, top: 0, right: 1000, bottom: 1000 }
+        // translation: { left: 0, top: 0, right: 1000, bottom: 1000 }
     });
 
     const selector = AreaExtensions.selector();
@@ -220,11 +100,10 @@ export async function createEditor(
 
     // manages number of sockets on hash function nodes
     const reconcileSockets = async (node: HashFunctionNode) => {
-        const MAX_CHANNELS = 4;
+        const max_channels = 4;
         const inputs = Object.keys(node.inputs).sort();
         let highestConnectedIndex = -1;
 
-        // find the highest index currently connected
         inputs.forEach((key) => {
             const index = parseInt(key.split("-")[1]);
             const hasInputConn = editor.getConnections().some(c => c.target === node.id && c.targetInput === key);
@@ -271,7 +150,7 @@ export async function createEditor(
         // update channel count based on connections
         let targetCount = highestConnectedIndex + 2; 
         if (targetCount < 1) targetCount = 1;
-        if (targetCount > MAX_CHANNELS) targetCount = MAX_CHANNELS;
+        if (targetCount > max_channels) targetCount = max_channels;
 
         const currentCount = Object.keys(node.inputs).length;
         if (currentCount !== targetCount) {
@@ -326,7 +205,7 @@ export async function createEditor(
             (node as HashValueNode).displayValue = (incomingVal as string) || "";
         }
 
-        // update node views and force lit re-render
+        // update node views
         for (const node of editor.getNodes()) {
             await area.update("node", node.id);
             const view = area.nodeViews.get(node.id);
@@ -340,7 +219,7 @@ export async function createEditor(
         dispatchChange();
     }
 
-    // serialize processing to avoid overlapping fetch/reset cancellations
+    // avoid overlapping fetch/reset cancellations
     async function process() {
         if (isProcessing) {
             hasPendingProcess = true;
@@ -430,7 +309,7 @@ export async function createEditor(
         return context; 
     });
 
-    // serializes the editor state for rerender
+    // editor state for rerender
     const exportState = () => {
         return {
             nodes: editor.getNodes().map(n => {
@@ -465,38 +344,38 @@ export async function createEditor(
         for(const c of editor.getConnections()) await editor.removeConnection(c.id);
         for(const n of editor.getNodes()) await editor.removeNode(n.id);
 
-        for (const nData of data.nodes) {
+        for (const node_data of data.nodes) {
             let node: Nodes | undefined;
-            if (nData.label === 'Key') {
+            if (node_data.label === 'Key') {
                 node = new KeyNode(socket);
-                node.value = nData.value || "";
-            } else if (nData.label === 'HashFunction') {
+                node.value = node_data.value || "";
+            } else if (node_data.label === 'HashFunction') {
                 node = new HashFunctionNode(socket);
-                (node as HashFunctionNode).selectedFunction = nData.selectedFunction || "sha256";
-                if (nData.inputsCount) (node as HashFunctionNode).setChannelCount(nData.inputsCount);
-            } else if (nData.label === 'HashValue') {
+                (node as HashFunctionNode).selectedFunction = node_data.selectedFunction || "sha256";
+                if (node_data.inputsCount) (node as HashFunctionNode).setChannelCount(node_data.inputsCount);
+            } else if (node_data.label === 'HashValue') {
                 node = new HashValueNode(socket);
-            } else if (nData.label === 'Salt') {
-                node = new SaltNode(socket, nData.saltValue);
+            } else if (node_data.label === 'Salt') {
+                node = new SaltNode(socket, node_data.saltValue);
             }
 
             if (node) {
-                node.id = nData.id;
-                (node as any).customTitle = nData.customTitle || nData.label;
+                node.id = node_data.id;
+                (node as any).customTitle = node_data.customTitle || node_data.label;
                 
                 setupNode(node); 
 
                 await editor.addNode(node);
-                await area.translate(node.id, { x: nData.x, y: nData.y });
+                await area.translate(node.id, { x: node_data.x, y: node_data.y });
             }
         }
 
-        for (const cData of data.connections) {
-            const source = editor.getNode(cData.source);
-            const target = editor.getNode(cData.target);
+        for (const connection_data of data.connections) {
+            const source = editor.getNode(connection_data.source);
+            const target = editor.getNode(connection_data.target);
             if (source && target) {
                 try {
-                    await editor.addConnection(new Connection(source, cData.sourceOutput, target, cData.targetInput));
+                    await editor.addConnection(new Connection(source, connection_data.sourceOutput, target, connection_data.targetInput));
                 } catch(e) { console.warn("Could not restore connection", e); }
             }
         }
