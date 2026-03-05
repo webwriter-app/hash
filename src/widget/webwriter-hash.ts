@@ -4,7 +4,7 @@ import { customElement, property } from "lit/decorators.js";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 
 import { createRef, ref } from "lit/directives/ref.js";
-import { createEditor } from "./src/editor/editor";
+import { createEditor } from "./editor/editor";
 import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.component.js";
 import SlDrawer from "@shoelace-style/shoelace/dist/components/drawer/drawer.js";
 import SlSwitch from "@shoelace-style/shoelace/dist/components/switch/switch.js";
@@ -12,7 +12,7 @@ import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.
 
 import IconFocus2 from "@tabler/icons/outline/focus-2.svg";
 import IconLayoutSidebar from "@tabler/icons/outline/layout-sidebar.svg"; 
-import { EditorDock } from "./src/editor/editor-dock";
+import { EditorDock } from "./editor/editor-dock";
 import { styles } from "./webwriter-hash.styles";
 
 @customElement("webwriter-hash")

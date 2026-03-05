@@ -1,9 +1,14 @@
 {
     "name": "@webwriter/hash",
-    "version": "1.0.0",
+    "version": "1.0.1",
+    "description": "Offers an interactive node editor to familiarize students with the concept of hash functions.",
     "keywords": [
         "webwriter-widget",
-        "hashing"
+        "hashing",
+        "widget-practical",
+        "iscedf2013-06",
+        "isced2011-1",
+        "isced2011-2"
     ],
     "license": "MIT",
     "author": "nura.zimmermann@rwth-aachen.de",
@@ -32,11 +37,12 @@
     },
     "exports": {
         "./widgets/webwriter-hash.*": {
-            "source": "./widgets/webwriter-hash.ts",
-            "default": "./dist/widgets/webwriter-hash.*"
+            "source": "./src/widget/webwriter-hash.ts",
+            "default": "./dist/src/widget/webwriter-hash.*"
         },
-        "./snippets/password-pioniere-station-1.html": "./snippets/password-pioneers-station-1.html",
-        "./snippets/password-pioniere-station-2.html": "./snippets/password-pioneers-station-2.html",
-        "./snippets/password-pioniere-station-3.html": "./snippets/password-pioneers-station-3.html"
+        "./snippets/password-pioniere-station-1.html": "./src/snippets/password-pioneers-station-1.html",
+        "./snippets/password-pioniere-station-2.html": "./src/snippets/password-pioneers-station-2.html",
+        "./snippets/password-pioniere-station-3.html": "./src/snippets/password-pioneers-station-3.html",
+        "./icon": "./src/lock-password.svg"
     }
 }
