@@ -2,6 +2,7 @@
     "name": "@webwriter/hash",
     "version": "1.0.1",
     "description": "Visually create hashing workflows with keys, salts, and hash functions.",
+    "repository": "github:@webwriter-app/hash",
     "keywords": [
         "webwriter-widget",
         "hashing",
