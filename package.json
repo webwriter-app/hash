@@ -1,12 +1,17 @@
 {
     "name": "@webwriter/hash",
-    "version": "0.9.0",
-    "description": "",
+    "version": "1.0.1",
+    "description": "Visually create hashing workflows with keys, salts, and hash functions.",
     "keywords": [
-        "webwriter-widget"
+        "webwriter-widget",
+        "hashing",
+        "widget-practical",
+        "iscedf2013-06",
+        "isced2011-1",
+        "isced2011-2"
     ],
     "license": "MIT",
-    "author": "",
+    "author": "nura.zimmermann@rwth-aachen.de",
     "scripts": {
         "prepublishOnly": "npx @webwriter/build",
         "dev": "npx @webwriter/build dev",
@@ -14,18 +19,30 @@
     },
     "dependencies": {
         "@noble/hashes": "^1.7.2",
+        "@retejs/lit-plugin": "^2.0.3",
         "@shoelace-style/shoelace": "^2.20.1",
-        "@webwriter/lit": "^2.1.7",
-        "lit": "^3.3.0"
+        "@webwriter/lit": "^2",
+        "lit": "^3",
+        "rete": "^2.0.3",
+        "rete-area-plugin": "^2.0.5",
+        "rete-connection-plugin": "^2.0.4",
+        "rete-render-utils": "^2.0.2",
+        "rete-dock-plugin": "2.0.2",
+        "rete-engine": "^2.0.0",
+        "@tabler/icons": "^3.21.0",
+        "rete-context-menu-plugin": "2.0.3"
     },
     "devDependencies": {
-        "@lit/localize-tools": "^0.8.0"
+        "@lit/localize-tools": "^0.8"
     },
     "exports": {
         "./widgets/webwriter-hash.*": {
-            "source": "./widgets/webwriter-hash.ts",
-            "default": "./dist/widgets/webwriter-hash.*"
+            "source": "./src/widget/webwriter-hash.ts",
+            "default": "./dist/src/widget/webwriter-hash.*"
         },
-        "./icon": "./icon.svg"
+        "./snippets/password-pioniere-station-1.html": "./src/snippets/password-pioneers-station-1.html",
+        "./snippets/password-pioniere-station-2.html": "./src/snippets/password-pioneers-station-2.html",
+        "./snippets/password-pioniere-station-3.html": "./src/snippets/password-pioneers-station-3.html",
+        "./icon": "./src/lock-password.svg"
     }
 }
