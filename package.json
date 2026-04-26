@@ -1,7 +1,7 @@
 {
     "name": "@webwriter/hash",
     "version": "1.0.1",
-    "description": "Offers an interactive node editor to familiarize students with the concept of hash functions.",
+    "description": "Visually create hashing workflows with keys, salts, and hash functions.",
     "keywords": [
         "webwriter-widget",
         "hashing",
