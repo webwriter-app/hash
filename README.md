@@ -1,9 +1,8 @@
 # WebWriter Hash
 
-License: [MIT](security-systems/LICENSE) | Version: 1.0.0
+License: [MIT](security-systems/LICENSE) | Version: 1.0.1
 
-The Hashing Widget intends to familiarize students with the concept of hash functions using a visual node editor.
-This widget uses the [Rete.js](https://retejs.org/) library to render content via its internal engine. Students can connect different node types (Keys, Salts, Hash Functions, Hash Values) to generate hashes and understand the data flow.
+Visually create hashing workflows with keys, salts, and hash functions.
 
 ## Snippets
 
