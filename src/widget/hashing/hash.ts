@@ -1,4 +1,4 @@
-import { bytesToHex } from "@noble/hashes/utils";
+import { bytesToHex } from "@noble/hashes/utils.js";
 import { hash_algorithms, type HashAlgorithmName } from "./algoithms";
 
 // compute hash value based on selected algorithm and input string

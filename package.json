@@ -2,7 +2,7 @@
     "name": "@webwriter/hash",
     "version": "1.0.1",
     "description": "Visually create hashing workflows with keys, salts, and hash functions.",
-    "repository": "github:@webwriter-app/hash",
+    "repository": "github:webwriter-app/hash",
     "keywords": [
         "webwriter-widget",
         "hashing",
@@ -19,19 +19,19 @@
         "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
     },
     "dependencies": {
-        "@noble/hashes": "^1.7.2",
+        "@noble/hashes": "^2.3.0",
         "@retejs/lit-plugin": "^2.0.3",
         "@shoelace-style/shoelace": "^2.20.1",
+        "@tabler/icons": "^3.21.0",
         "@webwriter/lit": "^2",
         "lit": "^3",
         "rete": "^2.0.3",
         "rete-area-plugin": "^2.0.5",
         "rete-connection-plugin": "^2.0.4",
-        "rete-render-utils": "^2.0.2",
-        "rete-dock-plugin": "2.0.2",
+        "rete-context-menu-plugin": "^2.0.6",
+        "rete-dock-plugin": "^2.0.4",
         "rete-engine": "^2.0.0",
-        "@tabler/icons": "^3.21.0",
-        "rete-context-menu-plugin": "2.0.3"
+        "rete-render-utils": "^2.0.2"
     },
     "devDependencies": {
         "@lit/localize-tools": "^0.8"
