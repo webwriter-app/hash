@@ -83,8 +83,8 @@ export async function createEditor(
     // updates the grid background based on zoom/pan
     const updateBackground = () => {
         const { k, x, y } = area.area.transform;
-        const bgSize = 20 * k;  
-        const dotSize = Math.max(1 * k, 0.5); 
+        const bgSize = 30 * k;  
+        const dotSize = Math.max(1.5 * k, 0.5); 
         container.style.setProperty("--bg-size", `${bgSize}px`);
         container.style.setProperty("--dot-size", `${dotSize}px`);
         container.style.setProperty("--bg-pos-x", `${x}px`);

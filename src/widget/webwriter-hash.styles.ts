@@ -96,8 +96,12 @@ export const styles = css`
   .rete {
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(#d1d5db 1px, transparent 0);
-    background-size: 20px 20px;
+    background-image: radial-gradient(
+      #d1d5db var(--dot-size, 1px),
+      transparent 0
+    );
+    background-size: var(--bg-size, 20px) var(--bg-size, 20px);
+    background-position: var(--bg-pos-x, 0) var(--bg-pos-y, 0);
     background-color: #f9fafb;
   }
 
