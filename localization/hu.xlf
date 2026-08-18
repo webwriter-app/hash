@@ -64,53 +64,50 @@
       <trans-unit id="s8a0ee3d87938f19a">
         <source>Nodes</source>
         <target>Csomópontok</target>
-        <note>Header of the list of draggable nodes</note>
+        <note from="lit-localize">Header of the list of draggable nodes</note>
       </trans-unit>
       <trans-unit id="sfe7895d83752c894">
         <source>Salt text</source>
         <target>Sószöveg</target>
-        <note>Label of the field showing the generated salt</note>
+        <note from="lit-localize">Label of the field showing the generated salt</note>
       </trans-unit>
       <trans-unit id="hc60fe849d5871ed0">
-        <source>Key + 
-          <x id="0" equiv-text="&lt;b&gt;"/>Salt
-          <x id="1" equiv-text="&lt;/b&gt;"/>
-        </source>
+        <source>Key + <x id="0" equiv-text="&lt;b&gt;"/>Salt<x id="1" equiv-text="&lt;/b&gt;"/></source>
         <target>Kulcs + 
           <x id="0" equiv-text="&lt;b&gt;"/> Só
           <x id="1" equiv-text="&lt;/b&gt;"/>
         </target>
-        <note>Label of the field showing the key with the salt appended</note>
+        <note from="lit-localize">Label of the field showing the key with the salt appended</note>
       </trans-unit>
       <trans-unit id="s340c5424c1068661">
         <source>Salt</source>
         <target>Salt</target>
-        <note>Name of the node appending a salt to the key</note>
+        <note from="lit-localize">Name of the node appending a salt to the key</note>
       </trans-unit>
       <trans-unit id="s506b6a19d12f414c">
         <source>Key</source>
         <target>Kulcs</target>
-        <note>Name of the node holding the text that gets hashed</note>
+        <note from="lit-localize">Name of the node holding the text that gets hashed</note>
       </trans-unit>
       <trans-unit id="s082194e632f41463">
         <source>Hash Function</source>
         <target>Hash-függvény</target>
-        <note>Name of the node selecting the hash algorithm</note>
+        <note from="lit-localize">Name of the node selecting the hash algorithm</note>
       </trans-unit>
       <trans-unit id="s8617fc8fa9c02980">
         <source>Hash Value</source>
         <target>Hash-érték</target>
-        <note>Name of the node showing the hashing result</note>
+        <note from="lit-localize">Name of the node showing the hashing result</note>
       </trans-unit>
       <trans-unit id="s5f343a43e7ea9f91">
         <source>Error</source>
         <target>Hiba</target>
-        <note>Shown instead of a hash value when hashing fails</note>
+        <note from="lit-localize">Shown instead of a hash value when hashing fails</note>
       </trans-unit>
       <trans-unit id="sc26501e3ade7da3c">
         <source>Tools</source>
         <target>Eszközök</target>
-        <note>Title of the drawer listing the draggable nodes</note>
+        <note from="lit-localize">Title of the drawer listing the draggable nodes</note>
       </trans-unit>
     </body>
   </file>

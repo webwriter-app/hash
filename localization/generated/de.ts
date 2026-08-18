@@ -10,7 +10,7 @@
 
     export const templates = {
       'hc60fe849d5871ed0': html`Schlüssel + 
-          <b> Salt
+          <b>Salt
           </b>
         `,
 's082194e632f41463': `Hash-Funktion`,
