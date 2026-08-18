@@ -1,7 +1,11 @@
-import { ClassicPreset } from "rete";
+import { ClassicPreset, GetSchemes } from "rete";
 import { computeHashHex } from "../hashing/hash";
 
 const USE_COMPUTE_HASH_HEX = true;
+
+// rete's Output defaults to multipleConnections: true, which has to be opted out of explicitly
+const singleInput = (socket: ClassicPreset.Socket) => new ClassicPreset.Input(socket, undefined, false);
+const singleOutput = (socket: ClassicPreset.Socket) => new ClassicPreset.Output(socket, undefined, false);
 
 export class BaseNode extends ClassicPreset.Node {
     public customTitle: string = ""; 
@@ -16,7 +20,7 @@ export class KeyNode extends BaseNode {
     public value = "";
     constructor(socket: ClassicPreset.Socket) {
         super("Key");
-        this.addOutput("key-output", new ClassicPreset.Output(socket));
+        this.addOutput("key-output", singleOutput(socket));
     }
     data() { return { "key-output": this.value }; }
 }
@@ -36,8 +40,8 @@ export class SaltNode extends BaseNode {
             this.saltValue = Math.random().toString(36).substring(2, 7);
         }
         
-        this.addInput("salt-input", new ClassicPreset.Input(socket));
-        this.addOutput("salt-output", new ClassicPreset.Output(socket));
+        this.addInput("salt-input", singleInput(socket));
+        this.addOutput("salt-output", singleOutput(socket));
     }
 
     regenerateSalt() {
@@ -60,8 +64,8 @@ export class HashFunctionNode extends BaseNode {
     constructor(socket: ClassicPreset.Socket) {
         super("HashFunction");
         this.socket = socket;
-        this.addInput("in-0", new ClassicPreset.Input(socket));
-        this.addOutput("out-0", new ClassicPreset.Output(socket));
+        this.addInput("in-0", singleInput(socket));
+        this.addOutput("out-0", singleOutput(socket));
     }
 
     // adds and removes input/output pairs dynamically
@@ -69,8 +73,8 @@ export class HashFunctionNode extends BaseNode {
         const currentCount = Object.keys(this.inputs).length;
         if (count > currentCount) {
             for (let i = currentCount; i < count; i++) {
-                this.addInput(`in-${i}`, new ClassicPreset.Input(this.socket));
-                this.addOutput(`out-${i}`, new ClassicPreset.Output(this.socket));
+                this.addInput(`in-${i}`, singleInput(this.socket));
+                this.addOutput(`out-${i}`, singleOutput(this.socket));
             }
         }
         if (count < currentCount) {
@@ -108,7 +112,7 @@ export class HashValueNode extends BaseNode {
     public displayValue = "";
     constructor(socket: ClassicPreset.Socket) {
         super("HashValue");
-        this.addInput("hash-value-input", new ClassicPreset.Input(socket));
+        this.addInput("hash-value-input", singleInput(socket));
     }
     data() { return {}; }
 }
@@ -118,3 +122,5 @@ export type Nodes = KeyNode | HashFunctionNode | HashValueNode | SaltNode;
 export class Connection extends ClassicPreset.Connection<Nodes, Nodes> {
     public color?: string; 
 }
+
+export type Schemes = GetSchemes<Nodes, Connection>;

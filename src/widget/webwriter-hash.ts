@@ -21,7 +21,7 @@ export class WebwriterHash extends LitElementWw {
     @property({ type: Boolean, attribute: true, reflect: true }) accessor allowAdding = false;
     @property({ type: Boolean, attribute: true, reflect: true }) accessor allowDeleting = false;
     @property({ type: Object, attribute: true, reflect: true }) accessor editorState: any = {}; 
-ç
+
     static get scopedElements() {
         return {
             "sl-icon": SlIcon,

@@ -41,12 +41,16 @@ export class NodeConnection extends LitElement {
         path:hover {
             stroke-width: 4px;
         }
+        path.pseudo {
+            stroke-dasharray: 8 6;
+            pointer-events: none;
+        }
     `;
 
     render() {
         return html`
             <svg data-testid="connection">
-                <path d=${this.path}></path>
+                <path class=${this.data?.isPseudo ? "pseudo" : ""} d=${this.path}></path>
             </svg>
         `;
     }

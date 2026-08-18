@@ -1,6 +1,6 @@
-import { NodeEditor, GetSchemes, ClassicPreset } from "rete";
+import { NodeEditor, ClassicPreset } from "rete";
 import { AreaPlugin, AreaExtensions } from "rete-area-plugin";
-import { ConnectionPlugin, Presets as ConnectionPresets } from "rete-connection-plugin";
+import { ConnectionPlugin } from "rete-connection-plugin";
 import { LitPlugin, Presets, LitArea2D } from "@retejs/lit-plugin";
 import { DataflowEngine } from "rete-engine";
 import { html } from "lit";
@@ -18,10 +18,11 @@ import {
     HashFunctionNode, 
     HashValueNode, 
     Connection, 
-    Nodes 
+    Nodes,
+    Schemes
 } from "./editor.nodes";
+import { areSocketsFree, createConnectionPreset, isValidConnection } from "./editor.connections";
 
-type Schemes = GetSchemes<Nodes, Connection>;
 type AreaExtra = LitArea2D<Schemes>;
 
 // main editor creation through rete function
@@ -53,9 +54,9 @@ export async function createEditor(
                             .isAuthor=${(data.payload as any)._isAuthor}
                         ></hash-node>`;
                 },
-                connection() {
-                    return (data: any) =>
-                        html`<node-connection .path=${data.path} .data=${data.payload}></node-connection>`;
+                connection(data) {
+                    return (props: any) =>
+                        html`<node-connection .path=${props.path} .data=${data.payload}></node-connection>`;
                 },
                 socket(data) {
                     return () => html`<node-socket .data=${data}></node-socket>`;
@@ -66,9 +67,11 @@ export async function createEditor(
 
     let currentCanDelete = canDelete;
     let currentIsAuthor = isAuthor;
+    let isBatching = false;
     
     // dispatch event to update external state
     const dispatchChange = () => {
+        if (isBatching) return;
         const detail = exportState();
         container.dispatchEvent(new CustomEvent("rete-update", {
             detail,
@@ -143,7 +146,7 @@ export async function createEditor(
         }
 
         if (shifted) {
-            reconcileSockets(node);
+            await reconcileSockets(node);
             return;
         }
 
@@ -156,11 +159,10 @@ export async function createEditor(
         if (currentCount !== targetCount) {
             node.setChannelCount(targetCount);
             await area.update("node", node.id);
-            process();
         }
     };
 
-    connection.addPreset(ConnectionPresets.classic.setup());
+    connection.addPreset(createConnectionPreset(editor));
 
     editor.use(engine);
     editor.use(area);
@@ -169,13 +171,12 @@ export async function createEditor(
 
     const removeNodeWithConnections = async (nodeId: string) => {
         if (!currentCanDelete) return;
-        const connections = editor.getConnections();
-        const relatedConnections = connections.filter(c => c.source === nodeId || c.target === nodeId);
-        for (const connection of relatedConnections) {
-            await editor.removeConnection(connection.id);
-        }
-        await editor.removeNode(nodeId);
-        process();
+        await batch(async () => {
+            for (const c of editor.getConnections()) {
+                if (c.source === nodeId || c.target === nodeId) await editor.removeConnection(c.id);
+            }
+            await editor.removeNode(nodeId);
+        });
     };
 
         let isProcessing = false;
@@ -255,19 +256,44 @@ export async function createEditor(
         return context;
     });
     
+    let isSyncing = false;
+    let hasPendingSync = false;
+
+    // a structural change must not interleave with reconciling, which shifts connections
+    // out from under it and invalidates the ids it is working through
+    async function batch(mutate: () => Promise<void>) {
+        isBatching = true;
+        try {
+            await mutate();
+        } finally {
+            isBatching = false;
+        }
+        await syncGraph();
+    }
+
+    async function syncGraph() {
+        if (isSyncing) {
+            hasPendingSync = true;
+            return;
+        }
+        isSyncing = true;
+        try {
+            do {
+                hasPendingSync = false;
+                for (const node of editor.getNodes()) {
+                    if (node instanceof HashFunctionNode) await reconcileSockets(node);
+                }
+            } while (hasPendingSync);
+        } finally {
+            isSyncing = false;
+        }
+        await process();
+    }
+
     // trigger processing when connections change
     editor.addPipe(context => {
         if (context.type === 'connectioncreated' || context.type === 'connectionremoved') {
-            const nodes = editor.getNodes();
-            for (const node of nodes) {
-                if (node instanceof HashFunctionNode) {
-                    reconcileSockets(node);
-                }
-            }
-            setTimeout(() => {
-                process();
-                dispatchChange();
-            }, 30);
+            if (!isBatching) void syncGraph();
         }
         if (context.type === 'nodecreated' || context.type === 'noderemoved') {
             dispatchChange();
@@ -275,37 +301,9 @@ export async function createEditor(
         return context;
     });
 
-    // validate connections and restricts moves
-    editor.addPipe(async context => {
-        if (context.type === 'connectioncreate') {
-            const sourceNode = editor.getNode(context.data.source);
-            const targetNode = editor.getNode(context.data.target);
-            
-            // key node logic
-            if (sourceNode instanceof KeyNode) {
-                // allow only hash function or salt as target
-                if (!(targetNode instanceof HashFunctionNode) && !(targetNode instanceof SaltNode)) return;
-                
-                // enforce single output node connection
-                const existingConnections = editor.getConnections().filter(c => c.source === sourceNode.id);
-                for (const conn of existingConnections) {
-                    await editor.removeConnection(conn.id);
-                }
-            }
-            
-            // salt node logic
-            if (sourceNode instanceof SaltNode) {
-                if (!(targetNode instanceof HashFunctionNode)) return;
-            }
-
-            // hash function logic
-            if (sourceNode instanceof HashFunctionNode) {
-                if (!(targetNode instanceof HashValueNode)) return;
-            }
-            
-            // prevent connections starting from hash value
-            if (sourceNode instanceof HashValueNode) return;
-        }
+    // the interactive flow already checks the rules, this also covers programmatic adds
+    editor.addPipe(context => {
+        if (context.type === 'connectioncreate' && !isValidConnection(editor, context.data)) return;
         return context; 
     });
 
@@ -341,6 +339,10 @@ export async function createEditor(
     // loads editor state from data
     const importState = async (data: any) => {
         if (!data || !data.nodes) return;
+        await batch(() => importNodesAndConnections(data));
+    };
+
+    const importNodesAndConnections = async (data: any) => {
         for(const c of editor.getConnections()) await editor.removeConnection(c.id);
         for(const n of editor.getNodes()) await editor.removeNode(n.id);
 
@@ -370,14 +372,17 @@ export async function createEditor(
             }
         }
 
-        for (const connection_data of data.connections) {
+        for (const connection_data of data.connections ?? []) {
+            if (!isValidConnection(editor, connection_data) || !areSocketsFree(editor, connection_data)) {
+                console.warn("Skipped connection that no longer fits the graph", connection_data);
+                continue;
+            }
+
             const source = editor.getNode(connection_data.source);
             const target = editor.getNode(connection_data.target);
-            if (source && target) {
-                try {
-                    await editor.addConnection(new Connection(source, connection_data.sourceOutput, target, connection_data.targetInput));
-                } catch(e) { console.warn("Could not restore connection", e); }
-            }
+            try {
+                await editor.addConnection(new Connection(source, connection_data.sourceOutput, target, connection_data.targetInput));
+            } catch(e) { console.warn("Could not restore connection", e); }
         }
     };
 
