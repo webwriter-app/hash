@@ -1,5 +1,6 @@
 import { css, html, LitElement, CSSResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { localized, msg } from "@lit/localize";
 import { ClassicScheme } from "@retejs/lit-plugin";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.js";
@@ -12,18 +13,20 @@ import { HashFunctionNodeUI } from "./types/hash-function-node.ts";
 import { HashValueNodeUI } from "./types/hash-value-node";
 import { SaltNodeUI } from "./types/salt-node";
 import { styles } from "./node.styles";
+import { displayNodeTitle } from "./node-titles";
 
 type NodeExtraData = { width?: number; height?: number };
 
 @customElement("hash-node")
+@localized()
 export class HashNode extends LitElement {
   @property({ attribute: false }) process!: () => void;
   @property({ attribute: false }) deleteNode!: () => void;
   @property({ type: Boolean }) isEditingTitle = false;
 
   @property({ type: Boolean, attribute: true, reflect: true })
-  accessor canDelete;
-  @property({ type: Boolean, reflect: true }) accessor isAuthor;
+  accessor canDelete: boolean = false;
+  @property({ type: Boolean, reflect: true }) accessor isAuthor: boolean = false;
 
   static get properties() {
     return {
@@ -147,11 +150,7 @@ export class HashNode extends LitElement {
     
     this.className = `${nodeClass} ${selected ? "selected" : ""}`;
 
-    const displayTitle =
-      (this.data as any).customTitle ||
-      (label === "HashFunction" ? "Hash Function"
-        : label === "HashValue" ? "Hash Value"
-        : label);
+    const displayTitle = displayNodeTitle(label, (this.data as any).customTitle);
 
     return html`
       <style>
@@ -175,7 +174,7 @@ export class HashNode extends LitElement {
       </div>
 
       ${this.canDelete || this.isAuthor
-        ? html` <sl-tooltip content="Delete node" placement="top-start">
+        ? html` <sl-tooltip content=${msg("Delete node")} placement="top-start">
             <sl-icon
               class="delete-button icon-btn ${!this.canDelete && this.isAuthor
                 ? "disabled"

@@ -1,0 +1,118 @@
+<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="pl">
+    <body>
+      <trans-unit id="s658e6a008311409f">
+        <source>Drag and drop the nodes into the editor</source>
+        <target>Przeciągnij i upuść węzły do edytora</target>
+      </trans-unit>
+      <trans-unit id="s80a693fdbbc735b3">
+        <source>Required node for Hashing</source>
+        <target>Węzeł wymagany do haszowania</target>
+      </trans-unit>
+      <trans-unit id="sa61cbfcfe4598f64">
+        <source>Optional node for Salting</source>
+        <target>Węzeł opcjonalny do solenia</target>
+      </trans-unit>
+      <trans-unit id="sd9bdfc0f95188eea">
+        <source>Delete node</source>
+        <target>Usuń węzeł</target>
+      </trans-unit>
+      <trans-unit id="sdf86efcdc302af52">
+        <source>Select a hash function</source>
+        <target>Wybierz funkcję skrótu</target>
+      </trans-unit>
+      <trans-unit id="s7c0462add8379ba2">
+        <source>Hashed value result</source>
+        <target>Wynik haszowania</target>
+      </trans-unit>
+      <trans-unit id="sdccd8f78d52d3a87">
+        <source>Copy to clipboard</source>
+        <target>Skopiuj do schowka</target>
+      </trans-unit>
+      <trans-unit id="sc582b5508c2961d1">
+        <source>Enter a key...</source>
+        <target>Wprowadź klucz...</target>
+      </trans-unit>
+      <trans-unit id="sd5fc23432952db23">
+        <source>Key input + Salt</source>
+        <target>Wprowadź klucz + sól</target>
+      </trans-unit>
+      <trans-unit id="s87730e5071589cc6">
+        <source>Hash Editor</source>
+        <target>Edytor skrótu</target>
+      </trans-unit>
+      <trans-unit id="scc2f08380b867322">
+        <source>Toggle node menu</source>
+        <target>Przełącz menu węzła</target>
+      </trans-unit>
+      <trans-unit id="seded5609c55e7071">
+        <source>Focus on nodes</source>
+        <target>Skup na węzłach</target>
+      </trans-unit>
+      <trans-unit id="s6bc7b85be71db921">
+        <source>Toggle these settings for the author and student view.</source>
+        <target>Przełącz te ustawienia dla widoku autora i ucznia.</target>
+      </trans-unit>
+      <trans-unit id="se34da59fd0f2a3e1">
+        <source>Adding Nodes</source>
+        <target>Dodawanie węzłów</target>
+      </trans-unit>
+      <trans-unit id="s3e99b3826b00964c">
+        <source>Deleting Nodes</source>
+        <target>Usuwanie węzłów</target>
+      </trans-unit>
+      <trans-unit id="s8a0ee3d87938f19a">
+        <source>Nodes</source>
+        <target>Węzły</target>
+        <note>Header of the list of draggable nodes</note>
+      </trans-unit>
+      <trans-unit id="sfe7895d83752c894">
+        <source>Salt text</source>
+        <target>Tekst soli</target>
+        <note>Label of the field showing the generated salt</note>
+      </trans-unit>
+      <trans-unit id="hc60fe849d5871ed0">
+        <source>Key + 
+          <x id="0" equiv-text="&lt;b&gt;"/>Salt
+          <x id="1" equiv-text="&lt;/b&gt;"/>
+        </source>
+        <target>Klucz + 
+          Sól 
+          <x id="0" equiv-text="&lt;b&gt;"/>
+          <x id="1" equiv-text="&lt;/b&gt;"/>
+        </target>
+        <note>Label of the field showing the key with the salt appended</note>
+      </trans-unit>
+      <trans-unit id="s340c5424c1068661">
+        <source>Salt</source>
+        <target>Salt</target>
+        <note>Name of the node appending a salt to the key</note>
+      </trans-unit>
+      <trans-unit id="s506b6a19d12f414c">
+        <source>Key</source>
+        <target>Klucz</target>
+        <note>Name of the node holding the text that gets hashed</note>
+      </trans-unit>
+      <trans-unit id="s082194e632f41463">
+        <source>Hash Function</source>
+        <target>Funkcja skrótu</target>
+        <note>Name of the node selecting the hash algorithm</note>
+      </trans-unit>
+      <trans-unit id="s8617fc8fa9c02980">
+        <source>Hash Value</source>
+        <target>Wartość skrótu</target>
+        <note>Name of the node showing the hashing result</note>
+      </trans-unit>
+      <trans-unit id="s5f343a43e7ea9f91">
+        <source>Error</source>
+        <target>Błąd</target>
+        <note>Shown instead of a hash value when hashing fails</note>
+      </trans-unit>
+      <trans-unit id="sc26501e3ade7da3c">
+        <source>Tools</source>
+        <target>Narzędzia</target>
+        <note>Title of the drawer listing the draggable nodes</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

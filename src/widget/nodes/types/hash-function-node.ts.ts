@@ -1,10 +1,12 @@
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { localized, msg } from "@lit/localize";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.js";
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.js";
 
 @customElement("hash-function-node")
+@localized()
 export class HashFunctionNodeUI extends LitElement {
     @property() value: string = "sha256";
 
@@ -22,7 +24,7 @@ export class HashFunctionNodeUI extends LitElement {
 
     render() {
         return html`
-            <sl-select placeholder="Select a hash function" .value=${this.value} @sl-change=${this.onSelectChange}>
+            <sl-select placeholder=${msg("Select a hash function")} .value=${this.value} @sl-change=${this.onSelectChange}>
                 <sl-option value="sha1">SHA-1</sl-option>
                 <sl-option value="sha256">SHA-256</sl-option>
                 <sl-option value="sha384">SHA-384</sl-option>

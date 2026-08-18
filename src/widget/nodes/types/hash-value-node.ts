@@ -1,5 +1,6 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { localized, msg } from "@lit/localize";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.js";
 import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js";
@@ -7,6 +8,7 @@ import IconCopy from "@tabler/icons/outline/copy.svg";
 
 
 @customElement("hash-value-node")
+@localized()
 export class HashValueNodeUI extends LitElement {
   @property({ type: String }) accessor value: string = "";
 
@@ -70,12 +72,12 @@ export class HashValueNodeUI extends LitElement {
   render() {
     return html`
       <textarea
-        placeholder="Hashed value result"
+        placeholder=${msg("Hashed value result")}
         class="data-box"
         readonly
         .value=${this.value}
       ></textarea>
-      <sl-tooltip content="Copy to clipboard" placement="right-end">
+      <sl-tooltip content=${msg("Copy to clipboard")} placement="right-end">
         <sl-icon
           src=${IconCopy}
           @click=${this.handleCopy}

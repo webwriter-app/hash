@@ -19,6 +19,7 @@
         "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
     },
     "dependencies": {
+        "@lit/localize": "^0.12.2",
         "@noble/hashes": "^2.3.0",
         "@retejs/lit-plugin": "^2.0.3",
         "@shoelace-style/shoelace": "^2.20.1",

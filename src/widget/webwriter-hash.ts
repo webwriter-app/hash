@@ -1,6 +1,8 @@
 import { html, css, CSSResult } from "lit";
 import { LitElementWw } from "@webwriter/lit";
 import { customElement, property } from "lit/decorators.js"; 
+import { localized, msg } from "@lit/localize";
+// @ts-ignore
 import "@shoelace-style/shoelace/dist/themes/light.css";
 
 import { createRef, ref } from "lit/directives/ref.js";
@@ -14,13 +16,18 @@ import IconFocus2 from "@tabler/icons/outline/focus-2.svg";
 import IconLayoutSidebar from "@tabler/icons/outline/layout-sidebar.svg"; 
 import { EditorDock } from "./editor/editor-dock";
 import { styles } from "./webwriter-hash.styles";
+// @ts-ignore
+import LOCALIZE from "../../localization/generated";
 
 @customElement("webwriter-hash")
+@localized()
 export class WebwriterHash extends LitElementWw {
 
     @property({ type: Boolean, attribute: true, reflect: true }) accessor allowAdding = false;
     @property({ type: Boolean, attribute: true, reflect: true }) accessor allowDeleting = false;
-    @property({ type: Object, attribute: true, reflect: true }) accessor editorState: any = {}; 
+    @property({ type: Object, attribute: true, reflect: true }) accessor editorState: any = {};
+
+    protected localize = LOCALIZE;
 
     static get scopedElements() {
         return {
@@ -155,19 +162,19 @@ export class WebwriterHash extends LitElementWw {
         const showDrawer = this.allowAdding || this.isContentEditable;
         return html`
             <div class="widget-container" @drop=${this.handleDrop} @dragover=${this.handleDragOver}>
-                <div class="pill pill-center"><span class="instruction">Hash Editor</span></div>
+                <div class="pill pill-center"><span class="instruction">${msg("Hash Editor")}</span></div>
                 <div class="pill pill-right">
                     ${showDrawer ? html`
-                        <sl-tooltip content="Toggle node menu">
+                        <sl-tooltip content=${msg("Toggle node menu")}>
                             <sl-icon src=${IconLayoutSidebar} class=${this.allowAdding ? '' : 'icon-disabled'} @click=${() => this.toggleDock()}></sl-icon>
                         </sl-tooltip>
                     ` : ''}
-                    <sl-tooltip content="Focus on nodes"> 
+                    <sl-tooltip content=${msg("Focus on nodes")}> 
                         <sl-icon src=${IconFocus2} @click=${() => this.editorInstance?.zoomToNodes(!!this.renderRoot.querySelector("#drawer[open]"))}></sl-icon>
                     </sl-tooltip>    
                 </div>
 
-                <sl-drawer label="Tools" id="drawer" placement="start" class="drawer-dock" contained no-header ?open=${this.allowAdding}>
+                <sl-drawer label=${msg("Tools", { desc: "Title of the drawer listing the draggable nodes" })} id="drawer" placement="start" class="drawer-dock" contained no-header ?open=${this.allowAdding}>
                     <editor-dock .allowSalting=${true}></editor-dock> 
                 </sl-drawer>
 
@@ -175,9 +182,9 @@ export class WebwriterHash extends LitElementWw {
             </div>
 
             <div class="author-only options" part="options">
-                <div class="description">Toggle these settings for the author and student view.</div>
-                <sl-switch ?checked=${this.allowAdding} @sl-change=${(e: any) => this.allowAdding = e.target.checked}>Adding Nodes</sl-switch>
-                <sl-switch ?checked=${this.allowDeleting} @sl-change=${(e: any) => this.allowDeleting = e.target.checked}>Deleting Nodes</sl-switch>
+                <div class="description">${msg("Toggle these settings for the author and student view.")}</div>
+                <sl-switch ?checked=${this.allowAdding} @sl-change=${(e: any) => this.allowAdding = e.target.checked}>${msg("Adding Nodes")}</sl-switch>
+                <sl-switch ?checked=${this.allowDeleting} @sl-change=${(e: any) => this.allowDeleting = e.target.checked}>${msg("Deleting Nodes")}</sl-switch>
                 </div>
         `;
     }
