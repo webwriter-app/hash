@@ -1,6 +1,6 @@
-import { NodeEditor, GetSchemes, ClassicPreset } from "rete";
+import { NodeEditor, ClassicPreset } from "rete";
 import { AreaPlugin, AreaExtensions } from "rete-area-plugin";
-import { ConnectionPlugin, Presets as ConnectionPresets } from "rete-connection-plugin";
+import { ConnectionPlugin } from "rete-connection-plugin";
 import { LitPlugin, Presets, LitArea2D } from "@retejs/lit-plugin";
 import { DataflowEngine } from "rete-engine";
 import { html } from "lit";
@@ -18,15 +18,17 @@ import {
     HashFunctionNode, 
     HashValueNode, 
     Connection, 
-    Nodes 
+    Nodes,
+    Schemes
 } from "./editor.nodes";
+import { areSocketsFree, createConnectionPreset, isValidConnection } from "./editor.connections";
 
-type Schemes = GetSchemes<Nodes, Connection>;
 type AreaExtra = LitArea2D<Schemes>;
 
 // main editor creation through rete function
 export async function createEditor(
-    container: HTMLElement, 
+    container: HTMLElement,
+    background: HTMLCanvasElement,
     canDelete: boolean,
     isAuthor: boolean, 
     initialData?: any 
@@ -53,9 +55,9 @@ export async function createEditor(
                             .isAuthor=${(data.payload as any)._isAuthor}
                         ></hash-node>`;
                 },
-                connection() {
-                    return (data: any) =>
-                        html`<node-connection .path=${data.path} .data=${data.payload}></node-connection>`;
+                connection(data) {
+                    return (props: any) =>
+                        html`<node-connection .path=${props.path} .data=${data.payload}></node-connection>`;
                 },
                 socket(data) {
                     return () => html`<node-socket .data=${data}></node-socket>`;
@@ -66,9 +68,11 @@ export async function createEditor(
 
     let currentCanDelete = canDelete;
     let currentIsAuthor = isAuthor;
+    let isBatching = false;
     
     // dispatch event to update external state
     const dispatchChange = () => {
+        if (isBatching) return;
         const detail = exportState();
         container.dispatchEvent(new CustomEvent("rete-update", {
             detail,
@@ -77,16 +81,72 @@ export async function createEditor(
         }));
     };
     
-    // updates the grid background based on zoom/pan
-    const updateBackground = () => {
+    const backgroundContext = background.getContext("2d");
+    const gridResolution = 4;
+    const gridTile = document.createElement("canvas");
+    gridTile.width = 30 * gridResolution;
+    gridTile.height = 30 * gridResolution;
+    const gridTileContext = gridTile.getContext("2d");
+    let backgroundFrame: number | undefined;
+
+    // Draw the grid atomically
+    const drawBackground = () => {
+        backgroundFrame = undefined;
+        if (!backgroundContext || !gridTileContext) return;
+
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        if (width === 0 || height === 0) return;
+
+        const pixelRatio = window.devicePixelRatio || 1;
+        const canvasWidth = Math.max(1, Math.round(width * pixelRatio));
+        const canvasHeight = Math.max(1, Math.round(height * pixelRatio));
+        if (background.width !== canvasWidth || background.height !== canvasHeight) {
+            background.width = canvasWidth;
+            background.height = canvasHeight;
+        }
+
         const { k, x, y } = area.area.transform;
-        const bgSize = 20 * k;  
-        const dotSize = Math.max(1 * k, 0.5); 
-        container.style.setProperty("--bg-size", `${bgSize}px`);
-        container.style.setProperty("--dot-size", `${dotSize}px`);
-        container.style.setProperty("--bg-pos-x", `${x}px`);
-        container.style.setProperty("--bg-pos-y", `${y}px`);
+        const radius = Math.max(1.5 * k, 0.5);
+        gridTileContext.clearRect(0, 0, gridTile.width, gridTile.height);
+        gridTileContext.beginPath();
+        gridTileContext.arc(
+            gridTile.width / 2,
+            gridTile.height / 2,
+            radius * gridResolution / k,
+            0,
+            Math.PI * 2
+        );
+        gridTileContext.fillStyle = "#d1d5db";
+        gridTileContext.fill();
+
+        const gridPattern = backgroundContext.createPattern(gridTile, "repeat");
+        if (!gridPattern) return;
+
+        backgroundContext.setTransform(1, 0, 0, 1, 0, 0);
+        backgroundContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
+        const scale = pixelRatio * k / gridResolution;
+        const translateX = x * pixelRatio;
+        const translateY = y * pixelRatio;
+        backgroundContext.setTransform(scale, 0, 0, scale, translateX, translateY);
+        backgroundContext.fillStyle = gridPattern;
+        backgroundContext.fillRect(
+            -translateX / scale,
+            -translateY / scale,
+            canvasWidth / scale,
+            canvasHeight / scale
+        );
+        container.style.setProperty("--zoom", String(k));
     };
+
+    const updateBackground = () => {
+        if (backgroundFrame !== undefined) return;
+        backgroundFrame = requestAnimationFrame(drawBackground);
+    };
+
+    const backgroundResizeObserver = new ResizeObserver(updateBackground);
+    backgroundResizeObserver.observe(container);
 
     AreaExtensions.restrictor(area, {
         scaling: { min: 0.1, max: 1 },
@@ -143,7 +203,7 @@ export async function createEditor(
         }
 
         if (shifted) {
-            reconcileSockets(node);
+            await reconcileSockets(node);
             return;
         }
 
@@ -156,26 +216,30 @@ export async function createEditor(
         if (currentCount !== targetCount) {
             node.setChannelCount(targetCount);
             await area.update("node", node.id);
-            process();
         }
     };
 
-    connection.addPreset(ConnectionPresets.classic.setup());
+    connection.addPreset(createConnectionPreset(editor));
 
     editor.use(engine);
     editor.use(area);
     area.use(connection);
     area.use(litRenderer);
 
+    const syncPointer = (event: PointerEvent) => area.area.setPointerFrom(event);
+    container.addEventListener("pointerdown", syncPointer, true);
+
+    const cancelConnection = () => connection.drop();
+    window.addEventListener("pointercancel", cancelConnection);
+
     const removeNodeWithConnections = async (nodeId: string) => {
         if (!currentCanDelete) return;
-        const connections = editor.getConnections();
-        const relatedConnections = connections.filter(c => c.source === nodeId || c.target === nodeId);
-        for (const connection of relatedConnections) {
-            await editor.removeConnection(connection.id);
-        }
-        await editor.removeNode(nodeId);
-        process();
+        await batch(async () => {
+            for (const c of editor.getConnections()) {
+                if (c.source === nodeId || c.target === nodeId) await editor.removeConnection(c.id);
+            }
+            await editor.removeNode(nodeId);
+        });
     };
 
         let isProcessing = false;
@@ -255,19 +319,44 @@ export async function createEditor(
         return context;
     });
     
+    let isSyncing = false;
+    let hasPendingSync = false;
+
+    // a structural change must not interleave with reconciling, which shifts connections
+    // out from under it and invalidates the ids it is working through
+    async function batch(mutate: () => Promise<void>) {
+        isBatching = true;
+        try {
+            await mutate();
+        } finally {
+            isBatching = false;
+        }
+        await syncGraph();
+    }
+
+    async function syncGraph() {
+        if (isSyncing) {
+            hasPendingSync = true;
+            return;
+        }
+        isSyncing = true;
+        try {
+            do {
+                hasPendingSync = false;
+                for (const node of editor.getNodes()) {
+                    if (node instanceof HashFunctionNode) await reconcileSockets(node);
+                }
+            } while (hasPendingSync);
+        } finally {
+            isSyncing = false;
+        }
+        await process();
+    }
+
     // trigger processing when connections change
     editor.addPipe(context => {
         if (context.type === 'connectioncreated' || context.type === 'connectionremoved') {
-            const nodes = editor.getNodes();
-            for (const node of nodes) {
-                if (node instanceof HashFunctionNode) {
-                    reconcileSockets(node);
-                }
-            }
-            setTimeout(() => {
-                process();
-                dispatchChange();
-            }, 30);
+            if (!isBatching) void syncGraph();
         }
         if (context.type === 'nodecreated' || context.type === 'noderemoved') {
             dispatchChange();
@@ -275,37 +364,9 @@ export async function createEditor(
         return context;
     });
 
-    // validate connections and restricts moves
-    editor.addPipe(async context => {
-        if (context.type === 'connectioncreate') {
-            const sourceNode = editor.getNode(context.data.source);
-            const targetNode = editor.getNode(context.data.target);
-            
-            // key node logic
-            if (sourceNode instanceof KeyNode) {
-                // allow only hash function or salt as target
-                if (!(targetNode instanceof HashFunctionNode) && !(targetNode instanceof SaltNode)) return;
-                
-                // enforce single output node connection
-                const existingConnections = editor.getConnections().filter(c => c.source === sourceNode.id);
-                for (const conn of existingConnections) {
-                    await editor.removeConnection(conn.id);
-                }
-            }
-            
-            // salt node logic
-            if (sourceNode instanceof SaltNode) {
-                if (!(targetNode instanceof HashFunctionNode)) return;
-            }
-
-            // hash function logic
-            if (sourceNode instanceof HashFunctionNode) {
-                if (!(targetNode instanceof HashValueNode)) return;
-            }
-            
-            // prevent connections starting from hash value
-            if (sourceNode instanceof HashValueNode) return;
-        }
+    // the interactive flow already checks the rules, this also covers programmatic adds
+    editor.addPipe(context => {
+        if (context.type === 'connectioncreate' && !isValidConnection(editor, context.data)) return;
         return context; 
     });
 
@@ -341,6 +402,10 @@ export async function createEditor(
     // loads editor state from data
     const importState = async (data: any) => {
         if (!data || !data.nodes) return;
+        await batch(() => importNodesAndConnections(data));
+    };
+
+    const importNodesAndConnections = async (data: any) => {
         for(const c of editor.getConnections()) await editor.removeConnection(c.id);
         for(const n of editor.getNodes()) await editor.removeNode(n.id);
 
@@ -370,14 +435,17 @@ export async function createEditor(
             }
         }
 
-        for (const connection_data of data.connections) {
+        for (const connection_data of data.connections ?? []) {
+            if (!isValidConnection(editor, connection_data) || !areSocketsFree(editor, connection_data)) {
+                console.warn("Skipped connection that no longer fits the graph", connection_data);
+                continue;
+            }
+
             const source = editor.getNode(connection_data.source);
             const target = editor.getNode(connection_data.target);
-            if (source && target) {
-                try {
-                    await editor.addConnection(new Connection(source, connection_data.sourceOutput, target, connection_data.targetInput));
-                } catch(e) { console.warn("Could not restore connection", e); }
-            }
+            try {
+                await editor.addConnection(new Connection(source, connection_data.sourceOutput, target, connection_data.targetInput));
+            } catch(e) { console.warn("Could not restore connection", e); }
         }
     };
 
@@ -434,6 +502,10 @@ export async function createEditor(
 
     return {
         destroy: () => { 
+            container.removeEventListener("pointerdown", syncPointer, true);
+            window.removeEventListener("pointercancel", cancelConnection);
+            backgroundResizeObserver.disconnect();
+            if (backgroundFrame !== undefined) cancelAnimationFrame(backgroundFrame);
             area.destroy(); 
             editor.clear();
             engine.reset();
@@ -452,8 +524,9 @@ export async function createEditor(
                 setupNode(node); 
                 await editor.addNode(node);
                 const { k, x, y } = area.area.transform;
-                const translatedX = (clientX - x) / k;
-                const translatedY = (clientY - y) / k;
+                const bounds = area.nodeViews.get(node.id)?.element.getBoundingClientRect();
+                const translatedX = (clientX - x - (bounds?.width ?? 0) / 2) / k;
+                const translatedY = (clientY - y - (bounds?.height ?? 0) / 2) / k;
 
                 await area.translate(node.id, { x: translatedX, y: translatedY });
                 process(); 

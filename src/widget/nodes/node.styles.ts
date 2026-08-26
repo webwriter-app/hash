@@ -14,6 +14,11 @@ export const styles = css`
     min-height: 100px;
     transition: height 0.1s ease-out;
     font-family: sans-serif;
+
+    --socket-size: 16px;
+    --socket-gap: 4px;
+    --socket-hit-width: var(--socket-size);
+    --socket-hit-height: var(--socket-size);
   }
 
   /* Node Colors */
@@ -211,6 +216,37 @@ export const styles = css`
     justify-content: space-between;
     margin-top: auto;
     padding-top: 8px;
+  }
+
+  .inputs,
+  .outputs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--socket-gap);
+  }
+
+  .socket-row rete-ref {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    box-sizing: border-box;
+    width: var(--socket-hit-width);
+    height: var(--socket-hit-height);
+    margin: calc((var(--socket-size) - var(--socket-hit-height)) / 2)
+      calc((var(--socket-size) - var(--socket-hit-width)) / 2);
+  }
+
+  /*
+   * Grow the sockets and their hit targets on touch devices
+   */
+  @media (pointer: coarse) {
+    :host {
+      --socket-size: 20px;
+      --socket-gap: 26px;
+      --socket-hit-width: clamp(44px, calc(44px / var(--zoom, 1)), 88px);
+      --socket-hit-height: 44px;
+    }
   }
 
   sl-tooltip {

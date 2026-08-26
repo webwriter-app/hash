@@ -1,0 +1,37 @@
+{
+  ".": {
+    "description": {
+      "bg": "Създавайте визуално работни потоци за хеширане с ключове, соли и хеш-функции.",
+      "ar": "قم بإنشاء سير عمل التجزئة بصريًّا باستخدام المفاتيح و«الملح» ودوال التجزئة.",
+      "cs": "Vizuálně vytvářejte pracovní postupy pro generování hashů s klíči, solí a hashovými funkcemi.",
+      "de": "Erstellen Sie visuell Hash-Workflows mit Schlüsseln, Salts und Hash-Funktionen.",
+      "fi": "Luo visuaalisesti hajautusprosesseja, joissa käytetään avaimia, suolausarvoja ja hajautusfunktioita.",
+      "da": "Opret visuelt hashing-arbejdsgange med nøgler, salts og hashfunktioner.",
+      "et": "Looge visuaalselt hash-töövood, kasutades võtmeid, sooli ja hash-funktsioone.",
+      "nl": "Maak visueel hashing-workflows met sleutels, salts en hashfuncties.",
+      "it": "Crea visivamente flussi di lavoro di hashing con chiavi, salt e funzioni di hash.",
+      "el": "Δημιουργήστε οπτικά ροές εργασίας κατακερματισμού με κλειδιά, salts και συναρτήσεις κατακερματισμού.",
+      "fr": "Créez visuellement des flux de traitement de hachage à l'aide de clés, de sels et de fonctions de hachage.",
+      "hu": "Kulcsok, sók és hash-függvények segítségével vizuálisan hozhat létre hash-feldolgozási munkafolyamatokat.",
+      "lv": "Vizuāli izveidojiet hašēšanas darba plūsmas, izmantojot atslēgas, sāļus un hašēšanas funkcijas.",
+      "lt": "Vizualiai kurkite maišymo darbo eigas, naudodami raktus, druskas ir maišymo funkcijas.",
+      "nb": "Lag grafiske hashing-arbeidsflyter med nøkler, salt og hashfunksjoner.",
+      "pl": "Twórz wizualnie procesy generowania skrótów z wykorzystaniem kluczy, solów i funkcji skrótu.",
+      "pt-PT": "Crie visualmente fluxos de trabalho de hash com chaves, salts e funções de hash.",
+      "sk": "Vizuálne vytvárajte pracovné postupy pre generovanie hashových hodnôt s použitím kľúčov, solí a hashových funkcií.",
+      "ru": "Визуально создавайте рабочие процессы хеширования с использованием ключей, солей и хеш-функций.",
+      "ro": "Creați vizual fluxuri de lucru de hash folosind chei, valori de salt și funcții hash.",
+      "sl": "Vizualno ustvarjajte delovne tokove za hashiranje s ključi, soli in hash funkcijami.",
+      "tr": "Anahtarlar, tuzlar ve karma fonksiyonları kullanarak görsel olarak karma iş akışları oluşturun.",
+      "sv": "Skapa visuella hash-arbetsflöden med nycklar, saltvärden och hashfunktioner.",
+      "uk": "Візуально створюйте робочі процеси хешування з використанням ключів, солей та хеш-функцій.",
+      "es": "Crea visualmente flujos de trabajo de hash con claves, sales y funciones hash.",
+      "pt-BR": "Crie visualmente fluxos de trabalho de hash com chaves, salts e funções de hash.",
+      "ja": "キー、ソルト、ハッシュ関数を用いて、ハッシュ処理のワークフローを視覚的に作成します。",
+      "ko": "키, 솔트 및 해시 함수를 사용하여 해싱 워크플로를 시각적으로 생성합니다.",
+      "id": "Buat alur kerja hashing secara visual dengan menggunakan kunci, salt, dan fungsi hash.",
+      "zh-hans": "使用密钥、盐值和哈希函数直观地创建哈希工作流。",
+      "zh-hant": "透過鍵、鹽值和雜湊函數，以視覺化方式建立雜湊工作流程。"
+    }
+  }
+}

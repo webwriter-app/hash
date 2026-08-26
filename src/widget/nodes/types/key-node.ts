@@ -1,9 +1,11 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property, eventOptions } from "lit/decorators.js";
+import { localized, msg } from "@lit/localize";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlTextarea from "@shoelace-style/shoelace/dist/components/textarea/textarea.js";
 
 @customElement("key-node")
+@localized()
 export class KeyNodeUI extends LitElement {
   @property() value: string = "";
 
@@ -57,7 +59,7 @@ export class KeyNodeUI extends LitElement {
   render() {
     return html`
       <sl-textarea
-        placeholder="Enter a key..."
+        placeholder=${msg("Enter a key...")}
         resize="none"
         .value=${this.value}
         @sl-input=${this.onInputChange}

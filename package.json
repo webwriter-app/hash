@@ -1,49 +1,88 @@
 {
-    "name": "@webwriter/hash",
-    "version": "1.0.1",
-    "description": "Visually create hashing workflows with keys, salts, and hash functions.",
-    "repository": "github:@webwriter-app/hash",
-    "keywords": [
-        "webwriter-widget",
-        "hashing",
-        "widget-practical",
-        "iscedf2013-06",
-        "isced2011-1",
-        "isced2011-2"
-    ],
-    "license": "MIT",
-    "author": "nura.zimmermann@rwth-aachen.de",
-    "scripts": {
-        "prepublishOnly": "npx @webwriter/build",
-        "dev": "npx @webwriter/build dev",
-        "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
+  "name": "@webwriter/hash",
+  "version": "1.0.2",
+  "description": "Visually create hashing workflows with keys, salts, and hash functions.",
+  "repository": "github:webwriter-app/hash",
+  "keywords": [
+    "webwriter-widget",
+    "hashing",
+    "widget-practical",
+    "iscedf2013-06",
+    "isced2011-1",
+    "isced2011-2",
+    "widget-lang-en",
+    "widget-lang-de",
+    "widget-lang-ar",
+    "widget-lang-bg",
+    "widget-lang-cs",
+    "widget-lang-da",
+    "widget-lang-nl",
+    "widget-lang-et",
+    "widget-lang-fi",
+    "widget-lang-fr",
+    "widget-lang-el",
+    "widget-lang-hu",
+    "widget-lang-it",
+    "widget-lang-lv",
+    "widget-lang-lt",
+    "widget-lang-nb",
+    "widget-lang-pl",
+    "widget-lang-pt-PT",
+    "widget-lang-ro",
+    "widget-lang-ru",
+    "widget-lang-sk",
+    "widget-lang-sl",
+    "widget-lang-es",
+    "widget-lang-sv",
+    "widget-lang-tr",
+    "widget-lang-uk",
+    "widget-lang-pt-BR",
+    "widget-lang-ko",
+    "widget-lang-ja",
+    "widget-lang-id",
+    "widget-lang-zh-hans",
+    "widget-lang-zh-hant"
+  ],
+  "license": "MIT",
+  "author": "nura.zimmermann@rwth-aachen.de",
+  "scripts": {
+    "prepublishOnly": "npx @webwriter/build",
+    "dev": "npx @webwriter/build dev",
+    "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
+  },
+  "dependencies": {
+    "@lit/localize": "^0.12.2",
+    "@noble/hashes": "^2.3.0",
+    "@retejs/lit-plugin": "^2.0.3",
+    "@shoelace-style/shoelace": "^2.20.1",
+    "@tabler/icons": "^3.21.0",
+    "@webwriter/lit": "^2",
+    "lit": "^3",
+    "rete": "^2.0.3",
+    "rete-area-plugin": "^2.0.5",
+    "rete-connection-plugin": "^2.0.4",
+    "rete-context-menu-plugin": "^2.0.6",
+    "rete-dock-plugin": "^2.0.4",
+    "rete-engine": "^2.0.0",
+    "rete-render-utils": "^2.0.2"
+  },
+  "devDependencies": {
+    "@lit/localize-tools": "^0.8"
+  },
+  "exports": {
+    "./widgets/webwriter-hash.*": {
+      "source": "./src/widget/webwriter-hash.ts",
+      "default": "./dist/src/widget/webwriter-hash.*"
     },
-    "dependencies": {
-        "@noble/hashes": "^1.7.2",
-        "@retejs/lit-plugin": "^2.0.3",
-        "@shoelace-style/shoelace": "^2.20.1",
-        "@webwriter/lit": "^2",
-        "lit": "^3",
-        "rete": "^2.0.3",
-        "rete-area-plugin": "^2.0.5",
-        "rete-connection-plugin": "^2.0.4",
-        "rete-render-utils": "^2.0.2",
-        "rete-dock-plugin": "2.0.2",
-        "rete-engine": "^2.0.0",
-        "@tabler/icons": "^3.21.0",
-        "rete-context-menu-plugin": "2.0.3"
-    },
-    "devDependencies": {
-        "@lit/localize-tools": "^0.8"
-    },
-    "exports": {
-        "./widgets/webwriter-hash.*": {
-            "source": "./src/widget/webwriter-hash.ts",
-            "default": "./dist/src/widget/webwriter-hash.*"
-        },
-        "./snippets/password-pioniere-station-1.html": "./src/snippets/password-pioneers-station-1.html",
-        "./snippets/password-pioniere-station-2.html": "./src/snippets/password-pioneers-station-2.html",
-        "./snippets/password-pioniere-station-3.html": "./src/snippets/password-pioneers-station-3.html",
-        "./icon": "./src/lock-password.svg"
-    }
+    "./snippets/password-pioneers-station-1.html": "./src/snippets/password-pioneers-station-1.html",
+    "./snippets/password-pioneers-station-2.html": "./src/snippets/password-pioneers-station-2.html",
+    "./snippets/password-pioneers-station-3.html": "./src/snippets/password-pioneers-station-3.html",
+    "./icon": "./src/lock-password.svg",
+    "./editing-config.json": "./editing-config.json",
+    "./custom-elements.json": "./custom-elements.json"
+  },
+  "editingConfig": {
+    ".": {}
+  },
+  "customElements": "custom-elements.json"
 }
