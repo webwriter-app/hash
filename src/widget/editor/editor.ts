@@ -524,8 +524,9 @@ export async function createEditor(
                 setupNode(node); 
                 await editor.addNode(node);
                 const { k, x, y } = area.area.transform;
-                const translatedX = (clientX - x) / k;
-                const translatedY = (clientY - y) / k;
+                const bounds = area.nodeViews.get(node.id)?.element.getBoundingClientRect();
+                const translatedX = (clientX - x - (bounds?.width ?? 0) / 2) / k;
+                const translatedY = (clientY - y - (bounds?.height ?? 0) / 2) / k;
 
                 await area.translate(node.id, { x: translatedX, y: translatedY });
                 process(); 

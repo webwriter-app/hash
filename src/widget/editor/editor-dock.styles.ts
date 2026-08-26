@@ -25,6 +25,7 @@ export const styles = css`
     border: 1px solid #ced4da;
     border-radius: 4px;
     cursor: grab;
+    touch-action: none;
     user-select: none;
     text-align: center;
     font-family: sans-serif;
@@ -32,12 +33,16 @@ export const styles = css`
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     font-weight: 550;
   }
-  .dock-item:hover {
-    box-shadow: 0 2px 4px gray;
+  @media (hover: hover) {
+    .dock-item:hover {
+      box-shadow: 0 2px 4px gray;
+    }
   }
 
-  .dock-item:active {
+  .dock-item:active,
+  .dock-item.drag-source {
     cursor: grabbing;
+    box-shadow: 0 2px 4px gray;
   }
   .key {
     background: #f3f7f9;

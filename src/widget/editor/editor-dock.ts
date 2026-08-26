@@ -23,11 +23,6 @@ export class EditorDock extends LitElement {
         ];
     }
 
-    private handleDragStart(e: DragEvent, type: string) {
-        e.dataTransfer?.setData("nodeType", type);
-        e.dataTransfer!.effectAllowed = "copy";
-    }
-
     render() {
         return html`
             <div class="dock-header">${msg("Nodes", { desc: "Header of the list of draggable nodes" })}</div>
@@ -38,8 +33,7 @@ export class EditorDock extends LitElement {
             <sl-tooltip content=${msg("Required node for Hashing")} placement="right-end" hoist>
                 <div 
                     class="dock-item key" 
-                    draggable="true" 
-                    @dragstart=${(e: DragEvent) => this.handleDragStart(e, 'Key')}
+                    data-node-type="Key"
                 >
                     ${nodeTitle("Key")}
                 </div>
@@ -48,8 +42,7 @@ export class EditorDock extends LitElement {
             <sl-tooltip content=${msg("Optional node for Salting")} placement="right-end" hoist>
                 <div 
                     class="dock-item salt ${this.allowSalting ? '' : 'disabled'}" 
-                    draggable="${this.allowSalting}" 
-                    @dragstart=${(e: DragEvent) => this.handleDragStart(e, 'Salt')}
+                    data-node-type="Salt"
                 >
                     ${nodeTitle("Salt")}
                 </div>
@@ -58,10 +51,7 @@ export class EditorDock extends LitElement {
             <sl-tooltip content=${msg("Required node for Hashing")} placement="right-end" hoist>
                 <div 
                     class="dock-item hash-function" 
-                    draggable="true" 
-                    @dragstart=${(e: DragEvent) => {
-                        e.dataTransfer!.setData("nodeType", "HashFunction"); 
-                    }}            
+                    data-node-type="HashFunction"
                 >
                     ${nodeTitle("HashFunction")}
                 </div>
@@ -70,10 +60,7 @@ export class EditorDock extends LitElement {
             <sl-tooltip content=${msg("Required node for Hashing")} placement="right-end" hoist>
                 <div 
                     class="dock-item hash-value" 
-                    draggable="true" 
-                    @dragstart=${(e: DragEvent) => {
-                        e.dataTransfer!.setData("nodeType", "HashValue"); 
-                    }}              
+                    data-node-type="HashValue"
                 >
                     ${nodeTitle("HashValue")}
                 </div>

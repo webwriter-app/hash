@@ -107,6 +107,55 @@ export const styles = css`
     pointer-events: none;
   }
 
+  .rete.drag-over {
+    outline: 2px solid #39bdf8;
+    outline-offset: -2px;
+  }
+
+  .drag-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  .drag-preview {
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    padding: 10px;
+    background: white;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 550;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0.9;
+    will-change: transform;
+  }
+
+  .drag-preview.key {
+    background: #f3f7f9;
+    border-color: #085886;
+  }
+
+  .drag-preview.hash-function {
+    background: #fdf8ef;
+    border-color: #e78c1f;
+  }
+
+  .drag-preview.hash-value {
+    background: #eef0f2;
+    border-color: #0f3048;
+  }
+
+  .drag-preview.salt {
+    background: #e8f5e9;
+    border: 1.5px dashed #2e7d32;
+  }
+
   :host(:not([contenteditable="true"]):not([contenteditable=""])) .author-only {
     display: none !important;
   }
