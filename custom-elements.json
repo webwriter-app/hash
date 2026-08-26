@@ -1,0 +1,239 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/widget/webwriter-hash.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "WebwriterHash",
+          "members": [
+            {
+              "kind": "field",
+              "name": "allowAdding",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, enables the side drawer and allow drag-and-drop new nodes (Key, Salt, HashFunction, HashValue) to editor.",
+              "attribute": "allowAdding",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "allowDeleting",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, allows user to delete selected nodes from the graph.",
+              "attribute": "allowDeleting",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "editorState",
+              "type": {
+                "text": "any"
+              },
+              "default": "{}",
+              "description": "The JSON representation of the graph, containing all nodes, positions, and connections. Used for saving state in rerender.",
+              "attribute": "editorState",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
+            {
+              "kind": "field",
+              "name": "scopedElements",
+              "static": true,
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "reteRef",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "backgroundRef",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "editorInstance",
+              "type": {
+                "text": "any | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "nodeDrag",
+              "type": {
+                "text": "NodeDrag | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "dragFrame",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "handleEditorChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerDown",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerMove",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerEnd",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "requestDragFrame",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "isOverEditor",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "clientX",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "clientY",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "finishNodeDrag",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "toggleDock",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "allowAdding",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, enables the side drawer and allow drag-and-drop new nodes (Key, Salt, HashFunction, HashValue) to editor.",
+              "fieldName": "allowAdding"
+            },
+            {
+              "name": "allowDeleting",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, allows user to delete selected nodes from the graph.",
+              "fieldName": "allowDeleting"
+            },
+            {
+              "name": "editorState",
+              "type": {
+                "text": "any"
+              },
+              "default": "{}",
+              "description": "The JSON representation of the graph, containing all nodes, positions, and connections. Used for saving state in rerender.",
+              "fieldName": "editorState"
+            }
+          ],
+          "superclass": {
+            "name": "LitElementWw",
+            "package": "@webwriter/lit"
+          },
+          "tagName": "webwriter-hash",
+          "customElement": true,
+          "modulePath": "src/widget/webwriter-hash.ts",
+          "definitionPath": "src/widget/webwriter-hash.ts"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "WebwriterHash",
+          "declaration": {
+            "name": "WebwriterHash",
+            "module": "src/widget/webwriter-hash.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "webwriter-hash",
+          "declaration": {
+            "name": "WebwriterHash",
+            "module": "src/widget/webwriter-hash.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

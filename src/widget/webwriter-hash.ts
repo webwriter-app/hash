@@ -34,8 +34,17 @@ type NodeDrag = {
 @localized()
 export class WebwriterHash extends LitElementWw {
 
+    /**
+     * If true, enables the side drawer and allow drag-and-drop new nodes (Key, Salt, HashFunction, HashValue) to editor.
+     */
     @property({ type: Boolean, attribute: true, reflect: true }) accessor allowAdding = false;
+    /**
+     * If true, allows user to delete selected nodes from the graph.
+     */
     @property({ type: Boolean, attribute: true, reflect: true }) accessor allowDeleting = false;
+    /**
+     * The JSON representation of the graph, containing all nodes, positions, and connections. Used for saving state in rerender.
+     */
     @property({ type: Object, attribute: true, reflect: true }) accessor editorState: any = {};
 
     protected localize = LOCALIZE;

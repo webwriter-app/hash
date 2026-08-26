@@ -1,6 +1,6 @@
 {
   "name": "@webwriter/hash",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Visually create hashing workflows with keys, salts, and hash functions.",
   "repository": "github:webwriter-app/hash",
   "keywords": [
@@ -74,13 +74,15 @@
       "source": "./src/widget/webwriter-hash.ts",
       "default": "./dist/src/widget/webwriter-hash.*"
     },
-    "./snippets/password-pioniere-station-1.html": "./src/snippets/password-pioneers-station-1.html",
-    "./snippets/password-pioniere-station-2.html": "./src/snippets/password-pioneers-station-2.html",
-    "./snippets/password-pioniere-station-3.html": "./src/snippets/password-pioneers-station-3.html",
+    "./snippets/password-pioneers-station-1.html": "./src/snippets/password-pioneers-station-1.html",
+    "./snippets/password-pioneers-station-2.html": "./src/snippets/password-pioneers-station-2.html",
+    "./snippets/password-pioneers-station-3.html": "./src/snippets/password-pioneers-station-3.html",
     "./icon": "./src/lock-password.svg",
-    "./editing-config.json": "./editing-config.json"
+    "./editing-config.json": "./editing-config.json",
+    "./custom-elements.json": "./custom-elements.json"
   },
   "editingConfig": {
     ".": {}
-  }
+  },
+  "customElements": "custom-elements.json"
 }
