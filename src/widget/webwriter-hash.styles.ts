@@ -95,13 +95,16 @@ export const styles = css`
   .rete {
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(
-      #d1d5db var(--dot-size, 1px),
-      transparent 0
-    );
-    background-size: var(--bg-size, 20px) var(--bg-size, 20px);
-    background-position: var(--bg-pos-x, 0) var(--bg-pos-y, 0);
+    position: relative;
     background-color: #f9fafb;
+  }
+
+  .rete-grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
   }
 
   :host(:not([contenteditable="true"]):not([contenteditable=""])) .author-only {

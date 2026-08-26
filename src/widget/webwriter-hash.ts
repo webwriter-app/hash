@@ -46,6 +46,7 @@ export class WebwriterHash extends LitElementWw {
       }
 
     private reteRef = createRef<HTMLDivElement>();
+    private backgroundRef = createRef<HTMLCanvasElement>();
     private editorInstance?: any;
 
     // lifecycle, checks if editor is empty and sets permissions for authoring
@@ -62,11 +63,12 @@ export class WebwriterHash extends LitElementWw {
     // initialize editor.ts createEditor function values, add listeners and permissions
     async firstUpdated() {
    
-        if (this.reteRef.value && !this.editorInstance) {
+        if (this.reteRef.value && this.backgroundRef.value && !this.editorInstance) {
             requestAnimationFrame(async () => {
                 try {                    
                     this.editorInstance = await createEditor(
                         this.reteRef.value!, // editor
+                        this.backgroundRef.value!, // grid background
                         this.allowDeleting, // canDelete
                         this.isContentEditable, // isAuthor
                         this.editorState        // initialData
@@ -178,7 +180,11 @@ export class WebwriterHash extends LitElementWw {
                     <editor-dock .allowSalting=${true}></editor-dock> 
                 </sl-drawer>
 
-                <div id="app"><div ${ref(this.reteRef)} class="rete"></div></div>
+                <div id="app">
+                    <div ${ref(this.reteRef)} class="rete">
+                        <canvas ${ref(this.backgroundRef)} class="rete-grid" aria-hidden="true"></canvas>
+                    </div>
+                </div>
             </div>
 
             <div class="author-only options" part="options">

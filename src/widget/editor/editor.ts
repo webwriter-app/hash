@@ -27,7 +27,8 @@ type AreaExtra = LitArea2D<Schemes>;
 
 // main editor creation through rete function
 export async function createEditor(
-    container: HTMLElement, 
+    container: HTMLElement,
+    background: HTMLCanvasElement,
     canDelete: boolean,
     isAuthor: boolean, 
     initialData?: any 
@@ -80,17 +81,72 @@ export async function createEditor(
         }));
     };
     
-    // updates the grid background based on zoom/pan
-    const updateBackground = () => {
+    const backgroundContext = background.getContext("2d");
+    const gridResolution = 4;
+    const gridTile = document.createElement("canvas");
+    gridTile.width = 30 * gridResolution;
+    gridTile.height = 30 * gridResolution;
+    const gridTileContext = gridTile.getContext("2d");
+    let backgroundFrame: number | undefined;
+
+    // Draw the grid atomically
+    const drawBackground = () => {
+        backgroundFrame = undefined;
+        if (!backgroundContext || !gridTileContext) return;
+
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        if (width === 0 || height === 0) return;
+
+        const pixelRatio = window.devicePixelRatio || 1;
+        const canvasWidth = Math.max(1, Math.round(width * pixelRatio));
+        const canvasHeight = Math.max(1, Math.round(height * pixelRatio));
+        if (background.width !== canvasWidth || background.height !== canvasHeight) {
+            background.width = canvasWidth;
+            background.height = canvasHeight;
+        }
+
         const { k, x, y } = area.area.transform;
-        const bgSize = 30 * k;  
-        const dotSize = Math.max(1.5 * k, 0.5); 
-        container.style.setProperty("--bg-size", `${bgSize}px`);
-        container.style.setProperty("--dot-size", `${dotSize}px`);
-        container.style.setProperty("--bg-pos-x", `${x}px`);
-        container.style.setProperty("--bg-pos-y", `${y}px`);
+        const radius = Math.max(1.5 * k, 0.5);
+        gridTileContext.clearRect(0, 0, gridTile.width, gridTile.height);
+        gridTileContext.beginPath();
+        gridTileContext.arc(
+            gridTile.width / 2,
+            gridTile.height / 2,
+            radius * gridResolution / k,
+            0,
+            Math.PI * 2
+        );
+        gridTileContext.fillStyle = "#d1d5db";
+        gridTileContext.fill();
+
+        const gridPattern = backgroundContext.createPattern(gridTile, "repeat");
+        if (!gridPattern) return;
+
+        backgroundContext.setTransform(1, 0, 0, 1, 0, 0);
+        backgroundContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
+        const scale = pixelRatio * k / gridResolution;
+        const translateX = x * pixelRatio;
+        const translateY = y * pixelRatio;
+        backgroundContext.setTransform(scale, 0, 0, scale, translateX, translateY);
+        backgroundContext.fillStyle = gridPattern;
+        backgroundContext.fillRect(
+            -translateX / scale,
+            -translateY / scale,
+            canvasWidth / scale,
+            canvasHeight / scale
+        );
         container.style.setProperty("--zoom", String(k));
     };
+
+    const updateBackground = () => {
+        if (backgroundFrame !== undefined) return;
+        backgroundFrame = requestAnimationFrame(drawBackground);
+    };
+
+    const backgroundResizeObserver = new ResizeObserver(updateBackground);
+    backgroundResizeObserver.observe(container);
 
     AreaExtensions.restrictor(area, {
         scaling: { min: 0.1, max: 1 },
@@ -448,6 +504,8 @@ export async function createEditor(
         destroy: () => { 
             container.removeEventListener("pointerdown", syncPointer, true);
             window.removeEventListener("pointercancel", cancelConnection);
+            backgroundResizeObserver.disconnect();
+            if (backgroundFrame !== undefined) cancelAnimationFrame(backgroundFrame);
             area.destroy(); 
             editor.clear();
             engine.reset();
