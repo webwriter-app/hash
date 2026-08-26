@@ -40,7 +40,7 @@ export class HashNode extends LitElement {
   declare width: number;
   declare height: number;
   declare data: ClassicScheme["Node"] & NodeExtraData;
-  declare emit: ((type: string, payload: any) => void) | null;
+  declare emit: ((context: { type: string; data: any }) => void) | null;
 
   public static get styles(): CSSResult[] {
     return [
@@ -59,6 +59,45 @@ export class HashNode extends LitElement {
     };
   }
 
+
+  /*
+   * Rete measures a socket once, when its <rete-ref> mounts, and keeps that position for
+   * the connection ends. Anything that moves the sockets afterwards - a hash function
+   * gaining a channel, a control that finishes upgrading, the touch layout kicking in -
+   * leaves the connections attached to the old spots, because rete never measures again.
+   * Re-announcing a socket whose center moved is what makes it measure again.
+   */
+  private socketCenters = new WeakMap<Element, string>();
+  private socketObserver = new ResizeObserver(() => this.announceMovedSockets());
+
+  private announceMovedSockets() {
+    for (const ref of this.renderRoot.querySelectorAll<HTMLElement>("rete-ref")) {
+      const data = (ref as any).data;
+      if (!data) continue;
+
+      // the center is what rete stores, and it survives the touch target growing with the zoom
+      const center = `${ref.offsetLeft + ref.offsetWidth / 2}:${ref.offsetTop + ref.offsetHeight / 2}`;
+      if (this.socketCenters.get(ref) === center) continue;
+
+      const measured = this.socketCenters.has(ref);
+      this.socketCenters.set(ref, center);
+      if (measured) this.emit?.({ type: "rendered", data: { ...data, element: ref } });
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.socketObserver.observe(this);
+  }
+
+  disconnectedCallback() {
+    this.socketObserver.disconnect();
+    super.disconnectedCallback();
+  }
+
+  protected updated() {
+    this.announceMovedSockets();
+  }
 
   // state dispatcher 
   private dispatchNodeChange(key: string, value: any) {

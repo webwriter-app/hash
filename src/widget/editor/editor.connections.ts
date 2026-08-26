@@ -48,6 +48,9 @@ export function areSocketsFree(editor: NodeEditor<Schemes>, data: ConnectionData
     );
 }
 
+const isSameSocket = (a: SocketData, b: SocketData) =>
+    a.nodeId === b.nodeId && a.side === b.side && a.key === b.key;
+
 const findSocketData = (context: FlowContext, nodeId: string, side: Side, key: string) =>
     Array.from(context.socketsCache.values()).find(
         data => data.nodeId === nodeId && data.side === side && data.key === key
@@ -81,6 +84,10 @@ class SingleConnectionFlow extends ClassicFlow<Schemes, any[]> {
         }
 
         await super.pick(params, context);
+
+        // prevent leaving the dashed preview line hanging
+        const picked = this.getPickedSocket();
+        if (event === "up" && picked && !isSameSocket(picked, socket)) this.drop(context);
     }
 }
 

@@ -89,6 +89,7 @@ export async function createEditor(
         container.style.setProperty("--dot-size", `${dotSize}px`);
         container.style.setProperty("--bg-pos-x", `${x}px`);
         container.style.setProperty("--bg-pos-y", `${y}px`);
+        container.style.setProperty("--zoom", String(k));
     };
 
     AreaExtensions.restrictor(area, {
@@ -168,6 +169,12 @@ export async function createEditor(
     editor.use(area);
     area.use(connection);
     area.use(litRenderer);
+
+    const syncPointer = (event: PointerEvent) => area.area.setPointerFrom(event);
+    container.addEventListener("pointerdown", syncPointer, true);
+
+    const cancelConnection = () => connection.drop();
+    window.addEventListener("pointercancel", cancelConnection);
 
     const removeNodeWithConnections = async (nodeId: string) => {
         if (!currentCanDelete) return;
@@ -439,6 +446,8 @@ export async function createEditor(
 
     return {
         destroy: () => { 
+            container.removeEventListener("pointerdown", syncPointer, true);
+            window.removeEventListener("pointercancel", cancelConnection);
             area.destroy(); 
             editor.clear();
             engine.reset();

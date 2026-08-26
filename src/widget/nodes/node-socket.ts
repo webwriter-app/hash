@@ -16,8 +16,8 @@ export class NodeSocket extends LitElement {
     static styles = css`
     :host {
       display: inline-block;
-      width: 16px;
-      height: 16px;
+      width: var(--socket-size, 16px);
+      height: var(--socket-size, 16px);
       border-radius: 50%;
       background: white;
       box-sizing: border-box;

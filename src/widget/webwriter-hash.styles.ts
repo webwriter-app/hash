@@ -36,8 +36,7 @@ export const styles = css`
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border: 1px solid #e0e0e0;
     align-self: center;
-
-  }Ç
+  }
 
   .pill-center {
     left: 50%;
