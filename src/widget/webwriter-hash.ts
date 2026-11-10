@@ -1,6 +1,6 @@
 import { html, css, CSSResult } from "lit";
 import { LitElementWw } from "@webwriter/lit";
-import { customElement, property } from "lit/decorators.js"; 
+import { customElement, property, state } from "lit/decorators.js";
 import { localized, msg } from "@lit/localize";
 // @ts-ignore
 import "@shoelace-style/shoelace/dist/themes/light.css";
@@ -9,7 +9,6 @@ import { createRef, ref } from "lit/directives/ref.js";
 import { createEditor } from "./editor/editor";
 import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.component.js";
 import SlDrawer from "@shoelace-style/shoelace/dist/components/drawer/drawer.js";
-import SlSwitch from "@shoelace-style/shoelace/dist/components/switch/switch.js";
 import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js";
 
 import IconFocus2 from "@tabler/icons/outline/focus-2.svg";
@@ -34,6 +33,12 @@ type NodeDrag = {
 @localized()
 export class WebwriterHash extends LitElementWw {
 
+    static options = {
+        allowAdding: { type: Boolean, label: { _: "Adding Nodes" } },
+        allowDeleting: { type: Boolean, label: { _: "Deleting Nodes" } },
+    };
+    readonly options = WebwriterHash.options;
+
     /**
      * If true, enables the side drawer and allow drag-and-drop new nodes (Key, Salt, HashFunction, HashValue) to editor.
      */
@@ -45,7 +50,7 @@ export class WebwriterHash extends LitElementWw {
     /**
      * The JSON representation of the graph, containing all nodes, positions, and connections. Used for saving state in rerender.
      */
-    @property({ type: Object, attribute: true, reflect: true }) accessor editorState: any = {};
+    @state() accessor editorState: any = {};
 
     protected localize = LOCALIZE;
 
@@ -54,7 +59,6 @@ export class WebwriterHash extends LitElementWw {
             "sl-icon": SlIcon,
             "sl-drawer": SlDrawer,
             "editor-dock": EditorDock,
-            "sl-switch": SlSwitch,
             "sl-tooltip": SlTooltip
         };
     }
@@ -68,12 +72,29 @@ export class WebwriterHash extends LitElementWw {
     private reteRef = createRef<HTMLDivElement>();
     private backgroundRef = createRef<HTMLCanvasElement>();
     private editorInstance?: any;
+    private dataObserver?: MutationObserver;
+    private legacyEditorState: any = undefined;
+    private savedDataSnapshot: string | null = null;
+    private applyingData = false;
+    private remoteStatePending = false;
     private nodeDrag?: NodeDrag;
     private dragFrame?: number;
 
     // lifecycle, checks if editor is empty and sets permissions for authoring
     connectedCallback() {
+        const rawLegacyState = this.getAttribute("editorstate");
+        if (rawLegacyState !== null) {
+            try { this.legacyEditorState = JSON.parse(rawLegacyState); }
+            catch { this.legacyEditorState = undefined; }
+        }
         super.connectedCallback();
+        this.dataObserver = new MutationObserver(() => this.readAuthoredData());
+        this.dataObserver.observe(this, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ["slot", "type"] });
+        if (this.dataBlock()) this.readAuthoredData();
+        else if (this.legacyEditorState !== undefined) {
+            this.editorState = this.legacyEditorState;
+            this.persistAuthoredData();
+        }
         const isEmpty = !this.editorState?.nodes || this.editorState.nodes.length === 0;
         
         if (this.isContentEditable && isEmpty) {
@@ -95,6 +116,12 @@ export class WebwriterHash extends LitElementWw {
                         this.isContentEditable, // isAuthor
                         this.editorState        // initialData
                     );
+
+                    if (this.remoteStatePending && this.editorState?.nodes) {
+                        await this.editorInstance.importGraph(this.editorState);
+                        this.remoteStatePending = false;
+                    }
+                    if (!this.editorState?.nodes?.length) this.editorState = this.editorInstance.getGraph();
                     
                     await this.editorInstance.updatePermissions({
                         canDelete: this.allowDeleting,
@@ -118,6 +145,8 @@ export class WebwriterHash extends LitElementWw {
     // reset, destroy editor and remove listeners
     disconnectedCallback(): void {
         this.finishNodeDrag();
+        this.dataObserver?.disconnect();
+        this.dataObserver = undefined;
         super.disconnectedCallback();
         if (this.editorInstance) {
             this.editorInstance.destroy();
@@ -133,9 +162,61 @@ export class WebwriterHash extends LitElementWw {
         this.editorState = data;
     }
 
+    private dataBlock(): HTMLScriptElement | null {
+        return this.querySelector(':scope > script[type="application/json"][slot="data"]');
+    }
+
+    private readAuthoredData() {
+        const block = this.dataBlock();
+        if (!block || this.applyingData) return;
+        try {
+            const value = JSON.parse(block.textContent ?? "");
+            if (!value || typeof value !== "object" || !value.editorState) return;
+            const snapshot = JSON.stringify({editorState: value.editorState});
+            if (snapshot === this.savedDataSnapshot) return;
+            this.applyingData = true;
+            this.remoteStatePending = this.hasUpdated;
+            this.editorState = value.editorState;
+            this.savedDataSnapshot = snapshot;
+            this.removeAttribute("editorstate");
+        } catch (error) {
+            console.error("Unable to read hash data block", error);
+        } finally {
+            this.applyingData = false;
+        }
+    }
+
+    private persistAuthoredData() {
+        if (!this.isConnected || this.applyingData || !this.editorState?.nodes) return;
+        const snapshot = JSON.stringify({editorState: this.editorState});
+        if (snapshot === this.savedDataSnapshot) return;
+        let block = this.dataBlock();
+        if (!block) {
+            block = this.ownerDocument.createElement("script");
+            block.type = "application/json";
+            block.slot = "data";
+            this.append(block);
+        }
+        this.applyingData = true;
+        block.textContent = snapshot.replace(/</g, "\\u003c");
+        this.savedDataSnapshot = snapshot;
+        this.legacyEditorState = undefined;
+        this.removeAttribute("editorstate");
+        this.applyingData = false;
+    }
+
     // lifecycle, when property changed
     async updated(changedProperties: Map<string, any>) {
-            
+        if (changedProperties.has("editorState")) {
+            if (this.remoteStatePending) {
+                if (this.editorInstance && this.editorState?.nodes) {
+                    await this.editorInstance.importGraph(this.editorState);
+                    this.remoteStatePending = false;
+                }
+            } else {
+                this.persistAuthoredData();
+            }
+        }
         if (
         changedProperties.has('allowAdding') || 
         changedProperties.has('allowDeleting') || 
@@ -290,11 +371,6 @@ export class WebwriterHash extends LitElementWw {
 
             <div class="drag-overlay" aria-hidden="true"></div>
 
-            <div class="author-only options" part="options">
-                <div class="description">${msg("Toggle these settings for the author and student view.")}</div>
-                <sl-switch ?checked=${this.allowAdding} @sl-change=${(e: any) => this.allowAdding = e.target.checked}>${msg("Adding Nodes")}</sl-switch>
-                <sl-switch ?checked=${this.allowDeleting} @sl-change=${(e: any) => this.allowDeleting = e.target.checked}>${msg("Deleting Nodes")}</sl-switch>
-                </div>
         `;
     }
 }
