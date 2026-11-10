@@ -4,22 +4,22 @@
 <body>
 <trans-unit id="s658e6a008311409f">
   <source>Drag and drop the nodes into the editor</source>
-<target>Nodes ወደ አርታዒው ጎትተው ይልቀቁ</target></trans-unit>
+<target>መስቀለኛ ነጥቦች ወደ አርታዒው ጎትተው ይልቀቁ</target></trans-unit>
 <trans-unit id="s80a693fdbbc735b3">
   <source>Required node for Hashing</source>
-<target>ለhashing የሚያስፈልግ node</target></trans-unit>
+<target>ለሃሽ ማድረግ የሚያስፈልግ መስቀለኛ ነጥብ</target></trans-unit>
 <trans-unit id="sa61cbfcfe4598f64">
   <source>Optional node for Salting</source>
-<target>salt ለመጨመር አማራጭ node</target></trans-unit>
+<target>ጨው ለመጨመር አማራጭ መስቀለኛ ነጥብ</target></trans-unit>
 <trans-unit id="sd9bdfc0f95188eea">
   <source>Delete node</source>
-<target>Node ሰርዝ</target></trans-unit>
+<target>መስቀለኛ ነጥብ ሰርዝ</target></trans-unit>
 <trans-unit id="sdf86efcdc302af52">
   <source>Select a hash function</source>
-<target>የhash ተግባር ይምረጡ</target></trans-unit>
+<target>የሃሽ ተግባር ይምረጡ</target></trans-unit>
 <trans-unit id="s7c0462add8379ba2">
   <source>Hashed value result</source>
-<target>የhash ዋጋ ውጤት</target></trans-unit>
+<target>የሃሽ ዋጋ ውጤት</target></trans-unit>
 <trans-unit id="sdccd8f78d52d3a87">
   <source>Copy to clipboard</source>
 <target>ወደ ቅንጥብ ሰሌዳ ቅዳ</target></trans-unit>
@@ -28,38 +28,38 @@
 <target>ቁልፍ ያስገቡ...</target></trans-unit>
 <trans-unit id="sd5fc23432952db23">
   <source>Key input + Salt</source>
-<target>የቁልፍ ግቤት + salt</target></trans-unit>
+<target>የቁልፍ ግቤት + ጨው</target></trans-unit>
 <trans-unit id="se34da59fd0f2a3e1">
   <source>Adding Nodes</source>
-<target>Nodes መጨመር</target></trans-unit>
+<target>መስቀለኛ ነጥቦች መጨመር</target></trans-unit>
 <trans-unit id="s3e99b3826b00964c">
   <source>Deleting Nodes</source>
-<target>Nodes መሰረዝ</target></trans-unit>
+<target>መስቀለኛ ነጥቦች መሰረዝ</target></trans-unit>
 <trans-unit id="s87730e5071589cc6">
   <source>Hash Editor</source>
-<target>የHash አርታዒ</target></trans-unit>
+<target>የሃሽ አርታዒ</target></trans-unit>
 <trans-unit id="scc2f08380b867322">
   <source>Toggle node menu</source>
-<target>የnodes ምናሌን አሳይ ወይም ደብቅ</target></trans-unit>
+<target>የመስቀለኛ ነጥቦች ምናሌን አሳይ ወይም ደብቅ</target></trans-unit>
 <trans-unit id="seded5609c55e7071">
   <source>Focus on nodes</source>
-<target>እይታን ከnodes ጋር አስተካክል</target></trans-unit>
+<target>እይታን ከመስቀለኛ ነጥቦች ጋር አስተካክል</target></trans-unit>
 <trans-unit id="s8a0ee3d87938f19a">
   <source>Nodes</source>
   <note from="lit-localize">Header of the list of draggable nodes</note>
-<target>Nodes</target></trans-unit>
+<target>መስቀለኛ ነጥቦች</target></trans-unit>
 <trans-unit id="sfe7895d83752c894">
   <source>Salt text</source>
   <note from="lit-localize">Label of the field showing the generated salt</note>
-<target>የsalt ጽሑፍ</target></trans-unit>
+<target>የጨው ጽሑፍ</target></trans-unit>
 <trans-unit id="hc60fe849d5871ed0">
   <source>Key + <x id="0" equiv-text="&lt;b&gt;" />Salt<x id="1" equiv-text="&lt;/b&gt;" /></source>
   <note from="lit-localize">Label of the field showing the key with the salt appended</note>
-<target>ቁልፍ + <x id="0" equiv-text="&lt;b&gt;" />salt<x id="1" equiv-text="&lt;/b&gt;" /></target></trans-unit>
+<target>ቁልፍ + <x id="0" equiv-text="&lt;b&gt;" />ጨው<x id="1" equiv-text="&lt;/b&gt;" /></target></trans-unit>
 <trans-unit id="s340c5424c1068661">
   <source>Salt</source>
   <note from="lit-localize">Name of the node appending a salt to the key</note>
-<target>Salt</target></trans-unit>
+<target>ጨው</target></trans-unit>
 <trans-unit id="s506b6a19d12f414c">
   <source>Key</source>
   <note from="lit-localize">Name of the node holding the text that gets hashed</note>
@@ -67,11 +67,11 @@
 <trans-unit id="s082194e632f41463">
   <source>Hash Function</source>
   <note from="lit-localize">Name of the node selecting the hash algorithm</note>
-<target>የHash ተግባር</target></trans-unit>
+<target>የሃሽ ተግባር</target></trans-unit>
 <trans-unit id="s8617fc8fa9c02980">
   <source>Hash Value</source>
   <note from="lit-localize">Name of the node showing the hashing result</note>
-<target>የHash ዋጋ</target></trans-unit>
+<target>የሃሽ ዋጋ</target></trans-unit>
 <trans-unit id="s5f343a43e7ea9f91">
   <source>Error</source>
   <note from="lit-localize">Shown instead of a hash value when hashing fails</note>
