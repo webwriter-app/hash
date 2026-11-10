@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Chiave`,
 's5f343a43e7ea9f91': `Errore`,
 's658e6a008311409f': `Trascina e rilascia i nodi nell'editor`,
-'s6bc7b85be71db921': `Attiva/disattiva queste impostazioni per la visualizzazione autore e studente.`,
 's7c0462add8379ba2': `Risultato del valore sottoposto a hash`,
 's80a693fdbbc735b3': `Nodo richiesto per l'hashing`,
 's8617fc8fa9c02980': `Valore hash`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Metti a fuoco i nodi`,
 'sfe7895d83752c894': `Testo di salt`,
     };
-  

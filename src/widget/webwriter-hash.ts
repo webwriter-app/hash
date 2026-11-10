@@ -1,7 +1,6 @@
 import { html, css, CSSResult } from "lit";
 import { LitElementWw } from "@webwriter/lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { localized, msg } from "@lit/localize";
 // @ts-ignore
 import "@shoelace-style/shoelace/dist/themes/light.css";
 
@@ -15,8 +14,8 @@ import IconFocus2 from "@tabler/icons/outline/focus-2.svg";
 import IconLayoutSidebar from "@tabler/icons/outline/layout-sidebar.svg"; 
 import { EditorDock } from "./editor/editor-dock";
 import { styles } from "./webwriter-hash.styles";
-// @ts-ignore
-import LOCALIZE from "../../localization/generated";
+import type { MsgFn } from "@lit/localize";
+import { createLocalizer, effectiveLanguage, sourceMsg } from "../../localization/localizer";
 
 type NodeDrag = {
     pointerId: number;
@@ -30,14 +29,29 @@ type NodeDrag = {
 };
 
 @customElement("webwriter-hash")
-@localized()
 export class WebwriterHash extends LitElementWw {
+    // Inherited language must not be reflected as an authored attribute.
+    static override get observedAttributes() {
+        return super.observedAttributes.filter(name => name !== "lang");
+    }
 
-    static options = {
-        allowAdding: { type: Boolean, label: { _: "Adding Nodes" } },
-        allowDeleting: { type: Boolean, label: { _: "Deleting Nodes" } },
-    };
-    readonly options = WebwriterHash.options;
+    protected static override finalize() {
+        super.finalize();
+        // Legacy decorators inherit Lit's standard-decorator metadata.
+        this.elementProperties.set("lang", { attribute: false, noAccessor: true });
+    }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+
+    private static makeOptions(msg: MsgFn) {
+        return {
+            allowAdding: { type: Boolean, label: { _: msg("Adding Nodes") } },
+            allowDeleting: { type: Boolean, label: { _: msg("Deleting Nodes") } },
+        };
+    }
+    static options = WebwriterHash.makeOptions(sourceMsg);
+    readonly options = WebwriterHash.makeOptions(sourceMsg);
 
     /**
      * If true, enables the side drawer and allow drag-and-drop new nodes (Key, Salt, HashFunction, HashValue) to editor.
@@ -52,7 +66,10 @@ export class WebwriterHash extends LitElementWw {
      */
     @state() accessor editorState: any = {};
 
-    protected localize = LOCALIZE;
+    protected localize = createLocalizer(this, () => {
+        Object.assign(this.options, WebwriterHash.makeOptions(this.msg));
+    });
+    readonly msg = this.localize.msg;
 
     static get scopedElements() {
         return {
@@ -346,19 +363,19 @@ export class WebwriterHash extends LitElementWw {
                 @pointerup=${this.handlePointerEnd}
                 @pointercancel=${this.handlePointerEnd}
             >
-                <div class="pill pill-center"><span class="instruction">${msg("Hash Editor")}</span></div>
+                <div class="pill pill-center"><span class="instruction">${this.msg("Hash Editor")}</span></div>
                 <div class="pill pill-right">
                     ${showDrawer ? html`
-                        <sl-tooltip content=${msg("Toggle node menu")}>
+                        <sl-tooltip content=${this.msg("Toggle node menu")}>
                             <sl-icon src=${IconLayoutSidebar} class=${this.allowAdding ? '' : 'icon-disabled'} @click=${() => this.toggleDock()}></sl-icon>
                         </sl-tooltip>
                     ` : ''}
-                    <sl-tooltip content=${msg("Focus on nodes")}> 
+                    <sl-tooltip content=${this.msg("Focus on nodes")}>
                         <sl-icon src=${IconFocus2} @click=${() => this.editorInstance?.zoomToNodes(!!this.renderRoot.querySelector("#drawer[open]"))}></sl-icon>
                     </sl-tooltip>    
                 </div>
 
-                <sl-drawer label=${msg("Tools", { desc: "Title of the drawer listing the draggable nodes" })} id="drawer" placement="start" class="drawer-dock" contained no-header ?open=${this.allowAdding}>
+                <sl-drawer label=${this.msg("Tools", { desc: "Title of the drawer listing the draggable nodes" })} id="drawer" placement="start" class="drawer-dock" contained no-header ?open=${this.allowAdding}>
                     <editor-dock .allowSalting=${true}></editor-dock> 
                 </sl-drawer>
 

@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Kunci`,
 's5f343a43e7ea9f91': `Kesalahan`,
 's658e6a008311409f': `Seret dan lepaskan node-node tersebut ke dalam editor`,
-'s6bc7b85be71db921': `Aktifkan/nonaktifkan pengaturan ini untuk tampilan penulis dan siswa.`,
 's7c0462add8379ba2': `Hasil nilai hashing`,
 's80a693fdbbc735b3': `Node yang diperlukan untuk Hashing`,
 's8617fc8fa9c02980': `Nilai hash`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Fokus pada node`,
 'sfe7895d83752c894': `Teks garam`,
     };
-  

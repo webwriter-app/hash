@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Sleutel`,
 's5f343a43e7ea9f91': `Fout`,
 's658e6a008311409f': `Sleep de knooppunten naar de editor en zet ze daar neer`,
-'s6bc7b85be71db921': `Schakel deze instellingen in of uit voor de weergave van de auteur en de student.`,
 's7c0462add8379ba2': `Resultaat van de hashed waarde`,
 's80a693fdbbc735b3': `Vereist knooppunt voor hashing`,
 's8617fc8fa9c02980': `Hashwaarde`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Focus op knooppunten`,
 'sfe7895d83752c894': `Salt-tekst`,
     };
-  

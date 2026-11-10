@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Ключ`,
 's5f343a43e7ea9f91': `Ошибка`,
 's658e6a008311409f': `Перетащите узлы в редактор`,
-'s6bc7b85be71db921': `Переключить эти настройки для режимов просмотра «Автор» и «Студент».`,
 's7c0462add8379ba2': `Результат хеширования`,
 's80a693fdbbc735b3': `Узел, необходимый для хеширования`,
 's8617fc8fa9c02980': `Хеш-значение`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Фокус на узлах`,
 'sfe7895d83752c894': `Текст соли`,
     };
-  

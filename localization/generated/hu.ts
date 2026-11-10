@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Kulcs`,
 's5f343a43e7ea9f91': `Hiba`,
 's658e6a008311409f': `Húzza át a csomópontokat az szerkesztőbe`,
-'s6bc7b85be71db921': `Ezeket a beállításokat a szerzői és a hallgatói nézetben is be- és kikapcsolhatja.`,
 's7c0462add8379ba2': `A hash-érték eredménye`,
 's80a693fdbbc735b3': `A hash-eléshez szükséges csomópont`,
 's8617fc8fa9c02980': `Hash-érték`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Fókusz a csomópontokra`,
 'sfe7895d83752c894': `Sószöveg`,
     };
-  

@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Ključ`,
 's5f343a43e7ea9f91': `Napaka`,
 's658e6a008311409f': `Vlečite vozlišča v urejevalnik in jih tam spustite`,
-'s6bc7b85be71db921': `Preklopite te nastavitve za pogled avtorja in študenta.`,
 's7c0462add8379ba2': `Rezultat hashirane vrednosti`,
 's80a693fdbbc735b3': `Potrebno vozlišče za hashiranje`,
 's8617fc8fa9c02980': `Hash vrednost`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Osredotoči se na vozlišča`,
 'sfe7895d83752c894': `Salt besedilo`,
     };
-  

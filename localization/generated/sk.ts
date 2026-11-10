@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Kľúč`,
 's5f343a43e7ea9f91': `Chyba`,
 's658e6a008311409f': `Presuňte uzly do editora pomocou funkcie „drag and drop“`,
-'s6bc7b85be71db921': `Prepínanie týchto nastavení pre zobrazenie autora a študenta.`,
 's7c0462add8379ba2': `Výsledná hashovaná hodnota`,
 's80a693fdbbc735b3': `Povinný uzol pre hashovanie`,
 's8617fc8fa9c02980': `Hodnota hash`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Zameranie na uzly`,
 'sfe7895d83752c894': `Text so soľou`,
     };
-  

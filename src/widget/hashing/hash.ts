@@ -1,5 +1,3 @@
-import { msg } from "@lit/localize";
-
 import { bytesToHex } from "@noble/hashes/utils.js";
 import { hash_algorithms, type HashAlgorithmName } from "./algoithms";
 
@@ -17,7 +15,7 @@ export function computeHashHex(algorithm: string, input: string): string {
     const data = new TextEncoder().encode(input);
     return bytesToHex(algo(data));
   } catch {
-    return msg("Error", { desc: "Shown instead of a hash value when hashing fails" });
+    return "Error";
   }
 }
 

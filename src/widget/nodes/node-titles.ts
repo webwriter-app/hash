@@ -1,6 +1,7 @@
-import { msg } from "@lit/localize";
+import type { MsgFn } from "@lit/localize";
+import { sourceMsg } from "../../../localization/localizer";
 
-export function nodeTitle(label: string): string {
+export function nodeTitle(label: string, msg: MsgFn = sourceMsg): string {
     switch (label) {
         case "Key":
             return msg("Key", { desc: "Name of the node holding the text that gets hashed" });
@@ -15,6 +16,6 @@ export function nodeTitle(label: string): string {
     }
 }
 
-export function displayNodeTitle(label: string, customTitle?: string): string {
-    return !customTitle || customTitle === label ? nodeTitle(label) : customTitle;
+export function displayNodeTitle(label: string, customTitle?: string, msg: MsgFn = sourceMsg): string {
+    return !customTitle || customTitle === label ? nodeTitle(label, msg) : customTitle;
 }

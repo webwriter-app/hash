@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Ключ`,
 's5f343a43e7ea9f91': `Помилка`,
 's658e6a008311409f': `Перетягніть вузли в редактор`,
-'s6bc7b85be71db921': `Увімкнути/вимкнути ці налаштування для режиму автора та студента.`,
 's7c0462add8379ba2': `Результат хешування`,
 's80a693fdbbc735b3': `Необхідний вузол для хешування`,
 's8617fc8fa9c02980': `Хеш-значення`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Фокус на вузлах`,
 'sfe7895d83752c894': `Текст солі`,
     };
-  

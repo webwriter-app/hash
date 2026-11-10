@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Nøkkel`,
 's5f343a43e7ea9f91': `Feil`,
 's658e6a008311409f': `Dra og slipp nodene inn i redigeringsverktøyet`,
-'s6bc7b85be71db921': `Veksle mellom disse innstillingene for forfatter- og studentvisningen.`,
 's7c0462add8379ba2': `Resultat av hashing`,
 's80a693fdbbc735b3': `Nødvendig node for hashing`,
 's8617fc8fa9c02980': `Hashverdi`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Fokus på noder`,
 'sfe7895d83752c894': `Salttekst`,
     };
-  

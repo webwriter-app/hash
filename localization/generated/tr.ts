@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Anahtar`,
 's5f343a43e7ea9f91': `Hata`,
 's658e6a008311409f': `Düğümleri düzenleyiciye sürükleyip bırakın`,
-'s6bc7b85be71db921': `Yazar ve öğrenci görünümü için bu ayarları değiştirin.`,
 's7c0462add8379ba2': `Hesaplanan hash değeri`,
 's80a693fdbbc735b3': `Hashing için gerekli düğüm`,
 's8617fc8fa9c02980': `Hash Değeri`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Düğümlere odaklan`,
 'sfe7895d83752c894': `Salt metni`,
     };
-  

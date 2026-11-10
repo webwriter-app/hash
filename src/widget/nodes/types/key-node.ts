@@ -1,12 +1,12 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property, eventOptions } from "lit/decorators.js";
-import { localized, msg } from "@lit/localize";
+import { connectMessages } from "../../../../localization/localizer";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlTextarea from "@shoelace-style/shoelace/dist/components/textarea/textarea.js";
 
 @customElement("key-node")
-@localized()
 export class KeyNodeUI extends LitElement {
+  protected readonly msg = connectMessages(this);
   @property() value: string = "";
 
   static get scopedElements() {
@@ -59,7 +59,7 @@ export class KeyNodeUI extends LitElement {
   render() {
     return html`
       <sl-textarea
-        placeholder=${msg("Enter a key...")}
+        placeholder=${this.msg("Enter a key...")}
         resize="none"
         .value=${this.value}
         @sl-input=${this.onInputChange}

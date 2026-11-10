@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Schlüssel`,
 's5f343a43e7ea9f91': `Fehler`,
 's658e6a008311409f': `Ziehen Sie die Knoten per Drag-and-Drop in den Editor`,
-'s6bc7b85be71db921': `Diese Einstellungen für die Autoren- und Teilnehmeransicht umschalten.`,
 's7c0462add8379ba2': `Ergebnis des Hash-Werts`,
 's80a693fdbbc735b3': `Erforderlicher Knoten für das Hashing`,
 's8617fc8fa9c02980': `Hash-Wert`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Fokus auf Knoten`,
 'sfe7895d83752c894': `Salt-Text`,
     };
-  

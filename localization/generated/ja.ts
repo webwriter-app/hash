@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `キー`,
 's5f343a43e7ea9f91': `エラー`,
 's658e6a008311409f': `ノードをエディタにドラッグ＆ドロップします`,
-'s6bc7b85be71db921': `作成者ビューと学生ビューのこれらの設定を切り替えます。`,
 's7c0462add8379ba2': `ハッシュ値の結果`,
 's80a693fdbbc735b3': `ハッシュ処理に必要なノード`,
 's8617fc8fa9c02980': `ハッシュ値`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `ノードにフォーカスを合わせる`,
 'sfe7895d83752c894': `ソルトテキスト`,
     };
-  
