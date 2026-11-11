@@ -105,7 +105,16 @@
       "he": "צרו באופן חזותי תהליכי גיבוב בעזרת מפתחות, מלח ופונקציות גיבוב.",
       "az": "Açarlar, duzlar və heş funksiyaları ilə heşləmə iş axınlarını vizual şəkildə yaradın.",
       "tk": "Açarlar, duzlar we haş funksiýalary bilen haş iş akymlaryny şekil görnüşinde dörediň.",
-      "be": "Візуальна стварайце працэсы хэшавання з ключамі, солямі і хэш-функцыямі."
+      "be": "Візуальна стварайце працэсы хэшавання з ключамі, солямі і хэш-функцыямі.",
+      "yue-Hans": "用视觉化方式建立杂凑流程，包含金钥、盐值同杂凑函数。",
+      "yue-Hant": "用視覺化方式建立雜湊流程，包含金鑰、鹽值同雜湊函數。",
+      "kmr": "Rêzikên xebata hashê bi mifte, salt û fonksiyonên hashê bi awayekî dîtbar çêbike.",
+      "kmr-Latn": "Rêzikên xebata hashê bi mifte, salt û fonksiyonên hashê bi awayekî dîtbar çêbike.",
+      "kmr-Arab": "رێزکێن خەباتا هاسهێ ب مفتە, سالت ئوو فۆنکسیۆنێن هاسهێ ب ئاوایەکی دیتبار چێبکە.",
+      "ckb": "ڕەوتی کارکردنی هاش بە شێوەی بینراو دروست بکە بە کلیل، خوێ و فەنکشنی هاش.",
+      "ckb-Arab": "ڕەوتی کارکردنی هاش بە شێوەی بینراو دروست بکە بە کلیل، خوێ و فەنکشنی هاش.",
+      "af-ZA": "Stel werkstrome vir berekening van hutswaardes visueel saam met sleutels, soute en hutsfunksies.",
+      "af-NA": "Stel werkstrome vir berekening van hutswaardes visueel saam met sleutels, soute en hutsfunksies."
     },
     "label": {
       "_": "Hash",
@@ -210,7 +219,16 @@
       "he": "גיבוב",
       "az": "Heş",
       "tk": "Haş",
-      "be": "Хэш"
+      "be": "Хэш",
+      "yue-Hans": "杂凑",
+      "yue-Hant": "雜湊",
+      "kmr": "Hash",
+      "kmr-Latn": "Hash",
+      "kmr-Arab": "هاسه",
+      "ckb": "هاش",
+      "ckb-Arab": "هاش",
+      "af-ZA": "Hutswaarde",
+      "af-NA": "Hutswaarde"
     }
   },
   "./widgets/webwriter-hash": {
@@ -317,7 +335,16 @@
       "he": "גיבוב",
       "az": "Heş",
       "tk": "Haş",
-      "be": "Хэш"
+      "be": "Хэш",
+      "yue-Hans": "杂凑",
+      "yue-Hant": "雜湊",
+      "kmr": "Hash",
+      "kmr-Latn": "Hash",
+      "kmr-Arab": "هاسه",
+      "ckb": "هاش",
+      "ckb-Arab": "هاش",
+      "af-ZA": "Hutswaarde",
+      "af-NA": "Hutswaarde"
     }
   },
   "./snippets/password-pioneers-station-1": {
@@ -424,7 +451,16 @@
       "he": "חלוצי הסיסמאות: תחנה 1",
       "az": "Parol pionerləri: stansiya 1",
       "tk": "Parol pionerleri: 1-nji beket",
-      "be": "Піянеры пароляў: станцыя 1"
+      "be": "Піянеры пароляў: станцыя 1",
+      "yue-Hans": "密码先锋站 1",
+      "yue-Hant": "密碼先鋒站 1",
+      "kmr": "Pêşengên Şîfreyê Rawesta-1",
+      "kmr-Latn": "Pêşengên Şîfreyê Rawesta-1",
+      "kmr-Arab": "پێشەنگێن شیفرەیێ راوەستا-1",
+      "ckb": "پێشەنگانی وشەی نهێنی ـ وێستگەی 1",
+      "ckb-Arab": "پێشەنگانی وشەی نهێنی ـ وێستگەی 1",
+      "af-ZA": "Wagwoordpioniers – Stasie 1",
+      "af-NA": "Wagwoordpioniers – Stasie 1"
     }
   },
   "./snippets/password-pioneers-station-2": {
@@ -531,7 +567,16 @@
       "he": "חלוצי הסיסמאות: תחנה 2",
       "az": "Parol pionerləri: stansiya 2",
       "tk": "Parol pionerleri: 2-nji beket",
-      "be": "Піянеры пароляў: станцыя 2"
+      "be": "Піянеры пароляў: станцыя 2",
+      "yue-Hans": "密码先锋站 2",
+      "yue-Hant": "密碼先鋒站 2",
+      "kmr": "Pêşengên Şîfreyê - Rawesta 2",
+      "kmr-Latn": "Pêşengên Şîfreyê - Rawesta 2",
+      "kmr-Arab": "پێشەنگێن شیفرەیێ - راوەستا 2",
+      "ckb": "پێشەنگانی وشەی نهێنی ـ وێستگەی 2",
+      "ckb-Arab": "پێشەنگانی وشەی نهێنی ـ وێستگەی 2",
+      "af-ZA": "Wagwoordpioniers – Stasie 2",
+      "af-NA": "Wagwoordpioniers – Stasie 2"
     }
   },
   "./snippets/password-pioneers-station-3": {
@@ -638,7 +683,16 @@
       "he": "חלוצי הסיסמאות: תחנה 3",
       "az": "Parol pionerləri: stansiya 3",
       "tk": "Parol pionerleri: 3-nji beket",
-      "be": "Піянеры пароляў: станцыя 3"
+      "be": "Піянеры пароляў: станцыя 3",
+      "yue-Hans": "密码先锋站 3",
+      "yue-Hant": "密碼先鋒站 3",
+      "kmr": "Pêşengên Şîfreyê - Rawesta 3",
+      "kmr-Latn": "Pêşengên Şîfreyê - Rawesta 3",
+      "kmr-Arab": "پێشەنگێن شیفرەیێ - راوەستا 3",
+      "ckb": "پێشەنگانی وشەی نهێنی ـ وێستگەی 3",
+      "ckb-Arab": "پێشەنگانی وشەی نهێنی ـ وێستگەی 3",
+      "af-ZA": "Wagwoordpioniers – Stasie 3",
+      "af-NA": "Wagwoordpioniers – Stasie 3"
     }
   }
 }
