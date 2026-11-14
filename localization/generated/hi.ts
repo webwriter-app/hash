@@ -1,0 +1,35 @@
+
+    // Do not modify this file by hand!
+    // Re-generate this file by running lit-localize
+
+    import {html} from 'lit';
+
+
+    /* eslint-disable no-irregular-whitespace */
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+
+    export const templates = {
+      'hc60fe849d5871ed0': html`कुंजी + <b>सॉल्ट</b>`,
+'s082194e632f41463': `हैश फ़ंक्शन`,
+'s340c5424c1068661': `सॉल्ट`,
+'s3e99b3826b00964c': `नोड हटाना`,
+'s506b6a19d12f414c': `कुंजी`,
+'s5f343a43e7ea9f91': `त्रुटि`,
+'s658e6a008311409f': `नोड को खींचकर संपादक में छोड़ें`,
+'s7c0462add8379ba2': `हैश मान का परिणाम`,
+'s80a693fdbbc735b3': `हैशिंग के लिए आवश्यक नोड`,
+'s8617fc8fa9c02980': `हैश मान`,
+'s87730e5071589cc6': `हैश संपादक`,
+'s8a0ee3d87938f19a': `नोड`,
+'sa61cbfcfe4598f64': `सॉल्ट जोड़ने के लिए वैकल्पिक नोड`,
+'sc26501e3ade7da3c': `उपकरण`,
+'sc582b5508c2961d1': `कुंजी दर्ज करें...`,
+'scc2f08380b867322': `नोड मेनू दिखाएँ या छिपाएँ`,
+'sd5fc23432952db23': `कुंजी इनपुट + सॉल्ट`,
+'sd9bdfc0f95188eea': `नोड हटाएँ`,
+'sdccd8f78d52d3a87': `क्लिपबोर्ड पर कॉपी करें`,
+'sdf86efcdc302af52': `हैश फ़ंक्शन चुनें`,
+'se34da59fd0f2a3e1': `नोड जोड़ना`,
+'seded5609c55e7071': `नोड के अनुसार दृश्य समायोजित करें`,
+'sfe7895d83752c894': `सॉल्ट पाठ`,
+    };

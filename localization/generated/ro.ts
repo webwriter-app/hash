@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Cheie`,
 's5f343a43e7ea9f91': `Eroare`,
 's658e6a008311409f': `Trageți și plasați nodurile în editor`,
-'s6bc7b85be71db921': `Comutați aceste setări pentru vizualizarea autorului și a elevului.`,
 's7c0462add8379ba2': `Rezultatul valorii hash`,
 's80a693fdbbc735b3': `Nod necesar pentru hashing`,
 's8617fc8fa9c02980': `Valoare hash`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Focalizare pe noduri`,
 'sfe7895d83752c894': `Text de salt`,
     };
-  

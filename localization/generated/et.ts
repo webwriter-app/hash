@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Võti`,
 's5f343a43e7ea9f91': `Viga`,
 's658e6a008311409f': `Lohistage sõlmed redaktorisse`,
-'s6bc7b85be71db921': `Lülita need seaded sisse või välja autori ja õpilase vaates.`,
 's7c0462add8379ba2': `Hash-väärtuse tulemus`,
 's80a693fdbbc735b3': `Hashinguks vajalik sõlm`,
 's8617fc8fa9c02980': `Hash-väärtus`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Keskendu sõlmedele`,
 'sfe7895d83752c894': `Salt-tekst`,
     };
-  

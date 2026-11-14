@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `金鑰`,
 's5f343a43e7ea9f91': `錯誤`,
 's658e6a008311409f': `將節點拖放至編輯器中`,
-'s6bc7b85be71db921': `切換作者與學生視圖的這些設定。`,
 's7c0462add8379ba2': `雜湊值結果`,
 's80a693fdbbc735b3': `雜湊運算所需的節點`,
 's8617fc8fa9c02980': `雜湊值`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `將焦點移至節點`,
 'sfe7895d83752c894': `鹽值`,
     };
-  

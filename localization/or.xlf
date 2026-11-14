@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<file target-language="or" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s658e6a008311409f">
+  <source>Drag and drop the nodes into the editor</source>
+<target>ନୋଡ୍‌ଗୁଡ଼ିକୁ ଏଡିଟର୍‌କୁ ଟାଣି ଛାଡ଼ନ୍ତୁ</target></trans-unit>
+<trans-unit id="s80a693fdbbc735b3">
+  <source>Required node for Hashing</source>
+<target>ହ୍ୟାଶିଂ ପାଇଁ ଆବଶ୍ୟକ ନୋଡ୍</target></trans-unit>
+<trans-unit id="sa61cbfcfe4598f64">
+  <source>Optional node for Salting</source>
+<target>ସଲ୍ଟ ଯୋଡ଼ିବା ପାଇଁ ବୈକଳ୍ପିକ ନୋଡ୍</target></trans-unit>
+<trans-unit id="sd9bdfc0f95188eea">
+  <source>Delete node</source>
+<target>ନୋଡ୍ ହଟାନ୍ତୁ</target></trans-unit>
+<trans-unit id="sdf86efcdc302af52">
+  <source>Select a hash function</source>
+<target>ହ୍ୟାଶ୍ ଫଙ୍କସନ୍ ବାଛନ୍ତୁ</target></trans-unit>
+<trans-unit id="s7c0462add8379ba2">
+  <source>Hashed value result</source>
+<target>ହ୍ୟାଶ୍ ହୋଇଥିବା ମୂଲ୍ୟର ଫଳାଫଳ</target></trans-unit>
+<trans-unit id="sdccd8f78d52d3a87">
+  <source>Copy to clipboard</source>
+<target>କ୍ଲିପ୍‌ବୋର୍ଡକୁ କପି କରନ୍ତୁ</target></trans-unit>
+<trans-unit id="sc582b5508c2961d1">
+  <source>Enter a key...</source>
+<target>ଏକ କି ଲେଖନ୍ତୁ...</target></trans-unit>
+<trans-unit id="sd5fc23432952db23">
+  <source>Key input + Salt</source>
+<target>କି ଇନପୁଟ୍ + ସଲ୍ଟ</target></trans-unit>
+<trans-unit id="se34da59fd0f2a3e1">
+  <source>Adding Nodes</source>
+<target>ନୋଡ୍ ଯୋଡ଼ିବା</target></trans-unit>
+<trans-unit id="s3e99b3826b00964c">
+  <source>Deleting Nodes</source>
+<target>ନୋଡ୍ ହଟାଇବା</target></trans-unit>
+<trans-unit id="s87730e5071589cc6">
+  <source>Hash Editor</source>
+<target>ହ୍ୟାଶ୍ ଏଡିଟର୍</target></trans-unit>
+<trans-unit id="scc2f08380b867322">
+  <source>Toggle node menu</source>
+<target>ନୋଡ୍ ମେନୁ ଦେଖାନ୍ତୁ କିମ୍ବା ଲୁଚାନ୍ତୁ</target></trans-unit>
+<trans-unit id="seded5609c55e7071">
+  <source>Focus on nodes</source>
+<target>ନୋଡ୍‌ଗୁଡ଼ିକ ଉପରେ ଫୋକସ୍ କରନ୍ତୁ</target></trans-unit>
+<trans-unit id="s8a0ee3d87938f19a">
+  <source>Nodes</source>
+  <note from="lit-localize">Header of the list of draggable nodes</note>
+<target>ନୋଡ୍</target></trans-unit>
+<trans-unit id="sfe7895d83752c894">
+  <source>Salt text</source>
+  <note from="lit-localize">Label of the field showing the generated salt</note>
+<target>ସଲ୍ଟ ଟେକ୍ସଟ୍</target></trans-unit>
+<trans-unit id="hc60fe849d5871ed0">
+  <source>Key + <x id="0" equiv-text="&lt;b&gt;" />Salt<x id="1" equiv-text="&lt;/b&gt;" /></source>
+  <note from="lit-localize">Label of the field showing the key with the salt appended</note>
+<target>କି + <x id="0" equiv-text="&lt;b&gt;" />ସଲ୍ଟ<x id="1" equiv-text="&lt;/b&gt;" /></target></trans-unit>
+<trans-unit id="s340c5424c1068661">
+  <source>Salt</source>
+  <note from="lit-localize">Name of the node appending a salt to the key</note>
+<target>ସଲ୍ଟ</target></trans-unit>
+<trans-unit id="s506b6a19d12f414c">
+  <source>Key</source>
+  <note from="lit-localize">Name of the node holding the text that gets hashed</note>
+<target>କି</target></trans-unit>
+<trans-unit id="s082194e632f41463">
+  <source>Hash Function</source>
+  <note from="lit-localize">Name of the node selecting the hash algorithm</note>
+<target>ହ୍ୟାଶ୍ ଫଙ୍କସନ୍</target></trans-unit>
+<trans-unit id="s8617fc8fa9c02980">
+  <source>Hash Value</source>
+  <note from="lit-localize">Name of the node showing the hashing result</note>
+<target>ହ୍ୟାଶ୍ ମୂଲ୍ୟ</target></trans-unit>
+<trans-unit id="s5f343a43e7ea9f91">
+  <source>Error</source>
+  <note from="lit-localize">Shown instead of a hash value when hashing fails</note>
+<target>ତ୍ରୁଟି</target></trans-unit>
+<trans-unit id="sc26501e3ade7da3c">
+  <source>Tools</source>
+  <note from="lit-localize">Title of the drawer listing the draggable nodes</note>
+<target>ଉପକରଣ</target></trans-unit>
+</body>
+</file>
+</xliff>

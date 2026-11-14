@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `키`,
 's5f343a43e7ea9f91': `오류`,
 's658e6a008311409f': `노드를 편집기로 드래그 앤 드롭하세요`,
-'s6bc7b85be71db921': `작성자 및 학생 보기에 대해 이 설정을 전환합니다.`,
 's7c0462add8379ba2': `해시된 값 결과`,
 's80a693fdbbc735b3': `해싱에 필요한 노드`,
 's8617fc8fa9c02980': `해시 값`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `노드에 포커스`,
 'sfe7895d83752c894': `솔트 텍스트`,
     };
-  

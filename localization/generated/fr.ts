@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -20,7 +20,6 @@
 's506b6a19d12f414c': `Clé`,
 's5f343a43e7ea9f91': `Erreur`,
 's658e6a008311409f': `Glissez-déposez les nœuds dans l'éditeur`,
-'s6bc7b85be71db921': `Activer/désactiver ces paramètres pour l'affichage de l'auteur et de l'étudiant.`,
 's7c0462add8379ba2': `Résultat de la valeur hachée`,
 's80a693fdbbc735b3': `Nœud requis pour le hachage`,
 's8617fc8fa9c02980': `Valeur de hachage`,
@@ -38,4 +37,3 @@
 'seded5609c55e7071': `Mettre les nœuds en surbrillance`,
 'sfe7895d83752c894': `Texte de sel`,
     };
-  

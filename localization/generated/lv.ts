@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Atslēga`,
 's5f343a43e7ea9f91': `Kļūda`,
 's658e6a008311409f': `Pavelciet un nometiet mezglus redaktorā`,
-'s6bc7b85be71db921': `Pārslēgt šos iestatījumus autora un studenta skatā.`,
 's7c0462add8379ba2': `Hāšēšanas rezultāts`,
 's80a693fdbbc735b3': `Nepieciešamais mezgls hašēšanai`,
 's8617fc8fa9c02980': `Hāša vērtība`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Fokuss uz mezgliem`,
 'sfe7895d83752c894': `Sāls teksts`,
     };
-  

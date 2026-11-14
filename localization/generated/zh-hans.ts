@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `密钥`,
 's5f343a43e7ea9f91': `错误`,
 's658e6a008311409f': `将节点拖放至编辑器中`,
-'s6bc7b85be71db921': `为作者和学生视图切换这些设置。`,
 's7c0462add8379ba2': `哈希值结果`,
 's80a693fdbbc735b3': `哈希所需的节点`,
 's8617fc8fa9c02980': `哈希值`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `聚焦节点`,
 'sfe7895d83752c894': `盐值`,
     };
-  

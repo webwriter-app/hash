@@ -1,14 +1,14 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property, eventOptions } from "lit/decorators.js";
-import { localized, msg } from "@lit/localize";
+import { connectMessages } from "../../../../localization/localizer";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlInput from "@shoelace-style/shoelace/dist/components/input/input.js";
 import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.js";
 import IconRefresh from "@tabler/icons/outline/refresh.svg";
 
 @customElement("salt-node")
-@localized()
 export class SaltNodeUI extends LitElement {
+  protected readonly msg = connectMessages(this);
   @property({ type: String }) accessor salt: string = "";
   @property({ type: String }) accessor incoming: string = "";
 
@@ -97,7 +97,7 @@ export class SaltNodeUI extends LitElement {
     return html`
       <div class="salt-container">
         <sl-input
-          label=${msg("Salt text", { desc: "Label of the field showing the generated salt" })}
+          label=${this.msg("Salt text", { desc: "Label of the field showing the generated salt" })}
           readonly
           .value=${this.salt}
           @pointerdown=${(e: Event) => e.stopPropagation()}
@@ -111,10 +111,10 @@ export class SaltNodeUI extends LitElement {
         </sl-input>
 
         <div>
-          <label class="shoelace-label">${msg(html`Key + <b>Salt</b>`, { desc: "Label of the field showing the key with the salt appended" })}</label>
+          <label class="shoelace-label">${this.msg(html`Key + <b>Salt</b>`, { desc: "Label of the field showing the key with the salt appended" })}</label>
           <div class="salt-key-input" @wheel=${this.handleWheel}>
             ${!this.incoming && !this.salt
-              ? html`<span class="placeholder">${msg("Key input + Salt")}</span>`
+              ? html`<span class="placeholder">${this.msg("Key input + Salt")}</span>`
               : ""}
             <span class="key-part">${this.incoming}</span
             ><span class="salt-part">${this.salt}</span>

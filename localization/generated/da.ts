@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Nøgle`,
 's5f343a43e7ea9f91': `Fejl`,
 's658e6a008311409f': `Træk og slip noderne ind i editoren`,
-'s6bc7b85be71db921': `Skift mellem disse indstillinger for forfatter- og elevvisningen.`,
 's7c0462add8379ba2': `Resultatet af den hashede værdi`,
 's80a693fdbbc735b3': `Nødvendig node til hashing`,
 's8617fc8fa9c02980': `Hashværdi`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Fokus på noder`,
 'sfe7895d83752c894': `Salttekst`,
     };
-  

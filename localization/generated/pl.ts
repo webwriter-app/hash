@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -20,7 +20,6 @@
 's506b6a19d12f414c': `Klucz`,
 's5f343a43e7ea9f91': `Błąd`,
 's658e6a008311409f': `Przeciągnij i upuść węzły do edytora`,
-'s6bc7b85be71db921': `Przełącz te ustawienia dla widoku autora i ucznia.`,
 's7c0462add8379ba2': `Wynik haszowania`,
 's80a693fdbbc735b3': `Węzeł wymagany do haszowania`,
 's8617fc8fa9c02980': `Wartość skrótu`,
@@ -38,4 +37,3 @@
 'seded5609c55e7071': `Skup na węzłach`,
 'sfe7895d83752c894': `Tekst soli`,
     };
-  

@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Chave`,
 's5f343a43e7ea9f91': `Erro`,
 's658e6a008311409f': `Arraste e solte os nós no editor`,
-'s6bc7b85be71db921': `Alternar estas definições para a visualização do autor e do aluno.`,
 's7c0462add8379ba2': `Resultado do valor hash`,
 's80a693fdbbc735b3': `Nó obrigatório para o hashing`,
 's8617fc8fa9c02980': `Valor de hash`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Focar nos nós`,
 'sfe7895d83752c894': `Texto de sal`,
     };
-  

@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Raktas`,
 's5f343a43e7ea9f91': `Klaida`,
 's658e6a008311409f': `Pervilkite mazgus į redaktorių`,
-'s6bc7b85be71db921': `Perjungti šiuos nustatymus autoriaus ir studento peržiūrai.`,
 's7c0462add8379ba2': `Hashingo rezultatas`,
 's80a693fdbbc735b3': `Reikalingas mazgas maišymui`,
 's8617fc8fa9c02980': `Hash vertė`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Fokusas ant mazgų`,
 'sfe7895d83752c894': `„Salt“ tekstas`,
     };
-  

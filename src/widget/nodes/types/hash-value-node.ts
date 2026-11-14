@@ -1,6 +1,6 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { localized, msg } from "@lit/localize";
+import { connectMessages } from "../../../../localization/localizer";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.js";
 import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js";
@@ -8,8 +8,8 @@ import IconCopy from "@tabler/icons/outline/copy.svg";
 
 
 @customElement("hash-value-node")
-@localized()
 export class HashValueNodeUI extends LitElement {
+  protected readonly msg = connectMessages(this);
   @property({ type: String }) accessor value: string = "";
 
   static get scopedElements() {
@@ -65,19 +65,25 @@ export class HashValueNodeUI extends LitElement {
     }
   `;
 
+  private get displayValue() {
+    return this.value === "Error"
+      ? this.msg("Error", { desc: "Shown instead of a hash value when hashing fails" })
+      : this.value;
+  }
+
   private async handleCopy() {
-    if (this.value) await navigator.clipboard.writeText(this.value);
+    if (this.displayValue) await navigator.clipboard.writeText(this.displayValue);
   }
 
   render() {
     return html`
       <textarea
-        placeholder=${msg("Hashed value result")}
+        placeholder=${this.msg("Hashed value result")}
         class="data-box"
         readonly
-        .value=${this.value}
+        .value=${this.displayValue}
       ></textarea>
-      <sl-tooltip content=${msg("Copy to clipboard")} placement="right-end">
+      <sl-tooltip content=${this.msg("Copy to clipboard")} placement="right-end">
         <sl-icon
           src=${IconCopy}
           @click=${this.handleCopy}

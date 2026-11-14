@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Clave`,
 's5f343a43e7ea9f91': `Error`,
 's658e6a008311409f': `Arrastra y suelta los nodos en el editor`,
-'s6bc7b85be71db921': `Activar o desactivar estos ajustes para la vista del autor y del alumno.`,
 's7c0462add8379ba2': `Resultado del valor hash`,
 's80a693fdbbc735b3': `Nodo obligatorio para el hash`,
 's8617fc8fa9c02980': `Valor hash`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Centrar en los nodos`,
 'sfe7895d83752c894': `Texto de sal`,
     };
-  

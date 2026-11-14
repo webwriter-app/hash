@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,7 +19,6 @@
 's506b6a19d12f414c': `Nyckel`,
 's5f343a43e7ea9f91': `Fel`,
 's658e6a008311409f': `Dra och släpp noderna i redigeraren`,
-'s6bc7b85be71db921': `Växla mellan dessa inställningar för författar- och elevvyn.`,
 's7c0462add8379ba2': `Resultatet av det hashkodade värdet`,
 's80a693fdbbc735b3': `Nod som krävs för hashing`,
 's8617fc8fa9c02980': `Hashvärde`,
@@ -37,4 +36,3 @@
 'seded5609c55e7071': `Fokusera på noder`,
 'sfe7895d83752c894': `Salttext`,
     };
-  

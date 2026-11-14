@@ -3,7 +3,7 @@
     // Re-generate this file by running lit-localize
 
     import {html} from 'lit';
-    
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -20,7 +20,6 @@
 's506b6a19d12f414c': `المفتاح`,
 's5f343a43e7ea9f91': `خطأ`,
 's658e6a008311409f': `اسحب العقد وأسقطها في المحرر`,
-'s6bc7b85be71db921': `تبديل هذه الإعدادات لعرض المؤلف والطالب.`,
 's7c0462add8379ba2': `نتيجة القيمة المُجزأة`,
 's80a693fdbbc735b3': `العقدة المطلوبة لعملية التجزئة`,
 's8617fc8fa9c02980': `قيمة التجزئة`,
@@ -38,4 +37,3 @@
 'seded5609c55e7071': `التركيز على العقد`,
 'sfe7895d83752c894': `نص الملح`,
     };
-  
