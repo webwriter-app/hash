@@ -1,17 +1,11 @@
-import { css, html, LitElement } from "lit";
-import { customElement, property, eventOptions } from "lit/decorators.js";
-import { connectMessages } from "../../../../localization/localizer";
-import "@shoelace-style/shoelace/dist/themes/light.css";
-import SlTextarea from "@shoelace-style/shoelace/dist/components/textarea/textarea.js";
+import { css, html } from "lit";
+import { NodeContent } from "./node-content";
+import { property, eventOptions } from "lit/decorators.js";
+import { widgetMsg } from "@webwriter/lit/localize";
 
-@customElement("key-node")
-export class KeyNodeUI extends LitElement {
-  protected readonly msg = connectMessages(this);
-  @property() value: string = "";
-
-  static get scopedElements() {
-    return { "sl-textarea": SlTextarea };
-  }
+export class KeyNodeUI extends NodeContent {
+  protected readonly msg = widgetMsg(this);
+  @property() accessor value: string = "";
 
   static styles = css`
     :host {

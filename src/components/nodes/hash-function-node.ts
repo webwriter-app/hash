@@ -1,18 +1,11 @@
-import { html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { connectMessages } from "../../../../localization/localizer";
-import "@shoelace-style/shoelace/dist/themes/light.css";
-import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.js";
-import SlOption from "@shoelace-style/shoelace/dist/components/option/option.js";
+import { html } from "lit";
+import { NodeContent } from "./node-content";
+import { property } from "lit/decorators.js";
+import { widgetMsg } from "@webwriter/lit/localize";
 
-@customElement("hash-function-node")
-export class HashFunctionNodeUI extends LitElement {
-  protected readonly msg = connectMessages(this);
-    @property() value: string = "sha256";
-
-    static get scopedElements() {
-        return { "sl-select": SlSelect, "sl-option": SlOption };
-    }
+export class HashFunctionNodeUI extends NodeContent {
+  protected readonly msg = widgetMsg(this);
+    @property() accessor value: string = "sha256";
 
     private onSelectChange(e: any) {
         this.dispatchEvent(new CustomEvent('val-change', { 

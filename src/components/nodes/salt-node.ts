@@ -1,20 +1,13 @@
-import { css, html, LitElement } from "lit";
-import { customElement, property, eventOptions } from "lit/decorators.js";
-import { connectMessages } from "../../../../localization/localizer";
-import "@shoelace-style/shoelace/dist/themes/light.css";
-import SlInput from "@shoelace-style/shoelace/dist/components/input/input.js";
-import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.js";
+import { css, html } from "lit";
+import { NodeContent } from "./node-content";
+import { property, eventOptions } from "lit/decorators.js";
+import { widgetMsg } from "@webwriter/lit/localize";
 import IconRefresh from "@tabler/icons/outline/refresh.svg";
 
-@customElement("salt-node")
-export class SaltNodeUI extends LitElement {
-  protected readonly msg = connectMessages(this);
+export class SaltNodeUI extends NodeContent {
+  protected readonly msg = widgetMsg(this);
   @property({ type: String }) accessor salt: string = "";
   @property({ type: String }) accessor incoming: string = "";
-
-  static get scopedElements() {
-    return { "sl-input": SlInput, "sl-icon": SlIcon };
-  }
 
   static styles = css`
     .salt-container {

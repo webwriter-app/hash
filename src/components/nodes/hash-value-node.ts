@@ -1,20 +1,13 @@
-import { css, html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { connectMessages } from "../../../../localization/localizer";
-import "@shoelace-style/shoelace/dist/themes/light.css";
-import SlIcon from "@shoelace-style/shoelace/dist/components/icon/icon.js";
-import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js";
+import { css, html } from "lit";
+import { NodeContent } from "./node-content";
+import { property } from "lit/decorators.js";
+import { widgetMsg } from "@webwriter/lit/localize";
 import IconCopy from "@tabler/icons/outline/copy.svg";
 
 
-@customElement("hash-value-node")
-export class HashValueNodeUI extends LitElement {
-  protected readonly msg = connectMessages(this);
+export class HashValueNodeUI extends NodeContent {
+  protected readonly msg = widgetMsg(this);
   @property({ type: String }) accessor value: string = "";
-
-  static get scopedElements() {
-    return { "sl-icon": SlIcon, "sl-tooltip": SlTooltip };
-  }
 
   static styles = css`
     :host {

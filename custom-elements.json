@@ -4,13 +4,88 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/widget/webwriter-hash.ts",
+      "path": "src/widgets/webwriter-hash.ts",
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "Node-and-edge editor for hashing workflows: connect key, salt and hash-function nodes to a hash value node.\nThe graph (nodes, their positions and settings, and the connections) is stored in the widget's JSON data block\nand drawn on a Scene.",
           "name": "WebwriterHash",
           "members": [
+            {
+              "kind": "field",
+              "name": "scopedElements",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ ...sceneElements, \"ww-scene\": webglAvailable() ? PixiScene : sceneElements[\"ww-scene\"], \"sl-icon\": SlIcon, \"sl-drawer\": SlDrawer, \"sl-tooltip\": SlTooltip, \"sl-select\": SlSelect, \"sl-option\": SlOption, \"sl-textarea\": SlTextarea, \"sl-input\": SlInput, \"editor-dock\": EditorDock, \"key-node\": KeyNodeUI, \"salt-node\": SaltNodeUI, \"hash-function-node\": HashFunctionNodeUI, \"hash-value-node\": HashValueNodeUI, }"
+            },
+            {
+              "kind": "field",
+              "name": "permissions",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ allowAdding: { label: (widget: { msg: MsgFn }) => widget.msg(\"Adding Nodes\") }, allowDeleting: { label: (widget: { msg: MsgFn }) => widget.msg(\"Deleting Nodes\") }, }"
+            },
+            {
+              "kind": "field",
+              "name": "actions",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ deleteSelection: { label: (widget: { msg: MsgFn }) => widget.msg(\"Delete selection\", { desc: \"Action that removes the selected nodes and connections\" }), shortcut: \"Delete\", can: \"allowDeleting\", }, }"
+            },
+            {
+              "kind": "field",
+              "name": "#permissions",
+              "privacy": "private",
+              "default": "new Permissions(this)"
+            },
+            {
+              "kind": "field",
+              "name": "#drag",
+              "privacy": "private",
+              "default": "new Drag(this, { can: () => this.#permissions.can(\"allowAdding\"), lift: { opacity: 0.9, boxShadow: \"0 4px 10px rgba(0, 0, 0, 0.2)\" }, })"
+            },
+            {
+              "kind": "field",
+              "name": "#viewport",
+              "privacy": "private",
+              "default": "new Viewport(this, { bounds: () => this.#fitBox ?? this.#scene.extent(), margin: 3000 })"
+            },
+            {
+              "kind": "field",
+              "name": "#scene",
+              "privacy": "private",
+              "type": {
+                "text": "SceneController"
+              },
+              "default": "new SceneController(this, { viewport: this.#viewport.core })"
+            },
+            {
+              "kind": "field",
+              "name": "#shortcuts",
+              "privacy": "private",
+              "default": "new Shortcuts(this)"
+            },
+            {
+              "kind": "field",
+              "name": "#data",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "localize",
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "msg",
+              "readonly": true
+            },
             {
               "kind": "field",
               "name": "allowAdding",
@@ -35,146 +110,330 @@
             },
             {
               "kind": "field",
-              "name": "editorState",
+              "name": "selection",
               "type": {
-                "text": "any"
+                "text": "ReadonlySet<string>"
               },
-              "default": "{}",
-              "description": "The JSON representation of the graph, containing all nodes, positions, and connections. Used for saving state in rerender.",
-              "attribute": "editorState",
-              "reflects": true
+              "default": "new Set()"
             },
             {
               "kind": "field",
-              "name": "localize",
-              "privacy": "protected",
-              "default": "LOCALIZE"
+              "name": "editingTitle",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null"
             },
             {
               "kind": "field",
-              "name": "scopedElements",
-              "static": true,
+              "name": "#fitBox",
+              "privacy": "private",
+              "type": {
+                "text": "{ x: number; y: number; width: number; height: number } | null"
+              },
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "#state",
+              "privacy": "private",
+              "type": {
+                "text": "unknown | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "#graph",
+              "privacy": "private",
+              "type": {
+                "text": "Graph"
+              },
+              "default": "{ nodes: [], connections: [] }"
+            },
+            {
+              "kind": "field",
+              "name": "#fallback",
+              "privacy": "private",
+              "type": {
+                "text": "Graph | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "#lastPermissions",
+              "privacy": "private",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\""
+            },
+            {
+              "kind": "field",
+              "name": "graph",
+              "type": {
+                "text": "Graph"
+              },
+              "description": "The graph from the data block, in the shape the editor works with. Without nodes the default pipeline shows.",
               "readonly": true
             },
             {
-              "kind": "field",
-              "name": "reteRef",
-              "privacy": "private"
+              "kind": "method",
+              "name": "zoomToNodes",
+              "description": "Fits the view to the nodes, beside the drawer if it is open."
             },
             {
               "kind": "field",
-              "name": "backgroundRef",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "editorInstance",
-              "type": {
-                "text": "any | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "nodeDrag",
-              "type": {
-                "text": "NodeDrag | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "dragFrame",
-              "type": {
-                "text": "number | undefined"
-              },
-              "privacy": "private"
+              "name": "#drawer",
+              "privacy": "private",
+              "readonly": true
             },
             {
               "kind": "method",
-              "name": "handleEditorChange",
+              "name": "deleteSelection",
+              "description": "Widget action: removes the selected nodes with their connections, and the selected connections."
+            },
+            {
+              "kind": "method",
+              "name": "#commit",
               "privacy": "private",
               "parameters": [
                 {
-                  "name": "data",
+                  "name": "graph",
                   "type": {
-                    "text": "any"
+                    "text": "Graph"
                   }
                 }
               ]
             },
             {
               "kind": "method",
-              "name": "handlePointerDown",
+              "name": "#change",
               "privacy": "private",
               "parameters": [
                 {
-                  "name": "event",
+                  "name": "change",
                   "type": {
-                    "text": "PointerEvent"
+                    "text": "() => void"
                   }
                 }
-              ]
+              ],
+              "description": "Changes the graph as one undo step. The step lasts until the render, which writes the block."
             },
             {
               "kind": "method",
-              "name": "handlePointerMove",
+              "name": "#patch",
               "privacy": "private",
               "parameters": [
                 {
-                  "name": "event",
+                  "name": "id",
                   "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handlePointerEnd",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "requestDragFrame",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "isOverEditor",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "clientX",
-                  "type": {
-                    "text": "number"
+                    "text": "string"
                   }
                 },
                 {
-                  "name": "clientY",
+                  "name": "change",
                   "type": {
-                    "text": "number"
+                    "text": "Partial<GraphNode>"
                   }
                 }
               ]
             },
             {
               "kind": "method",
-              "name": "finishNodeDrag",
+              "name": "#deleteNode",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#select",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "CustomEvent<SelectDetail>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#move",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "CustomEvent<MoveDetail>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#connect",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "CustomEvent<ConnectDetail>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#drop",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "CustomEvent<DragCommitDetail>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#toggleDock",
               "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "toggleDock",
-              "privacy": "private"
+              "name": "#editTitle",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#setTitle",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#titleKey",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                },
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#regenerateSalt",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#content",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "node",
+                  "type": {
+                    "text": "GraphNode"
+                  }
+                },
+                {
+                  "name": "flow",
+                  "type": {
+                    "text": "Flow"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#socket",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "node",
+                  "type": {
+                    "text": "GraphNode"
+                  }
+                },
+                {
+                  "name": "key",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "side",
+                  "type": {
+                    "text": "\"input\" | \"output\""
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#node",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "node",
+                  "type": {
+                    "text": "GraphNode"
+                  }
+                },
+                {
+                  "name": "flow",
+                  "type": {
+                    "text": "Flow"
+                  }
+                }
+              ]
             }
           ],
           "attributes": [
@@ -195,15 +454,6 @@
               "default": "false",
               "description": "If true, allows user to delete selected nodes from the graph.",
               "fieldName": "allowDeleting"
-            },
-            {
-              "name": "editorState",
-              "type": {
-                "text": "any"
-              },
-              "default": "{}",
-              "description": "The JSON representation of the graph, containing all nodes, positions, and connections. Used for saving state in rerender.",
-              "fieldName": "editorState"
             }
           ],
           "superclass": {
@@ -212,8 +462,8 @@
           },
           "tagName": "webwriter-hash",
           "customElement": true,
-          "modulePath": "src/widget/webwriter-hash.ts",
-          "definitionPath": "src/widget/webwriter-hash.ts"
+          "modulePath": "src/widgets/webwriter-hash.ts",
+          "definitionPath": "src/widgets/webwriter-hash.ts"
         }
       ],
       "exports": [
@@ -222,7 +472,7 @@
           "name": "WebwriterHash",
           "declaration": {
             "name": "WebwriterHash",
-            "module": "src/widget/webwriter-hash.ts"
+            "module": "src/widgets/webwriter-hash.ts"
           }
         },
         {
@@ -230,7 +480,7 @@
           "name": "webwriter-hash",
           "declaration": {
             "name": "WebwriterHash",
-            "module": "src/widget/webwriter-hash.ts"
+            "module": "src/widgets/webwriter-hash.ts"
           }
         }
       ]

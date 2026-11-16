@@ -1,5 +1,5 @@
-# Hash (`@webwriter/hash@1.0.2`)
-[License: MIT](LICENSE) | Version: 1.0.2
+# Hash (`@webwriter/hash@2.0.0`)
+[License: MIT](LICENSE) | Version: 2.0.0
 
 Visually create hashing workflows with keys, salts, and hash functions.
 
@@ -15,7 +15,9 @@ Visually create hashing workflows with keys, salts, and hash functions.
 
 
 ## `WebwriterHash` (`<webwriter-hash>`)
-
+Node-and-edge editor for hashing workflows: connect key, salt and hash-function nodes to a hash value node.
+The graph (nodes, their positions and settings, and the connections) is stored in the widget's JSON data block
+and drawn on a Scene.
 
 ### Usage
 
@@ -41,12 +43,25 @@ npm install @webwriter/hash
 ## Fields
 | Name (Attribute Name) | Type | Description | Default | Reflects |
 | :-------------------: | :--: | :---------: | :-----: | :------: |
+| `WebwriterHash.scopedElements` | `object` | - | `{ ...sceneElements, "ww-scene": webglAvailable() ? PixiScene : sceneElements["ww-scene"], "sl-icon": SlIcon, "sl-drawer": SlDrawer, "sl-tooltip": SlTooltip, "sl-select": SlSelect, "sl-option": SlOption, "sl-textarea": SlTextarea, "sl-input": SlInput, "editor-dock": EditorDock, "key-node": KeyNodeUI, "salt-node": SaltNodeUI, "hash-function-node": HashFunctionNodeUI, "hash-value-node": HashValueNodeUI, }` | ✗ |
+| `WebwriterHash.permissions` | `object` | - | `{ allowAdding: { label: (widget: { msg: MsgFn }) => widget.msg("Adding Nodes") }, allowDeleting: { label: (widget: { msg: MsgFn }) => widget.msg("Deleting Nodes") }, }` | ✗ |
+| `WebwriterHash.actions` | `object` | - | `{ deleteSelection: { label: (widget: { msg: MsgFn }) => widget.msg("Delete selection", { desc: "Action that removes the selected nodes and connections" }), shortcut: "Delete", can: "allowDeleting", }, }` | ✗ |
+| `msg` | - | - | - | ✗ |
 | `allowAdding` (`allowAdding`) | `boolean` | If true, enables the side drawer and allow drag-and-drop new nodes (Key, Salt, HashFunction, HashValue) to editor. | `false` | ✓ |
 | `allowDeleting` (`allowDeleting`) | `boolean` | If true, allows user to delete selected nodes from the graph. | `false` | ✓ |
-| `editorState` (`editorState`) | `any` | The JSON representation of the graph, containing all nodes, positions, and connections. Used for saving state in rerender. | `{}` | ✓ |
-| `WebwriterHash.scopedElements` | - | - | - | ✗ |
+| `selection` | `ReadonlySet<string>` | - | `new Set()` | ✗ |
+| `editingTitle` | `string \| null` | - | `null` | ✗ |
+| `graph` | `Graph` | The graph from the data block, in the shape the editor works with. Without nodes the default pipeline shows. | - | ✗ |
 
 *Fields including [properties](https://developer.mozilla.org/en-US/docs/Glossary/Property/JavaScript) and [attributes](https://developer.mozilla.org/en-US/docs/Glossary/Attribute) define the current state of the widget and offer customization options.*
+
+## Methods
+| Name | Description | Parameters |
+| :--: | :---------: | :-------: |
+| `zoomToNodes` | Fits the view to the nodes, beside the drawer if it is open. | -
+| `deleteSelection` | Widget action: removes the selected nodes with their connections, and the selected connections. | -
+
+*[Methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions) allow programmatic access to the widget.*
 
 ## Editing config
 | Name | Value |
@@ -55,35 +70,8 @@ npm install @webwriter/hash
 
 *The [editing config](https://webwriter.app/docs/packages/configuring/#editingconfig) defines how explorable authoring tools such as [WebWriter](https://webwriter.app) treat the widget.*
 
-*No public methods, slots, events, custom CSS properties, or CSS parts.*
-
-## Editor (`editor.ts`)
-The editor instance created by `createEditor()` contains the following methods.
-
-| Name | Description | Parameters |
-| :--- | :--- | :--- |
-| `addNode` | Adds a new node of the specified type at the given coordinates. | `type: string`<br>`clientX: number`<br>`clientY: number` |
-| `zoomToNodes` | Zooms and pans the view to fit all current nodes. Adjusts slightly if the sidebar is open. | `sidebarOpen: boolean` |
-| `importGraph` | Loads a complete graph state (nodes and connections) from a data object. Clears existing state first. | `data: any` |
-| `getGraph` | Exports the current state of the editor (nodes, positions, connections) as a JSON object. | - |
-| `process` | Triggers the data flow engine to recalculate hashes based on current connections and inputs. | - |
-| `updatePermissions` | Updates the interactive permissions for the editor and propagates them to all nodes. | `newPerms: { canDelete: boolean, isAuthor: boolean, allowAdding: boolean }` |
-| `destroy` | Cleans up the editor, destroys the area plugin, and clears the engine. | - |
-
-## Hash Nodes (`<hash-node>`)
-Represents the UI for a general node within the Rete.js canvas. All specified nodes are instances of the `<hash-node>` custom element.
-
-#### Fields
-
-| Attribute | Type | Description | Reflected |
-| :--- | :--- | :--- | :--- |
-| `data` | `Object` | Internal Rete.js node data object containing label, id, inputs, and outputs. | ✗ |
-| `canDelete` (`candelete`) | `boolean` | Indicates if the user is allowed to delete this node. Shows/hides the delete button. | ✓ |
-| `isAuthor` (`isauthor`) | `boolean` | Indicates if the user is in author mode. Enables title editing. | ✓ |
-| `isEditingTitle` | `boolean` | Internal state to track if the node title is currently being edited. | ✗ |
-| `width` | `number` | The width of the node in pixels. | ✗ |
-| `height` | `number` | The height of the node in pixels. | ✗ |
+*No public slots, events, custom CSS properties, or CSS parts.*
 
 
 ---
-*Generated with @webwriter/build@1.9.1*
+*Generated with @webwriter/build@1.14.0*
