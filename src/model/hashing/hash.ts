@@ -1,5 +1,5 @@
 import { bytesToHex } from "@noble/hashes/utils.js";
-import { hash_algorithms, type HashAlgorithmName } from "./algorithms";
+import { hash_algorithms } from "./algorithms";
 
 // compute hash value based on selected algorithm and input string
 export function computeHashHex(algorithm: string, input: string): string {
@@ -18,6 +18,3 @@ export function computeHashHex(algorithm: string, input: string): string {
     return "Error";
   }
 }
-
-export { hash_algorithms as HASH_ALGORITHMS };
-export type { HashAlgorithmName };

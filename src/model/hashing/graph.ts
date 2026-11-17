@@ -21,13 +21,13 @@ export type Graph = { nodes: GraphNode[]; connections: Connection[] };
 /** What flows through the graph, by node: the text a salt node receives and the hash a value node shows. */
 export type Flow = Map<string, { incoming?: string; display?: string }>;
 
-export const MAX_CHANNELS = 4;
+const MAX_CHANNELS = 4;
 
 export const NODE_LABELS: readonly NodeLabel[] = ["Key", "Salt", "HashFunction", "HashValue"];
 
 const isLabel = (label: unknown): label is NodeLabel => NODE_LABELS.includes(label as NodeLabel);
 
-export function randomId(): string {
+function randomId(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(8));
   return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
@@ -69,7 +69,7 @@ export function acceptedKinds(node: GraphNode): string {
  * The wiring rules: data flows Key -> (Salt) -> HashFunction -> HashValue,
  * and a hash value ends the pipeline.
  */
-export function canConnect(source: GraphNode, target: GraphNode): boolean {
+function canConnect(source: GraphNode, target: GraphNode): boolean {
   if (source.id === target.id) return false;
   if (source.label === "Key") return target.label === "Salt" || target.label === "HashFunction";
   if (source.label === "Salt") return target.label === "HashFunction";
@@ -104,7 +104,7 @@ export function defaultGraph(): Graph {
 }
 
 /** True if the connection joins existing sockets of nodes that may be wired. */
-export function isValidConnection(graph: Graph, connection: Connection): boolean {
+function isValidConnection(graph: Graph, connection: Connection): boolean {
   const source = graph.nodes.find((node) => node.id === connection.source);
   const target = graph.nodes.find((node) => node.id === connection.target);
   if (!source || !target) return false;
@@ -145,8 +145,6 @@ export function updateNode(graph: Graph, id: string, change: Partial<GraphNode>)
 
 /** The key that stands for a connection. Every output holds at most one, so the output names it. */
 export const connectionKey = (connection: Connection) => `wire:${connection.source}:${connection.sourceOutput}`;
-
-const channelOf = (key: string) => Number(key.split("-")[1]);
 
 /**
  * Gives a hash function as many channels as its connections need, plus one free pair,
@@ -240,3 +238,7 @@ export function evaluate(graph: Graph): Flow {
   }
   return flow;
 }
+
+/** What decides the result of {@link evaluate}: positions and titles do not take part. */
+export const flowSignature = (graph: Graph) =>
+  JSON.stringify([graph.nodes.map((node) => [node.id, node.label, node.value, node.selectedFunction, node.saltValue, node.inputsCount]), graph.connections]);

@@ -13,5 +13,3 @@ export const hash_algorithms: Record<string, (data: Uint8Array) => Uint8Array> =
   keccak_256,
   blake3,
 };
-
-export type HashAlgorithmName = keyof typeof hash_algorithms;

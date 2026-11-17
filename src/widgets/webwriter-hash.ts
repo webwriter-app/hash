@@ -32,7 +32,7 @@ import { HashFunctionNodeUI } from "../components/nodes/hash-function-node";
 import { HashValueNodeUI } from "../components/nodes/hash-value-node";
 import { displayNodeTitle, nodeTitle } from "../components/nodes/node-titles";
 import { styles } from "../components/webwriter-hash.styles";
-import { acceptedKinds, connect, connectionKey, createNode, defaultGraph, disconnect, evaluate, linkKind, normalize, NODE_LABELS, ports, reconnect, removeNodes, updateNode, type Flow, type Graph, type GraphNode, type NodeLabel } from "../model/hashing/graph";
+import { acceptedKinds, connect, connectionKey, createNode, defaultGraph, disconnect, evaluate, flowSignature, linkKind, normalize, NODE_LABELS, ports, reconnect, removeNodes, updateNode, type Flow, type Graph, type GraphNode, type NodeLabel } from "../model/hashing/graph";
 import { sourceLocale, targetLocales } from "../../localization/generated/locale-codes.js";
 
 /** The room kept free around the nodes when the view is fitted. */
@@ -135,6 +135,8 @@ export class WebwriterHash extends LitElementWw {
     #graph: Graph = { nodes: [], connections: [] };
     #fallback?: Graph;
     #lastPermissions = "";
+    // Moving or selecting nodes renders again without changing what the hashes depend on.
+    #flow?: { signature: string; flow: Flow };
 
     /** The graph from the data block, in the shape the editor works with. Without nodes the default pipeline shows. */
     get graph(): Graph {
@@ -353,7 +355,9 @@ export class WebwriterHash extends LitElementWw {
 
     render() {
         const graph = this.graph;
-        const flow = evaluate(graph);
+        const signature = flowSignature(graph);
+        if (this.#flow?.signature !== signature) this.#flow = { signature, flow: evaluate(graph) };
+        const flow = this.#flow.flow;
         const deletable = this.#permissions.can("allowDeleting");
         return html`
             <div class="widget-container">
