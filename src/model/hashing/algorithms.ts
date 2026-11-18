@@ -13,3 +13,14 @@ export const hash_algorithms: Record<string, (data: Uint8Array) => Uint8Array> =
   keccak_256,
   blake3,
 };
+
+/** The names of the algorithms as people write them. */
+export const hash_algorithm_labels: Record<string, string> = {
+  sha1: "SHA-1",
+  sha256: "SHA-256",
+  sha384: "SHA-384",
+  sha512: "SHA-512",
+  sha3_256: "SHA3-256",
+  keccak_256: "Keccak-256",
+  blake3: "BLAKE3",
+};

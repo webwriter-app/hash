@@ -345,7 +345,13 @@
       "ckb-Arab": "هاش",
       "af-ZA": "Hutswaarde",
       "af-NA": "Hutswaarde"
-    }
+    },
+    "importFormats": [
+      ".json"
+    ],
+    "exportFormats": [
+      "application/json"
+    ]
   },
   "./snippets/password-pioneers-station-1": {
     "label": {

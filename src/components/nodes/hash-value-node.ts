@@ -21,9 +21,9 @@ export class HashValueNodeUI extends NodeContent {
       border: 1px solid #d4d4d8;
       background: #fcfcfc;
       border-radius: 4px;
-      font-family: sans-serif;
+      font-family: inherit;
       font-size: medium;
-      color: #3f3f48;
+      color: var(--ww-text-color, #3f3f48);
       padding: 6px 8px;
       height: 125px;
       resize: none;
@@ -38,11 +38,40 @@ export class HashValueNodeUI extends NodeContent {
       position: absolute;
       bottom: 8px;
       right: 8px;
+      display: grid;
+      place-items: center;
+      min-width: 28px;
+      min-height: 28px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      font-size: 1rem;
       cursor: pointer;
       color: #555;
     }
     .copy-button:hover {
-      color: #39bdf8;
+      color: var(--ww-theme-accent-1, #39bdf8);
+    }
+    .copy-button:focus-visible {
+      outline: 2px solid var(--ww-theme-accent-1, #39bdf8);
+      outline-offset: 0;
+    }
+    @media (pointer: coarse) {
+      .copy-button {
+        bottom: 4px;
+        right: 4px;
+        min-width: 44px;
+        min-height: 44px;
+      }
+    }
+    @media print {
+      .copy-button {
+        display: none;
+      }
+      .data-box {
+        height: auto;
+        min-height: 3rem;
+      }
     }
 
     sl-tooltip {
@@ -54,7 +83,7 @@ export class HashValueNodeUI extends NodeContent {
       border: #a1a1aa 1px solid;
       color: #131316;
       font-size: 14px;
-      font-family: sans-serif;
+      font-family: inherit;
     }
   `;
 
@@ -77,11 +106,9 @@ export class HashValueNodeUI extends NodeContent {
         .value=${this.displayValue}
       ></textarea>
       <sl-tooltip content=${this.msg("Copy to clipboard")} placement="right-end">
-        <sl-icon
-          src=${IconCopy}
-          @click=${this.handleCopy}
-          class="copy-button"
-        ></sl-icon>
+        <button type="button" class="copy-button" aria-label=${this.msg("Copy to clipboard")} @click=${this.handleCopy}>
+          <sl-icon src=${IconCopy}></sl-icon>
+        </button>
       </sl-tooltip>
     `;
   }

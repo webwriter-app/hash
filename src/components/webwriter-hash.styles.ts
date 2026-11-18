@@ -3,13 +3,22 @@ import { css } from "lit";
 export const styles = css`
   :host {
     display: block;
+    box-sizing: border-box;
     width: 100%;
+    min-width: 300px;
+    max-width: 2100px;
     height: fit-content;
-    font-family: sans-serif;
+    font-family: var(--ww-font-family, sans-serif);
+    color: var(--ww-text-color, #3f3f48);
     position: relative;
   }
 
+  .responsive {
+    container-type: inline-size;
+  }
+
   .widget-container {
+    --dock-size: 170px;
     position: relative;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -49,24 +58,42 @@ export const styles = css`
 
   .instruction {
     font-weight: 600;
-    color: #3f3f48;
+    color: var(--ww-text-color, #3f3f48);
     font-size: 14px;
     white-space: nowrap;
   }
 
   sl-icon {
     font-size: 20px;
-    cursor: pointer;
     color: #555;
     transition: color 0.2s;
   }
 
-  sl-icon:hover {
-    color: #39bdf8;
+  /* Icon buttons: native buttons with a visible focus ring and a target of at least 32 px (44 px for fingers). */
+  .tool {
+    display: grid;
+    place-items: center;
+    min-width: 32px;
+    min-height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #555;
+    font: inherit;
+    cursor: pointer;
+  }
+  .tool:hover,
+  .tool:hover sl-icon {
+    color: var(--ww-theme-accent-1, #39bdf8);
+  }
+  .tool:focus-visible {
+    outline: 2px solid var(--ww-theme-accent-1, #39bdf8);
+    outline-offset: 1px;
   }
 
   .drawer-dock {
-    --size: 170px;
+    --size: var(--dock-size);
   }
   .drawer-dock::part(overlay) {
     display: none;
@@ -89,11 +116,12 @@ export const styles = css`
   }
 
   .stage:focus-visible {
-    outline: 2px solid #39bdf8;
+    outline: 2px solid var(--ww-theme-accent-1, #39bdf8);
     outline-offset: -2px;
   }
 
   ww-scene {
+    --ww-scene-selection: var(--ww-theme-accent-1, #39bdf8);
     --ww-scene-grid-color: #d1d5db;
     --ww-scene-grid-size: 1.5;
     position: absolute;
@@ -110,11 +138,11 @@ export const styles = css`
     stroke-width: 4px;
   }
   ww-path[selected] {
-    stroke: #39bdf8;
+    stroke: var(--ww-theme-accent-1, #39bdf8);
   }
 
   .stage[data-ww-drop-over] {
-    outline: 2px solid #39bdf8;
+    outline: 2px solid var(--ww-theme-accent-1, #39bdf8);
     outline-offset: -2px;
   }
 
@@ -131,8 +159,10 @@ export const styles = css`
     border-radius: 4px;
     cursor: grab;
     user-select: none;
+    touch-action: none;
+    color: var(--ww-text-color, #3f3f48);
     text-align: center;
-    font-family: sans-serif;
+    font-family: inherit;
     font-size: 14px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     font-weight: 550;
@@ -143,6 +173,10 @@ export const styles = css`
     }
   }
 
+  .dock-item:focus-visible {
+    outline: 2px solid var(--ww-theme-accent-1, #39bdf8);
+    outline-offset: 1px;
+  }
   .dock-item:active,
   .dock-item[data-ww-dragging] {
     cursor: grabbing;
@@ -150,19 +184,19 @@ export const styles = css`
   }
   .dock-item.key {
     background: #f3f7f9;
-    border-color: #085886;
+    border-color: var(--ww-theme-accent-2, #085886);
   }
   .dock-item.hash-function {
     background: #fdf8ef;
-    border-color: #e78c1f;
+    border-color: var(--ww-theme-accent-3, #e78c1f);
   }
   .dock-item.hash-value {
     background: #eef0f2;
-    border-color: #0f3048;
+    border-color: var(--ww-theme-accent-4, #0f3048);
   }
   .dock-item.salt {
     background: #e8f5e9;
-    border: 1.5px #2e7d32 dashed;
+    border: 1.5px var(--ww-theme-accent-5, #2e7d32) dashed;
   }
 
   :host(:not([contenteditable="true"]):not([contenteditable=""])) .author-only {
@@ -181,7 +215,7 @@ export const styles = css`
     border: #a1a1aa 1px solid;
     color: #131316;
     font-size: 14px;
-    font-family: sans-serif;
+    font-family: inherit;
   }
   .description {
     font-size: 13px;
@@ -208,28 +242,28 @@ export const styles = css`
     border: 2px solid grey;
     border-radius: 10px;
     background: white;
-    font-family: sans-serif;
-    color: #3f3f48;
+    font-family: inherit;
+    color: var(--ww-text-color, #3f3f48);
   }
   ww-node.key {
     background: #f3f7f9;
-    border-color: #085886;
+    border-color: var(--ww-theme-accent-2, #085886);
   }
   ww-node.hash-function {
     background: #fdf8ef;
-    border-color: #e78c1f;
+    border-color: var(--ww-theme-accent-3, #e78c1f);
   }
   ww-node.hash-value {
     width: 220px;
     background: #eef0f2;
-    border-color: #0f3048;
+    border-color: var(--ww-theme-accent-4, #0f3048);
   }
   ww-node.salt {
     background: #e8f5e9;
-    border: 2px #2e7d32 dashed;
+    border: 2px var(--ww-theme-accent-5, #2e7d32) dashed;
   }
   ww-node[selected] {
-    outline-color: #39bdf8;
+    outline-color: var(--ww-theme-accent-1, #39bdf8);
   }
 
   .title {
@@ -245,8 +279,13 @@ export const styles = css`
     line-height: 1.2;
     text-align: center;
     overflow-wrap: break-word;
-    color: black;
+    color: var(--ww-text-color, black);
     cursor: text;
+  }
+  .title:focus-visible,
+  ww-node:focus-visible {
+    outline: 2px solid var(--ww-theme-accent-1, #39bdf8);
+    outline-offset: 1px;
   }
   .title-input {
     width: 100%;
@@ -257,20 +296,19 @@ export const styles = css`
     border: none;
     outline: none;
     background: transparent;
+    font-family: inherit;
+    color: inherit;
   }
 
-  .icon-btn {
-    cursor: pointer;
-    color: #555;
-  }
-  .icon-btn:hover {
-    color: #39bdf8;
-  }
   .delete-button {
     position: absolute;
     top: 14px;
     right: 7px;
     z-index: 50;
+    min-width: 28px;
+    min-height: 28px;
+  }
+  .delete-button sl-icon {
     font-size: 1.2rem;
   }
 
@@ -321,6 +359,138 @@ export const styles = css`
       position: absolute;
       inset: -8px;
       border-radius: 50%;
+    }
+  }
+
+  @media (pointer: coarse) {
+    .tool {
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .delete-button {
+      min-width: 36px;
+      min-height: 36px;
+      top: 8px;
+      right: 3px;
+    }
+  }
+
+  ::slotted(img),
+  ::slotted(video) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Narrow containers: a slimmer node menu, no title pill, a taller window for the graph. */
+  @container (max-width: 479px) {
+    .widget-container {
+      --dock-size: 130px;
+      height: 520px;
+    }
+    .pill-center {
+      display: none;
+    }
+    .dock-item {
+      padding: 8px 4px;
+      font-size: 13px;
+    }
+  }
+  @container (min-width: 1400px) {
+    .widget-container {
+      height: 700px;
+    }
+  }
+
+  .print-picture {
+    display: none;
+  }
+  .print-picture svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+  .print-wire {
+    fill: none;
+    stroke: grey;
+    stroke-width: 3px;
+  }
+  .print-node rect {
+    fill: white;
+    stroke: grey;
+    stroke-width: 2px;
+  }
+  .print-node.key rect {
+    fill: #f3f7f9;
+    stroke: var(--ww-theme-accent-2, #085886);
+  }
+  .print-node.hash-function rect {
+    fill: #fdf8ef;
+    stroke: var(--ww-theme-accent-3, #e78c1f);
+  }
+  .print-node.hash-value rect {
+    fill: #eef0f2;
+    stroke: var(--ww-theme-accent-4, #0f3048);
+  }
+  .print-node.salt rect {
+    fill: #e8f5e9;
+    stroke: var(--ww-theme-accent-5, #2e7d32);
+    stroke-dasharray: 6 4;
+  }
+  .print-card {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 10px 12px;
+    overflow: hidden;
+    color: var(--ww-text-color, #3f3f48);
+    font-family: inherit;
+    font-size: 14px;
+    text-align: center;
+  }
+  .print-text {
+    margin-top: 8px;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    text-align: left;
+  }
+
+  /* Paper: the graph as it stands, without tools. */
+  @media print {
+    .widget-container[data-print] .stage {
+      display: none;
+    }
+    .widget-container[data-print] .print-picture {
+      display: block;
+      flex: 1;
+      min-height: 0;
+    }
+    .widget-container[data-print] {
+      height: auto;
+      min-height: 0;
+    }
+    :host {
+      max-width: none;
+      break-inside: avoid;
+    }
+    .widget-container {
+      break-inside: avoid;
+      border-color: #888;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .pill,
+    .drawer-dock,
+    .delete-button {
+      display: none !important;
+    }
+    ww-scene {
+      --ww-scene-grid-color: transparent;
+    }
+    .stage {
+      background-color: white;
+    }
+    ww-node[selected] {
+      outline: none;
     }
   }
 `;

@@ -31,9 +31,9 @@ export class SaltNodeUI extends NodeContent {
       border: 1px solid #d4d4d8;
       border-radius: 4px;
       background-color: white;
-      font-family: sans-serif;
+      font-family: inherit;
       font-size: medium;
-      color: #3f3f48;
+      color: var(--ww-text-color, #3f3f48);
       padding: 6px 8px;
       line-height: 1.4;
       word-break: break-all;
@@ -64,13 +64,38 @@ export class SaltNodeUI extends NodeContent {
       font-style: italic;
     }
     .refresh-icon {
+      display: grid;
+      place-items: center;
+      min-width: 28px;
+      min-height: 28px;
+      padding: 0;
+      border: 0;
+      background: transparent;
       font-size: 1.1rem;
       cursor: pointer;
-      padding: 2px;
       color: #555;
     }
     .refresh-icon:hover {
       color: #2e7d32;
+    }
+    .refresh-icon:focus-visible {
+      outline: 2px solid var(--ww-theme-accent-1, #39bdf8);
+    }
+    @media (pointer: coarse) {
+      .refresh-icon {
+        min-width: 44px;
+        min-height: 44px;
+      }
+    }
+    @media print {
+      .refresh-icon {
+        display: none;
+      }
+      .salt-key-input {
+        height: auto;
+        min-height: 3rem;
+        overflow: visible;
+      }
     }
   `;
 
@@ -95,12 +120,9 @@ export class SaltNodeUI extends NodeContent {
           .value=${this.salt}
           @pointerdown=${(e: Event) => e.stopPropagation()}
         >
-          <sl-icon
-            slot="suffix"
-            src="${IconRefresh}"
-            class="refresh-icon"
-            @click=${this.triggerRefresh}
-          ></sl-icon>
+          <button type="button" slot="suffix" class="refresh-icon" aria-label=${this.msg("Generate a new salt", { desc: "Label of the button that replaces the salt with a new random one" })} @click=${this.triggerRefresh}>
+            <sl-icon src=${IconRefresh}></sl-icon>
+          </button>
         </sl-input>
 
         <div>

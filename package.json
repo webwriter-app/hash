@@ -5,11 +5,27 @@
   "repository": "github:webwriter-app/hash",
   "keywords": [
     "webwriter-widget",
-    "hashing",
     "widget-practical",
-    "iscedf2013-06",
     "isced2011-1",
     "isced2011-2",
+    "isced2011-3",
+    "iscedf2013-061",
+    "widget-editable",
+    "widget-allows-pointer-input",
+    "widget-allows-keyboard-input",
+    "widget-allows-touch-input",
+    "widget-convertible-to-application/json",
+    "widget-convertible-from-application/json",
+    "widget-responsive",
+    "widget-themeable",
+    "widget-printable",
+    "widget-stateful",
+    "widget-configurable",
+    "widget-reactive",
+    "widget-testable",
+    "hashing",
+    "password",
+    "cryptography",
     "widget-lang-en",
     "widget-lang-en-US",
     "widget-lang-en-GB",
@@ -167,6 +183,14 @@
     "./tests/data.*": {
       "source": "./tests/data.test.ts",
       "default": "./dist/tests/data.*"
+    },
+    "./tests/interaction.*": {
+      "source": "./tests/interaction.test.ts",
+      "default": "./dist/tests/interaction.*"
+    },
+    "./tests/conversions.*": {
+      "source": "./tests/conversions.test.ts",
+      "default": "./dist/tests/conversions.*"
     },
     "./icon": "./icon.svg",
     "./editing-config.json": "./editing-config.json",
