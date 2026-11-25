@@ -1,0 +1,141 @@
+import { css, html } from "lit";
+import { NodeContent } from "./node-content";
+import { property, eventOptions } from "lit/decorators.js";
+import { widgetMsg } from "@webwriter/lit/localize";
+import IconRefresh from "@tabler/icons/outline/refresh.svg";
+
+export class SaltNodeUI extends NodeContent {
+  protected readonly msg = widgetMsg(this);
+  @property({ type: String }) accessor salt: string = "";
+  @property({ type: String }) accessor incoming: string = "";
+
+  static styles = css`
+    .salt-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 4px;
+      cursor: not-allowed;
+    }
+    .shoelace-label {
+      font-size: 0.85rem;
+      color: black;
+      font-weight: 500;
+      margin-bottom: 2px;
+      display: block;
+    }
+    .salt-key-input {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #d4d4d8;
+      border-radius: 4px;
+      background-color: white;
+      font-family: inherit;
+      font-size: medium;
+      color: var(--ww-text-color, #3f3f48);
+      padding: 6px 8px;
+      line-height: 1.4;
+      word-break: break-all;
+      overflow-y: scroll;
+      cursor: not-allowed;
+      height: 125px;
+    }
+    .salt-key-input::-webkit-scrollbar {
+      width: 6px;
+    }
+    .salt-key-input::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px;
+    }
+    .salt-key-input::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+    .key-part {
+      color: inherit;
+    }
+    .salt-part {
+      font-weight: bold;
+      color: black;
+    }
+    .placeholder {
+      color: #aaa;
+      font-style: italic;
+    }
+    .refresh-icon {
+      display: grid;
+      place-items: center;
+      min-width: 28px;
+      min-height: 28px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: #555;
+    }
+    .refresh-icon:hover {
+      color: #2e7d32;
+    }
+    .refresh-icon:focus-visible {
+      outline: 2px solid var(--ww-theme-accent-1, #39bdf8);
+    }
+    @media (pointer: coarse) {
+      .refresh-icon {
+        min-width: 44px;
+        min-height: 44px;
+      }
+    }
+    @media print {
+      .refresh-icon {
+        display: none;
+      }
+      .salt-key-input {
+        height: auto;
+        min-height: 3rem;
+        overflow: visible;
+      }
+    }
+  `;
+
+  @eventOptions({ passive: true })
+  private handleWheel(e: WheelEvent) {
+    e.stopPropagation();
+  }
+
+  private triggerRefresh(e: Event) {
+    e.stopPropagation();
+    this.dispatchEvent(
+      new CustomEvent("refresh", { bubbles: true, composed: true }),
+    );
+  }
+
+  render() {
+    return html`
+      <div class="salt-container">
+        <sl-input
+          label=${this.msg("Salt text", { desc: "Label of the field showing the generated salt" })}
+          readonly
+          .value=${this.salt}
+          @pointerdown=${(e: Event) => e.stopPropagation()}
+        >
+          <button type="button" slot="suffix" class="refresh-icon" aria-label=${this.msg("Generate a new salt", { desc: "Label of the button that replaces the salt with a new random one" })} @click=${this.triggerRefresh}>
+            <sl-icon src=${IconRefresh}></sl-icon>
+          </button>
+        </sl-input>
+
+        <div>
+          <label class="shoelace-label">${this.msg(html`Key + <b>Salt</b>`, { desc: "Label of the field showing the key with the salt appended" })}</label>
+          <div class="salt-key-input" @wheel=${this.handleWheel}>
+            ${!this.incoming && !this.salt
+              ? html`<span class="placeholder">${this.msg("Key input + Salt")}</span>`
+              : ""}
+            <span class="key-part">${this.incoming}</span
+            ><span class="salt-part">${this.salt}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}

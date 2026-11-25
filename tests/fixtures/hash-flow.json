@@ -1,0 +1,13 @@
+{
+  "nodes": [
+    { "id": "k1", "label": "Key", "customTitle": "Password", "x": 0, "y": 0, "value": "hello" },
+    { "id": "s1", "label": "Salt", "customTitle": "Salt", "x": 260, "y": 0, "saltValue": "xyz" },
+    { "id": "h1", "label": "HashFunction", "customTitle": "Hash Function", "x": 520, "y": 0, "selectedFunction": "sha1", "inputsCount": 2 },
+    { "id": "v1", "label": "HashValue", "customTitle": "Hash Value", "x": 780, "y": 0 }
+  ],
+  "connections": [
+    { "source": "k1", "sourceOutput": "key-output", "target": "s1", "targetInput": "salt-input" },
+    { "source": "s1", "sourceOutput": "salt-output", "target": "h1", "targetInput": "in-0" },
+    { "source": "h1", "sourceOutput": "out-0", "target": "v1", "targetInput": "hash-value-input" }
+  ]
+}
