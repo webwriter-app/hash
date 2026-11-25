@@ -114,4 +114,4 @@ npm install @webwriter/hash
 
 
 ---
-*Generated with @webwriter/build@1.14.0*
+*Generated with @webwriter/build@1.15.0*

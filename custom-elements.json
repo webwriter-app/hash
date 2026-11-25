@@ -674,9 +674,7 @@
             "package": "@webwriter/lit"
           },
           "tagName": "webwriter-hash",
-          "customElement": true,
-          "modulePath": "src/widgets/webwriter-hash.ts",
-          "definitionPath": "src/widgets/webwriter-hash.ts"
+          "customElement": true
         }
       ],
       "exports": [
