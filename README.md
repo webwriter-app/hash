@@ -1,5 +1,5 @@
-# Hash (`@webwriter/hash@2.0.0`)
-[License: MIT](LICENSE) | Version: 2.0.0
+# Hash (`@webwriter/hash@2.1.0`)
+[License: MIT](LICENSE) | Version: 2.1.0
 
 Visually create hashing workflows with keys, salts, and hash functions.
 
