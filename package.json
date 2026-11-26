@@ -1,6 +1,6 @@
 {
   "name": "@webwriter/hash",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Visually create hashing workflows with keys, salts, and hash functions.",
   "repository": "https://github.com/webwriter-app/hash",
   "keywords": [
@@ -180,6 +180,7 @@
     },
     "./icon": "./icon.svg",
     "./preview": "./assets/preview.mp4",
+    "./preview/de": "./assets/preview-de.mp4",
     "./editing-config.json": "./editing-config.json",
     "./custom-elements.json": "./custom-elements.json"
   },
